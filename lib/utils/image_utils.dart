@@ -14,6 +14,8 @@ class AssetUtils{
   static String contactsImages = '${imagePath}contacts.png';
   static String languageImages = '${imagePath}language.png';
   static String privacyPolicyImages = '${imagePath}privacy_policy.png';
+  static String agniKundImages = '${imagePath}agniKund.png';
+  static String tilakSndhyaImages = '${imagePath}tilakSndhya.png';
 
   // ICONS
 
@@ -21,6 +23,7 @@ class AssetUtils{
   static const calendarIcon = Icons.calendar_month;
   static const locationIcon = Icons.location_on;
   static const backArrowIcon = Icons.arrow_back_ios_new;
+  static const forwardArrowIcon = Icons.arrow_forward_ios;
   static const seetingIcon = Icons.settings;
   static const aboutIcon = Icons.error;
   static const shareIcon = Icons.share;

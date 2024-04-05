@@ -1,118 +1,3 @@
-// import 'package:flutter/material.dart';
-// import 'package:flutter_screenutil/flutter_screenutil.dart';
-// import 'package:get/get.dart';
-// import 'package:intl/intl.dart';
-// import 'package:sunrise_app/commonWidget/common_text.dart';
-// import 'package:sunrise_app/utils/color_utils.dart';
-// import 'package:sunrise_app/utils/icon_utils.dart';
-// import 'package:sunrise_app/utils/string_utils.dart';
-// import 'package:sunrise_app/view/enter_location_screen/enter_location_screen.dart';
-// import 'package:sunrise_app/view/google_map_screen/google_map.dart';
-// import 'package:sunrise_app/viewModel/sunrise_sunset_controller.dart';
-//
-// class SunriseSunetScreen extends StatelessWidget {
-//   const SunriseSunetScreen({Key? key, this.latitude, this.longitude, this.address}):super(key: key);
-//
-//   final double? latitude;
-//   final double? longitude;
-//   final String? address;
-//
-//   String formatAddress() {
-//     if (address == null) {
-//       return 'Location Not set,Click on Icon!';
-//     }
-//
-//     List<String> addressParts = address!.split(', ');
-//
-//     String homeNumber = addressParts.length > 0 ? addressParts[0] : '';
-//     String streetName = addressParts.length > 1 ? addressParts[1] : '';
-//     String area = addressParts.length > 2 ? addressParts[2] : '';
-//     String city = addressParts.length > 3 ? addressParts[3] : '';
-//     String state = addressParts.length > 4 ? addressParts[4] : '';
-//     String pinCode = addressParts.length > 5 ? addressParts[5] : '';
-//     String country = addressParts.length > 6 ? addressParts[6] : '';
-//
-//     return '$homeNumber,$streetName,$area,$city,$state,$pinCode,$country';
-//   }
-//
-//
-//   @override
-//   Widget build(BuildContext context) {
-//
-//     SunriseSunsetController sunriseSunsetController = Get.find<SunriseSunsetController>();
-//
-//     if (latitude != null && longitude != null) {
-//       sunriseSunsetController.fetchWeather(latitude!, longitude!);
-//     }
-//     return Scaffold(
-//       body: GetBuilder<SunriseSunsetController>(
-//         builder: (controller) => Column(
-//           mainAxisAlignment: MainAxisAlignment.center,
-//           children: [
-//             CustomText(
-//               'Sunrise: ${controller.weather?.sunrise != null ? DateFormat('hh:mm:ss a').format(controller.weather!.sunrise!.toLocal()) : ''}',
-//               color: ColorUtils.black,
-//             ),
-//             CustomText(
-//               'Sunset: ${controller.weather?.sunset != null ? DateFormat('hh:mm:ss a').format(controller.weather!.sunset!.toLocal()) : ''}',
-//               color: ColorUtils.black,
-//             ),
-//             SizedBox(
-//               height: 50.h,
-//             ),
-//             IconButton(
-//               onPressed: () {
-//                 Get.dialog(
-//                   AlertDialog(
-//                     title: GestureDetector(
-//                       onTap: () {
-//                         Get.off(const MapDemo());
-//                       },
-//                       child: const CustomText(
-//                         StringUtils.usgMapTxt,
-//                         color: ColorUtils.black,
-//                       ),
-//                     ),
-//                     content: GestureDetector(
-//                       onTap: () {
-//                         Get.off(const LocationScreen());
-//                       },
-//                       child: const CustomText(
-//                         StringUtils.usgManuallyTxt,
-//                         color: ColorUtils.black,
-//                       ),
-//                     ),
-//                   ),
-//                 );
-//               },
-//               icon: Icon(
-//                 IconUtils.locationIcon,
-//                 size: 50.h,
-//               ),
-//             ),
-//             Padding(
-//               padding: EdgeInsets.only(left: 20.w, right: 20.w),
-//               child: CustomText(
-//                 formatAddress(),
-//                 textAlign: TextAlign.center,
-//                 color: ColorUtils.black,
-//               ),
-//             ),
-//             if (latitude != null && longitude != null)
-//               Padding(
-//                 padding: EdgeInsets.only(left: 20.w, right: 20.w),
-//                 child: CustomText(
-//                   '(${latitude!.toString()}, ${longitude!.toString()})',
-//                   color: ColorUtils.black,
-//                 ),
-//               ),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:geocoding/geocoding.dart';
@@ -126,6 +11,7 @@ import 'package:sunrise_app/utils/image_utils.dart';
 import 'package:sunrise_app/utils/string_utils.dart';
 import 'package:sunrise_app/view/enter_location_screen/enter_location_screen.dart';
 import 'package:sunrise_app/view/google_map_screen/google_map.dart';
+import 'package:sunrise_app/view/mantra_menu_screen/mantra_menu_screen.dart';
 import 'package:sunrise_app/view/mantra_screen/mantra_screen.dart';
 import 'package:sunrise_app/view/setting_screen/setting_screen.dart';
 import 'package:sunrise_app/viewModel/google_map_controller.dart';
@@ -403,7 +289,7 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                         //  MANTRA TXT
                         InkWell(
                           onTap: () {
-                            Get.to(const MantraScreen());
+                            Get.to(const MantraMenuScreen());
                           },
                           child: Container(
                             padding:
@@ -509,11 +395,8 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                                   )),
                               child: Padding(
                                 padding: EdgeInsets.only(top: 25.h),
-                                child:sunriseSunsetController.isLoad.value
-                                    ?const CircularProgressIndicator(
-                                  color: ColorUtils.white,
-                                )
-                                    :CustomText(
+                                child:
+                                    CustomText(
                                   sunrise,
                                   fontWeight: FontWeight.w500,
                                   fontSize: 20.sp,
@@ -550,11 +433,8 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                                   )),
                               child: Padding(
                                 padding: EdgeInsets.only(top: 25.h),
-                                child:sunriseSunsetController.isLoad.value
-                                    ? const CircularProgressIndicator(
-                                  color: ColorUtils.white,
-                                )
-                                    :CustomText(
+                                child:
+                                    CustomText(
                                   sunset,
                                   fontWeight: FontWeight.w500,
                                   fontSize: 20.sp,
@@ -889,7 +769,7 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
     Get.dialog(
       AlertDialog(
         title: SizedBox(
-          height: googleController.locationList.isNotEmpty ? null : 80.h,
+          height: googleController.locationList.isNotEmpty ? null : 120.h,
           child: Column(
             children: [
               googleController.locationList.isNotEmpty
@@ -908,79 +788,110 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                       },
                     ),
                   ),
-                  SizedBox(
-                    height: 10.h,
+                  const Divider(),
+                  TextButton(
+                      onPressed: () {
+                        googleController.clearLocationList();
+                        sunriseSunsetController.clearLocationData();
+                        _clearData();
+                        sunriseSunsetController.weather.value = null;
+                        widget.latitude = 0;
+                        widget.longitude = 0;
+                        widget.address = '';
+                        setState(() {});
+                        Get.back(result: false);
+                      },
+                      child:  const CustomText(
+                        StringUtils.deleteLocationTxt,
+                        color: ColorUtils.black,
+                      ),
                   ),
                   const Divider(),
-                  InkWell(
-                    onTap: () {
-                      googleController.clearLocationList();
-                      sunriseSunsetController.clearLocationData();
-                      _clearData();
-                      sunriseSunsetController.weather.value = null;
-                      widget.latitude = 0;
-                      widget.longitude = 0;
-                      widget.address = '';
-                      setState(() {});
-                      Get.back(result: false);
-                    },
-                    child: const CustomText(
-                      'Delete All Location',
-                      color: ColorUtils.black,
-                    ),
-                  ),
-                  SizedBox(
-                    height: 10.h,
-                  ),
-                  const Divider(),
-                  InkWell(
-                    onTap: () {
-                      Get.back();
-                      Get.dialog(
-                        AlertDialog(
-                          title: SizedBox(
-                            height: 100.h,
-                            child: Column(
-                              children: [
-                                InkWell(
-                                  onTap: () {
-                                    Get.off(MapDemo());
-                                  },
-                                  child: const CustomText(
-                                    StringUtils.usgMapTxt,
-                                    color: ColorUtils.black,
+                  TextButton(
+                      onPressed: () {
+                        Get.back();
+                        Get.dialog(
+                          AlertDialog(
+                            title: SizedBox(
+                              height: 120.h,
+                              child: Column(
+                                children: [
+                                  TextButton(
+                                    onPressed: () {
+                                      Get.off(MapDemo());
+                                    },
+                                    child: const CustomText(
+                                      StringUtils.usgMapTxt,
+                                      color: ColorUtils.black,
+                                    ),
                                   ),
-                                ),
-                                SizedBox(
-                                  height: 20.h,
-                                ),
-                                InkWell(
-                                  onTap: () {
-                                    Get.off(const LocationScreen());
-                                  },
-                                  child: const CustomText(
-                                    StringUtils.usgManuallyTxt,
-                                    color: ColorUtils.black,
+                                  TextButton(
+                                    onPressed: () {
+                                      Get.off(const LocationScreen());
+
+                                    },
+                                    child: const CustomText(
+                                      StringUtils.usgManuallyTxt,
+                                      color: ColorUtils.black,
+                                    ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                           ),
-                        ),
-                      );
-                    },
-                    child: const CustomText(
-                      'Add Location',
-                      color: ColorUtils.black,
-                    ),
+                        );
+                      },
+                      child:  const CustomText(
+                        StringUtils.addLocationTxt,
+                        color: ColorUtils.black,
+                      ),
                   ),
+                  // InkWell(
+                  //   onTap: () {
+                  //     Get.back();
+                  //     Get.dialog(
+                  //       AlertDialog(
+                  //         title: SizedBox(
+                  //           height: 100.h,
+                  //           child: Column(
+                  //             children: [
+                  //               TextButton(
+                  //                   onPressed: () {
+                  //                     Get.off(MapDemo());
+                  //                   },
+                  //                 child: const CustomText(
+                  //                   StringUtils.usgMapTxt,
+                  //                   color: ColorUtils.black,
+                  //                 ),
+                  //               ),
+                  //               TextButton(
+                  //                   onPressed: () {
+                  //                     Get.off(const LocationScreen());
+                  //
+                  //                   },
+                  //                   child: const CustomText(
+                  //                     StringUtils.usgManuallyTxt,
+                  //                     color: ColorUtils.black,
+                  //                   ),
+                  //               ),
+                  //             ],
+                  //           ),
+                  //         ),
+                  //       ),
+                  //     );
+                  //   },
+                  //   child: const CustomText(
+                  //     StringUtils.addLocationTxt,
+                  //     color: ColorUtils.black,
+                  //   ),
+                  // ),
                 ],
               )
                   : Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  InkWell(
-                    onTap: () {
+                  TextButton(
+                    onPressed: () {
                       Get.off(MapDemo());
                     },
                     child: const CustomText(
@@ -988,16 +899,12 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                       color: ColorUtils.black,
                     ),
                   ),
-                  SizedBox(
-                    height: 10.h,
-                  ),
+
                   const Divider(),
-                  SizedBox(
-                    height: 10.h,
-                  ),
-                  InkWell(
-                    onTap: () {
+                  TextButton(
+                    onPressed: () {
                       Get.off(const LocationScreen());
+
                     },
                     child: const CustomText(
                       StringUtils.usgManuallyTxt,
@@ -1012,4 +919,9 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
       ),
     );
   }
+
+
+
+
+
 }

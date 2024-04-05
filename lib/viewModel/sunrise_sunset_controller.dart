@@ -11,7 +11,7 @@ class SunriseSunsetController extends GetxController {
   String formattedTime = DateFormat('HH:mm:ss').format(DateTime.now());
   RxString sunrise = ''.obs;
   RxString sunset = ''.obs;
-  RxBool isLoad = false.obs;
+ // RxBool isLoad = false.obs;
 
   @override
   void onInit() async {
@@ -24,7 +24,7 @@ class SunriseSunsetController extends GetxController {
   }
   Future<void> fetchWeather(double latitude, double longitude) async {
     try {
-      isLoad.value = true;
+    //  isLoad.value = true;
       Weather? newWeather = await ws!.currentWeatherByLocation(latitude, longitude);
       if (newWeather != null) {
         weather.value = newWeather; // Update weather data
@@ -33,10 +33,10 @@ class SunriseSunsetController extends GetxController {
         PrefServices.setValue('sunrise', sunrise.value);
         PrefServices.setValue('sunset', sunset.value);
       }
-      isLoad.value = false;
+    //  isLoad.value = false;
     } catch (e) {
       print('Error fetching weather: $e');
-      isLoad.value = false;
+    //  isLoad.value = false;
     }
   }
 

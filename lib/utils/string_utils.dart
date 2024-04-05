@@ -5,7 +5,7 @@ class StringUtils {
   static const manuallyEntryTxt = 'Manually Entry';
   static const stdConveLocationTxt = 'Enter location below in degrees using standard conventions';
   static const notEstSouWesTxt = '(+ve for North/East and -ve for south/west)';
-  static const locationUseTxt = 'USE THIS LOCATION';
+  static const locationUseTxt = 'Use this location';
   static const mapLocationUseTxt = 'See this location on map';
   static const longTxt = 'Longitude:';
   static const latiTxt = 'Latitude:';
@@ -48,5 +48,24 @@ class StringUtils {
   static const reminderTxt = 'Reminders';
   static const setReminderTxt = 'set reminders for this app';
   static const resetBtnTxt = 'Reset';
+  static const deleteLocationTxt = 'Delete All Location';
+  static const addLocationTxt = 'Add Location';
+  static const sooryayaSwaha = 'sooryaya swaha';
+  static const sooryayaSwahaTxt = 'सूर्याय  स्वाहा';
+  static const sooryayaIdem= 'sooryaya idem na mama';
+  static const sooryayaIdemTxt= 'सूर्याय इदं न मम';
+  static const prajapatayeSwaha= 'Prajapataye Swaha';
+  static const prajapatayeSwahaTxt= 'प्रजापतये स्वाहा';
+  static const prajapatayeIdem= 'prajapataye idem na mama';
+  static const prajapatayeIdemTxt= 'प्रजापतये इदं न मम';
+  static const agnayeSwaha= 'agnaye swaha';
+  static const agnayeSwahaTxt= 'अग्नये स्वाहा';
+  static const agnayeIdem= 'agnaye idem na mama';
+  static const agnayeIdemTxt= 'अग्नये इदं न मम';
+  static const agnihotraMantraTxt= 'Agnihotra mantra';
+  static const sunriseSunsetMantraTxt= '(sunrise & sunset mantra)';
+  static const tilakSandhyaMantraTxt= 'Trikal sandhya mantra';
+
+
 
 }
