@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:get/get.dart';
 import 'package:sunrise_app/common_Widget/common_assets.dart';
+import 'package:sunrise_app/common_Widget/common_button.dart';
 import 'package:sunrise_app/common_Widget/common_text.dart';
 import 'package:sunrise_app/common_Widget/common_textfield.dart';
 import 'package:sunrise_app/services/prefServices.dart';
@@ -26,11 +27,11 @@ class SunriseSunetScreen extends StatefulWidget {
   bool? value;
 
   SunriseSunetScreen({Key? key, this.latitude, this.longitude, this.address, this.value}) : super(key: key) {
-    if (address != null && latitude != null && longitude != null) {
-      PrefServices.setValue('address', address!);
-      PrefServices.setValue('latitude', latitude!);
-      PrefServices.setValue('longitude', longitude!);
-    }
+    // if (address != null && latitude != null && longitude != null) {
+    //   PrefServices.setValue('address', address!);
+    //   PrefServices.setValue('latitude', latitude!);
+    //   PrefServices.setValue('longitude', longitude!);
+    // }
   }
 
   @override
@@ -45,11 +46,19 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
   GoogleController googleController = Get.find<GoogleController>();
 
   String formatAddress() {
-    if (widget.address == null || (widget.latitude == 0 && widget.longitude == 0)) {
-      return 'Location not set, click on icon!';
-     }
+    // if (widget.address == null || (widget.latitude == 0 && widget.longitude == 0)) {
+    //   return 'Location not set, click on icon!';
+    //  }
+    //
+    // List<String> addressParts = widget.address!.split(',').map((part) => part.trim()).toList();
+    // addressParts.removeWhere((part) => part.isEmpty);
+    //
+    // return addressParts.join(', ');
+    if (address == null || (latitude == 0 && longitude == 0)) {
+      return StringUtils.locationSetTxt;
+    }
 
-    List<String> addressParts = widget.address!.split(',').map((part) => part.trim()).toList();
+    List<String> addressParts = address!.split(',').map((part) => part.trim()).toList();
     addressParts.removeWhere((part) => part.isEmpty);
 
     return addressParts.join(', ');
@@ -65,59 +74,127 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
     // TODO: implement initState
     super.initState();
     _loadAddress();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if(widget.value == true){
+        Get.dialog(
+          AlertDialog(
+            title: CustomText(
+              'Please confirm timesone for this location',
+              color: ColorUtils.black,
+            ),
+            content: CustomText(
+              'India Standard Time(Asia/Kolkata)',
+              color: ColorUtils.black,
+            ),
+            actions: [
+              Row(
+                children: [
+                  TextButton(
+                    onPressed: () {
+                      Get.back();
+                    },
+                    child: CustomText(
+                      'Change Timezone',
+                      color: ColorUtils.black,
+                    ),
+                  ),
+                  CustomBtn(
+                    width: 80.w,
+                    height: 40.h,
+                    onTap: () {
+                      setState(() {
+                        latitude = widget.latitude!;
+                        longitude = widget.longitude!;
+                        address = widget.address!;
+                      });
+                      if (address != null && latitude != null && longitude != null) {
+                        PrefServices.setValue('address', address!);
+                        PrefServices.setValue('latitude', latitude!);
+                        PrefServices.setValue('longitude', longitude!);
+                      }
+                    //   googleController.onLocationData(
+                    //     widget.address ?? googleController.address.value,
+                    //     widget.latitude ?? googleController.lastMapPosition.value!.latitude,
+                    //     widget.longitude ?? googleController.lastMapPosition.value!.longitude,
+                    //   );
+                    // Get.back(result:googleController.result.value = false);
+                      Get.back();
+                    },
+                    title: 'Confirm',
+                    bgColor: ColorUtils.orange,
+                  ),
+                ],
+              ),
+            ],
+          ),
+        );
+      }
+    });
+
   }
   Future<void> _loadAddress() async {
     String? storedAddress = await PrefServices.getString('address');
+    List<String> storedLocationList = PrefServices.getStringList('locationList');
     double? storedLatitude = await PrefServices.getDouble('latitude');
     double? storedLongitude = await PrefServices.getDouble('longitude');
 
     if (storedAddress != null) {
       setState(() {
-        if (widget.address == null) {
-          widget.address = storedAddress;
+        if (address == null) {
+         address = storedAddress;
         }
       });
     } else {
       setState(() {
-        widget.address = null;
+        address = null;
       });
     }
     if (storedLatitude != null) {
       setState(() {
-        if (widget.latitude == null) {
-          widget.latitude = storedLatitude;
+        if (latitude == null) {
+          latitude = storedLatitude;
         }
       });
     } else {
       setState(() {
-        widget.latitude = null;
+      latitude = null;
       });
     }
 
     if (storedLongitude != null) {
       setState(() {
-        if (widget.longitude == null) {
-          widget.longitude = storedLongitude;
+        if (longitude == null) {
+          longitude = storedLongitude;
         }
       });
     } else {
       setState(() {
-        widget.longitude = null;
+        longitude = null;
+      });
+    }
+    if(storedLocationList !=null){
+      setState(() {
+        googleController.locationList.value = RxList<String>(storedLocationList);
       });
     }
   }
-
   Future<void> _clearData() async {
     await PrefServices.removeValue('address');
     await PrefServices.removeValue('latitude');
     await PrefServices.removeValue('longitude');
+    await PrefServices.removeValue('locationList');
   }
-
+ double? latitude;
+ double? longitude;
+ String? address;
 
   @override
   Widget build(BuildContext context) {
-    if (widget.latitude != null && widget.longitude != null && (widget.latitude != 0 || widget.longitude != 0)) {
-      sunriseSunsetController.fetchWeather(widget.latitude!, widget.longitude!);
+    // if (widget.latitude != null && widget.longitude != null && (widget.latitude != 0 || widget.longitude != 0)) {
+    //   sunriseSunsetController.fetchWeather(widget.latitude!, widget.longitude!);
+    // }
+    if (latitude != null && longitude != null && (latitude != 0 || longitude != 0)) {
+      sunriseSunsetController.fetchWeather(latitude!, longitude!);
     }
     return Scaffold(
       key: _scaffoldKey,
@@ -365,6 +442,12 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.all(Radius.circular(6.r)),
                       border: Border.all(color: ColorUtils.borderColor),
+                     boxShadow: [
+                        BoxShadow(
+                          color: ColorUtils.white,
+                          blurRadius: 200.w,
+                        )
+                     ],
                     ),
                     child: CustomText(
                       sunriseSunsetController.formattedTime,
@@ -392,11 +475,18 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                                   BorderRadius.all(Radius.circular(6.r)),
                                   border: Border.all(
                                     color: ColorUtils.borderColor,
-                                  )),
+                                  ),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: ColorUtils.white,
+                                    blurRadius: 300.w,
+                                  )
+                                ],
+                              ),
                               child: Padding(
                                 padding: EdgeInsets.only(top: 25.h),
-                                child:
-                                    CustomText(
+                                child:sunriseSunsetController.isLoad.value?CircularProgressIndicator(color: ColorUtils.white,)
+                                    :CustomText(
                                   sunrise,
                                   fontWeight: FontWeight.w500,
                                   fontSize: 20.sp,
@@ -430,11 +520,18 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                                   borderRadius: BorderRadius.all(Radius.circular(6.r)),
                                   border: Border.all(
                                     color: ColorUtils.borderColor,
-                                  )),
+                                  ),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: ColorUtils.white,
+                                    blurRadius: 200.w,
+                                  )
+                                ],
+                              ),
                               child: Padding(
                                 padding: EdgeInsets.only(top: 25.h),
-                                child:
-                                    CustomText(
+                                child:sunriseSunsetController.isLoad.value?CircularProgressIndicator(color: ColorUtils.white,)
+                                    :CustomText(
                                   sunset,
                                   fontWeight: FontWeight.w500,
                                   fontSize: 20.sp,
@@ -484,16 +581,24 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                                         color: ColorUtils.black,
                                       ),
                                     ),
-                                    if (widget.latitude != null && widget.longitude != null &&
-                                        (widget.latitude != 0 || widget.longitude != 0))
-                                      Padding(
-                                        padding: EdgeInsets.only(left: 20.w, right: 20.w),
-                                        child: CustomText(
-                                          '(${formateLatitudeLongitude(widget.latitude!)}, '
-                                              '${formateLatitudeLongitude(widget.longitude!)})',
-                                          color: ColorUtils.black,
-                                        ),
-                                      ),
+                              if (latitude != null && longitude != null && (latitude != 0 || longitude != 0))
+                                Padding(
+                                  padding: EdgeInsets.only(left: 20.w, right: 20.w),
+                                  child: CustomText(
+                                    '(${formateLatitudeLongitude(latitude!)}, ${formateLatitudeLongitude(longitude!)})',
+                                    color: ColorUtils.black,
+                                  ),
+                                ),
+                                    // if (widget.latitude != null && widget.longitude != null &&
+                                    //     (widget.latitude != 0 || widget.longitude != 0))
+                                    //   Padding(
+                                    //     padding: EdgeInsets.only(left: 20.w, right: 20.w),
+                                    //     child: CustomText(
+                                    //       '(${formateLatitudeLongitude(widget.latitude!)}, '
+                                    //           '${formateLatitudeLongitude(widget.longitude!)})',
+                                    //       color: ColorUtils.black,
+                                    //     ),
+                                    //   ),
                               SizedBox(height: 10.h,),
                             ],
                           ),
@@ -658,6 +763,7 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                   //EDIT LOCATION
                   IconButton(
                       onPressed: () {
+                        int index = 0;
                         Get.dialog(
                           AlertDialog(
                             title: SizedBox(
@@ -666,9 +772,18 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   TextButton(
-                                      onPressed: () {
-
-                                      },
+                                    onPressed: () async {
+                                      // Delete this Location button pressed
+                                      await _clearData(); // Clear stored data
+                                      sunriseSunsetController.clearLocationData(); // Clear location data in the controller
+                                      setState(() {
+                                        address = ''; // Clear the address
+                                        latitude = 0; // Clear the latitude
+                                        longitude = 0;// Clear the longitude
+                                        googleController.locationList.removeAt(index);
+                                      });
+                                      Get.back(); // Close the dialog
+                                    },
                                       child: CustomText(
                                           'Delete this Location',
                                         fontWeight: FontWeight.w500,
@@ -679,10 +794,13 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                                   TextButton(
                                     onPressed: () {
                                       Get.back();
-                                      String newAddress = widget.address ?? '';
-                                   //   String newAddress = googleController.locationList[index];
-                                      double? newLatitude = widget.latitude;
-                                      double? newLongitude = widget.longitude;
+                                      // String newAddress = widget.address ?? '';
+                                      // double? newLatitude = widget.latitude;
+                                      // double? newLongitude = widget.longitude;
+                                      String newAddress = address ?? '';
+                                      double? newLatitude = latitude;
+                                      double? newLongitude = longitude;
+
                                        Get.dialog(
                                            AlertDialog(
                                             title: const CustomText(
@@ -691,6 +809,7 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                                             ),
                                             content: CommonTextField(
                                               initialValue: newAddress,
+
                                               onChange: (value) {
                                                 newAddress = value;
                                               },
@@ -715,14 +834,26 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                                                           newLongitude = locations.first.longitude;
                                                         }
                                                         setState(() {
-                                                          widget.address = newAddress;
-                                                          widget.latitude = newLatitude;
-                                                          widget.longitude = newLongitude;
+                                                          // widget.address = newAddress;
+                                                          // widget.latitude = newLatitude;
+                                                          // widget.longitude = newLongitude;
+                                                          // googleController.locationList[index] = newAddress;
+                                                          address = newAddress;
+                                                          latitude = newLatitude;
+                                                         longitude = newLongitude;
+                                                          googleController.locationList[index] = newAddress;
                                                         });
-                                                        if (widget.address != null && widget.latitude != null && widget.longitude != null) {
-                                                          PrefServices.setValue('address', widget.address!);
-                                                          PrefServices.setValue('latitude', widget.latitude!);
-                                                          PrefServices.setValue('longitude', widget.longitude!);
+                                                        // if (widget.address != null && widget.latitude != null && widget.longitude != null) {
+                                                        //   PrefServices.setValue('address', widget.address!);
+                                                        //   PrefServices.setValue('latitude', widget.latitude!);
+                                                        //   PrefServices.setValue('longitude', widget.longitude!);
+                                                        //   await PrefServices.setValue('locationList', googleController.locationList);
+                                                        // }
+                                                        if (address != null && latitude != null && longitude != null) {
+                                                          PrefServices.setValue('address', address!);
+                                                          PrefServices.setValue('latitude', latitude!);
+                                                          PrefServices.setValue('longitude', longitude!);
+                                                          await PrefServices.setValue('locationList', googleController.locationList);
                                                         }
                                                         Get.back();
                                                       },
@@ -791,14 +922,19 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                   const Divider(),
                   TextButton(
                       onPressed: () {
+                        int index = 0;
                         googleController.clearLocationList();
                         sunriseSunsetController.clearLocationData();
                         _clearData();
                         sunriseSunsetController.weather.value = null;
-                        widget.latitude = 0;
-                        widget.longitude = 0;
-                        widget.address = '';
-                        setState(() {});
+                        // widget.latitude = 0;
+                        // widget.longitude = 0;
+                        // widget.address = '';
+                        latitude = 0;
+                        longitude = 0;
+                       address = '';
+                        setState(() {
+                        });
                         Get.back(result: false);
                       },
                       child:  const CustomText(
@@ -919,9 +1055,4 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
       ),
     );
   }
-
-
-
-
-
 }

@@ -25,6 +25,8 @@ class MyApp extends StatelessWidget {
     return ScreenUtilInit(
       designSize:  Size(375, 812),
       child: GetMaterialApp(
+        locale: const Locale("en_US"),
+        fallbackLocale: const Locale('en_US'),
         title: 'Flutter Demo',
         home: WelcomeScreen(),
         debugShowCheckedModeBanner: false,

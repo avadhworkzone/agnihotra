@@ -7,6 +7,7 @@ import 'package:sunrise_app/common_Widget/common_text.dart';
 import 'package:sunrise_app/utils/color_utils.dart';
 import 'package:sunrise_app/utils/image_utils.dart';
 import 'package:sunrise_app/utils/string_utils.dart';
+import 'package:sunrise_app/view/sunrise_sunset_screen/sunrise_sunset_screen.dart';
 import 'package:sunrise_app/viewModel/google_map_controller.dart';
 
 class MapDemo extends StatefulWidget {
@@ -25,6 +26,16 @@ class _MapDemoState extends State<MapDemo> {
   final GoogleController googleController = Get.find<GoogleController>();
 
   @override
+  void initState() {
+    super.initState();
+    if (widget.latitude != null && widget.longitude != null) {
+      // Add marker for provided latitude and longitude
+      LatLng latLng = LatLng(widget.latitude!, widget.longitude!);
+      googleController.onAddMarkerButtonPressed(latLng);
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Obx(
@@ -41,7 +52,8 @@ class _MapDemoState extends State<MapDemo> {
                     child: GoogleMap(
                       onMapCreated: googleController.onMapCreated,
                       initialCameraPosition: CameraPosition(
-                        target: googleController.lastMapPosition.value ?? const LatLng(0.0, 0.0),
+                       // target: googleController.lastMapPosition.value ?? const LatLng(0.0, 0.0),
+                        target: LatLng(widget.latitude ?? 0.0, widget.longitude ?? 0.0),
                         zoom: 11.0,
                       ),
                       mapType: googleController.currentMapType.value,
@@ -102,12 +114,20 @@ class _MapDemoState extends State<MapDemo> {
                               begin: AlignmentDirectional.topEnd,
                               end: AlignmentDirectional.bottomEnd,
                             ),
-                            onTap: () {
+                            onTap: () async {
                               googleController.onLocationData(
                                 widget.address ?? googleController.address.value,
                                 widget.latitude ?? googleController.lastMapPosition.value!.latitude,
                                 widget.longitude ?? googleController.lastMapPosition.value!.longitude,
                               );
+                              // Get.offAll(
+                              //   SunriseSunetScreen(
+                              //     latitude: googleController.lastMapPosition.value!.latitude,
+                              //     longitude: googleController.lastMapPosition.value!.longitude,
+                              //     address: googleController.address.value,
+                              //     value: true,
+                              //   ),
+                              // );
                             },
                             title: StringUtils.mapTxt,
                             fontSize: 15.sp,

@@ -140,7 +140,7 @@ class _MantraMenuScreenState extends State<MantraMenuScreen> {
                     trailing: Container(
                       height: 40.h,
                       width: 40.w,
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                         shape: BoxShape.circle,
                         gradient: LinearGradient(
                           colors: [
@@ -153,7 +153,7 @@ class _MantraMenuScreenState extends State<MantraMenuScreen> {
                       ),
                       child: IconButton(
                           onPressed: () {
-                            Get.off(MantraScreen());
+                          //  Get.off(MantraScreen());
                           },
                           icon:Icon(
                             AssetUtils.forwardArrowIcon,

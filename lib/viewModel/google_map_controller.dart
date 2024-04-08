@@ -1,5 +1,3 @@
-
-
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -28,6 +26,7 @@ class GoogleController extends GetxController {
   RxString address = ''.obs;
   RxString searchAddress = ''.obs;
   RxBool isLoad = false.obs;
+  RxBool result = true.obs;
 
   RxList<String> searchResultAddresses = <String>[].obs;
   RxList<double> searchResultLatitudes = <double>[].obs;
@@ -61,8 +60,13 @@ class GoogleController extends GetxController {
           currentPosition.latitude,
           currentPosition.longitude,
         );
-        moveCameraToLocation(lastMapPosition.value!);
-        onAddMarkerButtonPressed(lastMapPosition.value!);
+       await moveCameraToLocation(lastMapPosition.value!,12.0);
+       await onAddMarkerButtonPressed(lastMapPosition.value!);
+        markers.forEach((marker) {
+          print('Marker position: ${marker.position}');
+          // You can print other properties of the marker if needed
+        });
+       update();
       } else {
         print("User denied location permission");
       }
@@ -71,7 +75,10 @@ class GoogleController extends GetxController {
     }
   }
 
+
+
   Future<String> onAddMarkerButtonPressed(LatLng latLng) async {
+    print('===========>$markers');
     markers.clear();
     markers.add(
       Marker(
@@ -83,7 +90,7 @@ class GoogleController extends GetxController {
         },
       ),
     );
-    moveCameraToLocation(latLng);
+    moveCameraToLocation(latLng,12.0);
     try {
       List<Placemark> placeMarks = await placemarkFromCoordinates(latLng.latitude, latLng.longitude);
 
@@ -169,7 +176,7 @@ class GoogleController extends GetxController {
         searchResultLatitudes.add(location.latitude);
         searchResultLongitudes.add(location.longitude);
 
-        moveCameraToLocation(LatLng(location.latitude, location.longitude));
+        moveCameraToLocation(LatLng(location.latitude, location.longitude),12.0);
         markers.add(
           Marker(
             markerId: MarkerId(location.toString()),
@@ -212,10 +219,10 @@ class GoogleController extends GetxController {
     suggestions.clear();
   }
 
-  moveCameraToLocation(LatLng location) async {
+  moveCameraToLocation(LatLng location,double zoom) async {
     GoogleMapController controller = await _controller.future;
     controller.animateCamera(
-      CameraUpdate.newLatLngZoom(location, 12.0),
+      CameraUpdate.newLatLngZoom(location, zoom),
     );
   }
 
@@ -245,13 +252,15 @@ class GoogleController extends GetxController {
     address = addr.obs;
     print("=======>$address");
     locationList.add(address.value);
+    print('======LocationList=========>$locationList');
     await PrefServices.setValue('locationList', locationList);
     Get.offAll(
       SunriseSunetScreen(
         latitude: lati,
         longitude: long,
         address: address.value,
-        value: false,
+       // value: false,
+        value: true,
       ),
     );
   }

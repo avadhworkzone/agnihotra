@@ -65,6 +65,7 @@ class StringUtils {
   static const agnihotraMantraTxt= 'Agnihotra mantra';
   static const sunriseSunsetMantraTxt= '(sunrise & sunset mantra)';
   static const tilakSandhyaMantraTxt= 'Trikal sandhya mantra';
+  static const locationSetTxt= 'Location not set,click on icon!';
 
 
 
