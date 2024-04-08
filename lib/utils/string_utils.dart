@@ -66,6 +66,10 @@ class StringUtils {
   static const sunriseSunsetMantraTxt= '(sunrise & sunset mantra)';
   static const tilakSandhyaMantraTxt= 'Trikal sandhya mantra';
 
-
+  /// trikal sandhya mantra
+  static const trikalMantraTxt= 'Trikal Sandhya Mantra';
+  static const mantra24= '24 mantra';
+  static const trikalSandhya= '।। त्रिकाल संध्यावदनम् ।।';
+  static const guruPrathna = 'गुरूप्रार्थना';
 
 }

@@ -34,29 +34,31 @@ class _MantraScreenState extends State<MantraScreen> {
           Padding(
             padding:EdgeInsets.only(top: 50.h),
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Padding(
                   padding:EdgeInsets.only(left: 12.w),
                   child: CircleAvatar(
                     backgroundColor: ColorUtils.white,
-                    radius: 23.r,
+                    radius: 18.r,
                     child: IconButton(
                       onPressed: () {
                         Get.off(SunriseSunetScreen());
                       },
-                      icon: const Icon(
+                      icon:  Icon(
+                        size: 20.w,
                         AssetUtils.backArrowIcon,
                         color: ColorUtils.orange,
                       ),
                     ),
                   ),
                 ),
-                SizedBox(width: 70.w,),
                 CustomText(
                   StringUtils.agnihotraMantraTxt,
                   fontWeight: FontWeight.w500,
                   fontSize: 18.sp,
                 ),
+                SizedBox(width: 12.w)
               ],
             ),
           ),
