@@ -5,8 +5,10 @@ import 'package:sunrise_app/common_Widget/common_text.dart';
 import 'package:sunrise_app/utils/color_utils.dart';
 import 'package:sunrise_app/utils/image_utils.dart';
 import 'package:sunrise_app/utils/string_utils.dart';
-import 'package:sunrise_app/view/mantra_screen/mantra_screen.dart';
+import 'package:sunrise_app/view/mantra_menu_screen/mantra_screen.dart';
 import 'package:sunrise_app/view/sunrise_sunset_screen/sunrise_sunset_screen.dart';
+
+import 'trikal_sandhya_mantra_screen.dart';
 
 class MantraMenuScreen extends StatefulWidget {
   const MantraMenuScreen({Key? key}) : super(key: key);
@@ -86,7 +88,7 @@ class _MantraMenuScreenState extends State<MantraMenuScreen> {
                    trailing: Container(
                      height: 40.h,
                      width: 40.w,
-                     decoration: BoxDecoration(
+                     decoration: const BoxDecoration(
                        shape: BoxShape.circle,
                        gradient: LinearGradient(
                          colors: [
@@ -99,9 +101,9 @@ class _MantraMenuScreenState extends State<MantraMenuScreen> {
                      ),
                      child: IconButton(
                          onPressed: () {
-                           Get.off(MantraScreen());
+                           Get.off(const MantraScreen());
                          },
-                         icon:Icon(
+                         icon:const Icon(
                            AssetUtils.forwardArrowIcon,
                            color: ColorUtils.white,
                          )
@@ -153,9 +155,11 @@ class _MantraMenuScreenState extends State<MantraMenuScreen> {
                       ),
                       child: IconButton(
                           onPressed: () {
+                            Get.to(()=>const TrikalSandhyaMantra());
+                            // Get.off(MantraScreen());
                           //  Get.off(MantraScreen());
                           },
-                          icon:Icon(
+                          icon:const Icon(
                             AssetUtils.forwardArrowIcon,
                             color: ColorUtils.white,
                           )

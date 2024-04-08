@@ -13,7 +13,7 @@ import 'package:sunrise_app/utils/string_utils.dart';
 import 'package:sunrise_app/view/enter_location_screen/enter_location_screen.dart';
 import 'package:sunrise_app/view/google_map_screen/google_map.dart';
 import 'package:sunrise_app/view/mantra_menu_screen/mantra_menu_screen.dart';
-import 'package:sunrise_app/view/mantra_screen/mantra_screen.dart';
+import 'package:sunrise_app/view/mantra_menu_screen/mantra_screen.dart';
 import 'package:sunrise_app/view/setting_screen/setting_screen.dart';
 import 'package:sunrise_app/viewModel/google_map_controller.dart';
 import 'package:sunrise_app/viewModel/sunrise_sunset_controller.dart';

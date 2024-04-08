@@ -67,6 +67,10 @@ class StringUtils {
   static const tilakSandhyaMantraTxt= 'Trikal sandhya mantra';
   static const locationSetTxt= 'Location not set,click on icon!';
 
-
+  /// trikal sandhya mantra
+  static const trikalMantraTxt= 'Trikal Sandhya Mantra';
+  static const mantra24= '24 mantra';
+  static const trikalSandhya= '।। त्रिकाल संध्यावदनम् ।।';
+  static const guruPrathna = 'गुरूप्रार्थना';
 
 }
