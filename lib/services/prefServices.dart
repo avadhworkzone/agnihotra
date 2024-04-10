@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -42,7 +44,6 @@ class PrefServices{
   static List<String> getStringList(String key){
     return _pref!.getStringList(key) ?? [];
   }
-
   static Future<void> removeValue(String key) async {
     await _pref!.remove(key);
   }

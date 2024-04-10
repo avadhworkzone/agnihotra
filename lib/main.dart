@@ -1,18 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:sunrise_app/localization/translations.dart';
 import 'package:sunrise_app/services/prefServices.dart';
+import 'package:sunrise_app/view/sunrise_sunset_screen/sunrise_sunset_screen.dart';
 import 'package:sunrise_app/view/welcome_screen/welcome_screen.dart';
 import 'package:sunrise_app/viewModel/enter_location_controller.dart';
 import 'package:sunrise_app/viewModel/google_map_controller.dart';
 import 'package:sunrise_app/viewModel/settings_controller.dart';
 import 'package:sunrise_app/viewModel/sunrise_sunset_controller.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await PrefServices.init();
+
+  // String savedLanguage = PrefServices.getString('language');
+  // Locale locale = savedLanguage.isNotEmpty ? Locale(savedLanguage) : Locale('en_US');
+  // Get.updateLocale(locale);
   runApp(MyApp());
 }
 
@@ -25,14 +33,26 @@ class MyApp extends StatelessWidget {
     return ScreenUtilInit(
       designSize:  Size(375, 812),
       child: GetMaterialApp(
+        translations: Translation(),
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
         locale: const Locale("en_US"),
         fallbackLocale: const Locale('en_US'),
-        title: 'Flutter Demo',
         home: WelcomeScreen(),
         debugShowCheckedModeBanner: false,
       ),
     );
   }
+  // Widget _getHomeWidget() {
+  //   String savedLanguage = PrefServices.getString('language');
+  //   if (savedLanguage.isNotEmpty) {
+  //     Locale locale = savedLanguage.isNotEmpty ? Locale(savedLanguage) : Locale('en_US');
+  //     Get.updateLocale(locale);
+  //     return SunriseSunetScreen(); // Navigate directly to SunriseSunsetScreen
+  //   } else {
+  //     return WelcomeScreen(); // Show WelcomeScreen if no language is selected
+  //   }
+  // }
   SunriseSunsetController sunriseSunsetController = Get.put(SunriseSunsetController());
   GoogleController googleController = Get.put(GoogleController());
   LocationController locationController = Get.put(LocationController());

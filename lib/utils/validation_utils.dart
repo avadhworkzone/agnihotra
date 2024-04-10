@@ -1,5 +1,3 @@
-import 'package:get/get.dart';
-
 class ValidationMsg{
   static String latitudeIsRequired = "Latitude is required";
   static String validLatitude = "Enter Valid Latitude";

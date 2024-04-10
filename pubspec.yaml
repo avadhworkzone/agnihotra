@@ -50,6 +50,9 @@ dependencies:
   fluttertoast: ^8.2.4
   worldtime: ^1.2.1
   flutter_localization: ^0.2.0
+  http: ^1.2.0
+
+
 
 
 
@@ -70,12 +73,12 @@ dev_dependencies:
 
 # The following section is specific to Flutter packages.
 flutter:
+  generate: true
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
-  generate: true
 
   # To add assets to your application, add an assets section, like this:
   # assets:

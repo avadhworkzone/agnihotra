@@ -4,6 +4,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:sunrise_app/common_Widget/common_button.dart';
 import 'package:sunrise_app/common_Widget/common_text.dart';
+import 'package:sunrise_app/services/prefServices.dart';
 import 'package:sunrise_app/utils/color_utils.dart';
 import 'package:sunrise_app/utils/image_utils.dart';
 import 'package:sunrise_app/utils/string_utils.dart';
@@ -19,6 +20,12 @@ class WelcomeScreen extends StatefulWidget {
 class _WelcomeScreenState extends State<WelcomeScreen> {
 
   String selectedValue = '';
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    selectedValue = PrefServices.getString('language');
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -106,7 +113,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         CustomText(
-                          StringUtils.hindiTxt,
+                          StringUtils.hinTxt,
                           fontSize: 14.sp,
                           fontWeight: FontWeight.w600,
                           color: ColorUtils.black,
@@ -117,6 +124,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                             onChanged:(value) {
                              setState(() {
                                selectedValue = value.toString();
+
                              });
                             },
                           fillColor: MaterialStateColor.resolveWith((states) => ColorUtils.orange),
@@ -146,7 +154,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         CustomText(
-                          StringUtils.englishTxt,
+                          StringUtils.engTxt,
                           fontSize: 14.sp,
                           fontWeight: FontWeight.w600,
                           color: ColorUtils.black,
@@ -157,6 +165,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                           onChanged:(value) {
                             setState(() {
                               selectedValue = value.toString();
+
                             });
                           },
                           fillColor: MaterialStateColor.resolveWith((states) => ColorUtils.orange),
@@ -186,7 +195,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         CustomText(
-                          StringUtils.gujaratiTxt,
+                          StringUtils.gujTxt,
                           fontSize: 14.sp,
                           fontWeight: FontWeight.w600,
                           color: ColorUtils.black,
@@ -197,6 +206,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                           onChanged:(value) {
                             setState(() {
                               selectedValue = value.toString();
+
                             });
                           },
                           fillColor: MaterialStateColor.resolveWith((states) => ColorUtils.orange),
@@ -220,8 +230,22 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                       begin: AlignmentDirectional.topEnd,
                       end: AlignmentDirectional.bottomEnd,
                     ),
-                    onTap: () {
+                    onTap: () async {
                      if(selectedValue.isNotEmpty){
+                       await PrefServices.setValue('language', selectedValue);
+                       switch(selectedValue){
+                         case 'Hindi':
+                           Get.updateLocale(Locale('hi'));
+                           break;
+                         case 'English':
+                           Get.updateLocale(Locale('en_US'));
+                           break;
+                         case 'Gujarati':
+                           Get.updateLocale(Locale('gu'));
+                           break;
+                         default :
+                           break;
+                       }
                      Get.off(SunriseSunetScreen());
                      }else{
                        Fluttertoast.showToast(
@@ -232,7 +256,6 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                            textColor: Colors.white,
                            fontSize: 16.0
                        );
-                       print("Please selected");
                      }
                     },
                     title: StringUtils.submitBtnTxt,

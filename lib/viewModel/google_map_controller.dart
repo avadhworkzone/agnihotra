@@ -37,9 +37,9 @@ class GoogleController extends GetxController {
 
   RxList<String> locationList = <String>[].obs;
   RxList<String> suggestions = <String>[].obs;
-
-
-
+  RxList<Map<String,dynamic>> locationLis = <Map<String,dynamic>>[].obs;
+  int _idCounter = 0;
+  int index = 0;
 
   @override
   Future<void> onInit() async {
@@ -62,11 +62,8 @@ class GoogleController extends GetxController {
         );
        await moveCameraToLocation(lastMapPosition.value!,12.0);
        await onAddMarkerButtonPressed(lastMapPosition.value!);
-        markers.forEach((marker) {
-          print('Marker position: ${marker.position}');
-          // You can print other properties of the marker if needed
-        });
-       update();
+        print('===========>$markers');
+        update();
       } else {
         print("User denied location permission");
       }
@@ -74,8 +71,6 @@ class GoogleController extends GetxController {
       print("Error getting current location: $e");
     }
   }
-
-
 
   Future<String> onAddMarkerButtonPressed(LatLng latLng) async {
     print('===========>$markers');
@@ -227,7 +222,7 @@ class GoogleController extends GetxController {
   }
 
   void clearLocationList() async {
-   locationList.clear();
+    locationList.clear();
     await PrefServices.setValue("locationList",locationList);
     print("===========$locationList");
     update();
@@ -248,10 +243,23 @@ class GoogleController extends GetxController {
     return await rootBundle.loadString(assetPath);
   }
 
+  String generateId() {
+    _idCounter++;
+    return 'ID_$_idCounter';
+  }
+
   onLocationData(String addr, double lati, double long) async {
     address = addr.obs;
     print("=======>$address");
-    locationList.add(address.value);
+    // List<Map<String,dynamic>>locationData = [
+    //   {
+    //     'id':generateId(),
+    //     'address':addr,
+    //   },
+    // ];
+    //print('=====>id========>${locationData[index]['id']}');
+     locationList.add(address.value);
+   // locationLis.addAll(locationData);
     print('======LocationList=========>$locationList');
     await PrefServices.setValue('locationList', locationList);
     Get.offAll(

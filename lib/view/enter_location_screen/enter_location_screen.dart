@@ -75,7 +75,7 @@ class _LocationScreenState extends State<LocationScreen> {
                           children: [
                             SizedBox(height: 50.h,),
                             CustomText(
-                              StringUtils.manualEntryTxt,
+                              StringUtils.manuallyEntryTxt,
                               fontSize: 19.sp,
                               fontWeight: FontWeight.w600,
                               color: ColorUtils.orange,
@@ -96,30 +96,30 @@ class _LocationScreenState extends State<LocationScreen> {
                               color: ColorUtils.black,
                               textAlign: TextAlign.center,
                             ),
-                            Padding(
-                              padding:EdgeInsets.only(left: 8.w),
-                              child: Row(
-                                children: [
-                                  Padding(
-                                    padding: EdgeInsets.only(top: 35.w),
-                                    child: CustomText(
-                                      StringUtils.longTxt,
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 15.sp,
-                                      color: ColorUtils.black,
-                                    ),
-                                  ),
-                                  SizedBox(width: 10.w,),
-                                  SizedBox(
-                                    width: 200.w,
-                                    child: CommonTextField(
-                                      validator: ValidationMethod.longitudeValidation,
-                                      textEditController: locationController.longitudeController,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
+                            // Padding(
+                            //   padding:EdgeInsets.only(left: 8.w),
+                            //   child: Row(
+                            //     children: [
+                            //       Padding(
+                            //         padding: EdgeInsets.only(top: 35.w),
+                            //         child: CustomText(
+                            //           StringUtils.longTxt,
+                            //           fontWeight: FontWeight.w600,
+                            //           fontSize: 15.sp,
+                            //           color: ColorUtils.black,
+                            //         ),
+                            //       ),
+                            //       SizedBox(width: 10.w,),
+                            //       SizedBox(
+                            //         width: 200.w,
+                            //         child: CommonTextField(
+                            //           validator: ValidationMethod.longitudeValidation,
+                            //           textEditController: locationController.longitudeController,
+                            //         ),
+                            //       ),
+                            //     ],
+                            //   ),
+                            // ),
                             Padding(
                               padding:EdgeInsets.only(left: 8.w),
                               child: Row(
@@ -140,6 +140,30 @@ class _LocationScreenState extends State<LocationScreen> {
                                     child: CommonTextField(
                                       validator: ValidationMethod.latitudeValidation,
                                       textEditController: locationController.latitudeController,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Padding(
+                              padding:EdgeInsets.only(left: 8.w),
+                              child: Row(
+                                children: [
+                                  Padding(
+                                    padding: EdgeInsets.only(top: 35.w),
+                                    child: CustomText(
+                                      StringUtils.longTxt,
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 15.sp,
+                                      color: ColorUtils.black,
+                                    ),
+                                  ),
+                                  SizedBox(width: 10.w,),
+                                  SizedBox(
+                                    width: 200.w,
+                                    child: CommonTextField(
+                                      validator: ValidationMethod.longitudeValidation,
+                                      textEditController: locationController.longitudeController,
                                     ),
                                   ),
                                 ],
