@@ -17,10 +17,6 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await PrefServices.init();
-
-  // String savedLanguage = PrefServices.getString('language');
-  // Locale locale = savedLanguage.isNotEmpty ? Locale(savedLanguage) : Locale('en_US');
-  // Get.updateLocale(locale);
   runApp(MyApp());
 }
 
@@ -30,6 +26,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+  //  bool isSelect = PrefServices.getBool('SelectedLanguage');
     return ScreenUtilInit(
       designSize:  Size(375, 812),
       child: GetMaterialApp(
@@ -38,21 +35,14 @@ class MyApp extends StatelessWidget {
         supportedLocales: AppLocalizations.supportedLocales,
         locale: const Locale("en_US"),
         fallbackLocale: const Locale('en_US'),
+       // home: isSelect?SunriseSunetScreen():WelcomeScreen(),
         home: WelcomeScreen(),
         debugShowCheckedModeBanner: false,
       ),
     );
   }
-  // Widget _getHomeWidget() {
-  //   String savedLanguage = PrefServices.getString('language');
-  //   if (savedLanguage.isNotEmpty) {
-  //     Locale locale = savedLanguage.isNotEmpty ? Locale(savedLanguage) : Locale('en_US');
-  //     Get.updateLocale(locale);
-  //     return SunriseSunetScreen(); // Navigate directly to SunriseSunsetScreen
-  //   } else {
-  //     return WelcomeScreen(); // Show WelcomeScreen if no language is selected
-  //   }
-  // }
+
+
   SunriseSunsetController sunriseSunsetController = Get.put(SunriseSunsetController());
   GoogleController googleController = Get.put(GoogleController());
   LocationController locationController = Get.put(LocationController());

@@ -18,7 +18,6 @@ class WelcomeScreen extends StatefulWidget {
 }
 
 class _WelcomeScreenState extends State<WelcomeScreen> {
-
   String selectedValue = '';
   @override
   void initState() {
@@ -247,11 +246,12 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                            break;
                        }
                      Get.off(SunriseSunetScreen());
+                       await PrefServices.setValue('SelectedLanguage', true);
+
                      }else{
                        Fluttertoast.showToast(
                            msg: "Please Selected Language",
                            toastLength: Toast.LENGTH_SHORT,
-                          // gravity: ToastGravity.CENTER,
                            timeInSecForIosWeb: 1,
                            textColor: Colors.white,
                            fontSize: 16.0

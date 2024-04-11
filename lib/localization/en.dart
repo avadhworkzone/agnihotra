@@ -75,6 +75,7 @@ Map<String,String> en= {
   "validLatitude":"Enter Valid Latitude",
   "longitudeIsRequired":"Longitude is required",
   "validLongitude":"Enter Valid Latitude",
+  "searchText":"Search"
 
 
 };

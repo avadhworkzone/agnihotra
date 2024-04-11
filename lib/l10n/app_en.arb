@@ -73,6 +73,7 @@
    "latitudeIsRequired":"Latitude is required",
    "validLatitude":"Enter Valid Latitude",
    "longitudeIsRequired":"Longitude is required",
-   "validLongitude":"Enter Valid Latitude"
+   "validLongitude":"Enter Valid Latitude",
+   "searchText":"Search"
 
 }

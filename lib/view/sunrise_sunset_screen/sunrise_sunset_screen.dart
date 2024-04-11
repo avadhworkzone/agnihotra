@@ -140,7 +140,6 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
       }
     });
     selectedValue = PrefServices.getString('language');
-
   }
 
   Future<void> _loadAddress() async {
@@ -520,578 +519,580 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                 ),
               ),
             ),
-            Column(
-              children: [
-                SizedBox(
-                  height: 70.h,
-                ),
-                Padding(
-                  padding: EdgeInsets.only(left: 10.w, right: 10.w),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      //  MANTRA TXT
-                      InkWell(
-                        onTap: () {
-                          Get.to(const MantraMenuScreen());
-                        },
-                        child: Container(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 8.w, vertical: 10.h),
-                          decoration: BoxDecoration(
-                            color: ColorUtils.white,
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(24.r)),
-                          ),
-                          child: Row(
-                            children: [
-                              Image.asset(
-                                AssetUtils.mantraImages,
-                              ),
-                              // LocalAssets(
-                              //     imagePath: AssetUtils.mantraImages,
-                              // ),
-                              SizedBox(
-                                width: 8.w,
-                              ),
-                              CustomText(
-                                StringUtils.mantraTxt,
-                                fontSize: 11.sp,
-                                fontWeight: FontWeight.w500,
-                                color: ColorUtils.black,
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      // MENU ICON
-                      InkWell(
-                        onTap: () {
-                          _scaffoldKey.currentState?.openEndDrawer();
-                        },
-                        child: CircleAvatar(
-                          radius: 17.r,
-                          backgroundColor: ColorUtils.white,
-                          child: Icon(
-                            AssetUtils.menuIcon,
-                            color: ColorUtils.orange,
+            SingleChildScrollView(
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: 70.h,
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(left: 10.w, right: 10.w),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        //  MANTRA TXT
+                        InkWell(
+                          onTap: () {
+                            Get.to(const MantraMenuScreen());
+                          },
+                          child: Container(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 8.w, vertical: 10.h),
+                            decoration: BoxDecoration(
+                              color: ColorUtils.white,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(24.r)),
+                            ),
+                            child: Row(
+                              children: [
+                                Image.asset(
+                                  AssetUtils.mantraImages,
+                                ),
+                                // LocalAssets(
+                                //     imagePath: AssetUtils.mantraImages,
+                                // ),
+                                SizedBox(
+                                  width: 8.w,
+                                ),
+                                CustomText(
+                                  StringUtils.mantraTxt,
+                                  fontSize: 11.sp,
+                                  fontWeight: FontWeight.w500,
+                                  color: ColorUtils.black,
+                                ),
+                              ],
+                            ),
                           ),
                         ),
-                      ),
-                    ],
+                        // MENU ICON
+                        InkWell(
+                          onTap: () {
+                            _scaffoldKey.currentState?.openEndDrawer();
+                          },
+                          child: CircleAvatar(
+                            radius: 17.r,
+                            backgroundColor: ColorUtils.white,
+                            child: Icon(
+                              AssetUtils.menuIcon,
+                              color: ColorUtils.orange,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-                SizedBox(
-                  height: 25.h,
-                ),
-                // CALENDAR ICON
-                const CircleAvatar(
-                  backgroundColor: ColorUtils.white,
-                  child: Icon(
-                    AssetUtils.calendarIcon,
-                    color: ColorUtils.orange,
+                  SizedBox(
+                    height: 25.h,
                   ),
-                ),
-                SizedBox(
-                  height: 10.h,
-                ),
-                // DATE
-                CustomText(
-                  sunriseSunsetController.formattedDate,
-                  fontWeight: FontWeight.w500,
-                  fontSize: 20.sp,
-                ),
-                SizedBox(
-                  height: 10.h,
-                ),
-                // TIME
-                Container(
-                  padding:
-                      EdgeInsets.symmetric(horizontal: 18.w, vertical: 5.h),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(6.r)),
-                    border: Border.all(color: ColorUtils.borderColor),
-                    boxShadow: [
-                      BoxShadow(
-                        color: ColorUtils.white,
-                        blurRadius: 200.w,
-                      )
-                    ],
+                  // CALENDAR ICON
+                  const CircleAvatar(
+                    backgroundColor: ColorUtils.white,
+                    child: Icon(
+                      AssetUtils.calendarIcon,
+                      color: ColorUtils.orange,
+                    ),
                   ),
-                  child: CustomText(
-                    sunriseSunsetController.formattedTime,
+                  SizedBox(
+                    height: 10.h,
+                  ),
+                  // DATE
+                  CustomText(
+                    sunriseSunsetController.formattedDate,
                     fontWeight: FontWeight.w500,
                     fontSize: 20.sp,
                   ),
-                ),
-                SizedBox(
-                  height: 90.h,
-                ),
-                 Obx(() =>Row(
-                   mainAxisAlignment: MainAxisAlignment.center,
-                   children: [
-                     // SUNRISE
-                     Stack(
-                       children: [
-                         Padding(
-                           padding: EdgeInsets.only(top: 23.h),
-                           child: Container(
-                             height: 79.13.h,
-                             width: 137.53.w,
-                             alignment: Alignment.center,
-                             decoration: BoxDecoration(
-                               borderRadius:
-                               BorderRadius.all(Radius.circular(6.r)),
-                               border: Border.all(
-                                 color: ColorUtils.borderColor,
-                               ),
-                               boxShadow: [
-                                 BoxShadow(
-                                   color: ColorUtils.white,
-                                   blurRadius: 300.w,
-                                 )
-                               ],
-                             ),
-                             child: Padding(
-                               padding: EdgeInsets.only(top: 25.h),
-                               child:
-                               sunriseSunsetController.isLoad.value
-                                   ? CircularProgressIndicator(
-                                 color: ColorUtils.white,
-                               )
-                                   :
-
-                               CustomText(
-                                 sunriseSunsetController.sunrise.value,
-                                 fontWeight: FontWeight.w500,
-                                 fontSize: 20.sp,
-                               ),
-
-
-                             ),
-                           ),
-                         ),
-                         Positioned(
-                           left: 40.w,
-                           child: CircleAvatar(
-                             backgroundColor: ColorUtils.white,
-                             radius: 27.r,
-                             child: LocalAssets(
-                                 imagePath: AssetUtils.sunriseImages),
-                           ),
-                         ),
-                       ],
-                     ),
-                     SizedBox(
-                       width: 20.w,
-                     ),
-                     // SUNSET
-                     Stack(
-                       children: [
-                         Padding(
-                           padding: EdgeInsets.only(top: 23.h),
-                           child: Container(
-                             height: 79.13.h,
-                             width: 137.53.w,
-                             alignment: Alignment.center,
-                             decoration: BoxDecoration(
-                               borderRadius:
-                               BorderRadius.all(Radius.circular(6.r)),
-                               border: Border.all(
-                                 color: ColorUtils.borderColor,
-                               ),
-                               boxShadow: [
-                                 BoxShadow(
-                                   color: ColorUtils.white,
-                                   blurRadius: 200.w,
-                                 )
-                               ],
-                             ),
-                             child: Padding(
-                               padding: EdgeInsets.only(top: 25.h),
-                               child:
-                               sunriseSunsetController.isLoad.value
-                                   ? CircularProgressIndicator(
-                                 color: ColorUtils.white,
-                               )
-                                   :
-
-                               CustomText(
-                                 sunriseSunsetController.sunset.value,
-                                 fontWeight: FontWeight.w500,
-                                 fontSize: 20.sp,
-                               ),
-
-                             ),
-                           ),
-                         ),
-                         Positioned(
-                           left: 40.w,
-                           child: CircleAvatar(
-                             backgroundColor: ColorUtils.white,
-                             radius: 27.r,
-                             child: LocalAssets(
-                               imagePath: AssetUtils.sunsetImages,
-                             ),
-                           ),
-                         ),
-                       ],
-                     ),
-                   ],
-                 ), ),
-
-                SizedBox(
-                  height: 130.h,
-                ),
-                // ADD LOCATION
-                Stack(
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.only(top: 23.h),
-                      child: Container(
-                        // height: 63.93.h,
-                        width: 287.83.w,
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                            color: ColorUtils.white,
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(52.r)),
-                            border: Border.all(
-                              color: ColorUtils.borderColor,
-                            )),
-                        child: Column(
-                          children: [
-                            Padding(
-                              padding: EdgeInsets.only(
-                                  left: 20.w, right: 20.w, top: 30.h),
-                              child: CustomText(
-                                formatAddress(),
-                                textAlign: TextAlign.center,
-                                color: ColorUtils.black,
-                              ),
-                            ),
-                            if (latitude != null &&
-                                longitude != null &&
-                                (latitude != 0 || longitude != 0))
-                              Padding(
-                                padding:
-                                    EdgeInsets.only(left: 20.w, right: 20.w),
-                                child: CustomText(
-                                  '(${formateLatitudeLongitude(latitude!)}, ${formateLatitudeLongitude(longitude!)})',
-                                  color: ColorUtils.black,
-                                ),
-                              ),
-                            // if (widget.latitude != null && widget.longitude != null &&
-                            //     (widget.latitude != 0 || widget.longitude != 0))
-                            //   Padding(
-                            //     padding: EdgeInsets.only(left: 20.w, right: 20.w),
-                            //     child: CustomText(
-                            //       '(${formateLatitudeLongitude(widget.latitude!)}, '
-                            //           '${formateLatitudeLongitude(widget.longitude!)})',
-                            //       color: ColorUtils.black,
-                            //     ),
-                            //   ),
-                            SizedBox(
-                              height: 10.h,
-                            ),
-                          ],
-                        ),
-                      ),
+                  SizedBox(
+                    height: 10.h,
+                  ),
+                  // TIME
+                  Container(
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 18.w, vertical: 5.h),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(6.r)),
+                      border: Border.all(color: ColorUtils.borderColor),
+                      boxShadow: [
+                        BoxShadow(
+                          color: ColorUtils.white,
+                          blurRadius: 200.w,
+                        )
+                      ],
                     ),
-                    Positioned(
-                      left: 120.w,
-                      child: InkWell(
-                        onTap: () {
-                          // Get.dialog(
-                          //   AlertDialog(
-                          //     title: SizedBox(
-                          //       height: googleController.locationList.isNotEmpty?null:80.h,
-                          //       child: Column(
-                          //         children: [
-                          //           googleController.locationList.isNotEmpty
-                          //               ? Column(
-                          //             crossAxisAlignment: CrossAxisAlignment.start,
-                          //             children: [
-                          //               SizedBox(
-                          //                 height: 150.h,
-                          //                 child: ListView.builder(
-                          //                   itemCount: googleController.locationList.length,
-                          //                   itemBuilder: (context, index) {
-                          //                     return CustomText(
-                          //                       googleController.locationList[index],
-                          //                       color: ColorUtils.black,
-                          //                     );
-                          //                   },
-                          //                 ),
-                          //               ),
-                          //               SizedBox(
-                          //                 height: 10.h,
-                          //               ),
-                          //               const Divider(),
-                          //               InkWell(
-                          //                 onTap: () {
-                          //                   googleController.clearLocationList();
-                          //                   sunriseSunsetController.clearLocationData();
-                          //                   _clearData();
-                          //                   sunriseSunsetController.weather.value = null;
-                          //                   widget.latitude = 0;
-                          //                   widget.longitude = 0;
-                          //                   widget.address = '';
-                          //                   setState(() {});
-                          //                   Get.back(result: false);
-                          //                 },
-                          //                 child: const CustomText(
-                          //                   'Delete All Location',
-                          //                   color: ColorUtils.black,
-                          //                 ),
-                          //               ),
-                          //               SizedBox(
-                          //                 height: 10.h,
-                          //               ),
-                          //               const Divider(),
-                          //               InkWell(
-                          //                 onTap: () {
-                          //                   Get.back();
-                          //                   Get.dialog(
-                          //                     AlertDialog(
-                          //                       title: SizedBox(
-                          //                         height: 100.h,
-                          //                         child: Column(
-                          //                           children: [
-                          //                             InkWell(
-                          //                               onTap: () {
-                          //                                 Get.off( MapDemo());
-                          //                               },
-                          //                               child: const CustomText(
-                          //                                 StringUtils.usgMapTxt,
-                          //                                 color: ColorUtils.black,
-                          //                               ),
-                          //                             ),
-                          //                             SizedBox(
-                          //                               height: 20.h,
-                          //                             ),
-                          //                             InkWell(
-                          //                               onTap: () {
-                          //                                 // sunriseSunsetController.isLoad.value = true;
-                          //                                 Get.off(const LocationScreen());
-                          //                                 // sunriseSunsetController.isLoad.value = true;
-                          //                               },
-                          //                               child:const CustomText(
-                          //                                 StringUtils.usgManuallyTxt,
-                          //                                 color: ColorUtils.black,
-                          //                               ),
-                          //                             ),
-                          //                           ],
-                          //                         ),
-                          //                       ),
-                          //                     ),
-                          //                   );
-                          //                 },
-                          //                 child: const CustomText(
-                          //                   'Add Location',
-                          //                   color: ColorUtils.black,
-                          //                 ),
-                          //               ),
-                          //             ],
-                          //           )
-                          //               : Column(
-                          //             crossAxisAlignment: CrossAxisAlignment.start,
-                          //             children: [
-                          //               InkWell(
-                          //                 onTap: () {
-                          //                   Get.off( MapDemo());
-                          //                 },
-                          //                 child: const CustomText(
-                          //                   StringUtils.usgMapTxt,
-                          //                   color: ColorUtils.black,
-                          //                 ),
-                          //               ),
-                          //               SizedBox(height: 10.h,),
-                          //               const Divider(),
-                          //               SizedBox(height: 10.h,),
-                          //               InkWell(
-                          //                 onTap: () {
-                          //                   //sunriseSunsetController.isLoad.value = true;
-                          //                   Get.off(const LocationScreen());
-                          //                   // sunriseSunsetController.isLoad.value = false;
-                          //
-                          //                 },
-                          //                 child:const CustomText(
-                          //                   StringUtils.usgManuallyTxt,
-                          //                   color: ColorUtils.black,
-                          //                 ),
-                          //               ),
-                          //
-                          //             ],
-                          //           ),
-                          //         ],
-                          //       ),
-                          //     ),
-                          //   ),
-                          // );
-                          _showLocationDialog();
-                        },
+                    child: CustomText(
+                      sunriseSunsetController.formattedTime,
+                      fontWeight: FontWeight.w500,
+                      fontSize: 20.sp,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 90.h,
+                  ),
+                   Obx(() =>Row(
+                     mainAxisAlignment: MainAxisAlignment.center,
+                     children: [
+                       // SUNRISE
+                       Stack(
+                         children: [
+                           Padding(
+                             padding: EdgeInsets.only(top: 23.h),
+                             child: Container(
+                               height: 79.13.h,
+                               width: 137.53.w,
+                               alignment: Alignment.center,
+                               decoration: BoxDecoration(
+                                 borderRadius:
+                                 BorderRadius.all(Radius.circular(6.r)),
+                                 border: Border.all(
+                                   color: ColorUtils.borderColor,
+                                 ),
+                                 boxShadow: [
+                                   BoxShadow(
+                                     color: ColorUtils.white,
+                                     blurRadius: 300.w,
+                                   )
+                                 ],
+                               ),
+                               child: Padding(
+                                 padding: EdgeInsets.only(top: 25.h),
+                                 child:
+                                 sunriseSunsetController.isLoad.value
+                                     ? CircularProgressIndicator(
+                                   color: ColorUtils.white,
+                                 )
+                                     :
+
+                                 CustomText(
+                                   sunriseSunsetController.sunrise.value,
+                                   fontWeight: FontWeight.w500,
+                                   fontSize: 20.sp,
+                                 ),
+
+
+                               ),
+                             ),
+                           ),
+                           Positioned(
+                             left: 40.w,
+                             child: CircleAvatar(
+                               backgroundColor: ColorUtils.white,
+                               radius: 27.r,
+                               child: LocalAssets(
+                                   imagePath: AssetUtils.sunriseImages),
+                             ),
+                           ),
+                         ],
+                       ),
+                       SizedBox(
+                         width: 20.w,
+                       ),
+                       // SUNSET
+                       Stack(
+                         children: [
+                           Padding(
+                             padding: EdgeInsets.only(top: 23.h),
+                             child: Container(
+                               height: 79.13.h,
+                               width: 137.53.w,
+                               alignment: Alignment.center,
+                               decoration: BoxDecoration(
+                                 borderRadius:
+                                 BorderRadius.all(Radius.circular(6.r)),
+                                 border: Border.all(
+                                   color: ColorUtils.borderColor,
+                                 ),
+                                 boxShadow: [
+                                   BoxShadow(
+                                     color: ColorUtils.white,
+                                     blurRadius: 200.w,
+                                   )
+                                 ],
+                               ),
+                               child: Padding(
+                                 padding: EdgeInsets.only(top: 25.h),
+                                 child:
+                                 sunriseSunsetController.isLoad.value
+                                     ? CircularProgressIndicator(
+                                   color: ColorUtils.white,
+                                 )
+                                     :
+
+                                 CustomText(
+                                   sunriseSunsetController.sunset.value,
+                                   fontWeight: FontWeight.w500,
+                                   fontSize: 20.sp,
+                                 ),
+
+                               ),
+                             ),
+                           ),
+                           Positioned(
+                             left: 40.w,
+                             child: CircleAvatar(
+                               backgroundColor: ColorUtils.white,
+                               radius: 27.r,
+                               child: LocalAssets(
+                                 imagePath: AssetUtils.sunsetImages,
+                               ),
+                             ),
+                           ),
+                         ],
+                       ),
+                     ],
+                   ), ),
+
+                  SizedBox(
+                    height: 130.h,
+                  ),
+                  // ADD LOCATION
+                  Stack(
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(top: 23.h),
                         child: Container(
-                          width: 50.29.w,
-                          height: 50.29.h,
-                          decoration: const BoxDecoration(
-                            gradient: LinearGradient(
-                              colors: [
-                                ColorUtils.gridentColor1,
-                                ColorUtils.gridentColor2,
-                              ],
-                              begin: AlignmentDirectional.topEnd,
-                              end: AlignmentDirectional.bottomEnd,
-                            ),
-                            shape: BoxShape.circle,
-                          ),
-                          child: Icon(
-                            AssetUtils.locationIcon,
-                            color: ColorUtils.white,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                //EDIT LOCATION
-                IconButton(
-                  onPressed: () {
-                    int index = 0;
-                    Get.dialog(
-                      AlertDialog(
-                        title: SizedBox(
-                          height: 120.h,
+                          // height: 63.93.h,
+                          width: 287.83.w,
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                              color: ColorUtils.white,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(52.r)),
+                              border: Border.all(
+                                color: ColorUtils.borderColor,
+                              )),
                           child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              TextButton(
-                                onPressed: () async {
-                                  // Delete this Location button pressed
-                                  await _clearData(); // Clear stored data
-                                  sunriseSunsetController
-                                      .clearLocationData(); // Clear location data in the controller
-                                  setState(() {
-                                    address = ''; // Clear the address
-                                    latitude = 0; // Clear the latitude
-                                    longitude = 0; // Clear the longitude
-                                    googleController.locationList.removeAt(index);
-                                  });
-                                  Get.back(); // Close the dialog
-                                },
+                              Padding(
+                                padding: EdgeInsets.only(
+                                    left: 20.w, right: 20.w, top: 30.h),
                                 child: CustomText(
-                                StringUtils.deleteLocationBtnTxt,
-                                  fontWeight: FontWeight.w500,
+                                  formatAddress(),
+                                  textAlign: TextAlign.center,
                                   color: ColorUtils.black,
                                 ),
                               ),
-                              Divider(),
-                              TextButton(
-                                onPressed: () {
-                                  Get.back();
-                                  // String newAddress = widget.address ?? '';
-                                  // double? newLatitude = widget.latitude;
-                                  // double? newLongitude = widget.longitude;
-                                  String newAddress = address ?? '';
-                                  double? newLatitude = latitude;
-                                  double? newLongitude = longitude;
-
-                                  Get.dialog(AlertDialog(
-                                    title: const CustomText(
-                                      StringUtils.enterLocationTxt,
-                                      color: ColorUtils.black,
-                                    ),
-                                    content: CommonTextField(
-                                      initialValue: newAddress,
-                                      onChange: (value) {
-                                        newAddress = value;
-                                      },
-                                    ),
-                                    actions: [
-                                      Row(
-                                        children: [
-                                          TextButton(
-                                            onPressed: () {
-                                              Get.back();
-                                            },
-                                            child: CustomText(
-                                              StringUtils.cancleTxt,
-                                              color: ColorUtils.black,
-                                            ),
-                                          ),
-                                          TextButton(
-                                              onPressed: () async {
-                                                List locations =
-                                                    await locationFromAddress(
-                                                        newAddress);
-                                                if (locations.isNotEmpty) {
-                                                  newLatitude =
-                                                      locations.first.latitude;
-                                                  newLongitude =
-                                                      locations.first.longitude;
-                                                }
-                                                setState(() {
-                                                  // widget.address = newAddress;
-                                                  // widget.latitude = newLatitude;
-                                                  // widget.longitude = newLongitude;
-                                                  // googleController.locationList[index] = newAddress;
-                                                  address = newAddress;
-                                                  latitude = newLatitude;
-                                                  longitude = newLongitude;
-                                                  googleController
-                                                          .locationList[index] =
-                                                      newAddress;
-                                                });
-                                                // if (widget.address != null && widget.latitude != null && widget.longitude != null) {
-                                                //   PrefServices.setValue('address', widget.address!);
-                                                //   PrefServices.setValue('latitude', widget.latitude!);
-                                                //   PrefServices.setValue('longitude', widget.longitude!);
-                                                //   await PrefServices.setValue('locationList', googleController.locationList);
-                                                // }
-                                                if (address != null &&
-                                                    latitude != null &&
-                                                    longitude != null) {
-                                                  PrefServices.setValue(
-                                                      'address', address!);
-                                                  PrefServices.setValue(
-                                                      'latitude', latitude!);
-                                                  PrefServices.setValue(
-                                                      'longitude', longitude!);
-                                                  await PrefServices.setValue(
-                                                      'locationList',
-                                                      googleController
-                                                          .locationList);
-                                                }
-                                                Get.back();
-                                              },
-                                              child: CustomText(
-                                                StringUtils.renameLocationBtnTxt,
-                                                color: ColorUtils.black,
-                                              )),
-                                        ],
-                                      ),
-                                    ],
-                                  ));
-                                },
-                                child: CustomText(
-                                  StringUtils.renameLocationTxt,
-                                  fontWeight: FontWeight.w500,
-                                  color: ColorUtils.black,
+                              if (latitude != null &&
+                                  longitude != null &&
+                                  (latitude != 0 || longitude != 0))
+                                Padding(
+                                  padding:
+                                      EdgeInsets.only(left: 20.w, right: 20.w),
+                                  child: CustomText(
+                                    '(${formateLatitudeLongitude(latitude!)}, ${formateLatitudeLongitude(longitude!)})',
+                                    color: ColorUtils.black,
+                                  ),
                                 ),
+                              // if (widget.latitude != null && widget.longitude != null &&
+                              //     (widget.latitude != 0 || widget.longitude != 0))
+                              //   Padding(
+                              //     padding: EdgeInsets.only(left: 20.w, right: 20.w),
+                              //     child: CustomText(
+                              //       '(${formateLatitudeLongitude(widget.latitude!)}, '
+                              //           '${formateLatitudeLongitude(widget.longitude!)})',
+                              //       color: ColorUtils.black,
+                              //     ),
+                              //   ),
+                              SizedBox(
+                                height: 10.h,
                               ),
                             ],
                           ),
                         ),
                       ),
-                    );
-                  },
-                  icon: Icon(
-                    AssetUtils.seetingIcon,
-                    size: 25.sp,
-                    color: ColorUtils.white,
+                      Positioned(
+                        left: 120.w,
+                        child: InkWell(
+                          onTap: () {
+                            // Get.dialog(
+                            //   AlertDialog(
+                            //     title: SizedBox(
+                            //       height: googleController.locationList.isNotEmpty?null:80.h,
+                            //       child: Column(
+                            //         children: [
+                            //           googleController.locationList.isNotEmpty
+                            //               ? Column(
+                            //             crossAxisAlignment: CrossAxisAlignment.start,
+                            //             children: [
+                            //               SizedBox(
+                            //                 height: 150.h,
+                            //                 child: ListView.builder(
+                            //                   itemCount: googleController.locationList.length,
+                            //                   itemBuilder: (context, index) {
+                            //                     return CustomText(
+                            //                       googleController.locationList[index],
+                            //                       color: ColorUtils.black,
+                            //                     );
+                            //                   },
+                            //                 ),
+                            //               ),
+                            //               SizedBox(
+                            //                 height: 10.h,
+                            //               ),
+                            //               const Divider(),
+                            //               InkWell(
+                            //                 onTap: () {
+                            //                   googleController.clearLocationList();
+                            //                   sunriseSunsetController.clearLocationData();
+                            //                   _clearData();
+                            //                   sunriseSunsetController.weather.value = null;
+                            //                   widget.latitude = 0;
+                            //                   widget.longitude = 0;
+                            //                   widget.address = '';
+                            //                   setState(() {});
+                            //                   Get.back(result: false);
+                            //                 },
+                            //                 child: const CustomText(
+                            //                   'Delete All Location',
+                            //                   color: ColorUtils.black,
+                            //                 ),
+                            //               ),
+                            //               SizedBox(
+                            //                 height: 10.h,
+                            //               ),
+                            //               const Divider(),
+                            //               InkWell(
+                            //                 onTap: () {
+                            //                   Get.back();
+                            //                   Get.dialog(
+                            //                     AlertDialog(
+                            //                       title: SizedBox(
+                            //                         height: 100.h,
+                            //                         child: Column(
+                            //                           children: [
+                            //                             InkWell(
+                            //                               onTap: () {
+                            //                                 Get.off( MapDemo());
+                            //                               },
+                            //                               child: const CustomText(
+                            //                                 StringUtils.usgMapTxt,
+                            //                                 color: ColorUtils.black,
+                            //                               ),
+                            //                             ),
+                            //                             SizedBox(
+                            //                               height: 20.h,
+                            //                             ),
+                            //                             InkWell(
+                            //                               onTap: () {
+                            //                                 // sunriseSunsetController.isLoad.value = true;
+                            //                                 Get.off(const LocationScreen());
+                            //                                 // sunriseSunsetController.isLoad.value = true;
+                            //                               },
+                            //                               child:const CustomText(
+                            //                                 StringUtils.usgManuallyTxt,
+                            //                                 color: ColorUtils.black,
+                            //                               ),
+                            //                             ),
+                            //                           ],
+                            //                         ),
+                            //                       ),
+                            //                     ),
+                            //                   );
+                            //                 },
+                            //                 child: const CustomText(
+                            //                   'Add Location',
+                            //                   color: ColorUtils.black,
+                            //                 ),
+                            //               ),
+                            //             ],
+                            //           )
+                            //               : Column(
+                            //             crossAxisAlignment: CrossAxisAlignment.start,
+                            //             children: [
+                            //               InkWell(
+                            //                 onTap: () {
+                            //                   Get.off( MapDemo());
+                            //                 },
+                            //                 child: const CustomText(
+                            //                   StringUtils.usgMapTxt,
+                            //                   color: ColorUtils.black,
+                            //                 ),
+                            //               ),
+                            //               SizedBox(height: 10.h,),
+                            //               const Divider(),
+                            //               SizedBox(height: 10.h,),
+                            //               InkWell(
+                            //                 onTap: () {
+                            //                   //sunriseSunsetController.isLoad.value = true;
+                            //                   Get.off(const LocationScreen());
+                            //                   // sunriseSunsetController.isLoad.value = false;
+                            //
+                            //                 },
+                            //                 child:const CustomText(
+                            //                   StringUtils.usgManuallyTxt,
+                            //                   color: ColorUtils.black,
+                            //                 ),
+                            //               ),
+                            //
+                            //             ],
+                            //           ),
+                            //         ],
+                            //       ),
+                            //     ),
+                            //   ),
+                            // );
+                            _showLocationDialog();
+                          },
+                          child: Container(
+                            width: 50.29.w,
+                            height: 50.29.h,
+                            decoration: const BoxDecoration(
+                              gradient: LinearGradient(
+                                colors: [
+                                  ColorUtils.gridentColor1,
+                                  ColorUtils.gridentColor2,
+                                ],
+                                begin: AlignmentDirectional.topEnd,
+                                end: AlignmentDirectional.bottomEnd,
+                              ),
+                              shape: BoxShape.circle,
+                            ),
+                            child: Icon(
+                              AssetUtils.locationIcon,
+                              color: ColorUtils.white,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
-                ),
-              ],
+                  //EDIT LOCATION
+                  IconButton(
+                    onPressed: () {
+                      int index = 0;
+                      Get.dialog(
+                        AlertDialog(
+                          title: SizedBox(
+                            height: 120.h,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                TextButton(
+                                  onPressed: () async {
+                                    // Delete this Location button pressed
+                                    await _clearData(); // Clear stored data
+                                    sunriseSunsetController
+                                        .clearLocationData(); // Clear location data in the controller
+                                    setState(() {
+                                      address = ''; // Clear the address
+                                      latitude = 0; // Clear the latitude
+                                      longitude = 0; // Clear the longitude
+                                      googleController.locationList.removeAt(index);
+                                    });
+                                    Get.back(); // Close the dialog
+                                  },
+                                  child: CustomText(
+                                  StringUtils.deleteLocationBtnTxt,
+                                    fontWeight: FontWeight.w500,
+                                    color: ColorUtils.black,
+                                  ),
+                                ),
+                                Divider(),
+                                TextButton(
+                                  onPressed: () {
+                                    Get.back();
+                                    // String newAddress = widget.address ?? '';
+                                    // double? newLatitude = widget.latitude;
+                                    // double? newLongitude = widget.longitude;
+                                    String newAddress = address ?? '';
+                                    double? newLatitude = latitude;
+                                    double? newLongitude = longitude;
+
+                                    Get.dialog(AlertDialog(
+                                      title: const CustomText(
+                                        StringUtils.enterLocationTxt,
+                                        color: ColorUtils.black,
+                                      ),
+                                      content: CommonTextField(
+                                        initialValue: newAddress,
+                                        onChange: (value) {
+                                          newAddress = value;
+                                        },
+                                      ),
+                                      actions: [
+                                        Row(
+                                          children: [
+                                            TextButton(
+                                              onPressed: () {
+                                                Get.back();
+                                              },
+                                              child: CustomText(
+                                                StringUtils.cancleTxt,
+                                                color: ColorUtils.black,
+                                              ),
+                                            ),
+                                            TextButton(
+                                                onPressed: () async {
+                                                  List locations =
+                                                      await locationFromAddress(
+                                                          newAddress);
+                                                  if (locations.isNotEmpty) {
+                                                    newLatitude =
+                                                        locations.first.latitude;
+                                                    newLongitude =
+                                                        locations.first.longitude;
+                                                  }
+                                                  setState(() {
+                                                    // widget.address = newAddress;
+                                                    // widget.latitude = newLatitude;
+                                                    // widget.longitude = newLongitude;
+                                                    // googleController.locationList[index] = newAddress;
+                                                    address = newAddress;
+                                                    latitude = newLatitude;
+                                                    longitude = newLongitude;
+                                                    googleController
+                                                            .locationList[index] =
+                                                        newAddress;
+                                                  });
+                                                  // if (widget.address != null && widget.latitude != null && widget.longitude != null) {
+                                                  //   PrefServices.setValue('address', widget.address!);
+                                                  //   PrefServices.setValue('latitude', widget.latitude!);
+                                                  //   PrefServices.setValue('longitude', widget.longitude!);
+                                                  //   await PrefServices.setValue('locationList', googleController.locationList);
+                                                  // }
+                                                  if (address != null &&
+                                                      latitude != null &&
+                                                      longitude != null) {
+                                                    PrefServices.setValue(
+                                                        'address', address!);
+                                                    PrefServices.setValue(
+                                                        'latitude', latitude!);
+                                                    PrefServices.setValue(
+                                                        'longitude', longitude!);
+                                                    await PrefServices.setValue(
+                                                        'locationList',
+                                                        googleController
+                                                            .locationList);
+                                                  }
+                                                  Get.back();
+                                                },
+                                                child: CustomText(
+                                                  StringUtils.renameLocationBtnTxt,
+                                                  color: ColorUtils.black,
+                                                )),
+                                          ],
+                                        ),
+                                      ],
+                                    ));
+                                  },
+                                  child: CustomText(
+                                    StringUtils.renameLocationTxt,
+                                    fontWeight: FontWeight.w500,
+                                    color: ColorUtils.black,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      );
+                    },
+                    icon: Icon(
+                      AssetUtils.seetingIcon,
+                      size: 25.sp,
+                      color: ColorUtils.white,
+                    ),
+                  ),
+                ],
+              ),
             ),
           ],
         )

@@ -75,6 +75,7 @@ Map<String,String> hi = {
   "validLatitude":"मान्य अक्षांश दर्ज करें",
   "longitudeIsRequired":"देशांतर आवश्यक है",
   "validLongitude":"मान्य अक्षांश दर्ज करें",
+  "searchText":"खोज"
 
 
 };

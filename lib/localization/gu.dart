@@ -74,6 +74,7 @@ Map<String,String> gu = {
   "validLatitude":"માન્ય અક્ષાંશ દાખલ કરો",
   "longitudeIsRequired":"રેખાંશ જરૂરી છે",
   "validLongitude":"માન્ય અક્ષાંશ દાખલ કરો",
+  "searchText":"શોધો"
 
 
 };

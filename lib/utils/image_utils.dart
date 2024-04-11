@@ -29,5 +29,6 @@ class AssetUtils{
   static const shareIcon = Icons.share;
   static const helpIcon = Icons.help;
   static const playIcon = Icons.play_arrow;
+  static const searchIcon = Icons.search;
 
 }
