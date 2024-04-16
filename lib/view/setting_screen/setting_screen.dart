@@ -36,6 +36,7 @@ class _SeetingScreenState extends State<SettingsScreen> {
     return Scaffold(
       body:Stack(
         children: [
+
           Container(
             decoration: BoxDecoration(
               image:DecorationImage(
@@ -307,9 +308,3 @@ class _SeetingScreenState extends State<SettingsScreen> {
     );
   }
 }
-
-
-
-
-
-
