@@ -1,3 +1,6 @@
+import 'dart:async';
+
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:sunrise_app/model/sunrise_sunset_model.dart';
@@ -8,52 +11,69 @@ import 'package:weather/weather.dart';
 class SunriseSunsetController extends GetxController {
   WeatherFactory? ws;
   Rx<Weather?> weather = Rx<Weather?>(null);
-  String formattedDate = DateFormat('dd MMMM yyyy').format(DateTime.now());
-  String formattedTime = DateFormat('HH:mm:ss').format(DateTime.now());
+  RxString currentTime = ''.obs;
+
+  late Rx<DateTime> selectedDate = DateTime.now().obs;
+
+  Future<void> selectDate(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: selectedDate.value,
+      firstDate: DateTime.now(),
+      lastDate: DateTime.now().add(const Duration(days: 1470)),
+      builder: (BuildContext context, Widget? child) {
+        return Theme(
+          data: ThemeData.light().copyWith(
+            colorScheme: const ColorScheme.light().copyWith(
+              primary: Colors.blue, // Adjust color as needed
+            ),
+          ),
+          child: child!,
+        );
+      },
+      selectableDayPredicate: (DateTime date) {
+        return true;
+      },
+    );
+
+    if (picked != null && picked != selectedDate.value) {
+      selectedDate.value = picked;
+    }
+  }
+
+  void updateTime() {
+    String formattedTime = DateFormat('HH:mm:ss').format(DateTime.now());
+    DateTime time = DateFormat.Hms().parse(formattedTime);
+    currentTime.value = DateFormat.jms().format(time);
+  }
+
   RxString sunrise = ''.obs;
   RxString sunset = ''.obs;
   RxBool isLoad = false.obs;
   SunriseSunsetModel? sunriseSunsetModel;
   RxString selectedValue = ''.obs;
 
-
   @override
   void onInit() async {
     super.onInit();
-    //ws = new WeatherFactory('da10025ef9d55e2bbbf4665cdbfaad73', language: Language.ENGLISH);
     sunrise.value = PrefServices.getString('sunrise');
     sunset.value = PrefServices.getString('sunset');
-    //fetchWeather;
     getSunriseSunsetTime;
   }
-  // Future<void> fetchWeather(double latitude, double longitude) async {
-  //   try {
-  //     isLoad.value = true;
-  //     Weather? newWeather = await ws!.currentWeatherByLocation(latitude, longitude);
-  //     if (newWeather != null) {
-  //       weather.value = newWeather; // Update weather data
-  //       sunrise.value = DateFormat('hh:mm:ss a').format(newWeather.sunrise?.toLocal() ?? DateTime.now());
-  //       sunset.value = DateFormat('hh:mm:ss a').format(newWeather.sunset?.toLocal() ?? DateTime.now());
-  //       PrefServices.setValue('sunrise', sunrise.value);
-  //       PrefServices.setValue('sunset', sunset.value);
-  //     }
-  //     isLoad.value = false;
-  //   } catch (e) {
-  //     print('Error fetching weather: $e');
-  //     isLoad.value = false;
-  //   }
-  // }
 
-  Future<void> getSunriseSunsetTime(double latitude,double longitude) async {
+
+
+  Future<void> getSunriseSunsetTime(double latitude, double longitude) async {
     isLoad.value = true;
     sunriseSunsetModel = await SunriseSunsetApi.getData(latitude, longitude);
-    sunrise.value =sunriseSunsetModel?.results.sunrise ?? '';
-    sunset.value =sunriseSunsetModel?.results.sunset ?? '';
+    sunrise.value = sunriseSunsetModel?.results.sunrise ?? '';
+    sunset.value = sunriseSunsetModel?.results.sunset ?? '';
     PrefServices.setValue('sunrise', sunrise.value);
     PrefServices.setValue('sunset', sunset.value);
     isLoad.value = false;
     update();
   }
+
   // Future<void> getSunriseSunsetTime(double latitude, double longitude) async {
   //   isLoad.value = true;
   //   try {

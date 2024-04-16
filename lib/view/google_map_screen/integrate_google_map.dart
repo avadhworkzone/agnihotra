@@ -14,8 +14,8 @@ import 'package:sunrise_app/utils/string_utils.dart';
 import 'package:sunrise_app/view/sunrise_sunset_screen/sunrise_sunset_screen.dart';
 import 'package:sunrise_app/viewModel/google_map_controller.dart';
 
-class MapDemo extends StatefulWidget {
-  MapDemo({Key? key, this.latitude, this.longitude, this.address})
+class IntegrateGoogleMap extends StatefulWidget {
+  IntegrateGoogleMap({Key? key, this.latitude, this.longitude, this.address})
       : super(key: key);
 
   double? latitude;
@@ -23,22 +23,25 @@ class MapDemo extends StatefulWidget {
   String? address;
 
   @override
-  State<MapDemo> createState() => _MapDemoState();
+  State<IntegrateGoogleMap> createState() => _IntegrateGoogleMapState();
 }
 const kGoogleApiKey = 'AIzaSyCotiIYalOfFMwIsvVPhwnFEGxPX-CtyYo';
 final homeScaffoldKey = GlobalKey<ScaffoldState>();
-class _MapDemoState extends State<MapDemo> {
+class _IntegrateGoogleMapState extends State<IntegrateGoogleMap> {
 
   final GoogleController googleController = Get.find<GoogleController>();
 
   @override
   void initState() {
     super.initState();
-    if (widget.latitude != null && widget.longitude != null) {
-      //Add marker for provided latitude and longitude
-      LatLng latLng = LatLng(widget.latitude!, widget.longitude!);
-      googleController.onAddMarkerButtonPressed(latLng);
-    }
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (widget.latitude != null && widget.longitude != null) {
+
+        LatLng latLng = LatLng(widget.latitude!, widget.longitude!);
+        googleController.onAddMarkerButtonPressed(latLng);
+      }
+    });
+
   }
 
   @override
@@ -46,34 +49,35 @@ class _MapDemoState extends State<MapDemo> {
     return Scaffold(
       body: Obx(
         () {
-          if (googleController.lastMapPosition == null) {
+          if (googleController.lastMapPosition == null){
             return const Center(child: CircularProgressIndicator());
           }
           return SingleChildScrollView(
-            physics: const NeverScrollableScrollPhysics(),
-            child: Column(
-              children: [
-                // SizedBox(height: 30.h,),
-                // Row(
-                //   children: [
-                //   Expanded(
-                //     child: ListTile(
-                //       onTap: () {
-                //         onSearch();
-                //       },
-                //       leading: Icon(
-                //         AssetUtils.searchIcon,
-                //       ),
-                //       title: CustomText(
-                //         StringUtils.searchText,
-                //         color: ColorUtils.black,
-                //       )
-                //     ),
-                //   ),
-                //   ],
-                // ),
+            physics : const NeverScrollableScrollPhysics(),
+            child : Column(
+              children : [
+                SizedBox(height: 30.h,),
+
+                Row(
+                  children: [
+                  Expanded(
+                    child: ListTile(
+                      onTap: () {
+                        onSearch();
+                      },
+                      leading: const Icon(
+                        AssetUtils.searchIcon,
+                      ),
+                      title: const CustomText(
+                        StringUtils.searchText,
+                        color: ColorUtils.black,
+                      )
+                    ),
+                  ),
+                  ],
+                ),
                 SizedBox(
-                  height: 500.h,
+                  height: Get.height/1.5,
                   child: GoogleMap(
                    onMapCreated: googleController.onMapCreated,
                     initialCameraPosition: CameraPosition(
@@ -95,6 +99,7 @@ class _MapDemoState extends State<MapDemo> {
                     },
                   ),
                 ),
+
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -124,34 +129,66 @@ class _MapDemoState extends State<MapDemo> {
                         color: ColorUtils.black,
                       ),
                     ),
+
                     SizedBox(
                       height: 20.h,
                     ),
-                    Padding(
-                      padding: EdgeInsets.only(left: 10.w,right: 200.w),
-                      child: CustomBtn(
-                        height: 50.h,
-                        gradient: const LinearGradient(
-                          colors: [
-                            ColorUtils.gridentColor1,
-                            ColorUtils.gridentColor2,
-                          ],
-                          begin: AlignmentDirectional.topEnd,
-                          end: AlignmentDirectional.bottomEnd,
+
+
+                    Row(
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.only(left: 5.w),
+                          child: CustomBtn(
+                            height: 45.h,
+                            width: 100.w,
+                            gradient: const LinearGradient(
+                              colors: [
+                                ColorUtils.gridentColor1,
+                                ColorUtils.gridentColor2,
+                              ],
+                              begin: AlignmentDirectional.topEnd,
+                              end: AlignmentDirectional.bottomEnd,
+                            ),
+                            onTap: () async {
+                              googleController.onLocationData(
+                                widget.address ?? googleController.address.value,
+                                widget.latitude ?? googleController.lastMapPosition.value!.latitude,
+                                widget.longitude ?? googleController.lastMapPosition.value!.longitude,
+                              );
+                            },
+                            title: StringUtils.selectTxt,
+                            fontSize: 15.sp,
+                          ),
                         ),
-                        onTap: () async {
-                          googleController.onLocationData(
-                            widget.address ?? googleController.address.value,
-                            widget.latitude ?? googleController.lastMapPosition.value!.latitude,
-                            widget.longitude ?? googleController.lastMapPosition.value!.longitude,
-                          );
-                        },
-                        title: StringUtils.mapTxt,
-                        fontSize: 15.sp,
-                      ),
+                        const Spacer(),
+
+                        Padding(
+                          padding: EdgeInsets.only(right: 5.w),
+                          child: CustomBtn(
+                            height: 45.h,
+                            width: 100.w,
+                            gradient: const LinearGradient(
+                              colors: [
+                                ColorUtils.gridentColor1,
+                                ColorUtils.gridentColor2,
+                              ],
+                              begin: AlignmentDirectional.topEnd,
+                              end: AlignmentDirectional.bottomEnd,
+                            ),
+                            onTap: ()  {
+
+                            },
+                            title: StringUtils.mapViewTxt,
+                            fontSize: 15.sp,
+                          ),
+                        ),
+                      ],
                     ),
+
                   ],
                 ),
+
               ],
             ),
           );
@@ -175,7 +212,7 @@ class _MapDemoState extends State<MapDemo> {
         hintText: "Search",
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(20),
-          borderSide: BorderSide(color: ColorUtils.white),
+          borderSide: const BorderSide(color: ColorUtils.white),
         ),
       ),
       components: [Component(Component.country, "in")],);
@@ -183,7 +220,6 @@ class _MapDemoState extends State<MapDemo> {
   }
 
   void onError(PlacesAutocompleteResponse response){
-    // homeScaffoldKey.currentState?.showSnackBar(SnackBar(content: Text(response.errorMessage!),));
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(response.errorMessage!)));
   }
 

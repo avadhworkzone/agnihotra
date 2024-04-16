@@ -52,7 +52,7 @@ dependencies:
   flutter_svg:
   google_maps_webservice: ^0.0.4
   google_api_headers:
-  share_plus:
+  share_plus: ^7.2.2
   gradient_icon: ^2.0.9
 
 

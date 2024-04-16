@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:sunrise_app/services/prefServices.dart';
-import 'package:sunrise_app/view/google_map_screen/google_map.dart';
+import 'package:sunrise_app/view/google_map_screen/integrate_google_map.dart';
 import 'package:sunrise_app/view/sunrise_sunset_screen/sunrise_sunset_screen.dart';
 import 'package:sunrise_app/viewModel/google_map_controller.dart';
 
@@ -105,7 +105,7 @@ class LocationController extends GetxController {
         googleController.onAddMarkerButtonPressed(latLng);
 
         Get.to(
-          MapDemo(
+          IntegrateGoogleMap(
             latitude: double.parse(latitude.value),
             longitude: double.parse(longitude.value),
             address: address.value,
