@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 import 'package:sunrise_app/common_Widget/common_assets.dart';
 import 'package:sunrise_app/common_Widget/common_button.dart';
 import 'package:sunrise_app/common_Widget/common_text.dart';
@@ -24,6 +23,7 @@ class SunriseSunetScreen extends StatefulWidget {
   double? longitude;
   String? address;
   bool? value;
+
 
 
   SunriseSunetScreen({Key? key, this.latitude, this.longitude, this.address, this.value}) : super(key: key) {
@@ -187,7 +187,6 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
 
   @override
   Widget build(BuildContext context) {
-
     if (latitude != null && longitude != null && (latitude != 0 || longitude != 0)) {
       sunriseSunsetController.getSunriseSunsetTime(latitude!, longitude!);
     }
@@ -551,22 +550,7 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                   ),
                   // CALENDAR ICON
                   InkWell(
-                    onTap: () async {
-                      // Show date picker and wait for user selection
-                      // DateTime? selectedDate = await showDatePicker(
-                      //   context: context,
-                      //   initialDate: DateTime.now(),
-                      //   firstDate: DateTime(2000),
-                      //   lastDate: DateTime.now().add(Duration(days: 365)), // Allow selecting dates up to a year from now
-                      // );
-                      //
-                      // if (selectedDate != null) {
-                      //   // Fetch sunrise and sunset times for the selected date
-                      //   double latitude = widget.latitude ?? 0.0;
-                      //   double longitude = widget.longitude ?? 0.0;
-                      //   sunriseSunsetController.getSunriseSunsetTime(latitude, longitude, selectedDate);
-                      // }
-                    },
+                    onTap: () async {},
                     child: const CircleAvatar(
                       backgroundColor: ColorUtils.white,
                       child: Icon(

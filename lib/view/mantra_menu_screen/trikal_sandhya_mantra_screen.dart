@@ -67,18 +67,19 @@ class _TrikalSandhyaMantraState extends State<TrikalSandhyaMantra> {
               ),
               Expanded(
                 child: Padding(
-                  padding: EdgeInsets.only(
-                      left: 10.w, right: 10.w, top: 10.h, bottom: 10.h),
+                  padding: EdgeInsets.only(left:10.w,right:10.w,top: 10.h, bottom: 10.h),
                   child: Container(
                     color: Colors.white,
                     width: Get.width,
                     child: SingleChildScrollView(
                       child: Column(
                         children: [
-                          CustomText(StringUtils.trikalSandhya,
+                          CustomText(
+                              StringUtils.trikalSandhya,
                               color: ColorUtils.black,
                               fontWeight: FontWeight.w600,
-                              fontSize: 13.sp),
+                              fontSize: 13.sp,
+                          ),
                           CustomBtn(
                             height: 35.h,
                             width: 110.w,
@@ -108,7 +109,7 @@ class _TrikalSandhyaMantraState extends State<TrikalSandhyaMantra> {
                           commonRowWidget(
                               number: '3',
                               firstTitle: 'आचमनम् ',
-                              secondTitle: '(Drink Water)',
+                              secondTitle: StringUtils.drinkWaterText,
                               fontWeight: FontWeight.w500),
                           Row(
                             children: [
@@ -125,7 +126,7 @@ class _TrikalSandhyaMantraState extends State<TrikalSandhyaMantra> {
                           commonRowWidget(
                               number: '4',
                               firstTitle: 'मार्जनम् ',
-                              secondTitle: '(Sprinkling Water on Head)',
+                              secondTitle: StringUtils.sprinklingWaterText,
                               fontWeight: FontWeight.w500),
                           Row(
                             children: [
@@ -153,7 +154,8 @@ class _TrikalSandhyaMantraState extends State<TrikalSandhyaMantra> {
                                           color: ColorUtils.black,
                                           fontWeight: FontWeight.w500,
                                           fontSize: 12.sp),
-                                      CustomText('(Touch the Head)',
+                                      CustomText(
+                                        StringUtils.headText,
                                           color: ColorUtils.black,
                                           fontWeight: FontWeight.w500,
                                           fontSize: 9.sp),
@@ -165,7 +167,8 @@ class _TrikalSandhyaMantraState extends State<TrikalSandhyaMantra> {
                                           color: ColorUtils.black,
                                           fontWeight: FontWeight.w500,
                                           fontSize: 12.sp),
-                                      CustomText('(Touch the Nose)',
+                                      CustomText(
+                                          StringUtils.noseText,
                                           color: ColorUtils.black,
                                           fontWeight: FontWeight.w500,
                                           fontSize: 9.sp),
@@ -177,21 +180,24 @@ class _TrikalSandhyaMantraState extends State<TrikalSandhyaMantra> {
                                           color: ColorUtils.black,
                                           fontWeight: FontWeight.w500,
                                           fontSize: 12.sp),
-                                      CustomText('(Touch the Heart)',
+                                      CustomText(
+                                          StringUtils.heartText,
                                           color: ColorUtils.black,
                                           fontWeight: FontWeight.w500,
                                           fontSize: 9.sp),
                                     ],
                                   ),
-                                  CustomText('प्राणायामे विनियोगः (5 Round)',
+                                  CustomText(
+                                    StringUtils.roundText,
                                       color: ColorUtils.orange,
                                       fontWeight: FontWeight.w600,
                                       fontSize: 13.sp),
                                   CustomText(
-                                      'ॐ भुः ॐ भुवः ॐ स्वः  ॐ महः ॐ जनः ॐ तपः ॐ सत्यं\nॐ तत्सवितुर् वरेण्यं भर्गो देवस्य धीमहि धियो यो नः प्रचोदयात्\nॐ आपो ज्योतिः रसोमृतं ब्रह्म भूर्भुवः स्वर् ॐ',
+                                      'ॐ भू ॐ भुवः ॐ स्वः  ॐ महः ॐ जनः ॐ तपः ॐ सत्यं\nॐ तत्सवितुर् वरेण्यं भर्गो देवस्य धीमहि धियो यो नः प्रचोदयात्\nॐ आपो ज्योतिः रसोमृतं ब्रह्म भूर्भुवः स्वर् ॐ',
                                       fontWeight: FontWeight.w500,
                                       fontSize: 12.sp,
-                                      color: ColorUtils.black)
+                                      color: ColorUtils.black,
+                                  )
                                 ],
                               )
                             ],
@@ -201,7 +207,7 @@ class _TrikalSandhyaMantraState extends State<TrikalSandhyaMantra> {
                               number: '6',
                               firstTitle: 'सङ्कल्पः ',
                               secondTitle:
-                                  '(Hands with sandwiched palms on right knee)',
+                                 StringUtils.handsText,
                               fontWeight: FontWeight.w500,
                               fontSize: 9.sp),
                           Row(
@@ -226,7 +232,7 @@ class _TrikalSandhyaMantraState extends State<TrikalSandhyaMantra> {
                           commonRowWidget(
                               number: '7',
                               firstTitle: 'मार्जनम् ',
-                              secondTitle: '(Sprinkling Water on Head) ',
+                              secondTitle: StringUtils.sprinklingWaterText,
                               fontWeight: FontWeight.w500,
                               fontSize: 9.sp),
                           Row(
@@ -237,7 +243,7 @@ class _TrikalSandhyaMantraState extends State<TrikalSandhyaMantra> {
                                 children: [
                                   commonRowWidget(
                                       secondTitle:
-                                          'ॐ आयो हिष्ठा मयोभुवः ता न ऊर्जे दधातन ।\nमहेरणाय चक्षसे ॥',
+                                          'ॐ आपो हिष्ठा मयोभुवः ता न ऊर्जे दधातन ।\nमहेरणाय चक्षसे ॥',
                                       fontSize: 12.sp,
                                       fontWeight: FontWeight.w500,
                                       verticalPadding: 0),
@@ -261,7 +267,7 @@ class _TrikalSandhyaMantraState extends State<TrikalSandhyaMantra> {
                           commonRowWidget(
                               number: '8',
                               firstTitle: 'अपः प्राशनम् ',
-                              secondTitle: ' (Water in right hand)',
+                              secondTitle:StringUtils.rightHandsText,
                               fontWeight: FontWeight.w500,
                               fontSize: 9.sp),
                           Row(
@@ -284,7 +290,7 @@ class _TrikalSandhyaMantraState extends State<TrikalSandhyaMantra> {
                                 children: [
                                   commonRowWidget(
                                       secondTitle:
-                                          'सूर्यश्च मा मन्युश्च मन्युपतयश्च मन्युकृतेभ्यः\nपापेभ्यों रक्षन्ताम् । यदात्र्या पापमकार्षम् ।।',
+                                          'सूर्यश्च मा मन्युश्च मन्युपतयश्च मन्युकृतेभ्यः\nपापेभ्यो रक्षन्ताम् । यदात्र्या पापमकार्षम् ।।',
                                       verticalPadding: 0,
                                       fontWeight: FontWeight.w500,
                                       fontSize: 12.sp,
@@ -298,7 +304,7 @@ class _TrikalSandhyaMantraState extends State<TrikalSandhyaMantra> {
                                       horizontalPadding: 0),
                                   commonRowWidget(
                                       secondTitle:
-                                          'रात्रिस्तदवलुम्पतु । यात्किञ्च दुरितम् मयि ।\nइदमहं मासमृत योनौ । सूर्ये ज्योतिषि जुहोमि स्वाहा ||',
+                                          'इदमहं मासमृत योनौ । सूर्ये ज्योतिषि जुहोमि स्वाहा ||',
                                       verticalPadding: 0,
                                       fontWeight: FontWeight.w500,
                                       fontSize: 12.sp,
@@ -389,7 +395,7 @@ class _TrikalSandhyaMantraState extends State<TrikalSandhyaMantra> {
                           commonRowWidget(
                               number: '9',
                               firstTitle: 'पुनर्मार्जनम् ',
-                              secondTitle: ' (Sprinkling water on Head)',
+                              secondTitle: StringUtils.sprinklingWaterText,
                               fontWeight: FontWeight.w500,
                               fontSize: 9.sp),
                           Row(
@@ -406,8 +412,8 @@ class _TrikalSandhyaMantraState extends State<TrikalSandhyaMantra> {
                           commonRowWidget(
                               number: '10',
                               firstTitle: 'अर्ध्य प्रदानम्  ',
-                              secondTitle: ' (3 time Gayatri Mantra)',
-                              thirdTitle: '(Water Oblations)',
+                              secondTitle: StringUtils.gayatriMantraText,
+                              thirdTitle: StringUtils.waterOblationText,
                               fontWeight: FontWeight.w500,
                               fontSize: 9.sp),
                           Row(
@@ -448,7 +454,7 @@ class _TrikalSandhyaMantraState extends State<TrikalSandhyaMantra> {
                           commonRowWidget(
                               number: '11',
                               firstTitle: 'गायत्री आवाहनम ',
-                              secondTitle: '(avahan mudra)',
+                              secondTitle:StringUtils.avahanMudraText,
                               fontWeight: FontWeight.w500,
                               fontSize: 9.sp),
                           Row(
@@ -461,7 +467,7 @@ class _TrikalSandhyaMantraState extends State<TrikalSandhyaMantra> {
                                 children: [
                                   commonRowWidget(
                                       secondTitle:
-                                          'आयातु वरदा देवी अक्षरं ब्रह्मसम्मितम् ।\nगायत्री छन्दसां माता इदं ब्रह्म जुषस्व नः ॥',
+                                          'आयातु वरदा देवी अक्षरं ब्रह्मसम्मितम् ।\nगायत्रीं  छन्दसां माता इदं ब्रह्म जुषस्व नः ॥',
                                       verticalPadding: 0,
                                       fontWeight: FontWeight.w500,
                                       fontSize: 12.sp,
@@ -476,7 +482,7 @@ class _TrikalSandhyaMantraState extends State<TrikalSandhyaMantra> {
                                   SizedBox(height: 5.h),
                                   commonRowWidget(
                                       secondTitle:
-                                          'गायत्री आवाहयामि\nसावित्रीं आवाहयामि ',
+                                          'गायत्रीं आवाहयामि\nसावित्रीं आवाहयामि ',
                                       verticalPadding: 0,
                                       fontWeight: FontWeight.w500,
                                       fontSize: 12.sp,
@@ -541,15 +547,15 @@ class _TrikalSandhyaMantraState extends State<TrikalSandhyaMantra> {
                                         color: ColorUtils.black,
                                       ),
                                       CustomText(
-                                        '(Touch the Head)',
+                                        StringUtils.headText,
                                         color: ColorUtils.black,
                                       ),
                                       CustomText(
-                                        '(Touch the Nose)',
+                                        StringUtils.noseText,
                                         color: ColorUtils.black,
                                       ),
                                       CustomText(
-                                        '(Touch the Heart)',
+                                        StringUtils.heartText,
                                         color: ColorUtils.black,
                                       ),
                                     ],
@@ -560,7 +566,7 @@ class _TrikalSandhyaMantraState extends State<TrikalSandhyaMantra> {
                                 padding:
                                     EdgeInsets.only(left: 15.w, right: 15.w),
                                 child: CustomText(
-                                  '(Meditate for Few Minutes, Start the gayatri japa and after that Meditate for some time)',
+                                 StringUtils.meditateText,
                                   color: ColorUtils.black,
                                   textAlign: TextAlign.center,
                                   fontWeight: FontWeight.w600,
@@ -577,7 +583,7 @@ class _TrikalSandhyaMantraState extends State<TrikalSandhyaMantra> {
                               fontSize: 9.sp),
                           commonRowWidget(
                               secondTitle:
-                                  '(Stand up, bow towards the four direction)',
+                                 StringUtils.directionText,
                               verticalPadding: 0,
                               fontWeight: FontWeight.w500,
                               fontSize: 12.sp,
@@ -591,39 +597,37 @@ class _TrikalSandhyaMantraState extends State<TrikalSandhyaMantra> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   commonRowWidget(
-                                      secondTitle: 'सन्ध्यायै नमः  - East',
+                                      secondTitle: StringUtils.eastText,
                                       verticalPadding: 0,
                                       fontWeight: FontWeight.w500,
                                       fontSize: 12.sp,
                                       horizontalPadding: 0),
                                   commonRowWidget(
-                                      secondTitle: 'सावित्रे नमः  - South',
+                                      secondTitle: StringUtils.southText,
                                       verticalPadding: 0,
                                       fontWeight: FontWeight.w500,
                                       fontSize: 12.sp,
                                       horizontalPadding: 0),
                                   commonRowWidget(
-                                      secondTitle: 'गायत्रै नमः  - West',
+                                      secondTitle: StringUtils.gaytrenamText,
                                       verticalPadding: 0,
                                       fontWeight: FontWeight.w500,
                                       fontSize: 12.sp,
                                       horizontalPadding: 0),
                                   commonRowWidget(
-                                      secondTitle: 'सरस्वत्यै नमः  - North',
+                                      secondTitle: StringUtils.sarswateyText,
                                       verticalPadding: 0,
                                       fontWeight: FontWeight.w500,
                                       fontSize: 12.sp,
                                       horizontalPadding: 0),
                                   commonRowWidget(
-                                      secondTitle:
-                                          'सर्वाभ्यो देवताभ्यो नमः  - East',
+                                      secondTitle:StringUtils.sarvabyaText,
                                       verticalPadding: 0,
                                       fontWeight: FontWeight.w500,
                                       fontSize: 12.sp,
                                       horizontalPadding: 0),
                                   commonRowWidget(
-                                      secondTitle:
-                                          'कामोकार्षीत मन्युकार्षीत नमो नमः   - East',
+                                      secondTitle: StringUtils.kamkarshitText,
                                       verticalPadding: 0,
                                       fontWeight: FontWeight.w500,
                                       fontSize: 12.sp,
@@ -668,7 +672,7 @@ class _TrikalSandhyaMantraState extends State<TrikalSandhyaMantra> {
                           commonRowWidget(
                               number: '15',
                               firstTitle: 'अग्न्याधानं ',
-                              secondTitle: '(Light the Fire)',
+                              secondTitle: StringUtils.fireText,
                               fontWeight: FontWeight.w500,
                               fontSize: 9.sp),
                           Row(
@@ -693,7 +697,7 @@ class _TrikalSandhyaMantraState extends State<TrikalSandhyaMantra> {
                           commonRowWidget(
                               number: '16',
                               firstTitle: ' जलप्रषेचनं  ',
-                              secondTitle: '(Pour Water in Following Directions)',
+                              secondTitle: StringUtils.pourWaterText,
                               fontWeight: FontWeight.w500,
                               fontSize: 9.sp),
                           Row(
@@ -728,7 +732,7 @@ class _TrikalSandhyaMantraState extends State<TrikalSandhyaMantra> {
                           commonRowWidget(
                               number: '17',
                               firstTitle: ' समिदाधानम्   ',
-                              secondTitle: '(Offer Samidha)',
+                              secondTitle: StringUtils.samidhaText,
                               fontWeight: FontWeight.w500,
                               fontSize: 9.sp),
                           Row(
@@ -761,7 +765,7 @@ class _TrikalSandhyaMantraState extends State<TrikalSandhyaMantra> {
                           commonRowWidget(
                               number: '18',
                               firstTitle: 'समिदाधानम  ',
-                              secondTitle: '(3/7/11 Times)',
+                              secondTitle: StringUtils.timeText,
                               fontWeight: FontWeight.w500,
                               fontSize: 9.sp),
                           Row(
@@ -780,7 +784,7 @@ class _TrikalSandhyaMantraState extends State<TrikalSandhyaMantra> {
                                       fontSize: 12.sp,
                                       horizontalPadding: 0),
                                   commonRowWidget(
-                                      secondTitle: '(1 Times)',
+                                      secondTitle: StringUtils.oneTimeText,
                                       verticalPadding: 0,
                                       fontWeight: FontWeight.w500,
                                       fontSize: 12.sp,
@@ -813,27 +817,21 @@ class _TrikalSandhyaMantraState extends State<TrikalSandhyaMantra> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
-                                  commonRowWidget(
-                                      secondTitle:
-                                          'ॐ अदितेन्वमंस्ताः ॥ (pronounce as : अदितेन्वमग्गुस्ताः)',
-                                      verticalPadding: 0,
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 12.sp,
-                                      horizontalPadding: 0),
-                                  commonRowWidget(
-                                      secondTitle:
-                                          'ॐ अनुमतेन्वमंस्ताः ॥ (pronounce as : अनुमतेन्वमग्गुस्ताः)',
-                                      verticalPadding: 0,
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 12.sp,
-                                      horizontalPadding: 0),
-                                  commonRowWidget(
-                                      secondTitle:
-                                          'ॐ सरस्वतेन्वमंस्ताः ||(pronounce as  : सरस्वतेन्वमग्गुस्ताः)',
-                                      verticalPadding: 0,
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 12.sp,
-                                      horizontalPadding: 0),
+                                  CustomText(
+                                    StringUtils.aditeText,
+                                    fontSize: 12.sp,
+                                    color: ColorUtils.black,
+                                  ),
+                                  CustomText(
+                                    StringUtils.anumatveText,
+                                    fontSize: 12.sp,
+                                    color: ColorUtils.black,
+                                  ),
+                                  CustomText(
+                                    StringUtils.sarswateProText,
+                                    fontSize: 12.sp,
+                                    color: ColorUtils.black,
+                                  ),
                                   commonRowWidget(
                                       secondTitle: 'ॐ देव सवितः प्रासावीः ॥',
                                       verticalPadding: 0,
@@ -937,7 +935,7 @@ class _TrikalSandhyaMantraState extends State<TrikalSandhyaMantra> {
                                           ),
                                         ),
                                         TextSpan(
-                                          text: '(SANDIP)',
+                                          text: 'SANDIP',
                                           style: TextStyle(
                                             decoration: TextDecoration.underline,
                                             color: ColorUtils.black,
@@ -964,7 +962,7 @@ class _TrikalSandhyaMantraState extends State<TrikalSandhyaMantra> {
                           commonRowWidget(
                               number: '22',
                               firstTitle: 'भस्म धारन',
-                              secondTitle: '(Apply Ashes)',
+                              secondTitle: StringUtils.applyText,
                               fontWeight: FontWeight.w500,
                               fontSize: 9.sp),
                           Row(
@@ -991,49 +989,49 @@ class _TrikalSandhyaMantraState extends State<TrikalSandhyaMantra> {
                                       horizontalPadding: 0),
                                   commonRowWidget(
                                       secondTitle:
-                                          'मेधावी भूयासम\t  On fore head(third eye)',
+                                          StringUtils.meghaviText,
                                       verticalPadding: 0,
                                       fontWeight: FontWeight.w500,
                                       fontSize: 12.sp,
                                       horizontalPadding: 0),
                                   commonRowWidget(
                                       secondTitle:
-                                          'तेजस्वी भूयासम् \t  On Chest (Heart region)',
+                                        StringUtils.tejasviText,
                                       verticalPadding: 0,
                                       fontWeight: FontWeight.w500,
                                       fontSize: 12.sp,
                                       horizontalPadding: 0),
                                   commonRowWidget(
                                       secondTitle:
-                                          'वर्चस्वी भूयासम् \t  Right Shoulder',
+                                        StringUtils.varchsviText,
                                       verticalPadding: 0,
                                       fontWeight: FontWeight.w500,
                                       fontSize: 12.sp,
                                       horizontalPadding: 0),
                                   commonRowWidget(
                                       secondTitle:
-                                          'ब्रह्मवर्चस्वी भूयासम\t Left Shoulder',
+                                          StringUtils.brhamsviText,
                                       verticalPadding: 0,
                                       fontWeight: FontWeight.w500,
                                       fontSize: 12.sp,
                                       horizontalPadding: 0),
                                   commonRowWidget(
                                       secondTitle:
-                                          'आयुष्यमान् भूयासम्\t Navel Region',
+                                        StringUtils.ayushyaText,
                                       verticalPadding: 0,
                                       fontWeight: FontWeight.w500,
                                       fontSize: 12.sp,
                                       horizontalPadding: 0),
                                   commonRowWidget(
                                       secondTitle:
-                                          'अन्नादो भूयासम्\t On Throat',
+                                          StringUtils.annadoText,
                                       verticalPadding: 0,
                                       fontWeight: FontWeight.w500,
                                       fontSize: 12.sp,
                                       horizontalPadding: 0),
                                   commonRowWidget(
                                       secondTitle:
-                                          'स्वस्ति भूयासम्\t Top of the head',
+                                         StringUtils.swstiText,
                                       verticalPadding: 0,
                                       fontWeight: FontWeight.w500,
                                       fontSize: 12.sp,
@@ -1157,13 +1155,14 @@ class _TrikalSandhyaMantraState extends State<TrikalSandhyaMantra> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
-                                  commonRowWidget(
-                                      secondTitle:
-                                          '(Surrendering all our actions thought & their results,\noffering water)',
-                                      verticalPadding: 0,
-                                      fontWeight: FontWeight.w500,
+                                  SizedBox(
+                                    width: 280.h,
+                                    child: CustomText(StringUtils.surrenderingText,
                                       fontSize: 12.sp,
-                                      horizontalPadding: 0),
+                                      color: ColorUtils.black,
+                                     // maxLines: 3,
+                                    ),
+                                  ),
                                   SizedBox(
                                     height: 10.h,
                                   ),
