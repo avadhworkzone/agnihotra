@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:geocoding/geocoding.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:sunrise_app/services/prefServices.dart';
 import 'package:sunrise_app/view/google_map_screen/google_map.dart';
 import 'package:sunrise_app/view/sunrise_sunset_screen/sunrise_sunset_screen.dart';
@@ -74,19 +75,6 @@ class LocationController extends GetxController {
       isLoad.value = false;
     }
   }
-  //
-  // void clearLocationList() {
-  //   googleController.locationList.clear();
-  //   print("location is deleted");
-  //   update();
-  // }
-
-  // void clearLocationList() async {
-  //   googleController.locationList.clear();
-  //   await PrefServices.setValue("locationList", googleController.locationList);
-  //   update();
-  // }
-
   void getLocationOnMap() async {
     try {
       if (validationFormKey.currentState!.validate()){
@@ -112,6 +100,10 @@ class LocationController extends GetxController {
         address.value = addressComponents.where((element) => element.isNotEmpty).join(', ');
         latitude.value = latitudeController.text;
         longitude.value = longitudeController.text;
+
+        LatLng latLng = LatLng(latData.value, lonData.value);
+        googleController.onAddMarkerButtonPressed(latLng);
+
         Get.to(
           MapDemo(
             latitude: double.parse(latitude.value),

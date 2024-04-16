@@ -28,6 +28,7 @@ class MapDemo extends StatefulWidget {
 const kGoogleApiKey = 'AIzaSyCotiIYalOfFMwIsvVPhwnFEGxPX-CtyYo';
 final homeScaffoldKey = GlobalKey<ScaffoldState>();
 class _MapDemoState extends State<MapDemo> {
+
   final GoogleController googleController = Get.find<GoogleController>();
 
   @override
@@ -49,43 +50,44 @@ class _MapDemoState extends State<MapDemo> {
             return const Center(child: CircularProgressIndicator());
           }
           return SingleChildScrollView(
-            physics: NeverScrollableScrollPhysics(),
+            physics: const NeverScrollableScrollPhysics(),
             child: Column(
               children: [
-                SizedBox(height: 30.h,),
-                Row(
-                  children: [
-                  Expanded(
-                    child: ListTile(
-                      onTap: () {
-                        onSearch();
-                      },
-                      leading: Icon(
-                        AssetUtils.searchIcon,
-                      ),
-                      title: CustomText(
-                        StringUtils.searchText,
-                        color: ColorUtils.black,
-                      )
-                    ),
-                  ),
-                  ],
-                ),
+                // SizedBox(height: 30.h,),
+                // Row(
+                //   children: [
+                //   Expanded(
+                //     child: ListTile(
+                //       onTap: () {
+                //         onSearch();
+                //       },
+                //       leading: Icon(
+                //         AssetUtils.searchIcon,
+                //       ),
+                //       title: CustomText(
+                //         StringUtils.searchText,
+                //         color: ColorUtils.black,
+                //       )
+                //     ),
+                //   ),
+                //   ],
+                // ),
                 SizedBox(
                   height: 500.h,
                   child: GoogleMap(
-                    onMapCreated: googleController.onMapCreated,
+                   onMapCreated: googleController.onMapCreated,
                     initialCameraPosition: CameraPosition(
-                     // target: googleController.lastMapPosition.value ?? const LatLng(0.0, 0.0),
-                      target: LatLng(widget.latitude ?? 0.0, widget.longitude ?? 0.0),
-                      zoom: 11.0,
+                    target: googleController.lastMapPosition.value ?? LatLng(widget.latitude ?? 0.0, widget.longitude ?? 0.0),
+                    // target: LatLng(widget.latitude ?? 0.0, widget.longitude ?? 0.0),
+                      zoom: 8.0,
                     ),
                     mapType: googleController.currentMapType.value,
                     markers: googleController.markers,
                     onCameraMove: googleController.onCameraMove,
                     onTap: (LatLng latLng) async {
                       await googleController.onAddMarkerButtonPressed(latLng);
-                      print('lastaddress===>${googleController.address}');
+                      print('========>lastaddress===>${googleController.address}');
+                      googleController.lastMapPosition.value = latLng;
                       widget.latitude  = googleController.lastMapPosition.value?.latitude;
                       widget.longitude = googleController.lastMapPosition.value?.longitude;
                       widget.address   = googleController.address.value;
@@ -143,14 +145,6 @@ class _MapDemoState extends State<MapDemo> {
                             widget.latitude ?? googleController.lastMapPosition.value!.latitude,
                             widget.longitude ?? googleController.lastMapPosition.value!.longitude,
                           );
-                          // Get.offAll(
-                          //   SunriseSunetScreen(
-                          //     latitude: googleController.lastMapPosition.value!.latitude,
-                          //     longitude: googleController.lastMapPosition.value!.longitude,
-                          //     address: googleController.address.value,
-                          //     value: true,
-                          //   ),
-                          // );
                         },
                         title: StringUtils.mapTxt,
                         fontSize: 15.sp,
@@ -165,6 +159,8 @@ class _MapDemoState extends State<MapDemo> {
       ),
     );
   }
+
+
   Future<void>onSearch()async{
 
     Prediction? p = await PlacesAutocomplete.show(

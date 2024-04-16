@@ -28,6 +28,8 @@ class CommonTextField extends StatelessWidget {
   final Color? titleColor;
   final List<TextInputFormatter>? inputFormatters;
   final String? Function(String?)? validator;
+  final TextAlignVertical? textAlignVertical;
+
 
   const CommonTextField({
     super.key,
@@ -51,7 +53,7 @@ class CommonTextField extends StatelessWidget {
     this.onChange,
     this.initialValue = '',
     this.obscureValue,
-    this.titleColor = ColorUtils.black,
+    this.titleColor = ColorUtils.black, this.textAlignVertical,
   });
 
   /// PLEASE IMPORT GET X PACKAGE
@@ -64,6 +66,7 @@ class CommonTextField extends StatelessWidget {
       children: [
         TextFormField(
           controller: textEditController,
+          textAlignVertical: textAlignVertical,
           style: TextStyle(
             color: ColorUtils.black,
             fontSize: 15,

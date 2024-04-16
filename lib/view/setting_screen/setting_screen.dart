@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:sunrise_app/common_Widget/common_button.dart';
 import 'package:sunrise_app/common_Widget/common_text.dart';
 import 'package:sunrise_app/utils/color_utils.dart';
 import 'package:sunrise_app/utils/image_utils.dart';
@@ -273,33 +274,24 @@ class _SeetingScreenState extends State<SettingsScreen> {
                           ),
                           SizedBox(height: 20.h,),
                           Center(
-                              child: InkWell(
-                                onTap: () {
-                                  print('object');
-                                },
-                                child: Container(
-                                  width: 100.98.w,
-                                  height: 50.47.h,
-                                  alignment: Alignment.center,
-                                  decoration: BoxDecoration(
-                                    gradient: const LinearGradient(
-                                      colors: [
-                                        ColorUtils.gridentColor1,
-                                        ColorUtils.gridentColor2,
-                                      ],
-                                      begin: AlignmentDirectional.topEnd,
-                                      end: AlignmentDirectional.bottomEnd,
-                                    ),
-                                    borderRadius: BorderRadius.all(Radius.circular(8.r)),
-                                  ),
-                                  child: CustomText(
-                                    StringUtils.resetBtnTxt,
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 18.sp,
-                                    color: ColorUtils.white,
-                                  ),
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 110.w),
+                              child: CustomBtn(
+                                height: 45.h,
+                                gradient: const LinearGradient(
+                                  colors: [
+                                    ColorUtils.gridentColor1,
+                                    ColorUtils.gridentColor2,
+                                  ],
+                                  begin: AlignmentDirectional.topEnd,
+                                  end: AlignmentDirectional.bottomEnd,
                                 ),
+                                onTap: () async {
+                                },
+                                title: StringUtils.resetBtnTxt,
+                                fontSize: 15.sp,
                               ),
+                            ),
                           ),
                           SizedBox(height: 10.h,),
                         ],

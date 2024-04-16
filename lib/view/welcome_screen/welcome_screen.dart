@@ -23,7 +23,6 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    selectedValue = PrefServices.getString('language');
   }
   @override
   Widget build(BuildContext context) {
@@ -48,7 +47,6 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                Center(
                  child: CustomText(
                      StringUtils.welcomeTxt,
-                    // color: Colors.white,
                      fontSize: 28.sp,
                      fontWeight: FontWeight.w600,
                    ),
@@ -123,7 +121,6 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                             onChanged:(value) {
                              setState(() {
                                selectedValue = value.toString();
-
                              });
                             },
                           fillColor: MaterialStateColor.resolveWith((states) => ColorUtils.orange),
@@ -141,7 +138,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                   height: 45.88.h,
                   width: Get.width,
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(27.r)),
+                    borderRadius: BorderRadius.all(Radius.circular(27.r),),
                     border: Border.all(
                       width: 1.5.w,
                       color: ColorUtils.borderColor,
@@ -231,23 +228,23 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                     ),
                     onTap: () async {
                      if(selectedValue.isNotEmpty){
-                       await PrefServices.setValue('language', selectedValue);
                        switch(selectedValue){
                          case 'Hindi':
-                           Get.updateLocale(Locale('hi'));
+                           Get.updateLocale(const Locale('hi'));
+                           await PrefServices.setValue('language', 'hi');
                            break;
                          case 'English':
-                           Get.updateLocale(Locale('en_US'));
+                           Get.updateLocale(const Locale('en_US'));
+                           await PrefServices.setValue('language', 'en_US');
                            break;
                          case 'Gujarati':
-                           Get.updateLocale(Locale('gu'));
+                           Get.updateLocale(const Locale('gu'));
+                           await PrefServices.setValue('language', 'gu');
                            break;
                          default :
                            break;
                        }
-                     Get.off(SunriseSunetScreen());
-                       await PrefServices.setValue('SelectedLanguage', true);
-
+                       Get.off(SunriseSunetScreen());
                      }else{
                        Fluttertoast.showToast(
                            msg: "Please Selected Language",

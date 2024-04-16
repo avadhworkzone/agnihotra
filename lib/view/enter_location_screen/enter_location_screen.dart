@@ -96,30 +96,6 @@ class _LocationScreenState extends State<LocationScreen> {
                               color: ColorUtils.black,
                               textAlign: TextAlign.center,
                             ),
-                            // Padding(
-                            //   padding:EdgeInsets.only(left: 8.w),
-                            //   child: Row(
-                            //     children: [
-                            //       Padding(
-                            //         padding: EdgeInsets.only(top: 35.w),
-                            //         child: CustomText(
-                            //           StringUtils.longTxt,
-                            //           fontWeight: FontWeight.w600,
-                            //           fontSize: 15.sp,
-                            //           color: ColorUtils.black,
-                            //         ),
-                            //       ),
-                            //       SizedBox(width: 10.w,),
-                            //       SizedBox(
-                            //         width: 200.w,
-                            //         child: CommonTextField(
-                            //           validator: ValidationMethod.longitudeValidation,
-                            //           textEditController: locationController.longitudeController,
-                            //         ),
-                            //       ),
-                            //     ],
-                            //   ),
-                            // ),
                             Padding(
                               padding:EdgeInsets.only(left: 8.w),
                               child: Row(
@@ -134,10 +110,10 @@ class _LocationScreenState extends State<LocationScreen> {
                                     ),
                                   ),
                                   SizedBox(width: 10.w,),
-
                                   SizedBox(
                                     width: 200.w,
                                     child: CommonTextField(
+                                      textAlignVertical: TextAlignVertical.bottom,
                                       validator: ValidationMethod.latitudeValidation,
                                       textEditController: locationController.latitudeController,
                                     ),
@@ -171,11 +147,12 @@ class _LocationScreenState extends State<LocationScreen> {
                             ),
                             SizedBox(height: 70.h,),
                             Obx((){
-                              return locationController.isLoad.value ? CircularProgressIndicator()
+                              return locationController.isLoad.value
+                                  ? const CircularProgressIndicator()
                                   : Padding(
-                                padding:  EdgeInsets.symmetric(horizontal: 80.w),
+                                padding:  EdgeInsets.symmetric(horizontal: 50.w),
                                 child: CustomBtn(
-                                  height: 50.h,
+                                  height: 45.h,
                                   gradient: const LinearGradient(
                                     colors: [
                                       ColorUtils.gridentColor1,
@@ -192,12 +169,10 @@ class _LocationScreenState extends State<LocationScreen> {
                                 ),
                               );
                             }),
-                            SizedBox(height: 10.h,),
-                            InkWell(
-                              onTap: () {
-                                print('object');
-                                locationController.getLocationOnMap();
-                              },
+                            TextButton(
+                                onPressed:() {
+                                  locationController.getLocationOnMap();
+                                },
                               child: CustomText(
                                 StringUtils.mapLocationUseTxt,
                                 fontWeight: FontWeight.w600,
@@ -217,151 +192,6 @@ class _LocationScreenState extends State<LocationScreen> {
           ],
         ),
       ),
-      // body: Center(
-      //   child: SingleChildScrollView(
-      //         child: Column(
-      //           mainAxisAlignment: MainAxisAlignment.center,
-      //           children: [
-      //             CustomText(
-      //               StringUtils.manuallyEntryTxt,
-      //               fontSize: 20.sp,
-      //               color: ColorUtils.black,
-      //             ),
-      //             SizedBox(
-      //               height: 15.h,
-      //             ),
-      //             Padding(
-      //               padding: EdgeInsets.only(left: 160.w, right: 150.w),
-      //               child: Container(
-      //                 alignment: Alignment.center,
-      //                 decoration: const BoxDecoration(
-      //                   color: ColorUtils.locContColor,
-      //                 ),
-      //                 padding: EdgeInsets.symmetric(vertical: 10.w),
-      //                 child: Icon(
-      //                   IconUtils.locatiIcon,
-      //                   color: ColorUtils.deepOrangeColor,
-      //                   size: 60.h,
-      //                 ),
-      //               ),
-      //             ),
-      //             SizedBox(
-      //               height: 10.h,
-      //             ),
-      //             Padding(
-      //               padding: EdgeInsets.only(left: 20.w, right: 20.w),
-      //               child: const CustomText(
-      //                 textAlign: TextAlign.center,
-      //                 StringUtils.stdConveLocationTxt,
-      //                 color: ColorUtils.greyColor,
-      //                 maxLines: 2,
-      //               ),
-      //             ),
-      //             SizedBox(
-      //               height: 10.h,
-      //             ),
-      //             const CustomText(
-      //               StringUtils.notEstSouWesTxt,
-      //               color: ColorUtils.greyColor,
-      //             ),
-      //             Row(
-      //               children: [
-      //                 Expanded(
-      //                   child: Padding(
-      //                     padding: EdgeInsets.only(top: 35.w, left: 35.w),
-      //                     child: const CustomText(
-      //                       StringUtils.longTxt,
-      //                       color: ColorUtils.greyColor,
-      //                       textAlign: TextAlign.center,
-      //                     ),
-      //                   ),
-      //                 ),
-      //                 SizedBox(
-      //                   width: 250.w,
-      //                   child: TextField(
-      //                     controller: locationController.longitudeController,
-      //                   ),
-      //                 ),
-      //               ],
-      //             ),
-      //             Row(
-      //               children: [
-      //                 Expanded(
-      //                   child: Padding(
-      //                     padding: EdgeInsets.only(top: 35.w, left: 35.w),
-      //                     child: const CustomText(
-      //                       StringUtils.latiTxt,
-      //                       color: ColorUtils.greyColor,
-      //                       textAlign: TextAlign.center,
-      //                     ),
-      //                   ),
-      //                 ),
-      //                 SizedBox(
-      //                   width: 250.w,
-      //                   child: TextField(
-      //                     controller: locationController.latitudeController,
-      //                   ),
-      //                 ),
-      //               ],
-      //             ),
-      //             SizedBox(
-      //               height: 20.h,
-      //             ),
-      //             Padding(
-      //               padding: EdgeInsets.only(left: 100.w, right: 100.w),
-      //               child: InkWell(
-      //                 onTap: () {
-      //                   locationController.getLocation();
-      //                 },
-      //                 child: commonContainer(
-      //                   decoration: const BoxDecoration(
-      //                     color: ColorUtils.btnContColor,
-      //                   ),
-      //                   padding: EdgeInsets.symmetric(
-      //                     vertical: 15.w,
-      //                   ),
-      //                   child: Padding(
-      //                     padding: EdgeInsets.only(left: 10.w, right: 10.w),
-      //                     child: const CustomText(
-      //                       StringUtils.locationUseTxt,
-      //                       color: ColorUtils.black,
-      //                       fontWeight: FontWeight.bold,
-      //                     ),
-      //                   ),
-      //                 ),
-      //               ),
-      //             ),
-      //             SizedBox(
-      //               height: 20.h,
-      //             ),
-      //             Padding(
-      //               padding: EdgeInsets.only(left: 90.w, right: 90.w),
-      //               child: InkWell(
-      //                 onTap: () {
-      //                   locationController.getLocationOnMap();
-      //                 },
-      //                 child: commonContainer(
-      //                   decoration: const BoxDecoration(
-      //                     color: ColorUtils.btnContColor,
-      //                   ),
-      //                   padding: EdgeInsets.symmetric(
-      //                     vertical: 15.w,
-      //                   ),
-      //                   child: Padding(
-      //                     padding: EdgeInsets.only(left: 10.w, right: 10.w),
-      //                     child: const CustomText(
-      //                       StringUtils.mapLocationUseTxt,
-      //                       color: ColorUtils.black,
-      //                       fontWeight: FontWeight.bold,
-      //                     ),
-      //                   ),
-      //                 ),
-      //               ),
-      //             ),
-      //           ],
-      //         ),
-      //       ),
-      // ),
     );
   }
 }

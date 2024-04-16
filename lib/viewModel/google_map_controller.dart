@@ -13,33 +13,19 @@ class GoogleController extends GetxController {
   final TextEditingController searchController = TextEditingController();
   final Completer<GoogleMapController> _controller = Completer();
   GoogleMapController? mapController;
-
-  //final Set<Marker> markers = {};
   final RxSet<Marker> markers = <Marker>{}.obs;
   Rx<LatLng?> lastMapPosition =  Rx<LatLng?>(null);
-
- // LatLng? lastMapPosition;
-
-  //MapType currentMapType = MapType.hybrid;
   Rx<MapType> currentMapType = MapType.hybrid.obs;
-  //String address = '';
   RxString address = ''.obs;
   RxString searchAddress = ''.obs;
   RxBool isLoad = false.obs;
   RxBool result = true.obs;
-
   RxList<String> searchResultAddresses = <String>[].obs;
   RxList<double> searchResultLatitudes = <double>[].obs;
   RxList<double> searchResultLongitudes = <double>[].obs;
-
- // List locationList = [];
-//  RxString lastAddress = ''.obs;
-
   RxList<String> locationList = <String>[].obs;
   RxList<String> suggestions = <String>[].obs;
   RxList<Map<String,dynamic>> locationLis = <Map<String,dynamic>>[].obs;
-  int _idCounter = 0;
-  int index = 0;
 
   @override
   Future<void> onInit() async {
@@ -60,7 +46,7 @@ class GoogleController extends GetxController {
           currentPosition.latitude,
           currentPosition.longitude,
         );
-       await moveCameraToLocation(lastMapPosition.value!,12.0);
+       await moveCameraToLocation(lastMapPosition.value!,8.0);
        await onAddMarkerButtonPressed(lastMapPosition.value!);
         print('===========>$markers');
         update();
@@ -85,7 +71,7 @@ class GoogleController extends GetxController {
         },
       ),
     );
-    moveCameraToLocation(latLng,12.0);
+    moveCameraToLocation(latLng,8.0);
     try {
       List<Placemark> placeMarks = await placemarkFromCoordinates(latLng.latitude, latLng.longitude);
 
@@ -130,7 +116,7 @@ class GoogleController extends GetxController {
   }
 
     onMarkerTapped(LatLng latLng) {
-    onAddMarkerButtonPressed(latLng);
+     onAddMarkerButtonPressed(latLng);
   }
 
   Future<String> searchLocations(String query) async {
@@ -171,7 +157,7 @@ class GoogleController extends GetxController {
         searchResultLatitudes.add(location.latitude);
         searchResultLongitudes.add(location.longitude);
 
-        moveCameraToLocation(LatLng(location.latitude, location.longitude),12.0);
+        moveCameraToLocation(LatLng(location.latitude, location.longitude),8.0);
         markers.add(
           Marker(
             markerId: MarkerId(location.toString()),
@@ -243,31 +229,17 @@ class GoogleController extends GetxController {
     return await rootBundle.loadString(assetPath);
   }
 
-  String generateId() {
-    _idCounter++;
-    return 'ID_$_idCounter';
-  }
-
   onLocationData(String addr, double lati, double long) async {
     address = addr.obs;
     print("=======>$address");
-    // List<Map<String,dynamic>>locationData = [
-    //   {
-    //     'id':generateId(),
-    //     'address':addr,
-    //   },
-    // ];
-    //print('=====>id========>${locationData[index]['id']}');
-     locationList.add(address.value);
-   // locationLis.addAll(locationData);
+    locationList.add(address.value);
     print('======LocationList=========>$locationList');
-    await PrefServices.setValue('locationList', locationList);
+    await PrefServices.setValue('locationList',locationList);
     Get.offAll(
       SunriseSunetScreen(
         latitude: lati,
         longitude: long,
         address: address.value,
-       // value: false,
         value: true,
       ),
     );

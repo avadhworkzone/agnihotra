@@ -16,6 +16,7 @@ class AssetUtils{
   static String privacyPolicyImages = '${imagePath}privacy_policy.png';
   static String agniKundImages = '${imagePath}agniKund.png';
   static String tilakSndhyaImages = '${imagePath}tilakSndhya.png';
+  static String directionImage = '${imagePath}directionImage.png';
 
   // ICONS
 

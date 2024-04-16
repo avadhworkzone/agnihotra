@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:sunrise_app/common_Widget/common_assets.dart';
 import 'package:sunrise_app/common_Widget/common_button.dart';
 import 'package:sunrise_app/common_Widget/common_text.dart';
 import 'package:sunrise_app/common_Widget/common_textfield.dart';
+import 'package:sunrise_app/model/sunrise_sunset_model.dart';
 import 'package:sunrise_app/services/prefServices.dart';
 import 'package:sunrise_app/utils/color_utils.dart';
 import 'package:sunrise_app/utils/image_utils.dart';
@@ -14,27 +15,18 @@ import 'package:sunrise_app/utils/string_utils.dart';
 import 'package:sunrise_app/view/enter_location_screen/enter_location_screen.dart';
 import 'package:sunrise_app/view/google_map_screen/google_map.dart';
 import 'package:sunrise_app/view/mantra_menu_screen/mantra_menu_screen.dart';
-import 'package:sunrise_app/view/mantra_menu_screen/mantra_screen.dart';
 import 'package:sunrise_app/view/setting_screen/setting_screen.dart';
 import 'package:sunrise_app/viewModel/google_map_controller.dart';
 import 'package:sunrise_app/viewModel/sunrise_sunset_controller.dart';
 
 class SunriseSunetScreen extends StatefulWidget {
-//  SunriseSunetScreen({Key? key, this.latitude, this.longitude, this.address, this.value}) : super(key: key);
-
   double? latitude;
   double? longitude;
   String? address;
   bool? value;
 
-  SunriseSunetScreen(
-      {Key? key, this.latitude, this.longitude, this.address, this.value})
-      : super(key: key) {
-    // if (address != null && latitude != null && longitude != null) {
-    //   PrefServices.setValue('address', address!);
-    //   PrefServices.setValue('latitude', latitude!);
-    //   PrefServices.setValue('longitude', longitude!);
-    // }
+
+  SunriseSunetScreen({Key? key, this.latitude, this.longitude, this.address, this.value}) : super(key: key) {
   }
 
   @override
@@ -43,25 +35,14 @@ class SunriseSunetScreen extends StatefulWidget {
 
 class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  SunriseSunsetController sunriseSunsetController =
-      Get.find<SunriseSunsetController>();
+  SunriseSunsetController sunriseSunsetController = Get.find<SunriseSunsetController>();
   GoogleController googleController = Get.find<GoogleController>();
 
   String formatAddress() {
-    // if (widget.address == null || (widget.latitude == 0 && widget.longitude == 0)) {
-    //   return 'Location not set, click on icon!';
-    //  }
-    //
-    // List<String> addressParts = widget.address!.split(',').map((part) => part.trim()).toList();
-    // addressParts.removeWhere((part) => part.isEmpty);
-    //
-    // return addressParts.join(', ');
     if (address == null || (latitude == 0 && longitude == 0)) {
       return StringUtils.locationSetTxt;
     }
-
-    List<String> addressParts =
-        address!.split(',').map((part) => part.trim()).toList();
+    List<String> addressParts = address!.split(',').map((part) => part.trim()).toList();
     addressParts.removeWhere((part) => part.isEmpty);
 
     return addressParts.join(', ');
@@ -71,10 +52,7 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
     String formattedValue = value.toStringAsFixed(4);
     return formattedValue;
   }
-  static String english = "en_US";
-  static String gujarati = "gu";
-  static String hindi = "hi";
-  String selectedValue = '';
+
 
   @override
   void initState() {
@@ -88,10 +66,16 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
             title: CustomText(
               StringUtils.timeZonTxt,
               color: ColorUtils.black,
+              fontSize: 19.sp,
+              fontWeight: FontWeight.w600,
+              textAlign: TextAlign.center,
             ),
             content: CustomText(
               StringUtils.standardTime,
               color: ColorUtils.black,
+              fontSize: 14.sp,
+              fontWeight: FontWeight.w500,
+              textAlign: TextAlign.center,
             ),
             actions: [
               Row(
@@ -100,37 +84,37 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                     onPressed: () {
                       Get.back();
                     },
-                    child: CustomText(
+                    child: const CustomText(
                       StringUtils.changeTimeTxt,
-                      color: ColorUtils.black,
+                      color: ColorUtils.orange,
+                      fontWeight: FontWeight.w600,
                     ),
                   ),
                   CustomBtn(
                     width: 80.w,
                     height: 40.h,
+                    gradient: const LinearGradient(
+                      colors: [
+                        ColorUtils.gridentColor1,
+                        ColorUtils.gridentColor2,
+                      ],
+                      begin: AlignmentDirectional.topEnd,
+                      end: AlignmentDirectional.bottomEnd,
+                    ),
                     onTap: () {
                       setState(() {
                         latitude = widget.latitude!;
                         longitude = widget.longitude!;
                         address = widget.address!;
                       });
-                      if (address != null &&
-                          latitude != null &&
-                          longitude != null) {
+                      if (address != null && latitude != null && longitude != null) {
                         PrefServices.setValue('address', address!);
                         PrefServices.setValue('latitude', latitude!);
                         PrefServices.setValue('longitude', longitude!);
                       }
-                      //   googleController.onLocationData(
-                      //     widget.address ?? googleController.address.value,
-                      //     widget.latitude ?? googleController.lastMapPosition.value!.latitude,
-                      //     widget.longitude ?? googleController.lastMapPosition.value!.longitude,
-                      //   );
-                      // Get.back(result:googleController.result.value = false);
                       Get.back();
                     },
                     title: StringUtils.confirmTxt,
-                    bgColor: ColorUtils.orange,
                   ),
                 ],
               ),
@@ -139,13 +123,12 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
         );
       }
     });
-    selectedValue = PrefServices.getString('language');
+    PrefServices.getString('language');
   }
 
   Future<void> _loadAddress() async {
     String? storedAddress = await PrefServices.getString('address');
-    List<String> storedLocationList =
-        PrefServices.getStringList('locationList');
+    List<String> storedLocationList = PrefServices.getStringList('locationList');
     double? storedLatitude = await PrefServices.getDouble('latitude');
     double? storedLongitude = await PrefServices.getDouble('longitude');
 
@@ -185,8 +168,7 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
     }
     if (storedLocationList != null) {
       setState(() {
-        googleController.locationList.value =
-            RxList<String>(storedLocationList);
+        googleController.locationList.value = RxList<String>(storedLocationList);
       });
     }
   }
@@ -202,20 +184,11 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
   double? longitude;
   String? address;
 
+
   @override
   Widget build(BuildContext context) {
-    // if (widget.latitude != null && widget.longitude != null && (widget.latitude != 0 || widget.longitude != 0)) {
-    //   sunriseSunsetController.fetchWeather(widget.latitude!, widget.longitude!);
-    // }
-    //=========
-    // if (latitude != null &&
-    //     longitude != null &&
-    //     (latitude != 0 || longitude != 0)) {
-    //   sunriseSunsetController.fetchWeather(latitude!, longitude!);
-    // }
-    if (latitude != null &&
-        longitude != null &&
-        (latitude != 0 || longitude != 0)) {
+
+    if (latitude != null && longitude != null && (latitude != 0 || longitude != 0)) {
       sunriseSunsetController.getSunriseSunsetTime(latitude!, longitude!);
     }
     return Scaffold(
@@ -254,7 +227,7 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                   ],
                 ),
               ),
-              Divider(),
+              const Divider(),
               SizedBox(
                 height: 10.h,
               ),
@@ -276,7 +249,7 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                   ),
                 ],
               ),
-              Divider(),
+              const Divider(),
               SizedBox(
                 height: 10.h,
               ),
@@ -284,12 +257,12 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                 onTap: () {
                   Get.dialog(
                     AlertDialog(
-                      title: SizedBox(
+                      content: SizedBox(
                         height: 250.h,
-                          child: Column(
+                          child: Obx(() =>  Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              CustomText(
+                              const CustomText(
                                 StringUtils.languageChooseTxt,
                                 color: ColorUtils.black,
                               ),
@@ -304,14 +277,10 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                                   ),
                                   Radio(
                                     value: 'Hindi',
-                                    groupValue: selectedValue,
+                                    groupValue: sunriseSunsetController.selectedValue.value,
                                     onChanged:(value) {
-                                      setState(() {
-                                        selectedValue = value.toString();
-                                        Get.updateLocale(Locale('hi'));
-                                      });
-                                      Get.back();
-                                    },
+                                      sunriseSunsetController.selectedValue.value = value.toString();
+                                      },
                                     fillColor: MaterialStateColor.resolveWith((states) => ColorUtils.orange),
                                   ),
                                 ],
@@ -327,14 +296,10 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                                   ),
                                   Radio(
                                     value: 'English',
-                                    groupValue: selectedValue,
+                                    groupValue: sunriseSunsetController.selectedValue.value,
                                     onChanged:(value) {
-                                      setState(() {
-                                        selectedValue = value.toString();
-                                        Get.updateLocale(Locale('en_US'));
-                                      });
-                                      Get.back();
-                                    },
+                                      sunriseSunsetController.selectedValue.value = value.toString();
+                                      },
                                     fillColor: MaterialStateColor.resolveWith((states) => ColorUtils.orange),
                                   ),
                                 ],
@@ -350,51 +315,49 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                                   ),
                                   Radio(
                                     value: 'Gujarati',
-                                    groupValue: selectedValue,
+                                    groupValue: sunriseSunsetController.selectedValue.value,
                                     onChanged:(value) {
-                                      setState(() {
-                                        selectedValue = value.toString();
-                                        Get.updateLocale(Locale('gu'));
-                                      });
-                                      Get.back();
-                                    },
+                                      sunriseSunsetController.selectedValue.value = value.toString();
+                                      },
                                     fillColor: MaterialStateColor.resolveWith((states) => ColorUtils.orange),
                                   ),
                                 ],
                               ),
                               SizedBox(height: 20.h,),
-                              // CustomBtn(
-                              //   height: 50.h,
-                              //   gradient: const LinearGradient(
-                              //     colors: [
-                              //       ColorUtils.gridentColor1,
-                              //       ColorUtils.gridentColor2,
-                              //     ],
-                              //     begin: AlignmentDirectional.topEnd,
-                              //     end: AlignmentDirectional.bottomEnd,
-                              //   ),
-                              //   onTap: () async {
-                              //     await PrefServices.setValue('language', selectedValue);
-                              //     switch(selectedValue){
-                              //         case 'Hindi':
-                              //           Get.updateLocale(Locale('hi'));
-                              //           break;
-                              //         case 'English':
-                              //           Get.updateLocale(Locale('en_US'));
-                              //           break;
-                              //         case 'Gujarati':
-                              //           Get.updateLocale(Locale('gu'));
-                              //           break;
-                              //         default :
-                              //           break;
-                              //       }
-                              //       Get.back();
-                              //
-                              //   },
-                              //   title: StringUtils.submitBtnTxt,
-                              // ),
+                              CustomBtn(
+                                height: 50.h,
+                                gradient: const LinearGradient(
+                                  colors: [
+                                    ColorUtils.gridentColor1,
+                                    ColorUtils.gridentColor2,
+                                  ],
+                                  begin: AlignmentDirectional.topEnd,
+                                  end: AlignmentDirectional.bottomEnd,
+                                ),
+                                onTap: () async {
+                                  switch(sunriseSunsetController.selectedValue.value){
+                                    case 'Hindi':
+                                      Get.updateLocale(const Locale('hi'));
+                                      await PrefServices.setValue('language','hi');
+                                      break;
+                                    case 'English':
+                                      Get.updateLocale(const Locale('en_US'));
+                                      await PrefServices.setValue('language','en_US');
+                                      break;
+                                    case 'Gujarati':
+                                      Get.updateLocale(const Locale('gu'));
+                                      await PrefServices.setValue('language','gu');
+                                      break;
+                                    default :
+                                      break;
+                                  }
+                                  Get.back();
+                                },
+                                title: StringUtils.submitBtnTxt,
+                              ),
                             ],
-                          ),
+                          ),),
+
                       ),
                     ),
                   );
@@ -418,13 +381,13 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                   ],
                 ),
               ),
-              Divider(),
+              const Divider(),
               SizedBox(
                 height: 10.h,
               ),
               Row(
                 children: [
-                  Icon(
+                  const Icon(
                     AssetUtils.aboutIcon,
                     color: ColorUtils.orange,
                   ),
@@ -439,7 +402,7 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                   ),
                 ],
               ),
-              Divider(),
+              const Divider(),
               SizedBox(
                 height: 10.h,
               ),
@@ -461,34 +424,37 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                   ),
                 ],
               ),
-              Divider(),
+              const Divider(),
+              SizedBox(
+                height: 10.h,
+              ),
+              InkWell(
+                onTap: () {},
+                child: Row(
+                  children: [
+                    const Icon(
+                      AssetUtils.shareIcon,
+                      color: ColorUtils.orange,
+                    ),
+                    SizedBox(
+                      width: 10.w,
+                    ),
+                    CustomText(
+                      StringUtils.shareTxt,
+                      fontWeight: FontWeight.w500,
+                      fontSize: 15.sp,
+                      color: ColorUtils.black,
+                    ),
+                  ],
+                ),
+              ),
+              const Divider(),
               SizedBox(
                 height: 10.h,
               ),
               Row(
                 children: [
-                  Icon(
-                    AssetUtils.shareIcon,
-                    color: ColorUtils.orange,
-                  ),
-                  SizedBox(
-                    width: 10.w,
-                  ),
-                  CustomText(
-                    StringUtils.shareTxt,
-                    fontWeight: FontWeight.w500,
-                    fontSize: 15.sp,
-                    color: ColorUtils.black,
-                  ),
-                ],
-              ),
-              Divider(),
-              SizedBox(
-                height: 10.h,
-              ),
-              Row(
-                children: [
-                  Icon(
+                  const Icon(
                     AssetUtils.helpIcon,
                     color: ColorUtils.orange,
                   ),
@@ -540,8 +506,7 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                                 horizontal: 8.w, vertical: 10.h),
                             decoration: BoxDecoration(
                               color: ColorUtils.white,
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(24.r)),
+                              borderRadius: BorderRadius.all(Radius.circular(24.r)),
                             ),
                             child: Row(
                               children: [
@@ -572,7 +537,7 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                           child: CircleAvatar(
                             radius: 17.r,
                             backgroundColor: ColorUtils.white,
-                            child: Icon(
+                            child: const Icon(
                               AssetUtils.menuIcon,
                               color: ColorUtils.orange,
                             ),
@@ -585,11 +550,29 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                     height: 25.h,
                   ),
                   // CALENDAR ICON
-                  const CircleAvatar(
-                    backgroundColor: ColorUtils.white,
-                    child: Icon(
-                      AssetUtils.calendarIcon,
-                      color: ColorUtils.orange,
+                  InkWell(
+                    onTap: () async {
+                      // Show date picker and wait for user selection
+                      // DateTime? selectedDate = await showDatePicker(
+                      //   context: context,
+                      //   initialDate: DateTime.now(),
+                      //   firstDate: DateTime(2000),
+                      //   lastDate: DateTime.now().add(Duration(days: 365)), // Allow selecting dates up to a year from now
+                      // );
+                      //
+                      // if (selectedDate != null) {
+                      //   // Fetch sunrise and sunset times for the selected date
+                      //   double latitude = widget.latitude ?? 0.0;
+                      //   double longitude = widget.longitude ?? 0.0;
+                      //   sunriseSunsetController.getSunriseSunsetTime(latitude, longitude, selectedDate);
+                      // }
+                    },
+                    child: const CircleAvatar(
+                      backgroundColor: ColorUtils.white,
+                      child: Icon(
+                        AssetUtils.calendarIcon,
+                        color: ColorUtils.orange,
+                      ),
                     ),
                   ),
                   SizedBox(
@@ -606,8 +589,7 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                   ),
                   // TIME
                   Container(
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 18.w, vertical: 5.h),
+                    padding: EdgeInsets.symmetric(horizontal: 18.w, vertical: 5.h),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.all(Radius.circular(6.r)),
                       border: Border.all(color: ColorUtils.borderColor),
@@ -615,7 +597,7 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                         BoxShadow(
                           color: ColorUtils.white,
                           blurRadius: 200.w,
-                        )
+                        ),
                       ],
                     ),
                     child: CustomText(
@@ -656,18 +638,13 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                                  padding: EdgeInsets.only(top: 25.h),
                                  child:
                                  sunriseSunsetController.isLoad.value
-                                     ? CircularProgressIndicator(
+                                     ? const CircularProgressIndicator(
                                    color: ColorUtils.white,
-                                 )
-                                     :
-
-                                 CustomText(
+                                 ) : CustomText(
                                    sunriseSunsetController.sunrise.value,
                                    fontWeight: FontWeight.w500,
                                    fontSize: 20.sp,
                                  ),
-
-
                                ),
                              ),
                            ),
@@ -676,8 +653,7 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                              child: CircleAvatar(
                                backgroundColor: ColorUtils.white,
                                radius: 27.r,
-                               child: LocalAssets(
-                                   imagePath: AssetUtils.sunriseImages),
+                               child: LocalAssets(imagePath: AssetUtils.sunriseImages),
                              ),
                            ),
                          ],
@@ -704,42 +680,36 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                                    BoxShadow(
                                      color: ColorUtils.white,
                                      blurRadius: 200.w,
-                                   )
+                                   ),
                                  ],
                                ),
                                child: Padding(
                                  padding: EdgeInsets.only(top: 25.h),
-                                 child:
-                                 sunriseSunsetController.isLoad.value
-                                     ? CircularProgressIndicator(
+                                 child: sunriseSunsetController.isLoad.value
+                                     ? const CircularProgressIndicator(
                                    color: ColorUtils.white,
                                  )
-                                     :
-
-                                 CustomText(
+                                     : CustomText(
                                    sunriseSunsetController.sunset.value,
                                    fontWeight: FontWeight.w500,
                                    fontSize: 20.sp,
                                  ),
-
                                ),
                              ),
                            ),
                            Positioned(
                              left: 40.w,
                              child: CircleAvatar(
-                               backgroundColor: ColorUtils.white,
+                               backgroundColor:ColorUtils.white,
                                radius: 27.r,
-                               child: LocalAssets(
-                                 imagePath: AssetUtils.sunsetImages,
+                               child: LocalAssets(imagePath: AssetUtils.sunsetImages,),
                                ),
                              ),
-                           ),
-                         ],
-                       ),
-                     ],
-                   ), ),
-
+                           ],
+                         ),
+                       ],
+                     ),
+                   ),
                   SizedBox(
                     height: 130.h,
                   ),
@@ -754,46 +724,30 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                           alignment: Alignment.center,
                           decoration: BoxDecoration(
                               color: ColorUtils.white,
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(52.r)),
+                              borderRadius: BorderRadius.all(Radius.circular(52.r)),
                               border: Border.all(
                                 color: ColorUtils.borderColor,
-                              )),
+                              ),
+                          ),
                           child: Column(
                             children: [
                               Padding(
-                                padding: EdgeInsets.only(
-                                    left: 20.w, right: 20.w, top: 30.h),
+                                padding: EdgeInsets.only(left: 20.w, right: 20.w, top: 30.h),
                                 child: CustomText(
                                   formatAddress(),
                                   textAlign: TextAlign.center,
                                   color: ColorUtils.black,
                                 ),
                               ),
-                              if (latitude != null &&
-                                  longitude != null &&
-                                  (latitude != 0 || longitude != 0))
+                              if (latitude != null && longitude != null && (latitude != 0 || longitude != 0))
                                 Padding(
-                                  padding:
-                                      EdgeInsets.only(left: 20.w, right: 20.w),
+                                  padding: EdgeInsets.only(left: 20.w, right: 20.w),
                                   child: CustomText(
-                                    '(${formateLatitudeLongitude(latitude!)}, ${formateLatitudeLongitude(longitude!)})',
-                                    color: ColorUtils.black,
+                                    '(${formateLatitudeLongitude(latitude!)},${formateLatitudeLongitude(longitude!)})',
+                                     color: ColorUtils.black,
                                   ),
                                 ),
-                              // if (widget.latitude != null && widget.longitude != null &&
-                              //     (widget.latitude != 0 || widget.longitude != 0))
-                              //   Padding(
-                              //     padding: EdgeInsets.only(left: 20.w, right: 20.w),
-                              //     child: CustomText(
-                              //       '(${formateLatitudeLongitude(widget.latitude!)}, '
-                              //           '${formateLatitudeLongitude(widget.longitude!)})',
-                              //       color: ColorUtils.black,
-                              //     ),
-                              //   ),
-                              SizedBox(
-                                height: 10.h,
-                              ),
+                              SizedBox(height: 10.h),
                             ],
                           ),
                         ),
@@ -802,133 +756,6 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                         left: 120.w,
                         child: InkWell(
                           onTap: () {
-                            // Get.dialog(
-                            //   AlertDialog(
-                            //     title: SizedBox(
-                            //       height: googleController.locationList.isNotEmpty?null:80.h,
-                            //       child: Column(
-                            //         children: [
-                            //           googleController.locationList.isNotEmpty
-                            //               ? Column(
-                            //             crossAxisAlignment: CrossAxisAlignment.start,
-                            //             children: [
-                            //               SizedBox(
-                            //                 height: 150.h,
-                            //                 child: ListView.builder(
-                            //                   itemCount: googleController.locationList.length,
-                            //                   itemBuilder: (context, index) {
-                            //                     return CustomText(
-                            //                       googleController.locationList[index],
-                            //                       color: ColorUtils.black,
-                            //                     );
-                            //                   },
-                            //                 ),
-                            //               ),
-                            //               SizedBox(
-                            //                 height: 10.h,
-                            //               ),
-                            //               const Divider(),
-                            //               InkWell(
-                            //                 onTap: () {
-                            //                   googleController.clearLocationList();
-                            //                   sunriseSunsetController.clearLocationData();
-                            //                   _clearData();
-                            //                   sunriseSunsetController.weather.value = null;
-                            //                   widget.latitude = 0;
-                            //                   widget.longitude = 0;
-                            //                   widget.address = '';
-                            //                   setState(() {});
-                            //                   Get.back(result: false);
-                            //                 },
-                            //                 child: const CustomText(
-                            //                   'Delete All Location',
-                            //                   color: ColorUtils.black,
-                            //                 ),
-                            //               ),
-                            //               SizedBox(
-                            //                 height: 10.h,
-                            //               ),
-                            //               const Divider(),
-                            //               InkWell(
-                            //                 onTap: () {
-                            //                   Get.back();
-                            //                   Get.dialog(
-                            //                     AlertDialog(
-                            //                       title: SizedBox(
-                            //                         height: 100.h,
-                            //                         child: Column(
-                            //                           children: [
-                            //                             InkWell(
-                            //                               onTap: () {
-                            //                                 Get.off( MapDemo());
-                            //                               },
-                            //                               child: const CustomText(
-                            //                                 StringUtils.usgMapTxt,
-                            //                                 color: ColorUtils.black,
-                            //                               ),
-                            //                             ),
-                            //                             SizedBox(
-                            //                               height: 20.h,
-                            //                             ),
-                            //                             InkWell(
-                            //                               onTap: () {
-                            //                                 // sunriseSunsetController.isLoad.value = true;
-                            //                                 Get.off(const LocationScreen());
-                            //                                 // sunriseSunsetController.isLoad.value = true;
-                            //                               },
-                            //                               child:const CustomText(
-                            //                                 StringUtils.usgManuallyTxt,
-                            //                                 color: ColorUtils.black,
-                            //                               ),
-                            //                             ),
-                            //                           ],
-                            //                         ),
-                            //                       ),
-                            //                     ),
-                            //                   );
-                            //                 },
-                            //                 child: const CustomText(
-                            //                   'Add Location',
-                            //                   color: ColorUtils.black,
-                            //                 ),
-                            //               ),
-                            //             ],
-                            //           )
-                            //               : Column(
-                            //             crossAxisAlignment: CrossAxisAlignment.start,
-                            //             children: [
-                            //               InkWell(
-                            //                 onTap: () {
-                            //                   Get.off( MapDemo());
-                            //                 },
-                            //                 child: const CustomText(
-                            //                   StringUtils.usgMapTxt,
-                            //                   color: ColorUtils.black,
-                            //                 ),
-                            //               ),
-                            //               SizedBox(height: 10.h,),
-                            //               const Divider(),
-                            //               SizedBox(height: 10.h,),
-                            //               InkWell(
-                            //                 onTap: () {
-                            //                   //sunriseSunsetController.isLoad.value = true;
-                            //                   Get.off(const LocationScreen());
-                            //                   // sunriseSunsetController.isLoad.value = false;
-                            //
-                            //                 },
-                            //                 child:const CustomText(
-                            //                   StringUtils.usgManuallyTxt,
-                            //                   color: ColorUtils.black,
-                            //                 ),
-                            //               ),
-                            //
-                            //             ],
-                            //           ),
-                            //         ],
-                            //       ),
-                            //     ),
-                            //   ),
-                            // );
                             _showLocationDialog();
                           },
                           child: Container(
@@ -945,7 +772,7 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                               ),
                               shape: BoxShape.circle,
                             ),
-                            child: Icon(
+                            child: const Icon(
                               AssetUtils.locationIcon,
                               color: ColorUtils.white,
                             ),
@@ -954,141 +781,135 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                       ),
                     ],
                   ),
+                  SizedBox(height: 20.h,),
                   //EDIT LOCATION
-                  IconButton(
-                    onPressed: () {
-                      int index = 0;
-                      Get.dialog(
-                        AlertDialog(
-                          title: SizedBox(
-                            height: 120.h,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                TextButton(
-                                  onPressed: () async {
-                                    // Delete this Location button pressed
-                                    await _clearData(); // Clear stored data
-                                    sunriseSunsetController
-                                        .clearLocationData(); // Clear location data in the controller
-                                    setState(() {
-                                      address = ''; // Clear the address
-                                      latitude = 0; // Clear the latitude
-                                      longitude = 0; // Clear the longitude
-                                      googleController.locationList.removeAt(index);
-                                    });
-                                    Get.back(); // Close the dialog
-                                  },
-                                  child: CustomText(
-                                  StringUtils.deleteLocationBtnTxt,
-                                    fontWeight: FontWeight.w500,
-                                    color: ColorUtils.black,
+                  Container(
+                    height: 40.h,
+                    width: 60.w,
+                    decoration: BoxDecoration(
+                      color: ColorUtils.white,
+                      borderRadius: BorderRadius.all(Radius.circular(10.r)),
+                    ),
+                    child:IconButton(
+                      onPressed: () {
+                        Get.dialog(
+                          AlertDialog(
+                            title: SizedBox(
+                              height: 120.h,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  TextButton(
+                                    onPressed: () async {
+                                      await _clearData();
+                                      sunriseSunsetController.clearSunriseSunsetData();
+                                      final containIndex = googleController.locationList.indexWhere((element) => element == address);
+                                      setState(() {
+                                        address = '';
+                                        latitude = 0;
+                                        longitude = 0;
+                                        googleController.locationList.removeAt(containIndex);
+                                      });
+                                      Get.back();
+                                    },
+                                    child: const CustomText(
+                                      StringUtils.deleteLocationBtnTxt,
+                                      fontWeight: FontWeight.w500,
+                                      color: ColorUtils.black,
+                                    ),
                                   ),
-                                ),
-                                Divider(),
-                                TextButton(
-                                  onPressed: () {
-                                    Get.back();
-                                    // String newAddress = widget.address ?? '';
-                                    // double? newLatitude = widget.latitude;
-                                    // double? newLongitude = widget.longitude;
-                                    String newAddress = address ?? '';
-                                    double? newLatitude = latitude;
-                                    double? newLongitude = longitude;
-
-                                    Get.dialog(AlertDialog(
-                                      title: const CustomText(
-                                        StringUtils.enterLocationTxt,
-                                        color: ColorUtils.black,
-                                      ),
-                                      content: CommonTextField(
-                                        initialValue: newAddress,
-                                        onChange: (value) {
-                                          newAddress = value;
-                                        },
-                                      ),
-                                      actions: [
-                                        Row(
-                                          children: [
-                                            TextButton(
-                                              onPressed: () {
-                                                Get.back();
-                                              },
-                                              child: CustomText(
-                                                StringUtils.cancleTxt,
-                                                color: ColorUtils.black,
+                                  const Divider(),
+                                  TextButton(
+                                    onPressed: () {
+                                      Get.back();
+                                      String newAddress = address ?? '';
+                                      double? newLatitude = latitude;
+                                      double? newLongitude = longitude;
+                                      Get.dialog(
+                                          AlertDialog(
+                                        title: const CustomText(
+                                          StringUtils.enterLocationTxt,
+                                          color: ColorUtils.black,
+                                        ),
+                                        content: CommonTextField(
+                                          initialValue: newAddress,
+                                          onChange: (value) {
+                                            newAddress = value;
+                                          },
+                                        ),
+                                        actions: [
+                                          Row(
+                                            children: [
+                                              TextButton(
+                                                onPressed: () {
+                                                  Get.back();
+                                                },
+                                                child: const CustomText(
+                                                  StringUtils.cancleTxt,
+                                                  color: ColorUtils.black,
+                                                ),
                                               ),
-                                            ),
-                                            TextButton(
+                                              TextButton(
                                                 onPressed: () async {
-                                                  List locations =
-                                                      await locationFromAddress(
-                                                          newAddress);
+                                                  print("==========Address====>${address!}");
+                                                  print("==========AddressList====>${googleController.locationList}");
+                                                  final containIndex = googleController.locationList.indexWhere((element) => element==address);
+                                                  List locations = await locationFromAddress(newAddress);
                                                   if (locations.isNotEmpty) {
-                                                    newLatitude =
-                                                        locations.first.latitude;
-                                                    newLongitude =
-                                                        locations.first.longitude;
+                                                    newLatitude = locations.first.latitude;
+                                                    newLongitude = locations.first.longitude;
                                                   }
                                                   setState(() {
-                                                    // widget.address = newAddress;
-                                                    // widget.latitude = newLatitude;
-                                                    // widget.longitude = newLongitude;
-                                                    // googleController.locationList[index] = newAddress;
                                                     address = newAddress;
                                                     latitude = newLatitude;
                                                     longitude = newLongitude;
-                                                    googleController
-                                                            .locationList[index] =
-                                                        newAddress;
+                                                    googleController.locationList[containIndex]= newAddress;
+
                                                   });
-                                                  // if (widget.address != null && widget.latitude != null && widget.longitude != null) {
-                                                  //   PrefServices.setValue('address', widget.address!);
-                                                  //   PrefServices.setValue('latitude', widget.latitude!);
-                                                  //   PrefServices.setValue('longitude', widget.longitude!);
-                                                  //   await PrefServices.setValue('locationList', googleController.locationList);
-                                                  // }
-                                                  if (address != null &&
-                                                      latitude != null &&
-                                                      longitude != null) {
-                                                    PrefServices.setValue(
-                                                        'address', address!);
-                                                    PrefServices.setValue(
-                                                        'latitude', latitude!);
-                                                    PrefServices.setValue(
-                                                        'longitude', longitude!);
-                                                    await PrefServices.setValue(
-                                                        'locationList',
-                                                        googleController
-                                                            .locationList);
+                                                  if (address != null && latitude != null && longitude != null) {
+                                                    PrefServices.setValue('address', address!);
+                                                    PrefServices.setValue('latitude', latitude!);
+                                                    PrefServices.setValue('longitude', longitude!);
+                                                    await PrefServices.setValue('locationList', googleController.locationList);
                                                   }
                                                   Get.back();
                                                 },
-                                                child: CustomText(
+                                                child: const CustomText(
                                                   StringUtils.renameLocationBtnTxt,
                                                   color: ColorUtils.black,
-                                                )),
-                                          ],
-                                        ),
-                                      ],
-                                    ));
-                                  },
-                                  child: CustomText(
-                                    StringUtils.renameLocationTxt,
-                                    fontWeight: FontWeight.w500,
-                                    color: ColorUtils.black,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ));
+                                    },
+                                    child: const CustomText(
+                                      StringUtils.renameLocationTxt,
+                                      fontWeight: FontWeight.w500,
+                                      color: ColorUtils.black,
+                                    ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                           ),
+                        );
+                      },
+                      icon: ShaderMask(
+                        blendMode: BlendMode.srcIn,
+                        shaderCallback: (Rect bounds) => const RadialGradient(
+                          center: Alignment.topCenter,
+                          colors: [
+                            ColorUtils.gridentColor1,
+                            ColorUtils.gridentColor2,
+                          ],
+                        ).createShader(bounds),
+                        child: const Icon(
+                          AssetUtils.seetingIcon,
+                          size: 25,
                         ),
-                      );
-                    },
-                    icon: Icon(
-                      AssetUtils.seetingIcon,
-                      size: 25.sp,
-                      color: ColorUtils.white,
+                      ),
                     ),
                   ),
                 ],
@@ -1102,15 +923,16 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
     Get.dialog(
       AlertDialog(
         title: SizedBox(
-          height:  googleController.locationList.isNotEmpty ? null : 120.h,
+          height: googleController.locationList.isNotEmpty ? null : 120.h,
           child: Column(
             children: [
               googleController.locationList.isNotEmpty
                   ? Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        SizedBox(
-                          height: 150.h,
+                        googleController.locationList.isNotEmpty
+                        ? SizedBox(
+                          height: googleController.locationList.length * 40.0,
                           width: Get.width,
                           child: ListView.builder(
                             shrinkWrap: true,
@@ -1122,13 +944,15 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                               );
                             },
                           ),
+                        ):CustomText(
+                          'Location name not found',
+                          color: ColorUtils.black,
                         ),
                         const Divider(),
                         TextButton(
                           onPressed: () {
-                            int index = 0;
                             googleController.clearLocationList();
-                            sunriseSunsetController.clearLocationData();
+                            sunriseSunsetController.clearSunriseSunsetData();
                             _clearData();
                             sunriseSunsetController.weather.value = null;
                             latitude = 0;

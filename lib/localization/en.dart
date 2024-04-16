@@ -14,7 +14,7 @@ Map<String,String> en= {
   "latiTxt":"Latitude:",
   "longTxt":"Longitude:",
   "selectTxt":"SELECT",
-  "mapTxt":"MAP",
+  "mapTxt":"map",
   "mapViewTxt":"Map View",
   "satelliteTxt":"Satellite",
   "searchTxt":"Search location",

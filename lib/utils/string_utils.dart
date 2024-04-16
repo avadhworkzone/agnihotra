@@ -19,7 +19,6 @@ class StringUtils {
   static const getStartTxt = 'getStartTxt';
   static const languageChooseTxt = 'languageChooseTxt';
   static const languageUseTxt = 'languageUseTxt';
-
   static const hindiTxt = 'Hindi';
   static const englishTxt = 'English';
   static const gujaratiTxt = 'Gujrati';
