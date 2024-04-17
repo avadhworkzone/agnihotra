@@ -9,12 +9,11 @@ import 'package:sunrise_app/services/prefServices.dart';
 import 'package:sunrise_app/view/sunrise_sunset_screen/sunrise_sunset_screen.dart';
 
 class GoogleController extends GetxController {
-
   final TextEditingController searchController = TextEditingController();
   final Completer<GoogleMapController> _controller = Completer();
   GoogleMapController? mapController;
   final RxSet<Marker> markers = <Marker>{}.obs;
-  Rx<LatLng?> lastMapPosition =  Rx<LatLng?>(null);
+  Rx<LatLng?> lastMapPosition = Rx<LatLng?>(null);
   Rx<MapType> currentMapType = MapType.hybrid.obs;
   RxString address = ''.obs;
   RxString searchAddress = ''.obs;
@@ -25,7 +24,7 @@ class GoogleController extends GetxController {
   RxList<double> searchResultLongitudes = <double>[].obs;
   RxList<String> locationList = <String>[].obs;
   RxList<String> suggestions = <String>[].obs;
-  RxList<Map<String,dynamic>> locationLis = <Map<String,dynamic>>[].obs;
+  RxList<Map<String, dynamic>> locationLis = <Map<String, dynamic>>[].obs;
 
   @override
   Future<void> onInit() async {
@@ -38,7 +37,8 @@ class GoogleController extends GetxController {
   _getCurrentLocation() async {
     try {
       LocationPermission permission = await Geolocator.requestPermission();
-      if (permission == LocationPermission.always || permission == LocationPermission.whileInUse) {
+      if (permission == LocationPermission.always ||
+          permission == LocationPermission.whileInUse) {
         Position currentPosition = await Geolocator.getCurrentPosition(
           desiredAccuracy: LocationAccuracy.best,
         );
@@ -46,8 +46,8 @@ class GoogleController extends GetxController {
           currentPosition.latitude,
           currentPosition.longitude,
         );
-       await moveCameraToLocation(lastMapPosition.value!,8.0);
-       await onAddMarkerButtonPressed(lastMapPosition.value!);
+        await moveCameraToLocation(lastMapPosition.value!, 8.0);
+        await onAddMarkerButtonPressed(lastMapPosition.value!);
         print('===========>$markers');
         update();
       } else {
@@ -71,15 +71,20 @@ class GoogleController extends GetxController {
         },
       ),
     );
-    moveCameraToLocation(latLng,8.0);
+    moveCameraToLocation(latLng, 8.0);
     try {
-      List<Placemark> placeMarks = await placemarkFromCoordinates(latLng.latitude, latLng.longitude);
+      List<Placemark> placeMarks =
+          await placemarkFromCoordinates(latLng.latitude, latLng.longitude);
 
       String street = placeMarks.isNotEmpty ? placeMarks[0].street ?? '' : '';
-      String subLocality = placeMarks.isNotEmpty ? placeMarks[0].subLocality ?? '' : '';
-      String locality = placeMarks.isNotEmpty ? placeMarks[0].locality ?? '' : '';
-      String administrativeArea = placeMarks.isNotEmpty ? placeMarks[0].administrativeArea ?? '' : '';
-      String postalCode = placeMarks.isNotEmpty ? placeMarks[0].postalCode ?? '' : '';
+      String subLocality =
+          placeMarks.isNotEmpty ? placeMarks[0].subLocality ?? '' : '';
+      String locality =
+          placeMarks.isNotEmpty ? placeMarks[0].locality ?? '' : '';
+      String administrativeArea =
+          placeMarks.isNotEmpty ? placeMarks[0].administrativeArea ?? '' : '';
+      String postalCode =
+          placeMarks.isNotEmpty ? placeMarks[0].postalCode ?? '' : '';
       String country = placeMarks.isNotEmpty ? placeMarks[0].country ?? '' : '';
 
       List<String> addressComponents = [
@@ -90,7 +95,8 @@ class GoogleController extends GetxController {
         postalCode,
         country,
       ];
-      address.value = addressComponents.where((element) => element.isNotEmpty).join(', ');
+      address.value =
+          addressComponents.where((element) => element.isNotEmpty).join(', ');
       address.value = address.value;
       lastMapPosition.value = LatLng(
         latLng.latitude,
@@ -99,7 +105,6 @@ class GoogleController extends GetxController {
       address.value = address.value;
       update();
       return address.value;
-
     } catch (e) {
       print("Error getting placemark: $e");
       return address.value;
@@ -115,8 +120,8 @@ class GoogleController extends GetxController {
     mapController = controller;
   }
 
-    onMarkerTapped(LatLng latLng) {
-     onAddMarkerButtonPressed(latLng);
+  onMarkerTapped(LatLng latLng) {
+    onAddMarkerButtonPressed(latLng);
   }
 
   Future<String> searchLocations(String query) async {
@@ -132,14 +137,20 @@ class GoogleController extends GetxController {
       markers.clear();
 
       for (var location in locations) {
-        List<Placemark> placeMarks = await placemarkFromCoordinates(location.latitude, location.longitude);
+        List<Placemark> placeMarks = await placemarkFromCoordinates(
+            location.latitude, location.longitude);
 
         String street = placeMarks.isNotEmpty ? placeMarks[0].street ?? '' : '';
-        String subLocality = placeMarks.isNotEmpty ? placeMarks[0].subLocality ?? '' : '';
-        String locality = placeMarks.isNotEmpty ? placeMarks[0].locality ?? '' : '';
-        String administrativeArea = placeMarks.isNotEmpty ? placeMarks[0].administrativeArea ?? '' : '';
-        String postalCode = placeMarks.isNotEmpty ? placeMarks[0].postalCode ?? '' : '';
-        String country = placeMarks.isNotEmpty ? placeMarks[0].country ?? '' : '';
+        String subLocality =
+            placeMarks.isNotEmpty ? placeMarks[0].subLocality ?? '' : '';
+        String locality =
+            placeMarks.isNotEmpty ? placeMarks[0].locality ?? '' : '';
+        String administrativeArea =
+            placeMarks.isNotEmpty ? placeMarks[0].administrativeArea ?? '' : '';
+        String postalCode =
+            placeMarks.isNotEmpty ? placeMarks[0].postalCode ?? '' : '';
+        String country =
+            placeMarks.isNotEmpty ? placeMarks[0].country ?? '' : '';
 
         List<String> addressComponents = [
           street,
@@ -150,14 +161,16 @@ class GoogleController extends GetxController {
           country,
         ];
 
-        searchAddress.value = addressComponents.where((element) => element.isNotEmpty).join(', ');
+        searchAddress.value =
+            addressComponents.where((element) => element.isNotEmpty).join(', ');
         address.value = searchAddress.value;
 
         searchResultAddresses.add(searchAddress.value);
         searchResultLatitudes.add(location.latitude);
         searchResultLongitudes.add(location.longitude);
 
-        moveCameraToLocation(LatLng(location.latitude, location.longitude),8.0);
+        moveCameraToLocation(
+            LatLng(location.latitude, location.longitude), 8.0);
         markers.add(
           Marker(
             markerId: MarkerId(location.toString()),
@@ -200,7 +213,7 @@ class GoogleController extends GetxController {
     suggestions.clear();
   }
 
-  moveCameraToLocation(LatLng location,double zoom) async {
+  moveCameraToLocation(LatLng location, double zoom) async {
     GoogleMapController controller = await _controller.future;
     controller.animateCamera(
       CameraUpdate.newLatLngZoom(location, zoom),
@@ -209,7 +222,7 @@ class GoogleController extends GetxController {
 
   void clearLocationList() async {
     locationList.clear();
-    await PrefServices.setValue("locationList",locationList);
+    await PrefServices.setValue("locationList", locationList);
     print("===========$locationList");
     update();
   }
@@ -230,11 +243,15 @@ class GoogleController extends GetxController {
   }
 
   onLocationData(String addr, double lati, double long) async {
-    address = addr.obs;
-    print("=======>$address");
+
+    address.value = addr;
+
+    print("=======> Address :- ${address.value}");
+    print("==> Lat long :- $lati $long");
     locationList.add(address.value);
-    print('======LocationList=========>$locationList');
-    await PrefServices.setValue('locationList',locationList);
+    print('======LocationList=========> $locationList');
+    await PrefServices.setValue('locationList', locationList);
+
     Get.offAll(
       SunriseSunetScreen(
         latitude: lati,
@@ -243,6 +260,7 @@ class GoogleController extends GetxController {
         value: true,
       ),
     );
+
   }
 }
 
