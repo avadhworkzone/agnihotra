@@ -30,6 +30,8 @@ class IntegrateGoogleMap extends StatefulWidget {
 const kGoogleApiKey = 'AIzaSyCotiIYalOfFMwIsvVPhwnFEGxPX-CtyYo';
 final homeScaffoldKey = GlobalKey<ScaffoldState>();
 
+
+
 class _IntegrateGoogleMapState extends State<IntegrateGoogleMap> {
   final GoogleController googleController = Get.find<GoogleController>();
 
@@ -142,6 +144,7 @@ class _IntegrateGoogleMapState extends State<IntegrateGoogleMap> {
                     ),
                     Row(
                       children: [
+
                         /// SELECT
                         Padding(
                           padding: EdgeInsets.only(left: 5.w),
@@ -158,9 +161,10 @@ class _IntegrateGoogleMapState extends State<IntegrateGoogleMap> {
                             ),
                             onTap: () async {
 
-                              PrefServices.setValue('saveAddress',widget.address ?? googleController.address.value);
-                              PrefServices.setValue('saveLat',widget.latitude ?? googleController.lastMapPosition.value!.latitude);
-                              PrefServices.setValue('saveLong',widget.longitude ?? googleController.lastMapPosition.value!.longitude);
+                              PrefServices.setValue('currentAddress',googleController.address.value);
+
+                              PrefServices.setValue('currentLat', googleController.lastMapPosition.value!.latitude);
+                              PrefServices.setValue('currentLong',googleController.lastMapPosition.value!.longitude);
 
 
                               print("Save Address :- ${widget.address ?? googleController.address.value}");

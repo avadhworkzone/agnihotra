@@ -9,6 +9,7 @@ import 'package:sunrise_app/services/prefServices.dart';
 import 'package:sunrise_app/view/sunrise_sunset_screen/sunrise_sunset_screen.dart';
 
 class GoogleController extends GetxController {
+
   final TextEditingController searchController = TextEditingController();
   final Completer<GoogleMapController> _controller = Completer();
   GoogleMapController? mapController;
@@ -264,6 +265,4 @@ class GoogleController extends GetxController {
   }
 }
 
-// lati :- 21.199353252090717  lon :- 72.8343528136611
-// lati:- 21.2393602  lon :- 72.8801493
-// lati:-16.0836997307694  lon:-100.3837738931179
+

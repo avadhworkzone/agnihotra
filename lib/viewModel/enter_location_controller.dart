@@ -13,8 +13,8 @@ class LocationController extends GetxController {
   TextEditingController longitudeController = TextEditingController();
   final validationFormKey = GlobalKey<FormState>();
   RxString address = ''.obs;
-  RxString latitude = ''.obs;
-  RxString longitude = ''.obs;
+  RxDouble latitude = 0.0.obs;
+  RxDouble longitude = 0.0.obs;
   RxDouble latData = 0.0.obs;
   RxDouble lonData = 0.0.obs;
   RxBool isLoad = false.obs;
@@ -25,7 +25,7 @@ class LocationController extends GetxController {
     googleController.locationList.value = PrefServices.getStringList('locationList');
   }
 
-  void getLocation() async {
+  void getLatLongLocation() async {
     try {
       if (validationFormKey.currentState!.validate()){
         isLoad.value = true;
@@ -48,20 +48,26 @@ class LocationController extends GetxController {
           postalCode,
           country
         ];
+
         address.value = addressComponents.where((element) => element.isNotEmpty).join(', ');
 
-        latitude.value = latitudeController.text;
-        longitude.value = longitudeController.text;
+        latitude.value = double.parse(latitudeController.text);
+        longitude.value = double.parse(longitudeController.text);
 
-        PrefServices.setValue('lastAddress', address.value);
+
         googleController.locationList.add(address.value);
-        await PrefServices.setValue('locationList', googleController.locationList);
+        PrefServices.setValue('locationList', googleController.locationList);
+        print("Manually Add===> ${address.value}");
+
+        PrefServices.setValue('currentAddress',address.value);
+        PrefServices.setValue('currentLat',latitude.value);
+          PrefServices.setValue('currentLong',longitude.value);
+
         Get.offAll(
           SunriseSunetScreen(
-            latitude: double.parse(latitude.value),
-            longitude: double.parse(longitude.value),
+            latitude: latitude.value,
+            longitude: longitude.value,
             address: address.value,
-            //value: false,
             value: true,
           ),
         );
@@ -75,6 +81,8 @@ class LocationController extends GetxController {
       isLoad.value = false;
     }
   }
+
+
   void getLocationOnMap() async {
     try {
       if (validationFormKey.currentState!.validate()){
@@ -98,16 +106,16 @@ class LocationController extends GetxController {
           country
         ];
         address.value = addressComponents.where((element) => element.isNotEmpty).join(', ');
-        latitude.value = latitudeController.text;
-        longitude.value = longitudeController.text;
+        latitude.value = double.parse(latitudeController.text);
+        longitude.value = double.parse(longitudeController.text);
 
         LatLng latLng = LatLng(latData.value, lonData.value);
         googleController.onAddMarkerButtonPressed(latLng);
 
         Get.to(
           IntegrateGoogleMap(
-            latitude: double.parse(latitude.value),
-            longitude: double.parse(longitude.value),
+            latitude: latitude.value,
+            longitude: longitude.value,
             address: address.value,
           ),
         );

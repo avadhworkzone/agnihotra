@@ -93,4 +93,5 @@ class StringUtils {
   static const  longitudeIsRequired = "longitudeIsRequired";
   static const validLongitude = "validLongitude";
   static const searchText = "searchText";
+  static const indiaStdTime = "indiaStdTime";
 }
