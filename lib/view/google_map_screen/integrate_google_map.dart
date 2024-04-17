@@ -30,6 +30,8 @@ class IntegrateGoogleMap extends StatefulWidget {
 const kGoogleApiKey = 'AIzaSyCotiIYalOfFMwIsvVPhwnFEGxPX-CtyYo';
 final homeScaffoldKey = GlobalKey<ScaffoldState>();
 
+
+
 class _IntegrateGoogleMapState extends State<IntegrateGoogleMap> {
   final GoogleController googleController = Get.find<GoogleController>();
 
@@ -158,14 +160,23 @@ class _IntegrateGoogleMapState extends State<IntegrateGoogleMap> {
                             ),
                             onTap: () async {
 
-                              PrefServices.setValue('saveAddress',widget.address ?? googleController.address.value);
-                              PrefServices.setValue('saveLat',widget.latitude ?? googleController.lastMapPosition.value!.latitude);
-                              PrefServices.setValue('saveLong',widget.longitude ?? googleController.lastMapPosition.value!.longitude);
+                              PrefServices.setValue('currentAddress',googleController.address.value);
+
+                              PrefServices.setValue('currentLat', googleController.lastMapPosition.value!.latitude);
+                              PrefServices.setValue('currentLong',googleController.lastMapPosition.value!.longitude);
+
+
                               print("Save Address :- ${widget.address ?? googleController.address.value}");
+
                               googleController.onLocationData(
-                                widget.address ?? googleController.address.value,
-                                widget.latitude ?? googleController.lastMapPosition.value!.latitude,
-                                widget.longitude ?? googleController.lastMapPosition.value!.longitude,
+                                widget.address ??
+                                    googleController.address.value,
+                                widget.latitude ??
+                                    googleController
+                                        .lastMapPosition.value!.latitude,
+                                widget.longitude ??
+                                    googleController
+                                        .lastMapPosition.value!.longitude,
                               );
                             },
                             title: StringUtils.selectTxt,

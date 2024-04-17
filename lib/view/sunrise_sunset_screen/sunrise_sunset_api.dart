@@ -1,5 +1,6 @@
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
+import 'package:sunrise_app/model/future_sunrise_sunsetTime_model.dart';
 import 'package:sunrise_app/model/sunrise_sunset_model.dart';
 import 'package:sunrise_app/services/api_services.dart';
 
@@ -20,18 +21,20 @@ class SunriseSunsetApi{
    }
   }
 
-  static Future getFutureTime(double lat,double lon,String date,String apiKey)async{
+  static Future getFutureTime(double lat,double lon,String date,String apiKey) async {
+
     try{
 
       String url = 'https://api.sunrise-sunset.org/json?lat=$lat&lng=$lon&date=$date&formatted=0&key=$apiKey';
       http.Response? response = await HttpServices.getApi(url: url);
-      if (response != null && response.statusCode == 200) {
-        print('=====Response getSunriseAndSunSetTime========>${response.body}');
-        return sunriseSunsetModelFromJson(response.body);
+
+      if(response != null && response.statusCode == 200){
+         print('=====Response getSunriseAndSunSetTime========>${response.body}');
+         return futureSunriseSunsetModelFromJson(response.body);
       }
-    }catch(e){
+    }
+    catch(e){
       print("Error :- $e");
-      // return null;
     }
   }
 }

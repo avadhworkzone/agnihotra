@@ -53,7 +53,7 @@ class _LocationScreenState extends State<LocationScreen> {
                           onPressed: () {
                              Get.back();
                           },
-                          icon: Icon(
+                          icon: const Icon(
                             AssetUtils.backArrowIcon,
                             color: ColorUtils.orange,
                           ),
@@ -146,6 +146,8 @@ class _LocationScreenState extends State<LocationScreen> {
                               ),
                             ),
                             SizedBox(height: 70.h,),
+
+                            /// Use this Location
                             Obx((){
                               return locationController.isLoad.value
                                   ? const CircularProgressIndicator()
@@ -162,7 +164,8 @@ class _LocationScreenState extends State<LocationScreen> {
                                     end: AlignmentDirectional.bottomEnd,
                                   ),
                                   onTap: () {
-                                    locationController.getLocation();
+                                     locationController.getLatLongLocation();
+
                                   },
                                   title:StringUtils.locationUseTxt,
                                   fontSize: 15.sp,
@@ -172,6 +175,7 @@ class _LocationScreenState extends State<LocationScreen> {
                             TextButton(
                                 onPressed:() {
                                   locationController.getLocationOnMap();
+
                                 },
                               child: CustomText(
                                 StringUtils.mapLocationUseTxt,
@@ -180,7 +184,9 @@ class _LocationScreenState extends State<LocationScreen> {
                                 color: ColorUtils.orange,
                               ),
                             ),
+
                             SizedBox(height: 50.h,),
+
                           ],
                         ),
                       ),
