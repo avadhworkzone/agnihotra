@@ -44,8 +44,7 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
     if (address == null || (latitude == 0 && longitude == 0)) {
       return StringUtils.locationSetTxt;
     }
-    List<String> addressParts =
-        address!.split(',').map((part) => part.trim()).toList();
+    List<String> addressParts = address!.split(',').map((part) => part.trim()).toList();
     addressParts.removeWhere((part) => part.isEmpty);
 
     return addressParts.join(', ');
@@ -94,9 +93,9 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
   @override
   Widget build(BuildContext context){
 
-    print("latitude :- $latitude ");
-    print("longitude :-  $longitude");
-    print("address :- $address");
+    print("latitude :- ${widget.latitude}");
+    print("longitude :-  ${widget.longitude}");
+    print("address :- ${widget.address}");
     print("googleController.address.value :- ${googleController.address.value}");
 
     return Scaffold(
@@ -568,11 +567,8 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                                       ? const CircularProgressIndicator(
                                           color: ColorUtils.white,
                                         )
-                                      : (PrefServices.getDouble('saveLat') ==
-                                                  0.0 &&
-                                              PrefServices.getDouble(
-                                                      'saveLong') ==
-                                                  0.0)
+                                      : (PrefServices.getDouble('saveLat') == 0.0 &&
+                                              PrefServices.getDouble('saveLong') == 0.0)
                                           ? CustomText(
                                               '',
                                               fontWeight: FontWeight.w500,

@@ -161,19 +161,11 @@ class _IntegrateGoogleMapState extends State<IntegrateGoogleMap> {
                               PrefServices.setValue('saveAddress',widget.address ?? googleController.address.value);
                               PrefServices.setValue('saveLat',widget.latitude ?? googleController.lastMapPosition.value!.latitude);
                               PrefServices.setValue('saveLong',widget.longitude ?? googleController.lastMapPosition.value!.longitude);
-
-
                               print("Save Address :- ${widget.address ?? googleController.address.value}");
-
                               googleController.onLocationData(
-                                widget.address ??
-                                    googleController.address.value,
-                                widget.latitude ??
-                                    googleController
-                                        .lastMapPosition.value!.latitude,
-                                widget.longitude ??
-                                    googleController
-                                        .lastMapPosition.value!.longitude,
+                                widget.address ?? googleController.address.value,
+                                widget.latitude ?? googleController.lastMapPosition.value!.latitude,
+                                widget.longitude ?? googleController.lastMapPosition.value!.longitude,
                               );
                             },
                             title: StringUtils.selectTxt,

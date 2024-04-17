@@ -67,13 +67,19 @@ class _MantraScreenState extends State<MantraScreen> {
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  SizedBox(height: 20.h,),
+               //   SizedBox(height: 20.h,),
                   Container(
                     height: 65.h,
-                    width: 65.w,
+                    width: 80.w,
                     decoration: BoxDecoration(
                       image: DecorationImage(image:AssetImage(AssetUtils.agniKundImages),fit: BoxFit.cover),
                       borderRadius: BorderRadius.all(Radius.circular(5.r)),
+                      boxShadow: [
+                        BoxShadow(
+                          blurRadius: 10.w,
+                          color: ColorUtils.greyColor,
+                        ),
+                      ]
                     ),
                   ),
                   SizedBox(height: 20.h,),
@@ -92,7 +98,7 @@ class _MantraScreenState extends State<MantraScreen> {
                           Center(
                             child: Container(
                               height: 50.26.h,
-                              width: 250.43.w,
+                              width: 230.43.w,
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.all(Radius.circular(27.r)),
                                 gradient: const LinearGradient(
@@ -105,6 +111,7 @@ class _MantraScreenState extends State<MantraScreen> {
                                 ),
                               ),
                               child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
                                   Padding(
                                     padding:EdgeInsets.only(top: 5.h,bottom: 5.h),
@@ -114,13 +121,14 @@ class _MantraScreenState extends State<MantraScreen> {
                                       child: LocalAssets(imagePath: AssetUtils.sunriseImages),
                                     ),
                                   ),
-                                  SizedBox(width: 10.w,),
                                   CustomText(
                                     StringUtils.sunriseTxt,
                                     fontWeight: FontWeight.w600,
                                     fontSize: 17.sp,
                                   ),
-                                ],
+                                SizedBox(width: 10.w,),
+
+                        ],
                               ),
                             ),
                           ),
@@ -219,7 +227,7 @@ class _MantraScreenState extends State<MantraScreen> {
                           Center(
                             child: Container(
                               height: 50.26.h,
-                              width: 250.43.w,
+                              width: 230.43.w,
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.all(Radius.circular(27.r)),
                                 gradient: LinearGradient(
@@ -232,6 +240,7 @@ class _MantraScreenState extends State<MantraScreen> {
                                 ),
                               ),
                               child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
                                   Padding(
                                     padding:EdgeInsets.only(top: 5.h,bottom: 5.h),
@@ -241,12 +250,12 @@ class _MantraScreenState extends State<MantraScreen> {
                                       child: LocalAssets(imagePath: AssetUtils.sunsetImages),
                                     ),
                                   ),
-                                  SizedBox(width: 10.w,),
                                   CustomText(
                                     StringUtils.sunsetTxt,
                                     fontWeight: FontWeight.w600,
                                     fontSize: 17.sp,
                                   ),
+                                  SizedBox(width: 10.w,),
                                 ],
                               ),
                             ),

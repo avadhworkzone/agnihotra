@@ -7,6 +7,7 @@ import 'package:sunrise_app/utils/color_utils.dart';
 import 'package:sunrise_app/utils/image_utils.dart';
 import 'package:sunrise_app/utils/string_utils.dart';
 import 'package:sunrise_app/view/sunrise_sunset_screen/sunrise_sunset_screen.dart';
+import 'package:sunrise_app/viewModel/settings_controller.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({Key? key}) : super(key: key);
@@ -16,27 +17,13 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SeetingScreenState extends State<SettingsScreen> {
-  RxBool on = false.obs;
-  void toggle() => on.value = on.value ? false : true;
 
-  RxBool on1 = false.obs;
-  void toggle1() => on1.value = on1.value ? false : true;
-
-  RxBool on2 = false.obs;
-  void toggle2() => on2.value = on2.value ? false : true;
-
-  RxBool on3 = false.obs;
-  void toggle3() => on3.value = on3.value ? false : true;
-
-  RxBool on4 = false.obs;
-  void toggle4() => on4.value = on4.value ? false : true;
-//  SettingScreenController settingScreenController = Get.find<SettingScreenController>();
+ SettingScreenController settingScreenController = Get.find<SettingScreenController>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body:Stack(
+      body:Obx(() =>  Stack(
         children: [
-
           Container(
             decoration: BoxDecoration(
               image:DecorationImage(
@@ -128,11 +115,11 @@ class _SeetingScreenState extends State<SettingsScreen> {
                                 Transform.scale(
                                  scale: 0.8,
                                   child: Switch(
-                                    value: on.value,
+                                    value: settingScreenController.on.value,
                                     onChanged: (value){
-                                      setState(() {
-                                        toggle();
-                                      });
+                                      //setState(() {
+                                        settingScreenController.toggle();
+                                     // });
                                     },
                                   ),
                                 ),
@@ -160,11 +147,11 @@ class _SeetingScreenState extends State<SettingsScreen> {
                                 Transform.scale(
                                   scale: 0.8,
                                   child: Switch(
-                                    value: on1.value,
+                                    value: settingScreenController.on1.value,
                                     onChanged: (value){
-                                      setState(() {
-                                        toggle1();
-                                      });
+                                     // setState(() {
+                                        settingScreenController.toggle1();
+                                     // });
                                     },
                                   ),
                                 ),
@@ -192,11 +179,11 @@ class _SeetingScreenState extends State<SettingsScreen> {
                                 Transform.scale(
                                   scale: 0.8,
                                   child: Switch(
-                                    value: on2.value,
+                                    value: settingScreenController.on2.value,
                                     onChanged: (value){
-                                      setState(() {
-                                        toggle2();
-                                      });
+                                     // setState(() {
+                                        settingScreenController.toggle2();
+                                     // });
                                     },
                                   ),
                                 ),
@@ -223,12 +210,10 @@ class _SeetingScreenState extends State<SettingsScreen> {
                                 const Spacer(),
                                 Transform.scale(
                                   scale: 0.8,
-                                  child: Switch(
-                                    value: on3.value,
-                                    onChanged: (value){
-                                      setState(() {
-                                        toggle3();
-                                      });
+                                  child:  Switch(
+                                    value: settingScreenController.on3.value,
+                                    onChanged: (value) {
+                                      settingScreenController.toggle3();
                                     },
                                   ),
                                 ),
@@ -256,11 +241,11 @@ class _SeetingScreenState extends State<SettingsScreen> {
                                 Transform.scale(
                                   scale: 0.8,
                                   child: Switch(
-                                    value: on4.value,
+                                    value: settingScreenController.on4.value,
                                     onChanged: (value){
-                                      setState(() {
-                                        toggle4();
-                                      });
+                                    //  setState(() {
+                                        settingScreenController.toggle4();
+                                     // });
                                     },
                                   ),
                                 ),
@@ -305,6 +290,8 @@ class _SeetingScreenState extends State<SettingsScreen> {
           ),
         ],
       ),
+      ),
+
     );
   }
 }
