@@ -20,14 +20,11 @@ import 'package:sunrise_app/view/setting_screen/setting_screen.dart';
 import 'package:sunrise_app/viewModel/google_map_controller.dart';
 import 'package:sunrise_app/viewModel/sunrise_sunset_controller.dart';
 
-
 class SunriseSunetScreen extends StatefulWidget {
   double? latitude;
   double? longitude;
   String? address;
   bool? value;
-
-
 
   SunriseSunetScreen(
       {Key? key, this.latitude, this.longitude, this.address, this.value})
@@ -43,7 +40,7 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
       Get.find<SunriseSunsetController>();
   GoogleController googleController = Get.find<GoogleController>();
 
-  String formatAddress() {
+  String formatAddress(){
     if (address == null || (latitude == 0 && longitude == 0)) {
       return StringUtils.locationSetTxt;
     }
@@ -60,61 +57,27 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
   }
 
   @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-    _loadAddress();
+  void initState(){
 
-    sunriseSunsetController.selectedDate.value = DateTime.now();
-      Timer.periodic(const Duration(seconds: 1), (timer){
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_){
+
+      PrefServices.getString('saveAddress');
+    sunriseSunsetController.getSunriseSunsetTime(
+          PrefServices.getDouble('saveLat'),
+          PrefServices.getDouble('saveLong'));
+
+      print("selectedDate :- ${sunriseSunsetController.selectedDate}");
+
+
+
+      sunriseSunsetController.selectedDate.value = DateTime.now();
+      Timer.periodic(const Duration(seconds: 1), (timer) {
         sunriseSunsetController.updateTime();
       });
     });
 
     PrefServices.getString('language');
-  }
-
-  Future<void> _loadAddress() async {
-    String? storedAddress = await PrefServices.getString('address');
-    List<String> storedLocationList =
-        PrefServices.getStringList('locationList');
-    double? storedLatitude = await PrefServices.getDouble('latitude');
-    double? storedLongitude = await PrefServices.getDouble('longitude');
-
-    if (storedAddress != null) {
-      setState(() {
-        address ??= storedAddress;
-      });
-    } else {
-      setState(() {
-        address = null;
-      });
-    }
-    if (storedLatitude != null) {
-      setState(() {
-        latitude ??= storedLatitude;
-      });
-    } else {
-      setState(() {
-        latitude = null;
-      });
-    }
-
-    if (storedLongitude != null) {
-      setState(() {
-        longitude ??= storedLongitude;
-      });
-    } else {
-      setState(() {
-        longitude = null;
-      });
-    }
-    if (storedLocationList != null) {
-      setState(() {
-        googleController.locationList.value =
-            RxList<String>(storedLocationList);
-      });
-    }
   }
 
   Future<void> _clearData() async {
@@ -128,25 +91,14 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
   double? longitude;
   String? address;
 
-
-  @override
-  Widget build(BuildContext context) {
-    if (latitude != null && longitude != null && (latitude != 0 || longitude != 0)) {
-
-
-
-
-
   @override
   Widget build(BuildContext context){
 
+    print("latitude :- $latitude ");
+    print("longitude :-  $longitude");
+    print("address :- $address");
+    print("googleController.address.value :- ${googleController.address.value}");
 
-    if (latitude != null &&
-        longitude != null &&
-        (latitude != 0 || longitude != 0)) {
-      print("");
-      sunriseSunsetController.getSunriseSunsetTime(latitude!, longitude!);
-    }
     return Scaffold(
         key: _scaffoldKey,
         endDrawer: Drawer(
@@ -430,6 +382,7 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                 SizedBox(
                   height: 10.h,
                 ),
+
                 Row(
                   children: [
                     const Icon(
@@ -453,7 +406,6 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
         ),
         body: Stack(
           children: [
-
             Container(
               decoration: BoxDecoration(
                 image: DecorationImage(
@@ -464,7 +416,6 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                 ),
               ),
             ),
-
             SingleChildScrollView(
               child: Column(
                 children: [
@@ -495,9 +446,6 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                                 Image.asset(
                                   AssetUtils.mantraImages,
                                 ),
-                                // LocalAssets(
-                                //     imagePath: AssetUtils.mantraImages,
-                                // ),
                                 SizedBox(
                                   width: 8.w,
                                 ),
@@ -535,10 +483,8 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
 
                   /// CALENDAR ICON
                   InkWell(
-
                     onTap: () async {
                       sunriseSunsetController.selectDate(context);
-
                     },
                     child: const CircleAvatar(
                       backgroundColor: ColorUtils.white,
@@ -555,10 +501,10 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
 
                   /// Selected Date of Calender
                   Obx(() => CustomText(
-                    DateFormat('dd MMMM yyyy').format(sunriseSunsetController.selectedDate.value),
-                    fontWeight: FontWeight.w500,
-                    fontSize: 20.sp,
-                  )),
+                        DateFormat('dd MMMM yyyy').format(sunriseSunsetController.selectedDate.value),
+                        fontWeight: FontWeight.w500,
+                        fontSize: 20.sp,
+                      )),
 
                   SizedBox(
                     height: 10.h,
@@ -594,7 +540,6 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                     () => Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-
                         /// SUNRISE
                         Stack(
                           children: [
@@ -623,11 +568,21 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                                       ? const CircularProgressIndicator(
                                           color: ColorUtils.white,
                                         )
-                                      : CustomText(
-                                          sunriseSunsetController.sunrise.value,
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: 20.sp,
-                                        ),
+                                      : (PrefServices.getDouble('saveLat') ==
+                                                  0.0 &&
+                                              PrefServices.getDouble(
+                                                      'saveLong') ==
+                                                  0.0)
+                                          ? CustomText(
+                                              '',
+                                              fontWeight: FontWeight.w500,
+                                              fontSize: 20.sp,
+                                            )
+                                          : CustomText(
+                                              PrefServices.getString('sunrise'),
+                                              fontWeight: FontWeight.w500,
+                                              fontSize: 20.sp,
+                                            ),
                                 ),
                               ),
                             ),
@@ -642,6 +597,7 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                             ),
                           ],
                         ),
+
                         SizedBox(
                           width: 20.w,
                         ),
@@ -674,11 +630,21 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                                       ? const CircularProgressIndicator(
                                           color: ColorUtils.white,
                                         )
-                                      : CustomText(
-                                          sunriseSunsetController.sunset.value,
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: 20.sp,
-                                        ),
+                                      : (PrefServices.getDouble('saveLat') ==
+                                                  0.0 &&
+                                              PrefServices.getDouble(
+                                                      'saveLong') ==
+                                                  0.0)
+                                          ? CustomText(
+                                              '',
+                                              fontWeight: FontWeight.w500,
+                                              fontSize: 20.sp,
+                                            )
+                                          : CustomText(
+                                              PrefServices.getString('sunset'),
+                                              fontWeight: FontWeight.w500,
+                                              fontSize: 20.sp,
+                                            ),
                                 ),
                               ),
                             ),
@@ -708,7 +674,6 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                       Padding(
                         padding: EdgeInsets.only(top: 23.h),
                         child: Container(
-                          // height: 63.93.h,
                           width: 287.83.w,
                           alignment: Alignment.center,
                           decoration: BoxDecoration(
@@ -721,23 +686,24 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                           ),
                           child: Column(
                             children: [
-                              Padding(
-                                padding: EdgeInsets.only(
-                                    left: 20.w, right: 20.w, top: 30.h),
-                                child: CustomText(
-                                  formatAddress(),
-                                  textAlign: TextAlign.center,
-                                  color: ColorUtils.black,
-                                ),
-                              ),
-                              if (latitude != null &&
-                                  longitude != null &&
-                                  (latitude != 0 || longitude != 0))
+                              if (PrefServices.getString('saveAddress')
+                                  .isNotEmpty)
                                 Padding(
-                                  padding:
-                                      EdgeInsets.only(left: 20.w, right: 20.w),
+                                  padding: EdgeInsets.only(
+                                      left: 20.w, right: 20.w, top: 30.h),
                                   child: CustomText(
-                                    '(${formateLatitudeLongitude(latitude!)},${formateLatitudeLongitude(longitude!)})',
+                                    PrefServices.getString('saveAddress'),
+                                    textAlign: TextAlign.center,
+                                    color: ColorUtils.black,
+                                  ),
+                                ),
+                              if (PrefServices.getString('saveAddress').isEmpty)
+                                Padding(
+                                  padding: EdgeInsets.only(
+                                      left: 20.w, right: 20.w, top: 30.h),
+                                  child: const CustomText(
+                                    StringUtils.locationSetTxt,
+                                    textAlign: TextAlign.center,
                                     color: ColorUtils.black,
                                   ),
                                 ),
@@ -802,6 +768,7 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                                       await _clearData();
                                       sunriseSunsetController
                                           .clearSunriseSunsetData();
+
                                       final containIndex = googleController
                                           .locationList
                                           .indexWhere(
@@ -977,16 +944,24 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                                 'Location name not found',
                                 color: ColorUtils.black,
                               ),
+
                         const Divider(),
+
+                        /// Delete All location
                         TextButton(
                           onPressed: () {
                             googleController.clearLocationList();
-                            sunriseSunsetController.clearSunriseSunsetData();
-                            _clearData();
-                            sunriseSunsetController.weather.value = null;
-                            latitude = 0;
-                            longitude = 0;
-                            address = '';
+                            googleController.address.value = '';
+                            sunriseSunsetController.sunset.value = '';
+                            sunriseSunsetController.sunrise.value = '';
+
+                            PrefServices.setValue('saveAddress', '');
+                            PrefServices.setValue('sunrise', '');
+                            PrefServices.setValue('sunset', '');
+
+                            PrefServices.setValue('saveLat', 0.0);
+                            PrefServices.setValue('saveLong', 0.0);
+
                             setState(() {});
                             Get.back(result: false);
                           },
