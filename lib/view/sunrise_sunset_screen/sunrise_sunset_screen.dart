@@ -21,7 +21,9 @@ import 'package:sunrise_app/viewModel/google_map_controller.dart';
 import 'package:sunrise_app/viewModel/settings_controller.dart';
 import 'package:sunrise_app/viewModel/sunrise_sunset_controller.dart';
 
+
 class SunriseSunetScreen extends StatefulWidget {
+
   double? latitude;
   double? longitude;
   String? address;
@@ -43,11 +45,12 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
   SettingScreenController settingScreenController = Get.find<
       SettingScreenController>();
 
-  String formatAddress(){
+  String formatAddress() {
     if (address == null || (latitude == 0 && longitude == 0)) {
       return StringUtils.locationSetTxt;
     }
-    List<String> addressParts = address!.split(',').map((part) => part.trim()).toList();
+    List<String> addressParts =
+        address!.split(',').map((part) => part.trim()).toList();
     addressParts.removeWhere((part) => part.isEmpty);
 
     return addressParts.join(', ');
@@ -59,19 +62,17 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
   }
 
   @override
-  void initState(){
-
+  void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_){
 
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       PrefServices.getString('saveAddress');
-    sunriseSunsetController.getSunriseSunsetTime(
-          PrefServices.getDouble('saveLat'),
-          PrefServices.getDouble('saveLong'));
+
+      sunriseSunsetController.getSunriseSunsetTime(
+          PrefServices.getDouble('currentLat'),
+          PrefServices.getDouble('currentLong'));
 
       print("selectedDate :- ${sunriseSunsetController.selectedDate}");
-
-
 
       sunriseSunsetController.selectedDate.value = DateTime.now();
       Timer.periodic(const Duration(seconds: 1), (timer) {
@@ -635,10 +636,11 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                   ),
 
                   /// SUNRISE and Sunset Time
-                  Obx(
-                    () => Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                  Obx(() => Row(
+
+                    mainAxisAlignment: MainAxisAlignment.center,
                       children: [
+
                         /// SUNRISE
                         Stack(
                           children: [
@@ -772,6 +774,7 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                             ),
                           ],
                         ),
+
                       ],
                     ),
                   ),
@@ -786,7 +789,6 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                       Padding(
                         padding: EdgeInsets.only(top: 23.h),
                         child: Container(
-                          width: 287.83.w,
                           alignment: Alignment.center,
                           decoration: BoxDecoration(
                             color: ColorUtils.white,
@@ -798,18 +800,19 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                           ),
                           child: Column(
                             children: [
-                              if (PrefServices.getString('saveAddress')
+                              if (PrefServices.getString('currentAddress')
                                   .isNotEmpty)
                                 Padding(
                                   padding: EdgeInsets.only(
                                       left: 20.w, right: 20.w, top: 30.h),
                                   child: CustomText(
-                                    PrefServices.getString('saveAddress'),
+                                    PrefServices.getString('currentAddress'),
                                     textAlign: TextAlign.center,
                                     color: ColorUtils.black,
                                   ),
                                 ),
-                              if (PrefServices.getString('saveAddress').isEmpty)
+                              if (PrefServices.getString('currentAddress')
+                                  .isEmpty)
                                 Padding(
                                   padding: EdgeInsets.only(
                                       left: 20.w, right: 20.w, top: 30.h),
@@ -819,17 +822,35 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                                     color: ColorUtils.black,
                                   ),
                                 ),
-                              SizedBox(height: 10.h),
+
+                              SizedBox(height: 4.h),
+                              if(PrefServices.getDouble('currentLat') != 0 &&
+                                  PrefServices.getDouble('currentLong') != 0)
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    CustomText(
+                                      "(${PrefServices.getDouble('currentLat').toStringAsFixed(4)},${PrefServices.getDouble('currentLong').toStringAsFixed(4)})",
+                                      textAlign: TextAlign.center,
+                                      color: ColorUtils.black,
+                                    ),
+                                    const CustomText(
+                                      StringUtils.indiaStdTime,
+                                      textAlign: TextAlign.center,
+                                      color: ColorUtils.black,
+                                    ),
+                                  ],
+                                ),
+                              SizedBox(height: 7.h),
                             ],
                           ),
                         ),
                       ),
-                      Positioned(
-                        left: 120.w,
-                        child: InkWell(
-                          onTap: () {
-                            _showLocationDialog();
-                          },
+                      InkWell(
+                        onTap: () {
+                          _showLocationDialog();
+                        },
+                        child: Center(
                           child: Container(
                             width: 50.29.w,
                             height: 50.29.h,
@@ -918,7 +939,9 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                                             newAddress = value;
                                           },
                                         ),
-                                        actions: [
+
+                                        actions : [
+
                                           Row(
                                             children: [
                                               TextButton(
@@ -1017,6 +1040,7 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                       ),
                     ),
                   ),
+
                 ],
               ),
             ),
@@ -1024,7 +1048,7 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
         ));
   }
 
-  void _showLocationDialog() {
+  void _showLocationDialog(){
     Get.dialog(
       AlertDialog(
         title: SizedBox(
@@ -1062,27 +1086,16 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                         /// Delete All location
                         TextButton(
                           onPressed: () {
-                            googleController.clearLocationList();
-                            googleController.address.value = '';
-                            sunriseSunsetController.sunset.value = '';
-                            sunriseSunsetController.sunrise.value = '';
-
-                            PrefServices.setValue('saveAddress', '');
-                            PrefServices.setValue('sunrise', '');
-                            PrefServices.setValue('sunset', '');
-
-                            PrefServices.setValue('saveLat', 0.0);
-                            PrefServices.setValue('saveLong', 0.0);
-
-                            setState(() {});
-                            Get.back(result: false);
+                            _deleteAllLocationDialog();
                           },
                           child: const CustomText(
                             StringUtils.deleteLocationTxt,
                             color: ColorUtils.black,
                           ),
                         ),
+
                         const Divider(),
+
                         TextButton(
                           onPressed: () {
                             Get.back();
@@ -1153,4 +1166,89 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
       ),
     );
   }
+
+  Future<void> _deleteAllLocationDialog() async {
+    Get.back();
+    return Get.dialog(
+        AlertDialog(
+          contentPadding: EdgeInsets.symmetric(horizontal: 20.w),
+
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(7.r), // Change border radius
+          ),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              SizedBox(
+                height: 11.h,
+              ),
+              CustomText(
+                StringUtils.deleteAllLocation,
+                fontWeight: FontWeight.w600,
+                color: ColorUtils.black,
+                textAlign: TextAlign.left,
+                fontSize: 15.sp,
+              ),
+
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+
+                  InkWell(
+                    onTap: () {
+                      Get.back();
+                    },
+                    child: CustomText(
+                      StringUtils.cancleTxt,
+                      fontWeight: FontWeight.w600,
+                      color: ColorUtils.orange,
+                      textAlign: TextAlign.center,
+                      fontSize: 13.sp,
+                    ),
+                  ),
+                  SizedBox(
+                    width: 10.w,
+                  ),
+
+                  /// Proceed
+                  InkWell(
+                    onTap: (){
+                      googleController.clearLocationList();
+                      googleController.address.value = '';
+                      sunriseSunsetController.sunset.value = '';
+                      sunriseSunsetController.sunrise.value = '';
+                      widget.address = '';
+
+                      PrefServices.setValue('currentAddress', '');
+                      PrefServices.setValue('sunrise', '');
+                      PrefServices.setValue('sunset', '');
+
+                      PrefServices.setValue('currentLat', 0.0);
+                      PrefServices.setValue('currentLong', 0.0);
+
+                      setState(() {});
+                      Get.back(result: false);
+                    },
+                    child: CustomText(
+                      StringUtils.proceedTxt,
+                      fontWeight: FontWeight.w600,
+                      color: ColorUtils.orange,
+                      textAlign: TextAlign.center,
+                      fontSize: 13.sp,
+                    ),
+                  ),
+
+
+                ],
+              ),
+              SizedBox(
+                height: 16.h,
+              ),
+            ],
+          ),
+        ));
+
+
+  }
+
 }

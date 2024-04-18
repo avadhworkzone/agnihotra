@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:sunrise_app/model/country_timezone_model.dart';
 import 'package:sunrise_app/model/future_sunrise_sunsetTime_model.dart';
 import 'package:sunrise_app/model/sunrise_sunset_model.dart';
 import 'package:sunrise_app/services/prefServices.dart';
@@ -83,13 +84,15 @@ class SunriseSunsetController extends GetxController {
   RxString  formattedSunsetTime = ''.obs;
   RxBool isLoad = false.obs;
   RxBool isFutureLoad = false.obs;
+  RxBool isCountryLoad = false.obs;
   SunriseSunsetModel? sunriseSunsetModel;
   FutureSunriseSunsetTimeModel? futureSunriseSunsetTimeModel;
+  CountryTimezoneModel? countryTimezoneModel;
   RxString selectedValue = ''.obs;
   final Uri _url = Uri.parse('https://www.freeprivacypolicy.com/live/b55e5ea0-1038-4c24-b269-7359dcad9bb2');
 
 
-  Future<void> getSunriseSunsetTime(double latitude, double longitude) async {
+ Future<void> getSunriseSunsetTime(double latitude, double longitude) async {
 
     isLoad.value = true;
     sunriseSunsetModel = await SunriseSunsetApi.getData(latitude, longitude);
@@ -103,6 +106,24 @@ class SunriseSunsetController extends GetxController {
     print("SunRise Value :- ${sunrise.value}");
     print("sunset Value :- ${sunset.value}");
     isLoad.value = false;
+    update();
+
+  }
+
+  Future<void> countryTimeZone(double latitude, double longitude,String date,String countryTimeZone) async {
+
+    isCountryLoad.value = true;
+    countryTimezoneModel = await SunriseSunsetApi.getDifferentCountryTime(latitude, longitude,date,countryTimeZone);
+
+    sunrise.value = countryTimezoneModel!.results?.sunrise ?? '';
+    sunset.value = countryTimezoneModel?.results?.sunset ?? '';
+
+    PrefServices.setValue('sunrise', sunrise.value);
+    PrefServices.setValue('sunset', sunset.value);
+
+    print("SunRise Value :- ${sunrise.value}");
+    print("sunset Value :- ${sunset.value}");
+    isCountryLoad.value = false;
     update();
 
   }
@@ -123,12 +144,12 @@ class SunriseSunsetController extends GetxController {
     DateTime utcSunsetTime = DateTime.parse(futureSunsetTime.value);
 
     // Create a DateTime object with the UTC time
-    DateTime indiaSunriseTime = utcSunRiseTime.add(const Duration(hours: 5, minutes: 30));
-    DateTime indiaSunsetTime = utcSunsetTime.add(const Duration(hours: 5, minutes: 30));
+    DateTime indiaSunriseTime = utcSunRiseTime.add(const Duration(hours: 5, minutes: 31,seconds: 15));
+    DateTime indiaSunsetTime = utcSunsetTime.add(const Duration(hours: 5, minutes: 28,seconds: 30));
 
-    // Format the DateTime object to 12-hour format with AM/PM
-    formattedSunriseTime.value = DateFormat('hh:mm:ss a').format(indiaSunriseTime);
-    formattedSunsetTime.value = DateFormat('hh:mm:ss a').format(indiaSunsetTime);
+     // Format the DateTime object to 12-hour format with AM/PM
+     formattedSunriseTime.value = DateFormat('hh:mm:ss a').format(indiaSunriseTime);
+     formattedSunsetTime.value = DateFormat('hh:mm:ss a').format(indiaSunsetTime);
 
     print("Future Sun Rise Value :- ${formattedSunriseTime.value}");
     print("Future sunset Value :- ${formattedSunsetTime.value}");
@@ -140,6 +161,8 @@ class SunriseSunsetController extends GetxController {
     update();
 
   }
+
+
 
   Future<void> clearSunriseSunsetData() async {
     sunrise.value = '';
