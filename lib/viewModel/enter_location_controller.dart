@@ -61,7 +61,9 @@ class LocationController extends GetxController {
 
         PrefServices.setValue('currentAddress',address.value);
         PrefServices.setValue('currentLat',latitude.value);
-          PrefServices.setValue('currentLong',longitude.value);
+        PrefServices.setValue('currentLong',longitude.value);
+
+
 
         Get.offAll(
           SunriseSunetScreen(
@@ -71,6 +73,7 @@ class LocationController extends GetxController {
             value: true,
           ),
         );
+        googleController.confirmTimeZone();
         isLoad.value = false;
         update();
         latitudeController.clear();

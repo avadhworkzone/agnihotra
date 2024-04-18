@@ -1,21 +1,27 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geocoding/geocoding.dart';
+import 'package:sunrise_app/common_Widget/common_button.dart';
+import 'package:sunrise_app/common_Widget/common_text.dart';
 import 'package:sunrise_app/services/prefServices.dart';
+import 'package:sunrise_app/utils/color_utils.dart';
+import 'package:sunrise_app/utils/string_utils.dart';
 import 'package:sunrise_app/view/sunrise_sunset_screen/sunrise_sunset_screen.dart';
 
 class GoogleController extends GetxController {
+
 
   final TextEditingController searchController = TextEditingController();
   final Completer<GoogleMapController> _controller = Completer();
   GoogleMapController? mapController;
   final RxSet<Marker> markers = <Marker>{}.obs;
   Rx<LatLng?> lastMapPosition = Rx<LatLng?>(null);
-  Rx<MapType> currentMapType = MapType.hybrid.obs;
+  Rx<MapType> currentMapType = MapType.normal.obs;
   RxString address = ''.obs;
   RxString searchAddress = ''.obs;
   RxBool isLoad = false.obs;
@@ -229,14 +235,16 @@ class GoogleController extends GetxController {
   }
 
   toggleMapType() {
-    if (currentMapType.value == MapType.hybrid) {
+
+    if (currentMapType.value == MapType.satellite){
       currentMapType.value = MapType.normal;
-      print("MapType===Satellite=========");
+       print("normal View==============");
     } else {
-      currentMapType.value = MapType.hybrid;
-      print("MapType===hybrid=========");
+      currentMapType.value = MapType.satellite;
+      print("satellite View==============");
+
     }
-    update();
+
   }
 
   Future<String> loadJsonFromAsset(String assetPath) async {
@@ -244,7 +252,6 @@ class GoogleController extends GetxController {
   }
 
   onLocationData(String addr, double lati, double long) async {
-
     address.value = addr;
 
     print("=======> Address :- ${address.value}");
@@ -253,16 +260,105 @@ class GoogleController extends GetxController {
     print('======LocationList=========> $locationList');
     await PrefServices.setValue('locationList', locationList);
 
-    Get.offAll(
-      SunriseSunetScreen(
-        latitude: lati,
-        longitude: long,
-        address: address.value,
-        value: true,
-      ),
-    );
+    if(address.value.isNotEmpty){
+      Get.offAll(
+        SunriseSunetScreen(
+          latitude: lati,
+          longitude: long,
+          address: address.value,
+          value: true,
+        ),
+      );
+      confirmTimeZone();
+    }
 
   }
+
+  Future<void> confirmTimeZone() async {
+    return Get.dialog(
+      AlertDialog(
+        contentPadding: EdgeInsets.zero,
+        titlePadding: EdgeInsets.zero,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(7.r), // Change border radius
+        ),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            SizedBox(
+              height: 11.h,
+            ),
+            CustomText(
+              StringUtils.timeZonTxt,
+              fontWeight: FontWeight.w600,
+              color: ColorUtils.black,
+              textAlign: TextAlign.center,
+              fontSize: 15.sp,
+            ),
+            SizedBox(
+              height: 10.h,
+            ),
+            CustomText(
+              StringUtils.standardTime,
+              fontWeight: FontWeight.w500,
+              color: ColorUtils.black,
+              textAlign: TextAlign.center,
+              fontSize: 13.sp,
+            ),
+
+            SizedBox(
+              height: 10.h,
+            ),
+
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                CustomText(
+                  StringUtils.changeTimeTxt,
+                  fontWeight: FontWeight.w600,
+                  color: ColorUtils.orange,
+                  textAlign: TextAlign.center,
+                  fontSize: 13.sp,
+                ),
+                SizedBox(
+                  width: 10.w,
+                ),
+
+                /// Confirm Button
+                Padding(
+                  padding: EdgeInsets.only(right: 15.w),
+                  child: CustomBtn(
+                    height: 26.h,
+                    width: 81.w,
+                    gradient: const LinearGradient(
+                      colors: [
+                        ColorUtils.gridentColor1,
+                        ColorUtils.gridentColor2,
+                      ],
+                      begin: AlignmentDirectional.topEnd,
+                      end: AlignmentDirectional.bottomEnd,
+                    ),
+                    onTap: (){
+                      Get.back();
+                    },
+                    title: StringUtils.confirmTxt,
+                    fontSize: 15.sp,
+                  ),
+                ),
+              ],
+            ),
+
+            SizedBox(
+              height: 16.h,
+            ),
+
+          ],
+        ),
+      ));
+
+
+  }
+
+
+
 }
-
-

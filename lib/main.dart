@@ -12,7 +12,6 @@ import 'package:sunrise_app/viewModel/sunrise_sunset_controller.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 
-
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -35,14 +34,17 @@ class MyApp extends StatelessWidget {
         supportedLocales: AppLocalizations.supportedLocales,
         locale:  Locale(PrefServices.getString('language').isEmpty?"en_US":PrefServices.getString('language')),
         fallbackLocale: const Locale('en_US'),
+        // home:  const ChangeTimeZoneScreen(),
         home:PrefServices.getString('language').isEmpty ? const WelcomeScreen() : SunriseSunetScreen(),
         debugShowCheckedModeBanner: false,
       ),
     );
   }
+
   SunriseSunsetController sunriseSunsetController = Get.put(SunriseSunsetController());
   GoogleController googleController = Get.put(GoogleController());
   LocationController locationController = Get.put(LocationController());
   SettingScreenController settingScreenController = Get.put(SettingScreenController());
+
 }
 

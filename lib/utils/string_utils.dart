@@ -81,12 +81,15 @@ class StringUtils {
   static const timeZonTxt = 'timeZonTxt';
   static const standardTime = 'standardTime';
   static const changeTimeTxt = 'changeTimeTxt';
+  static const timingDownload = 'timingDownload';
+  static const deleteAllLocation = 'deleteAllLocation';
   static const confirmTxt = 'confirmTxt';
   static const renameLocationBtnTxt = 'renameLocationBtnTxt';
   static const renameLocationTxt = 'renameLocationTxt';
   static const deleteLocationBtnTxt = 'deleteLocationBtnTxt';
   static const enterLocationTxt = 'enterLocationTxt';
   static const cancleTxt = 'cancleTxt';
+  static const proceedTxt = 'proceedTxt';
   static const languageValidationTxt = 'languageValidationTxt';
   static const latitudeIsRequired = "latitudeIsRequired";
   static const validLatitude = "validLatitude";
@@ -94,4 +97,5 @@ class StringUtils {
   static const validLongitude = "validLongitude";
   static const searchText = "searchText";
   static const indiaStdTime = "indiaStdTime";
+
 }
