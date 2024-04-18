@@ -119,7 +119,9 @@ class _TrikalSandhyaMantraState extends State<TrikalSandhyaMantra> {
                                   child: CustomText(
                                       'ॐ अच्युताय नमः।\nॐ अनन्ताय नमः|\nॐ गोविन्दाय नमः।',
                                       color: ColorUtils.black,
-                                      fontWeight: FontWeight.w500))
+                                      fontWeight: FontWeight.w500,
+                                  ),
+                              ),
                             ],
                           ),
                           const Divider(),

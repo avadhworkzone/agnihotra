@@ -54,7 +54,7 @@ dependencies:
   google_api_headers:
   share_plus: ^7.2.2
   gradient_icon: ^2.0.9
-
+  url_launcher: ^6.2.6
 
 
 

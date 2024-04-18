@@ -7,6 +7,7 @@ import 'package:sunrise_app/model/sunrise_sunset_model.dart';
 import 'package:sunrise_app/services/prefServices.dart';
 import 'package:sunrise_app/utils/const_utils.dart';
 import 'package:sunrise_app/view/sunrise_sunset_screen/sunrise_sunset_api.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:weather/weather.dart';
 
 class SunriseSunsetController extends GetxController {
@@ -85,10 +86,10 @@ class SunriseSunsetController extends GetxController {
   SunriseSunsetModel? sunriseSunsetModel;
   FutureSunriseSunsetTimeModel? futureSunriseSunsetTimeModel;
   RxString selectedValue = ''.obs;
+  final Uri _url = Uri.parse('https://www.freeprivacypolicy.com/live/b55e5ea0-1038-4c24-b269-7359dcad9bb2');
 
 
-
- Future<void> getSunriseSunsetTime(double latitude, double longitude) async {
+  Future<void> getSunriseSunsetTime(double latitude, double longitude) async {
 
     isLoad.value = true;
     sunriseSunsetModel = await SunriseSunsetApi.getData(latitude, longitude);
@@ -126,8 +127,8 @@ class SunriseSunsetController extends GetxController {
     DateTime indiaSunsetTime = utcSunsetTime.add(const Duration(hours: 5, minutes: 30));
 
     // Format the DateTime object to 12-hour format with AM/PM
-     formattedSunriseTime.value = DateFormat('hh:mm:ss a').format(indiaSunriseTime);
-     formattedSunsetTime.value = DateFormat('hh:mm:ss a').format(indiaSunsetTime);
+    formattedSunriseTime.value = DateFormat('hh:mm:ss a').format(indiaSunriseTime);
+    formattedSunsetTime.value = DateFormat('hh:mm:ss a').format(indiaSunsetTime);
 
     print("Future Sun Rise Value :- ${formattedSunriseTime.value}");
     print("Future sunset Value :- ${formattedSunsetTime.value}");
@@ -147,5 +148,9 @@ class SunriseSunsetController extends GetxController {
     await PrefServices.removeValue('sunset');
   }
 
-
+  Future<void> launchUrl() async {
+    if (!await launch(_url.toString())) {
+      throw 'Could not launch $_url';
+    }
+  }
 }

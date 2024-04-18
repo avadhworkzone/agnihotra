@@ -53,7 +53,7 @@ class _LocationScreenState extends State<LocationScreen> {
                           onPressed: () {
                              Get.back();
                           },
-                          icon: const Icon(
+                          icon: Icon(
                             AssetUtils.backArrowIcon,
                             color: ColorUtils.orange,
                           ),
@@ -97,7 +97,7 @@ class _LocationScreenState extends State<LocationScreen> {
                               textAlign: TextAlign.center,
                             ),
                             Padding(
-                              padding:EdgeInsets.only(left: 8.w),
+                              padding:EdgeInsets.only(left: 8.w, right: 8.w),
                               child: Row(
                                 children: [
                                   Padding(
@@ -110,8 +110,7 @@ class _LocationScreenState extends State<LocationScreen> {
                                     ),
                                   ),
                                   SizedBox(width: 10.w,),
-                                  SizedBox(
-                                    width: 200.w,
+                                  Expanded(
                                     child: CommonTextField(
                                       textAlignVertical: TextAlignVertical.bottom,
                                       validator: ValidationMethod.latitudeValidation,
@@ -122,7 +121,7 @@ class _LocationScreenState extends State<LocationScreen> {
                               ),
                             ),
                             Padding(
-                              padding:EdgeInsets.only(left: 8.w),
+                              padding:EdgeInsets.only(left: 8.w, right: 8.w),
                               child: Row(
                                 children: [
                                   Padding(
@@ -135,9 +134,10 @@ class _LocationScreenState extends State<LocationScreen> {
                                     ),
                                   ),
                                   SizedBox(width: 10.w,),
-                                  SizedBox(
-                                    width: 200.w,
-                                    child: CommonTextField(
+                                  Expanded(
+                                    child:
+
+                                    CommonTextField(
                                       validator: ValidationMethod.longitudeValidation,
                                       textEditController: locationController.longitudeController,
                                     ),
@@ -146,8 +146,6 @@ class _LocationScreenState extends State<LocationScreen> {
                               ),
                             ),
                             SizedBox(height: 70.h,),
-
-                            /// Use this Location
                             Obx((){
                               return locationController.isLoad.value
                                   ? const CircularProgressIndicator()
@@ -164,8 +162,7 @@ class _LocationScreenState extends State<LocationScreen> {
                                     end: AlignmentDirectional.bottomEnd,
                                   ),
                                   onTap: () {
-                                     locationController.getLatLongLocation();
-
+                                    locationController.getLocation();
                                   },
                                   title:StringUtils.locationUseTxt,
                                   fontSize: 15.sp,
@@ -175,7 +172,6 @@ class _LocationScreenState extends State<LocationScreen> {
                             TextButton(
                                 onPressed:() {
                                   locationController.getLocationOnMap();
-
                                 },
                               child: CustomText(
                                 StringUtils.mapLocationUseTxt,
@@ -184,9 +180,7 @@ class _LocationScreenState extends State<LocationScreen> {
                                 color: ColorUtils.orange,
                               ),
                             ),
-
                             SizedBox(height: 50.h,),
-
                           ],
                         ),
                       ),
