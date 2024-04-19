@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -18,12 +20,86 @@ class LocationController extends GetxController {
   RxDouble latData = 0.0.obs;
   RxDouble lonData = 0.0.obs;
   RxBool isLoad = false.obs;
+
+  String coordinates="No Location found";
+  String currentAddress='No Address found';
+
+  double currentLat = 0.0;
+  double currentLong = 0.0;
+
   @override
   void onInit() {
-    // TODO: implement onInit
     super.onInit();
     googleController.locationList.value = PrefServices.getStringList('locationList');
   }
+
+
+  checkPermission()async{
+
+    bool serviceEnabled;
+    LocationPermission permission;
+
+    serviceEnabled=await Geolocator.isLocationServiceEnabled();
+
+    print(serviceEnabled);
+
+    if (!serviceEnabled){
+      await Geolocator.openLocationSettings();
+      return ;
+    }
+
+
+    permission=await Geolocator.checkPermission();
+
+    print(permission);
+
+    if (permission==LocationPermission.denied){
+
+      permission=await Geolocator.requestPermission();
+
+      if (permission==LocationPermission.denied){
+        Fluttertoast.showToast(msg: 'Request Denied !');
+        return ;
+      }
+
+    }
+
+    if(permission==LocationPermission.deniedForever){
+      Fluttertoast.showToast(msg: 'Denied Forever !');
+      return ;
+    }
+
+    getLocation();
+
+  }
+
+  getLocation()async{
+
+
+
+    try{
+
+      Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+
+      coordinates='Latitude : ${position.latitude} \nLongitude : ${position.longitude}';
+      print("coordinates :- $coordinates");
+      currentLat = position.latitude;
+      currentLong = position.longitude;
+
+      List<Placemark> result  = await placemarkFromCoordinates(position.latitude, position.longitude);
+
+      if (result.isNotEmpty){
+        currentAddress ='${result[0].name}, ${result[0].locality} ${result[0].administrativeArea}';
+      }
+
+
+    }catch(e){
+      Fluttertoast.showToast(msg:"${e.toString()}");
+    }
+
+
+  }
+
 
   void getLatLongLocation() async {
     try {

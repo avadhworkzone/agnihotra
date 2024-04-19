@@ -35,7 +35,6 @@ class MyApp extends StatelessWidget {
         supportedLocales: AppLocalizations.supportedLocales,
         locale:  Locale(PrefServices.getString('language').isEmpty?"en_US":PrefServices.getString('language')),
         fallbackLocale: const Locale('en_US'),
-        // home:  const ChangeTimeZoneScreen(),
         home:PrefServices.getString('language').isEmpty ? const WelcomeScreen() : SunriseSunetScreen(),
         debugShowCheckedModeBanner: false,
       ),

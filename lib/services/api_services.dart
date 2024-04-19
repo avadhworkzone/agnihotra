@@ -5,12 +5,14 @@ class HttpServices {
   static Future<http.Response?> getApi({
     required String url,
   }) async {
+
     try {
       if (kDebugMode) {
         print('Url=====>$url');
       }
       return await http.get(Uri.parse(url));
-    } catch (e) {
+    }
+    catch (e) {
       print(e);
       return null;
     }

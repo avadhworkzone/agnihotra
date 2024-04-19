@@ -11,6 +11,7 @@ import 'package:sunrise_app/common_Widget/common_text.dart';
 import 'package:sunrise_app/services/prefServices.dart';
 import 'package:sunrise_app/utils/color_utils.dart';
 import 'package:sunrise_app/utils/string_utils.dart';
+import 'package:sunrise_app/view/google_map_screen/change_timezone_scrren.dart';
 import 'package:sunrise_app/view/sunrise_sunset_screen/sunrise_sunset_screen.dart';
 
 class GoogleController extends GetxController {
@@ -21,7 +22,7 @@ class GoogleController extends GetxController {
   GoogleMapController? mapController;
   final RxSet<Marker> markers = <Marker>{}.obs;
   Rx<LatLng?> lastMapPosition = Rx<LatLng?>(null);
-  Rx<MapType> currentMapType = MapType.normal.obs;
+  Rx<MapType> currentMapType = MapType.hybrid.obs;
   RxString address = ''.obs;
   RxString searchAddress = ''.obs;
   RxBool isLoad = false.obs;
@@ -33,37 +34,23 @@ class GoogleController extends GetxController {
   RxList<String> suggestions = <String>[].obs;
   RxList<Map<String, dynamic>> locationLis = <Map<String, dynamic>>[].obs;
 
+  late List<String> countryStateName = [];
+  TextEditingController searchCountryController = TextEditingController();
+  List<String> filteredCountryStateName = [];
+
+
+
+
   @override
   Future<void> onInit() async {
     super.onInit();
-    _getCurrentLocation();
     address.value = PrefServices.getString('lastAddress');
     locationList.value = PrefServices.getStringList('locationList');
   }
 
-  _getCurrentLocation() async {
-    try {
-      LocationPermission permission = await Geolocator.requestPermission();
-      if (permission == LocationPermission.always ||
-          permission == LocationPermission.whileInUse) {
-        Position currentPosition = await Geolocator.getCurrentPosition(
-          desiredAccuracy: LocationAccuracy.best,
-        );
-        lastMapPosition.value = LatLng(
-          currentPosition.latitude,
-          currentPosition.longitude,
-        );
-        await moveCameraToLocation(lastMapPosition.value!, 8.0);
-        await onAddMarkerButtonPressed(lastMapPosition.value!);
-        print('===========>$markers');
-        update();
-      } else {
-        print("User denied location permission");
-      }
-    } catch (e) {
-      print("Error getting current location: $e");
-    }
-  }
+
+
+
 
   Future<String> onAddMarkerButtonPressed(LatLng latLng) async {
     print('===========>$markers');
@@ -102,8 +89,7 @@ class GoogleController extends GetxController {
         postalCode,
         country,
       ];
-      address.value =
-          addressComponents.where((element) => element.isNotEmpty).join(', ');
+      address.value = addressComponents.where((element) => element.isNotEmpty).join(', ');
       address.value = address.value;
       lastMapPosition.value = LatLng(
         latLng.latitude,
@@ -122,7 +108,7 @@ class GoogleController extends GetxController {
     lastMapPosition.value = position.target;
   }
 
-  onMapCreated(GoogleMapController controller) {
+  onMapCreated(GoogleMapController controller){
     _controller.complete(controller);
     mapController = controller;
   }
@@ -176,8 +162,8 @@ class GoogleController extends GetxController {
         searchResultLatitudes.add(location.latitude);
         searchResultLongitudes.add(location.longitude);
 
-        moveCameraToLocation(
-            LatLng(location.latitude, location.longitude), 8.0);
+        moveCameraToLocation(LatLng(location.latitude, location.longitude), 8.0);
+
         markers.add(
           Marker(
             markerId: MarkerId(location.toString()),
@@ -188,6 +174,7 @@ class GoogleController extends GetxController {
             },
           ),
         );
+
         lastMapPosition.value = LatLng(
           location.latitude,
           location.longitude,
@@ -236,11 +223,11 @@ class GoogleController extends GetxController {
 
   toggleMapType() {
 
-    if (currentMapType.value == MapType.satellite){
+    if (currentMapType.value == MapType.hybrid){
       currentMapType.value = MapType.normal;
        print("normal View==============");
     } else {
-      currentMapType.value = MapType.satellite;
+      currentMapType.value = MapType.hybrid;
       print("satellite View==============");
 
     }
@@ -252,7 +239,6 @@ class GoogleController extends GetxController {
   }
 
   onLocationData(String addr, double lati, double long) async {
-
     address.value = addr;
 
     print("=======> Address :- ${address.value}");
@@ -275,20 +261,24 @@ class GoogleController extends GetxController {
 
   }
 
+
   Future<void> confirmTimeZone() async {
     return Get.dialog(
       AlertDialog(
         contentPadding: EdgeInsets.zero,
         titlePadding: EdgeInsets.zero,
+
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(7.r), // Change border radius
         ),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
+
             SizedBox(
               height: 11.h,
             ),
+
             CustomText(
               StringUtils.timeZonTxt,
               fontWeight: FontWeight.w600,
@@ -314,12 +304,19 @@ class GoogleController extends GetxController {
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                CustomText(
-                  StringUtils.changeTimeTxt,
-                  fontWeight: FontWeight.w600,
-                  color: ColorUtils.orange,
-                  textAlign: TextAlign.center,
-                  fontSize: 13.sp,
+
+                InkWell(
+                  onTap: () {
+                    Get.off(const ChangeTimeZoneScreen());
+                    print("======= CHANGE TIME ZONE SCREEN========");
+                  },
+                  child: CustomText(
+                    StringUtils.changeTimeTxt,
+                    fontWeight: FontWeight.w600,
+                    color: ColorUtils.orange,
+                    textAlign: TextAlign.center,
+                    fontSize: 13.sp,
+                  ),
                 ),
                 SizedBox(
                   width: 10.w,
