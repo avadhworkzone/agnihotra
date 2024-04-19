@@ -18,6 +18,7 @@ class SunriseSunsetController extends GetxController {
 
 
   late Rx<DateTime> selectedDate = DateTime.now().obs;
+  String formattedDate = DateFormat("yyyy-MM-dd").format(DateTime.now());
 
 
   Future<void> selectDate(BuildContext context) async {
@@ -55,9 +56,9 @@ class SunriseSunsetController extends GetxController {
 
         // Format the DateTime object to yyyy-MM-dd format
         DateFormat outputFormat = DateFormat("yyyy-MM-dd");
-        String formattedDate = outputFormat.format(date);
+         formattedDate = outputFormat.format(date);
 
-        print("formattedDate:- $formattedDate");
+         print("formattedDate :- $formattedDate");
 
         futureSunriseSunsetTime(latitude: PrefServices.getDouble('currentLat'),
             longitude: PrefServices.getDouble('currentLong'),
@@ -68,6 +69,9 @@ class SunriseSunsetController extends GetxController {
 
 
   }
+
+
+
 
   void updateTime() {
     String formattedTime = DateFormat('HH:mm:ss').format(DateTime.now());
@@ -81,6 +85,11 @@ class SunriseSunsetController extends GetxController {
   RxString futureSunsetTime = ''.obs;
   RxString  formattedSunriseTime = ''.obs;
   RxString  formattedSunsetTime = ''.obs;
+
+  RxString countrySunriseTimeZone = ''.obs;
+  RxString countrySunsetTimeZone = ''.obs;
+
+
   RxBool isLoad = false.obs;
   RxBool isFutureLoad = false.obs;
   RxBool isCountryLoad = false.obs;
@@ -114,14 +123,14 @@ class SunriseSunsetController extends GetxController {
     isCountryLoad.value = true;
     countryTimezoneModel = await SunriseSunsetApi.getDifferentCountryTime(latitude, longitude,date,countryTimeZone);
 
-    sunrise.value = countryTimezoneModel!.results?.sunrise ?? '';
-    sunset.value = countryTimezoneModel?.results?.sunset ?? '';
+    countrySunriseTimeZone.value = countryTimezoneModel!.results?.sunrise ?? '';
+    countrySunsetTimeZone.value = countryTimezoneModel?.results?.sunset ?? '';
 
-    PrefServices.setValue('sunrise', sunrise.value);
-    PrefServices.setValue('sunset', sunset.value);
+    PrefServices.setValue('countrySunriseTimeZone', countrySunriseTimeZone.value);
+    PrefServices.setValue('countrySunsetTimeZone', countrySunsetTimeZone.value);
 
-    print("SunRise Value :- ${sunrise.value}");
-    print("sunset Value :- ${sunset.value}");
+    print("countrySunriseTimeZone Value :- ${countrySunriseTimeZone.value}");
+    print("countrySunsetTimeZone Value :- ${countrySunsetTimeZone.value}");
     isCountryLoad.value = false;
     update();
 

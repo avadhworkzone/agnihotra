@@ -11,7 +11,12 @@ class SunriseSunsetApi {
 
    try{
 
-     print("Lat Long :- $lat $lon");
+     final timeBody = {
+       "lat": "$lat",
+       "lon": "$lon",
+     };
+
+     print("timeBody :- $timeBody");
      String url = 'https://api.sunrisesunset.io/json?lat=$lat&lng=$lon';
      http.Response? response = await HttpServices.getApi(url: url);
 
@@ -31,6 +36,14 @@ class SunriseSunsetApi {
 
     try{
 
+      final futureTimeBody = {
+          "lat":"$lat",
+          "lon":"$lon",
+          "date":date,
+          "apiKey":apiKey,
+      };
+
+      print("futureTimeBody :- $futureTimeBody");
 
       String url = 'https://api.sunrise-sunset.org/json?lat=$lat&lng=$lon&date=$date&formatted=0&key=$apiKey';
       http.Response? response = await HttpServices.getApi(url: url);
@@ -51,6 +64,14 @@ class SunriseSunsetApi {
 
     try{
 
+      final timeZonebody = {
+        "lat":"$lat",
+        "lng":"$lon",
+        "timezone":countryTimeZone,
+        "date":date,
+      };
+
+      print("timeZonebody :- $timeZonebody");
 
       String url = 'https://api.sunrisesunset.io/json?lat=$lat&lng=$lon&timezone=$countryTimeZone&date=$date';
       http.Response? response = await HttpServices.getApi(url: url);

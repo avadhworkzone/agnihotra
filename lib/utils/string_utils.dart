@@ -81,6 +81,7 @@ class StringUtils {
   static const timeZonTxt = 'timeZonTxt';
   static const standardTime = 'standardTime';
   static const changeTimeTxt = 'changeTimeTxt';
+  static const confirmTimeZone = 'confirmTimeZone';
   static const timingDownload = 'timingDownload';
   static const deleteAllLocation = 'deleteAllLocation';
   static const confirmTxt = 'confirmTxt';
@@ -89,6 +90,7 @@ class StringUtils {
   static const deleteLocationBtnTxt = 'deleteLocationBtnTxt';
   static const enterLocationTxt = 'enterLocationTxt';
   static const cancleTxt = 'cancleTxt';
+  static const yesTxt = 'yesTxt';
   static const proceedTxt = 'proceedTxt';
   static const languageValidationTxt = 'languageValidationTxt';
   static const latitudeIsRequired = "latitudeIsRequired";

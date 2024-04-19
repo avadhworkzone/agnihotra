@@ -64,6 +64,8 @@ Map<String,String> en= {
   "timeZonTxt" :"Please confirm timezone\nfor this location",
   "standardTime":"India Standard Time(Asia/Kolkata)",
   "changeTimeTxt" : "Change Timezone",
+  "confirmTimeZone" : "Confirm Timezone for your location",
+  "yesTxt" : "YES",
   "timingDownload" : "Please wait,\ntiming are being downloaded.",
   "deleteAllLocation" : "Are you sure you wish to delete all\nlocations ?",
   "confirmTxt":"Confirm",
