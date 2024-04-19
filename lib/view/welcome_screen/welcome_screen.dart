@@ -35,30 +35,30 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
               ),
             ),
           ),
-        Padding(
-          padding:EdgeInsets.only(top: 180.h),
-          child: Column(
-            children: [
-              // WELCOME
-               Center(
-                 child: CustomText(
-                     StringUtils.welcomeTxt,
-                     fontSize: 28.sp,
-                     fontWeight: FontWeight.w600,
-                   ),
-               ),
-              // GET START
-              Center(
-                child: CustomText(
-                  StringUtils.getStartTxt,
-                  // color: Colors.white,
-                  fontSize: 14.sp,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-            ],
-          ),
-        ),
+        // Padding(
+        //   padding:EdgeInsets.only(top: 180.h),
+        //   child: Column(
+        //     children: [
+        //       // WELCOME
+        //        Center(
+        //          child: CustomText(
+        //              StringUtils.welcomeTxt,
+        //              fontSize: 28.sp,
+        //              fontWeight: FontWeight.w600,
+        //            ),
+        //        ),
+        //       // GET START
+        //       Center(
+        //         child: CustomText(
+        //           StringUtils.getStartTxt,
+        //           // color: Colors.white,
+        //           fontSize: 14.sp,
+        //           fontWeight: FontWeight.w500,
+        //         ),
+        //       ),
+        //     ],
+        //   ),
+        // ),
         ],
       ),
       bottomSheet: Container(

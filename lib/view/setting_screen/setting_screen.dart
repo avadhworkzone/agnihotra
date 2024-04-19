@@ -219,8 +219,7 @@ class _SeetingScreenState extends State<SettingsScreen> {
                                             .isCountDown.value,
                                         onChanged: (value) {
                                           // settingScreenController.onCountDown();
-                                          settingScreenController
-                                              .toggleCountDown(value);
+                                          settingScreenController.toggleCountDown(value);
                                           ;
                                         },
                                       ),

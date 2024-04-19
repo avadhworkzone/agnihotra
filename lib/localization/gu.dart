@@ -22,9 +22,10 @@ Map<String,String> gu = {
   "welcomeTxt":"સ્વાગત છે",
   "getStartTxt":"ચાલો, શરુ કરીએ",
   "languageChooseTxt":"તમારી ભાષા પસંદ કરો",
+  "languageUseTxt":"તમે ઉપયોગ કરવાનું પસંદ કરો છો તે ભાષા પસંદ કરો",
+  "languageChooseTxt":"તમારી ભાષા પસંદ કરો",
   "submitBtnTxt":"સબમિટ કરો",
   "mantraTxt":"મંત્ર",
-  "SettingsScreenTxt":"સેટિંગ્સ",
   "contactsTxt":"સંપર્કો",
   "languageTxt":"ભાષા",
   "aboutTxt":"વિશે",
@@ -100,7 +101,7 @@ Map<String,String> gu = {
   "gaytrenamText":"गायत्रै नमः  - પશ્ચિમ",
   "sarswateyText":"सरस्वत्यै नमः  - ઉત્તર",
   "sarvabyaText":"सर्वाभ्यो देवताभ्यो नमः  - પૂર્વીય",
-  "kamkarshitText":"कामोकार्षीत मन्युकार्षीत नमो नमः  - પૂર્વીય",
+  "kamkarshitText":"कामोकार्षीत मन्युकार्षीत नमो नमः   - પૂર્વીય",
   "aditeText":"ॐ अदितेन्वमंस्ताः ॥ \n(તરીકે ઉચ્ચારવામાં આવે છે : अदितेन्वमग्गुस्ताः)",
   "anumatveText":"ॐ अनुमतेन्वमंस्ताः ॥ \n(તરીકે ઉચ્ચારવામાં આવે છે : अनुमतेन्वमग्गुस्ताः)",
   "sarswateProText":"ॐ सरस्वतेन्वमंस्ताः ||\n(તરીકે ઉચ્ચારવામાં આવે છે  : सरस्वतेन्वमग्गुस्ताः)",
@@ -111,10 +112,9 @@ Map<String,String> gu = {
   "brhamsviText":"ब्रह्मवर्चस्वी भूयासम\t ડાબા ખભા",
   "ayushyaText":"आयुष्यमान् भूयासम्\t નેવલ પ્રદેશ",
   "annadoText":"अन्नादो भूयासम्\t ગળા પર",
-  "swstiText":"स्वस्ति भूयासम्\t માથાની ટોચ"
-
-
-
-
+  "swstiText":"स्वस्ति भूयासम्\t માથાની ટોચ",
+  "settingsScreenTxt":"સેટિંગ્સ",
+  "deleteAllLocation":"આ સ્થાન કાઢી નાખો",
+  "processedTxt":"આગળ વધો"
 
 };

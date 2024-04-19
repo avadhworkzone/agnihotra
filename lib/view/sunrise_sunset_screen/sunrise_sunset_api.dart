@@ -37,7 +37,7 @@ class SunriseSunsetApi {
 
       if(response != null && response.statusCode == 200){
          print('=====Response getSunriseAndSunSetTime========>${response.body}');
-         return futureSunriseSunsetModelFromJson(response.body);
+         return futureSunriseSunsetTimeModelFromJson(response.body);
       }
     }
 

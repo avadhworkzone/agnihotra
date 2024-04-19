@@ -112,7 +112,6 @@ class _LocationScreenState extends State<LocationScreen> {
                                   SizedBox(width: 10.w,),
                                   Expanded(
                                     child: CommonTextField(
-                                      textAlignVertical: TextAlignVertical.bottom,
                                       validator: ValidationMethod.latitudeValidation,
                                       textEditController: locationController.latitudeController,
                                     ),
@@ -135,9 +134,7 @@ class _LocationScreenState extends State<LocationScreen> {
                                   ),
                                   SizedBox(width: 10.w,),
                                   Expanded(
-                                    child:
-
-                                    CommonTextField(
+                                    child: CommonTextField(
                                       validator: ValidationMethod.longitudeValidation,
                                       textEditController: locationController.longitudeController,
                                     ),
@@ -162,7 +159,7 @@ class _LocationScreenState extends State<LocationScreen> {
                                     end: AlignmentDirectional.bottomEnd,
                                   ),
                                   onTap: () {
-                                    locationController.getLocation();
+                                    locationController.getLatLongLocation();
                                   },
                                   title:StringUtils.locationUseTxt,
                                   fontSize: 15.sp,

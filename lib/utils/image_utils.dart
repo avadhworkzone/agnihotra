@@ -32,4 +32,10 @@ class AssetUtils{
   static const playIcon = Icons.play_arrow;
   static const searchIcon = Icons.search;
 
+  // AUDIO PATH
+  static const audioPath = 'assets/audio/';
+  static const sunriseMantraAudio = '${audioPath}sunrise_mantra_audio.m4a';
+  static const sunsetMantraAudio = '${audioPath}sunset_mantra_audio.m4a';
+
+
 }

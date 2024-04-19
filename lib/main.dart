@@ -5,6 +5,7 @@ import 'package:sunrise_app/localization/translations.dart';
 import 'package:sunrise_app/services/prefServices.dart';
 import 'package:sunrise_app/view/sunrise_sunset_screen/sunrise_sunset_screen.dart';
 import 'package:sunrise_app/view/welcome_screen/welcome_screen.dart';
+import 'package:sunrise_app/viewModel/agnihotra_mantra_controller.dart';
 import 'package:sunrise_app/viewModel/enter_location_controller.dart';
 import 'package:sunrise_app/viewModel/google_map_controller.dart';
 import 'package:sunrise_app/viewModel/settings_controller.dart';
@@ -45,6 +46,7 @@ class MyApp extends StatelessWidget {
   GoogleController googleController = Get.put(GoogleController());
   LocationController locationController = Get.put(LocationController());
   SettingScreenController settingScreenController = Get.put(SettingScreenController());
+  AgnihotraMantraController agnihotraMantraController = Get.put(AgnihotraMantraController());
 
 }
 

@@ -30,6 +30,7 @@ class SettingScreenController extends GetxController{
     super.onInit();
     updateTime();
     is24Hours.value = PrefServices.getBool('is24Hours');
+    isCountDown.value = PrefServices.getBool('isCountDown');
 
  }
 
@@ -49,11 +50,7 @@ class SettingScreenController extends GetxController{
 
     // Format the duration as "hh:mm:ss"
     return "${hours.toString().padLeft(2, '0')}:${minutes.toString().padLeft(2, '0')}:${seconds.toString().padLeft(2, '0')}";
-
-
-  }
-
-
+ }
   void onCountDown(){
     ///Start
     // Example: For demonstration purpose, I'm setting the current time as 7:59:41 PM
@@ -77,18 +74,61 @@ class SettingScreenController extends GetxController{
     if (currentTimeWithoutYear.isAfter(sunriseTimeWithoutYear)) {
       // Sunrise has occurred, calculate time until sunset
       if (currentTimeWithoutYear.isBefore(sunsetTimeWithoutYear)) {
-         difference!.value = sunsetTimeWithoutYear.difference(currentTimeWithoutYear);
-        print("Time until sunset: ${formatDuration(difference!.value)} hours.");
+         difference.value = sunsetTimeWithoutYear.difference(currentTimeWithoutYear);
+         print("Time until sunset: ${formatDuration(difference.value)} hours.");
+         PrefServices.setValue('timeUntilTime', formatDuration(difference.value));
       } else {
         // Sunset has occurred, calculate time until next sunrise
         DateTime nextDaySunrise = sunriseTimeWithoutYear.add(Duration(days: 1));
-        difference!.value = nextDaySunrise.difference(currentTimeWithoutYear);
-        print("Time until next sunrise: ${formatDuration(difference!.value)} hours.");
+        difference.value = nextDaySunrise.difference(currentTimeWithoutYear);
+        print("Time until next sunrise: ${formatDuration(difference.value)} hours.");
+        PrefServices.setValue('timeUntilTime', formatDuration(difference.value));
       }
     } else {
       // Sunrise hasn't occurred yet, calculate time until sunrise
-      difference!.value = sunriseTimeWithoutYear.difference(currentTimeWithoutYear);
-      print("Time until sunrise: ${formatDuration(difference!.value)} hours.");
+      difference.value = sunriseTimeWithoutYear.difference(currentTimeWithoutYear);
+      print("Time until sunrise: ${formatDuration(difference.value)} hours.");
+      PrefServices.setValue('timeUntilTime', formatDuration(difference.value));
+    }
+  }
+  void onFutureCountDown(){
+    ///Start
+    // Example: For demonstration purpose, I'm setting the current time as 7:59:41 PM
+    DateTime now = DateTime.now();
+
+    // Example: For demonstration purpose, I'm setting the sunrise and sunset times
+    // String sunriseTime = '06:17:05 AM';
+    // String sunsetTime = '06:59:05 PM';
+    String sunriseTime =  PrefServices.getString('futureSunrise');
+    String sunsetTime =  PrefServices.getString('futureSunset');
+
+    // Parse the sunrise and sunset times
+    DateTime sunrise = parseTime(sunriseTime);
+    DateTime sunset = parseTime(sunsetTime);
+
+    DateTime sunriseTimeWithoutYear = DateTime(now.year, now.month, now.day, sunrise.hour, sunrise.minute, sunrise.second);
+    DateTime sunsetTimeWithoutYear = DateTime(now.year, now.month, now.day, sunset.hour, sunset.minute, sunset.second);
+    DateTime currentTimeWithoutYear = DateTime(now.year, now.month, now.day, now.hour, now.minute, now.second);
+
+    // Check if sunrise has occurred
+    if (currentTimeWithoutYear.isAfter(sunriseTimeWithoutYear)) {
+      // Sunrise has occurred, calculate time until sunset
+      if (currentTimeWithoutYear.isBefore(sunsetTimeWithoutYear)) {
+        difference.value = sunsetTimeWithoutYear.difference(currentTimeWithoutYear);
+        print("Time until sunset: ${formatDuration(difference.value)} hours.");
+        PrefServices.setValue('timeUntilTime', formatDuration(difference.value));
+      } else {
+        // Sunset has occurred, calculate time until next sunrise
+        DateTime nextDaySunrise = sunriseTimeWithoutYear.add(Duration(days: 1));
+        difference.value = nextDaySunrise.difference(currentTimeWithoutYear);
+        print("Time until next sunrise: ${formatDuration(difference.value)} hours.");
+        PrefServices.setValue('timeUntilTime', formatDuration(difference.value));
+      }
+    } else {
+      // Sunrise hasn't occurred yet, calculate time until sunrise
+      difference.value = sunriseTimeWithoutYear.difference(currentTimeWithoutYear);
+      print("Time until sunrise: ${formatDuration(difference.value)} hours.");
+      PrefServices.setValue('timeUntilTime', formatDuration(difference.value));
     }
 
   }
@@ -96,13 +136,13 @@ class SettingScreenController extends GetxController{
     isCountDown.value = value;
     if (value) {
       onCountDown();
+      onFutureCountDown();
     }
+    PrefServices.setValue('isCountDown', value);
   }
   void updateTime() {
     String formattedTime = DateFormat(is24Hours.value ? 'HH:mm:ss' : 'h:mm:ss a').format(DateTime.now());
     current24HourTime.value = formattedTime;
-    PrefServices.setValue('settingTime',current24HourTime.value);
-
   }
   void updateSunriseSunsetTime(){
     String sunset12Hour = PrefServices.getString('sunset');
@@ -119,17 +159,40 @@ class SettingScreenController extends GetxController{
     print( 'Time in 24-hour format sunset: $sunset24Hour');
 
     String sunrise24Hour = DateFormat('HH:mm:ss').format(dateTimeSunrise);
-    print(   'Time in 24-hour format sunrise: $sunrise24Hour');
+    print(  'Time in 24-hour format sunrise: $sunrise24Hour');
 
     sunrise24HourTime.value = sunrise24Hour;
     sunset24HourTime.value = sunset24Hour;
     PrefServices.setValue('sunrise24Hours', sunrise24HourTime.value);
     PrefServices.setValue('sunset24Hours', sunset24HourTime.value);
   }
+  void updateFutureSunriseSunsetTime(){
+    String sunset12Hour = PrefServices.getString('futureSunset');
+    String sunrise12Hour = PrefServices.getString('futureSunrise');
+
+    // Parse the time string to DateTime object
+    var dateTimeSunset = DateFormat('h:mm:ss a').parse(sunset12Hour);
+    print( 'Original Time sunset: $sunset12Hour',);
+
+    var dateTimeSunrise= DateFormat('h:mm:ss a').parse(sunrise12Hour);
+    print( 'Original Time sunrise: $sunrise12Hour',);
+    // Format the DateTime object to 24-hour format
+    String sunset24Hour = DateFormat('HH:mm:ss').format(dateTimeSunset);
+    print( 'Time in 24-hour format sunset: $sunset24Hour');
+
+    String sunrise24Hour = DateFormat('HH:mm:ss').format(dateTimeSunrise);
+    print(  'Time in 24-hour format sunrise: $sunrise24Hour');
+
+    sunrise24HourTime.value = sunrise24Hour;
+    sunset24HourTime.value = sunset24Hour;
+    PrefServices.setValue('futureSunrise24Hours', sunrise24HourTime.value);
+    PrefServices.setValue('futureSunset24Hours', sunset24HourTime.value);
+  }
   void toggleTimeFormat(bool value) {
    is24Hours.value = value;
    updateTime();
    updateSunriseSunsetTime();
+   updateFutureSunriseSunsetTime();
    PrefServices.setValue('is24Hours',value);
   }
 

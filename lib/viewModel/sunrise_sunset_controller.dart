@@ -74,6 +74,8 @@ class SunriseSunsetController extends GetxController {
     String formattedTime = DateFormat('HH:mm:ss').format(DateTime.now());
     DateTime time = DateFormat.Hms().parse(formattedTime);
     currentTime.value = DateFormat.jms().format(time);
+    PrefServices.setValue('currentTime',currentTime.value);
+
   }
 
   RxString sunrise = ''.obs;

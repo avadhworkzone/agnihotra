@@ -25,7 +25,6 @@ Map<String,String> hi = {
   "languageUseTxt":"वह भाषा चुनें जिसका आप उपयोग करना पसंद करते हैं",
   "submitBtnTxt":"जमा करना",
   "mantraTxt":"मंत्र",
-  "SettingsScreenTxt":"समायोजन",
   "contactsTxt":"संपर्क",
   "languageTxt":"भाषा",
   "aboutTxt":"के बारे में",
@@ -101,7 +100,7 @@ Map<String,String> hi = {
   "gaytrenamText":"गायत्रै नमः  - पश्चिम",
   "sarswateyText":"सरस्वत्यै नमः  - उत्तर",
   "sarvabyaText":"सर्वाभ्यो देवताभ्यो नमः  - पूर्व",
-  "kamkarshitText":"कामोकार्षीत मन्युकार्षीत नमो नमः   - पूर्व",
+  "kamkarshitText":"कामोकार्षीत मन्युकार्षीत नमो नमः  - पूर्व",
   "aditeText":"ॐ अदितेन्वमंस्ताः ॥ \n(इस प्रकार उच्चारित करें : अदितेन्वमग्गुस्ताः)",
   "anumatveText":"ॐ अनुमतेन्वमंस्ताः ॥ \n(इस प्रकार उच्चारित करें : अनुमतेन्वमग्गुस्ताः)",
   "sarswateProText":"ॐ सरस्वतेन्वमंस्ताः ||\n(इस प्रकार उच्चारित करें  : सरस्वतेन्वमग्गुस्ताः)",
@@ -112,9 +111,9 @@ Map<String,String> hi = {
   "brhamsviText":"ब्रह्मवर्चस्वी भूयासम\t बायाँ कंधा",
   "ayushyaText":"आयुष्यमान् भूयासम्\t नौसेना क्षेत्र",
   "annadoText":"अन्नादो भूयासम्\t गले पर",
-  "swstiText":"स्वस्ति भूयासम्\t सिर के ऊपर"
-
-
-
+  "swstiText":"स्वस्ति भूयासम्\t सिर के ऊपर",
+  "settingsScreenTxt":"समायोजन",
+  "deleteAllLocation":"यह स्थान हटाएँ",
+  "processedTxt":"आगे बढ़ो"
 
 };

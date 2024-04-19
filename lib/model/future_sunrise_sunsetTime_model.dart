@@ -1,3 +1,9 @@
+import 'dart:convert';
+
+FutureSunriseSunsetTimeModel futureSunriseSunsetTimeModelFromJson(String str) => FutureSunriseSunsetTimeModel.fromJson(json.decode(str));
+
+String futureSunriseSunsetTimeModelToJson(FutureSunriseSunsetTimeModel data) => json.encode(data.toJson());
+
 class FutureSunriseSunsetTimeModel {
   FutureSunriseSunsetTimeModel({
       this.results, 

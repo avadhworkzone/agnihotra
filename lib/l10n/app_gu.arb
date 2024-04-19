@@ -25,7 +25,6 @@
   "languageChooseTxt":"તમારી ભાષા પસંદ કરો",
   "submitBtnTxt":"સબમિટ કરો",
   "mantraTxt":"મંત્ર",
-  "settingsScreenTxt":"સેટિંગ્સ",
   "contactsTxt":"સંપર્કો",
   "languageTxt":"ભાષા",
   "aboutTxt":"વિશે",
@@ -112,7 +111,11 @@
   "brhamsviText":"ब्रह्मवर्चस्वी भूयासम\t ડાબા ખભા",
   "ayushyaText":"आयुष्यमान् भूयासम्\t નેવલ પ્રદેશ",
   "annadoText":"अन्नादो भूयासम्\t ગળા પર",
-  "swstiText":"स्वस्ति भूयासम्\t માથાની ટોચ"
+  "swstiText":"स्वस्ति भूयासम्\t માથાની ટોચ",
+  "settingsScreenTxt":"સેટિંગ્સ",
+  "deleteAllLocation":"આ સ્થાન કાઢી નાખો",
+  "processedTxt":"આગળ વધો"
+
 
 
   }

@@ -21,9 +21,7 @@ import 'package:sunrise_app/viewModel/google_map_controller.dart';
 import 'package:sunrise_app/viewModel/settings_controller.dart';
 import 'package:sunrise_app/viewModel/sunrise_sunset_controller.dart';
 
-
 class SunriseSunetScreen extends StatefulWidget {
-
   double? latitude;
   double? longitude;
   String? address;
@@ -42,8 +40,8 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
   SunriseSunsetController sunriseSunsetController =
       Get.find<SunriseSunsetController>();
   GoogleController googleController = Get.find<GoogleController>();
-  SettingScreenController settingScreenController = Get.find<
-      SettingScreenController>();
+  SettingScreenController settingScreenController =
+      Get.find<SettingScreenController>();
 
   String formatAddress() {
     if (address == null || (latitude == 0 && longitude == 0)) {
@@ -94,71 +92,8 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
   double? longitude;
   String? address;
 
-  // DateTime parseTime(String timeStr) {
-  //   // Create a DateTimeFormatter with the expected time format
-  //   DateFormat formatter = DateFormat("hh:mm:ss a");
-  //
-  //   // Parse the time string into a DateTime object
-  //   return formatter.parse(timeStr);
-  // }
-  //
-  // String formatDuration(Duration duration) {
-  //   // Calculate hours, minutes, and seconds
-  //   int hours = duration.inHours;
-  //   int minutes = duration.inMinutes.remainder(60);
-  //   int seconds = duration.inSeconds.remainder(60);
-  //
-  //   // Format the duration as "hh:mm:ss"
-  //   return "${hours.toString().padLeft(2, '0')}:${minutes.toString().padLeft(2, '0')}:${seconds.toString().padLeft(2, '0')}";
-  // }
-
   @override
-  Widget build(BuildContext context){
-
-    print("latitude :- ${widget.latitude}");
-    print("longitude :-  ${widget.longitude}");
-    print("address :- ${widget.address}");
-    print("googleController.address.value :- ${googleController.address.value}");
-    ///Start
-    // Example: For demonstration purpose, I'm setting the current time as 7:59:41 PM
-    // DateTime now = DateTime.now();
-    //
-    // // Example: For demonstration purpose, I'm setting the sunrise and sunset times
-    // // String sunriseTime = '06:17:05 AM';
-    // // String sunsetTime = '06:59:05 PM';
-    // String sunriseTime =  PrefServices.getString('sunrise');
-    // String sunsetTime =  PrefServices.getString('sunset');
-    //
-    // // Parse the sunrise and sunset times
-    // DateTime sunrise = parseTime(sunriseTime);
-    // DateTime sunset = parseTime(sunsetTime);
-    //
-    // DateTime sunriseTimeWithoutYear = DateTime(now.year, now.month, now.day, sunrise.hour, sunrise.minute, sunrise.second);
-    // DateTime sunsetTimeWithoutYear = DateTime(now.year, now.month, now.day, sunset.hour, sunset.minute, sunset.second);
-    // DateTime currentTimeWithoutYear = DateTime(now.year, now.month, now.day, now.hour, now.minute, now.second);
-    //
-    // // Check if sunrise has occurred
-    // if (currentTimeWithoutYear.isAfter(sunriseTimeWithoutYear)) {
-    //   // Sunrise has occurred, calculate time until sunset
-    //   if (currentTimeWithoutYear.isBefore(sunsetTimeWithoutYear)) {
-    //     Duration difference = sunsetTimeWithoutYear.difference(currentTimeWithoutYear);
-    //     print("Time until sunset: ${formatDuration(difference)} hours.");
-    //   } else {
-    //     // Sunset has occurred, calculate time until next sunrise
-    //     DateTime nextDaySunrise = sunriseTimeWithoutYear.add(Duration(days: 1));
-    //     Duration difference = nextDaySunrise.difference(currentTimeWithoutYear);
-    //     print("Time until next sunrise: ${formatDuration(difference)} hours.");
-    //   }
-    // } else {
-    //   // Sunrise hasn't occurred yet, calculate time until sunrise
-    //   Duration difference = sunriseTimeWithoutYear.difference(currentTimeWithoutYear);
-    //   print("Time until sunrise: ${formatDuration(difference)} hours.");
-    // }
-
-    ///End
-
-
-
+  Widget build(BuildContext context) {
     return Scaffold(
         key: _scaffoldKey,
         endDrawer: Drawer(
@@ -187,7 +122,7 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                         width: 10.w,
                       ),
                       CustomText(
-                        StringUtils.SettingsScreenTxt,
+                        StringUtils.settingsScreenTxt,
                         fontWeight: FontWeight.w500,
                         fontSize: 15.sp,
                         color: ColorUtils.black,
@@ -395,7 +330,7 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                 ),
                 GestureDetector(
                   onTap: () {
-                  sunriseSunsetController.launchUrl();
+                    sunriseSunsetController.launchUrl();
                   },
                   child: Row(
                     children: [
@@ -447,7 +382,6 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                 SizedBox(
                   height: 10.h,
                 ),
-
                 Row(
                   children: [
                     const Icon(
@@ -542,6 +476,7 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                       ],
                     ),
                   ),
+
                   SizedBox(
                     height: 25.h,
                   ),
@@ -566,7 +501,8 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
 
                   /// Selected Date of Calender
                   Obx(() => CustomText(
-                        DateFormat('dd MMMM yyyy').format(sunriseSunsetController.selectedDate.value),
+                        DateFormat('dd MMMM yyyy')
+                            .format(sunriseSunsetController.selectedDate.value),
                         fontWeight: FontWeight.w500,
                         fontSize: 20.sp,
                       )),
@@ -576,71 +512,55 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                   ),
 
                   /// CURRENT TIME
-                  // Obx(() => Container(
-                  //       padding: EdgeInsets.symmetric(
-                  //           horizontal: 18.w, vertical: 5.h),
-                  //       decoration: BoxDecoration(
-                  //         borderRadius: BorderRadius.all(Radius.circular(6.r)),
-                  //         border: Border.all(color: ColorUtils.borderColor),
-                  //         boxShadow: [
-                  //           BoxShadow(
-                  //             color: ColorUtils.white,
-                  //             blurRadius: 200.w,
-                  //           ),
-                  //         ],
-                  //       ),
-                  //       child: CustomText(
-                  //         sunriseSunsetController.currentTime().toString(),
-                  //         fontWeight: FontWeight.w500,
-                  //         fontSize: 20.sp,
-                  //       ),
-                  //     ),),
-                   Obx(() {
-                     if(settingScreenController.isCountDown.value){
-                       return CustomText(
-                         settingScreenController.difference != null
-                             ? settingScreenController.formatDuration(settingScreenController.difference!.value):'',
+                  Obx(() {
+                    if (settingScreenController.isCountDown.value) {
+                      return CustomText(
+                        // settingScreenController.difference != null
+                        //     ? settingScreenController.formatDuration(settingScreenController.difference.value):'',
+                        PrefServices.getString('timeUntilTime'),
+                        fontWeight: FontWeight.w500,
+                        fontSize: 20.sp,
+                      );
+                    } else {
+                      return Container(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 18.w, vertical: 5.h),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(6.r)),
+                          border: Border.all(color: ColorUtils.borderColor),
+                          boxShadow: [
+                            BoxShadow(
+                              color: ColorUtils.white,
+                              blurRadius: 200.w,
+                            ),
+                          ],
+                        ),
+                        child: settingScreenController.is24Hours.value
+                            ? CustomText(
+                                settingScreenController.current24HourTime().toString(),
+                                fontWeight: FontWeight.w500,
+                                fontSize: 20.sp,
+                              )
+                            : CustomText(
+                                sunriseSunsetController
+                                    .currentTime()
+                                    .toString(),
+                                fontWeight: FontWeight.w500,
+                                fontSize: 20.sp,
+                              ),
+                      );
+                    }
+                  }),
 
-                     fontWeight: FontWeight.w500,
-                         fontSize: 20.sp,
-                       );
-                     }else{
-                       return Container(
-                         padding: EdgeInsets.symmetric(
-                             horizontal: 18.w, vertical: 5.h),
-                         decoration: BoxDecoration(
-                           borderRadius: BorderRadius.all(Radius.circular(6.r)),
-                           border: Border.all(color: ColorUtils.borderColor),
-                           boxShadow: [
-                             BoxShadow(
-                               color: ColorUtils.white,
-                               blurRadius: 200.w,
-                             ),
-                           ],
-                         ),
-                         child: settingScreenController.is24Hours.value?CustomText(
-                            // settingScreenController.current24HourTime().toString(),
-                           PrefServices.getString('settingTime'),
-                           fontWeight: FontWeight.w500,
-                           fontSize: 20.sp,
-                         ):CustomText(
-                           sunriseSunsetController.currentTime().toString(),
-                           fontWeight: FontWeight.w500,
-                           fontSize: 20.sp,
-                         ),
-                       );
-                     }
-                   }),
                   SizedBox(
                     height: 90.h,
                   ),
 
                   /// SUNRISE and Sunset Time
-                  Obx(() => Row(
-
-                    mainAxisAlignment: MainAxisAlignment.center,
+                  Obx(
+                    () => Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-
                         /// SUNRISE
                         Stack(
                           children: [
@@ -665,30 +585,29 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                                 ),
                                 child: Padding(
                                   padding: EdgeInsets.only(top: 25.h),
-                                  child: sunriseSunsetController.isLoad.value
+                                  child: sunriseSunsetController.isLoad.value && sunriseSunsetController.isFutureLoad.value
                                       ? const CircularProgressIndicator(
                                           color: ColorUtils.white,
                                         )
-                                      : (PrefServices.getDouble('saveLat') == 0.0 &&
-                                              PrefServices.getDouble('saveLong') == 0.0)
+                                      : (PrefServices.getDouble('currentLat') == 0.0 && PrefServices.getDouble('currentLong') == 0.0)
                                           ? CustomText(
                                               '',
                                               fontWeight: FontWeight.w500,
                                               fontSize: 20.sp,
-                                            )
-                                          :settingScreenController.is24Hours.value?
-                                      CustomText(
-                                       //settingScreenController.sunrise24HourTime.toString(),
-                                        PrefServices.getString('sunrise24Hours'),
-
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 20.sp,
-                                      ):
-                                     CustomText(
-                                       PrefServices.getString('sunrise'),
-                                       fontWeight: FontWeight.w500,
-                                       fontSize: 20.sp,
-                                            ),
+                                            ) : sunriseSunsetController.formattedSunriseTime.value.isNotEmpty
+                                              ?CustomText(
+                                                 settingScreenController.is24Hours.value?
+                                                 PrefServices.getString('futureSunrise24Hours'):
+                                                 PrefServices.getString('futureSunrise'),
+                                                      fontWeight: FontWeight.w500,
+                                                      fontSize: 20.sp,
+                                                    ) :CustomText(
+                                      settingScreenController.is24Hours.value?
+                                                  PrefServices.getString('sunrise24Hours'):
+                                      PrefServices.getString('sunrise'),
+                                                  fontWeight: FontWeight.w500,
+                                                  fontSize: 20.sp,
+                                                ),
                                 ),
                               ),
                             ),
@@ -732,33 +651,43 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                                 ),
                                 child: Padding(
                                   padding: EdgeInsets.only(top: 25.h),
-                                  child: sunriseSunsetController.isLoad.value
+                                  child: sunriseSunsetController.isLoad.value &&
+                                          sunriseSunsetController.isFutureLoad.value
                                       ? const CircularProgressIndicator(
                                           color: ColorUtils.white,
-                                        )
-                                      : (PrefServices.getDouble('saveLat') ==
-                                                  0.0 &&
-                                              PrefServices.getDouble(
-                                                      'saveLong') ==
-                                                  0.0)
+                                        ) : (PrefServices.getDouble('currentLat') == 0.0 &&
+                                              PrefServices.getDouble('currentLong') == 0.0)
                                           ? CustomText(
                                               '',
                                               fontWeight: FontWeight.w500,
                                               fontSize: 20.sp,
                                             )
-                                          : settingScreenController.is24Hours.value?
-                                  CustomText(
-                                     // settingScreenController.sunset24HourTime.toString(),
-                                    PrefServices.getString('sunset24Hours'),
-
+                                          : sunriseSunsetController.formattedSunsetTime.value.isNotEmpty
+                                      ? CustomText(
+                                    settingScreenController.is24Hours.value?
+                                    PrefServices.getString('futureSunset24Hours'):
+                                    PrefServices.getString('futureSunset'),
                                     fontWeight: FontWeight.w500,
                                     fontSize: 20.sp,
-                                  ):
-                                  CustomText(
-                                              PrefServices.getString('sunset'),
-                                              fontWeight: FontWeight.w500,
-                                              fontSize: 20.sp,
-                                            ),
+                                  ) :CustomText(
+                                    settingScreenController.is24Hours.value?
+                                    PrefServices.getString('sunset24Hours'):
+                                    PrefServices.getString('sunset'),
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 20.sp,
+                                  )
+                                              // ? CustomText(
+                                              //     PrefServices.getString(
+                                              //         'futureSunset'),
+                                              //     fontWeight: FontWeight.w500,
+                                              //     fontSize: 20.sp,
+                                              //   )
+                                              // : CustomText(
+                                              //     PrefServices.getString(
+                                              //         'sunset'),
+                                              //     fontWeight: FontWeight.w500,
+                                              //     fontSize: 20.sp,
+                                              //   ),
                                 ),
                               ),
                             ),
@@ -774,7 +703,6 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                             ),
                           ],
                         ),
-
                       ],
                     ),
                   ),
@@ -787,7 +715,8 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                   Stack(
                     children: [
                       Padding(
-                        padding: EdgeInsets.only(top: 23.h),
+                        padding:
+                            EdgeInsets.only(top: 23.h, left: 30.w, right: 30.w),
                         child: Container(
                           alignment: Alignment.center,
                           decoration: BoxDecoration(
@@ -822,9 +751,8 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                                     color: ColorUtils.black,
                                   ),
                                 ),
-
                               SizedBox(height: 4.h),
-                              if(PrefServices.getDouble('currentLat') != 0 &&
+                              if (PrefServices.getDouble('currentLat') != 0 &&
                                   PrefServices.getDouble('currentLong') != 0)
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
@@ -939,9 +867,7 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                                             newAddress = value;
                                           },
                                         ),
-
-                                        actions : [
-
+                                        actions: [
                                           Row(
                                             children: [
                                               TextButton(
@@ -1040,7 +966,6 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                       ),
                     ),
                   ),
-
                 ],
               ),
             ),
@@ -1048,7 +973,7 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
         ));
   }
 
-  void _showLocationDialog(){
+  void _showLocationDialog() {
     Get.dialog(
       AlertDialog(
         title: SizedBox(
@@ -1169,86 +1094,77 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
 
   Future<void> _deleteAllLocationDialog() async {
     Get.back();
-    return Get.dialog(
-        AlertDialog(
-          contentPadding: EdgeInsets.symmetric(horizontal: 20.w),
-
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(7.r), // Change border radius
+    return Get.dialog(AlertDialog(
+      contentPadding: EdgeInsets.symmetric(horizontal: 20.w),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(7.r), // Change border radius
+      ),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          SizedBox(
+            height: 11.h,
           ),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
+          CustomText(
+            StringUtils.deleteAllLocation,
+            fontWeight: FontWeight.w600,
+            color: ColorUtils.black,
+            textAlign: TextAlign.left,
+            fontSize: 15.sp,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              SizedBox(
-                height: 11.h,
-              ),
-              CustomText(
-                StringUtils.deleteAllLocation,
-                fontWeight: FontWeight.w600,
-                color: ColorUtils.black,
-                textAlign: TextAlign.left,
-                fontSize: 15.sp,
-              ),
-
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-
-                  InkWell(
-                    onTap: () {
-                      Get.back();
-                    },
-                    child: CustomText(
-                      StringUtils.cancleTxt,
-                      fontWeight: FontWeight.w600,
-                      color: ColorUtils.orange,
-                      textAlign: TextAlign.center,
-                      fontSize: 13.sp,
-                    ),
-                  ),
-                  SizedBox(
-                    width: 10.w,
-                  ),
-
-                  /// Proceed
-                  InkWell(
-                    onTap: (){
-                      googleController.clearLocationList();
-                      googleController.address.value = '';
-                      sunriseSunsetController.sunset.value = '';
-                      sunriseSunsetController.sunrise.value = '';
-                      widget.address = '';
-
-                      PrefServices.setValue('currentAddress', '');
-                      PrefServices.setValue('sunrise', '');
-                      PrefServices.setValue('sunset', '');
-
-                      PrefServices.setValue('currentLat', 0.0);
-                      PrefServices.setValue('currentLong', 0.0);
-
-                      setState(() {});
-                      Get.back(result: false);
-                    },
-                    child: CustomText(
-                      StringUtils.proceedTxt,
-                      fontWeight: FontWeight.w600,
-                      color: ColorUtils.orange,
-                      textAlign: TextAlign.center,
-                      fontSize: 13.sp,
-                    ),
-                  ),
-
-
-                ],
+              InkWell(
+                onTap: () {
+                  Get.back();
+                },
+                child: CustomText(
+                  StringUtils.cancleTxt,
+                  fontWeight: FontWeight.w600,
+                  color: ColorUtils.orange,
+                  textAlign: TextAlign.center,
+                  fontSize: 13.sp,
+                ),
               ),
               SizedBox(
-                height: 16.h,
+                width: 10.w,
+              ),
+
+              /// Proceed
+              InkWell(
+                onTap: () {
+                  googleController.clearLocationList();
+                  googleController.address.value = '';
+                  sunriseSunsetController.sunset.value = '';
+                  sunriseSunsetController.sunrise.value = '';
+                  widget.address = '';
+
+                  PrefServices.setValue('currentAddress', '');
+                  PrefServices.setValue('sunrise', '');
+                  PrefServices.setValue('sunset', '');
+
+                  PrefServices.setValue('currentLat', 0.0);
+                  PrefServices.setValue('currentLong', 0.0);
+
+                  setState(() {});
+                  Get.back(result: false);
+                },
+                child: CustomText(
+                  StringUtils.processedTxt,
+                  fontWeight: FontWeight.w600,
+                  color: ColorUtils.orange,
+                  textAlign: TextAlign.center,
+                  fontSize: 13.sp,
+                ),
               ),
             ],
           ),
-        ));
-
-
+          SizedBox(
+            height: 16.h,
+          ),
+        ],
+      ),
+    ));
   }
-
 }

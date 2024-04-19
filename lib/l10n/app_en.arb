@@ -24,7 +24,6 @@
   "languageUseTxt":"Select the language you prefer to use",
   "submitBtnTxt":"Submit",
   "mantraTxt":"Mantra",
-  "settingsScreenTxt":"Settings",
   "contactsTxt":"Contacts",
   "languageTxt":"Language",
   "aboutTxt":"About",
@@ -62,11 +61,11 @@
   "mantra24":"24 mantra",
   "timeZonTxt" :"Please confirm timesone for this location",
   "standardTime":"India Standard Time(Asia/Kolkata)",
-  "changeTimeTxt" : "Change Timezone",
+  "changeTimeTxt":"Change Timezone",
   "confirmTxt":"Confirm",
   "renameLocationBtnTxt":"RENAME LOCATION",
   "renameLocationTxt":"Rename this Location",
-   "deleteLocationBtnTxt" : "Delete this Location",
+  "deleteLocationBtnTxt" : "Delete this Location",
    "enterLocationTxt":"Enter new name for location",
    "cancleTxt":"CANCEL",
    "languageValidationTxt":"Please Selected Language",
@@ -111,6 +110,9 @@
    "brhamsviText":"ब्रह्मवर्चस्वी भूयासम\t Left Shoulder",
    "ayushyaText":"आयुष्यमान् भूयासम्\t Navel Region",
    "annadoText":"अन्नादो भूयासम्\t On Throat",
-   "swstiText":"स्वस्ति भूयासम्\t Top of the head"
+   "swstiText":"स्वस्ति भूयासम्\t Top of the head",
+   "settingsScreenTxt":"Settings",
+   "deleteAllLocation":"Delete this location",
+   "processedTxt":"PROCEED"
 
    }

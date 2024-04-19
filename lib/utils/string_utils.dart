@@ -25,8 +25,8 @@ class StringUtils {
 
   static const submitBtnTxt = 'submitBtnTxt';
   static const mantraTxt = 'mantraTxt';
+  static const settingsScreenTxt = 'settingsScreenTxt';
  // static const manualEntryTxt = 'Manual Entry';
-  static const SettingsScreenTxt = 'SettingsScreenTxt';
   static const contactsTxt = 'contactsTxt';
   static const languageTxt = 'languageTxt';
   static const aboutTxt = 'aboutTxt';
@@ -97,5 +97,42 @@ class StringUtils {
   static const validLongitude = "validLongitude";
   static const searchText = "searchText";
   static const indiaStdTime = "indiaStdTime";
+  static const drinkWaterText = "drinkWaterText";
+  static const sprinklingWaterText = "sprinklingWaterText";
+  static const headText = "headText";
+  static const noseText = "noseText";
+  static const heartText = "heartText";
+  static const roundText = "roundText";
+  static const handsText = "handsText";
+  static const rightHandsText = "rightHandsText";
+  static const gayatriMantraText = "gayatriMantraText";
+  static const waterOblationText = "waterOblationText";
+  static const avahanMudraText = "avahanMudraText";
+  static const meditateText = "meditateText";
+  static const directionText = "directionText";
+  static const eastText = "eastText";
+  static const southText = "southText";
+  static const gaytrenamText = "gaytrenamText";
+  static const sarswateyText = "sarswateyText";
+  static const sarvabyaText = "sarvabyaText";
+  static const kamkarshitText = "kamkarshitText";
+  static const fireText = "fireText";
+  static const pourWaterText = "pourWaterText";
+  static const samidhaText = "samidhaText";
+  static const timeText = "timeText";
+  static const oneTimeText = "oneTimeText";
+  static const aditeText = "aditeText";
+  static const anumatveText = "anumatveText";
+  static const sarswateProText = "sarswateProText";
+  static const applyText = "applyText";
+  static const meghaviText = "meghaviText";
+  static const tejasviText = "tejasviText";
+  static const varchsviText = "varchsviText";
+  static const brhamsviText = "brhamsviText";
+  static const ayushyaText = "ayushyaText";
+  static const annadoText = "annadoText";
+  static const swstiText = "swstiText";
+  static const surrenderingText = "surrenderingText";
+  static const processedTxt = "processedTxt";
 
 }
