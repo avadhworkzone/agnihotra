@@ -24,7 +24,6 @@ import 'package:sunrise_app/viewModel/google_map_controller.dart';
 import 'package:sunrise_app/viewModel/sunrise_sunset_controller.dart';
 
 class SunriseSunetScreen extends StatefulWidget {
-
   double? latitude;
   double? longitude;
   String? address;
@@ -42,13 +41,15 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   LocationController locationController = Get.find<LocationController>();
 
-  SunriseSunsetController sunriseSunsetController =Get.find<SunriseSunsetController>();
+  SunriseSunsetController sunriseSunsetController =
+      Get.find<SunriseSunsetController>();
   GoogleController googleController = Get.find<GoogleController>();
 
-  String formatAddress(){
+  String formatAddress() {
     if (address == null || (latitude == 0 && longitude == 0)) {
       return StringUtils.locationSetTxt;
     }
+
     List<String> addressParts =
         address!.split(',').map((part) => part.trim()).toList();
     addressParts.removeWhere((part) => part.isEmpty);
@@ -60,9 +61,10 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
     String formattedValue = value.toStringAsFixed(4);
     return formattedValue;
   }
-  String coordinates="No Location found";
-  String currentAddress='No Address found';
-  bool scanning=false;
+
+  String coordinates = "No Location found";
+  String currentAddress = 'No Address found';
+  bool scanning = false;
 
   @override
   void initState() {
@@ -70,10 +72,6 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       PrefServices.getString('saveAddress');
-
-      sunriseSunsetController.getSunriseSunsetTime(
-          PrefServices.getDouble('currentLat'),
-          PrefServices.getDouble('currentLong'));
 
       sunriseSunsetController.countryTimeZone(
           PrefServices.getDouble('currentLat'),
@@ -92,21 +90,15 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
     PrefServices.getString('language');
   }
 
-  Future<void> _clearData() async {
-    await PrefServices.removeValue('address');
-    await PrefServices.removeValue('latitude');
-    await PrefServices.removeValue('longitude');
-    await PrefServices.removeValue('locationList');
-  }
-
   double? latitude;
   double? longitude;
   String? address;
 
+  String newAddress = '';
+
   @override
   Widget build(BuildContext context) {
-
-    print("locationController.longitude.value :- ${locationController.longitude.value}");
+    print("New locationList :- ${PrefServices.getStringList("locationList")}");
     return Scaffold(
         key: _scaffoldKey,
         endDrawer: Drawer(
@@ -534,7 +526,7 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                           ],
                         ),
                         child: CustomText(
-                          sunriseSunsetController.currentTime().toString(),
+                          sunriseSunsetController.currentTime.value,
                           fontWeight: FontWeight.w500,
                           fontSize: 20.sp,
                         ),
@@ -572,54 +564,29 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                                   ],
                                 ),
                                 child: Padding(
-                                  padding: EdgeInsets.only(top: 25.h),
-                                  child: sunriseSunsetController.isLoad.value &&
-                                          sunriseSunsetController
-                                              .isFutureLoad.value &&
-                                          sunriseSunsetController
-                                              .isCountryLoad.value
-                                      ? const CircularProgressIndicator(
-                                          color: ColorUtils.white,
-                                        )
-                                      : (PrefServices.getDouble('currentLat') ==
-                                                  0.0 &&
-                                              PrefServices.getDouble(
-                                                      'currentLong') ==
-                                                  0.0)
-                                          ? CustomText(
-                                              '',
-                                              fontWeight: FontWeight.w500,
-                                              fontSize: 20.sp,
-                                            )
-                                          : sunriseSunsetController
-                                                  .formattedSunriseTime
-                                                  .value
-                                                  .isNotEmpty
-                                              ? CustomText(
-                                                  PrefServices.getString(
-                                                      'futureSunrise'),
-                                                  fontWeight: FontWeight.w500,
-                                                  fontSize: 20.sp,
-                                                )
-                                              : sunriseSunsetController
-                                                      .countrySunriseTimeZone
-                                                      .value
-                                                      .isNotEmpty
-                                                  ? CustomText(
-                                                      PrefServices.getString(
-                                                          'countrySunriseTimeZone'),
-                                                      fontWeight:
-                                                          FontWeight.w500,
-                                                      fontSize: 20.sp,
-                                                    )
-                                                  : CustomText(
-                                                      PrefServices.getString(
-                                                          'sunrise'),
-                                                      fontWeight:
-                                                          FontWeight.w500,
-                                                      fontSize: 20.sp,
-                                                    ),
-                                ),
+                                    padding: EdgeInsets.only(top: 25.h),
+                                    child: sunriseSunsetController
+                                            .isCountryLoad.value
+                                        ? const CircularProgressIndicator(
+                                            color: ColorUtils.white,
+                                          )
+                                        : (PrefServices.getDouble(
+                                                        'currentLat') ==
+                                                    0.0 &&
+                                                PrefServices.getDouble(
+                                                        'currentLong') ==
+                                                    0.0)
+                                            ? CustomText(
+                                                '',
+                                                fontWeight: FontWeight.w500,
+                                                fontSize: 20.sp,
+                                              )
+                                            : CustomText(
+                                                PrefServices.getString(
+                                                    'countrySunriseTimeZone'),
+                                                fontWeight: FontWeight.w500,
+                                                fontSize: 20.sp,
+                                              )),
                               ),
                             ),
                             Positioned(
@@ -661,52 +628,29 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                                   ],
                                 ),
                                 child: Padding(
-                                  padding: EdgeInsets.only(top: 25.h),
-                                  child: sunriseSunsetController.isLoad.value &&
-                                          sunriseSunsetController
-                                              .isFutureLoad.value
-                                      ? const CircularProgressIndicator(
-                                          color: ColorUtils.white,
-                                        )
-                                      : (PrefServices.getDouble('currentLat') ==
-                                                  0.0 &&
-                                              PrefServices.getDouble(
-                                                      'currentLong') ==
-                                                  0.0)
-                                          ? CustomText(
-                                              '',
-                                              fontWeight: FontWeight.w500,
-                                              fontSize: 20.sp,
-                                            )
-                                          : sunriseSunsetController
-                                                  .formattedSunsetTime
-                                                  .value
-                                                  .isNotEmpty
-                                              ? CustomText(
-                                                  PrefServices.getString(
-                                                      'futureSunset'),
-                                                  fontWeight: FontWeight.w500,
-                                                  fontSize: 20.sp,
-                                                )
-                                              : sunriseSunsetController
-                                                      .countrySunsetTimeZone
-                                                      .value
-                                                      .isNotEmpty
-                                                  ? CustomText(
-                                                      PrefServices.getString(
-                                                          'countrySunsetTimeZone'),
-                                                      fontWeight:
-                                                          FontWeight.w500,
-                                                      fontSize: 20.sp,
-                                                    )
-                                                  : CustomText(
-                                                      PrefServices.getString(
-                                                          'sunset'),
-                                                      fontWeight:
-                                                          FontWeight.w500,
-                                                      fontSize: 20.sp,
-                                                    ),
-                                ),
+                                    padding: EdgeInsets.only(top: 25.h),
+                                    child: sunriseSunsetController
+                                            .isCountryLoad.value
+                                        ? const CircularProgressIndicator(
+                                            color: ColorUtils.white,
+                                          )
+                                        : (PrefServices.getDouble(
+                                                        'currentLat') ==
+                                                    0.0 &&
+                                                PrefServices.getDouble(
+                                                        'currentLong') ==
+                                                    0.0)
+                                            ? CustomText(
+                                                '',
+                                                fontWeight: FontWeight.w500,
+                                                fontSize: 20.sp,
+                                              )
+                                            : CustomText(
+                                                PrefServices.getString(
+                                                    'countrySunsetTimeZone'),
+                                                fontWeight: FontWeight.w500,
+                                                fontSize: 20.sp,
+                                              )),
                               ),
                             ),
                             Positioned(
@@ -747,6 +691,7 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                           ),
                           child: Column(
                             children: [
+                              ///  CURRENT ADDRESS
                               if (PrefServices.getString('currentAddress')
                                   .isNotEmpty)
                                 Padding(
@@ -758,6 +703,7 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                                     color: ColorUtils.black,
                                   ),
                                 ),
+
                               if (PrefServices.getString('currentAddress')
                                   .isEmpty)
                                 Padding(
@@ -769,9 +715,12 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                                     color: ColorUtils.black,
                                   ),
                                 ),
+
+                              /// Lat Long
                               SizedBox(height: 4.h),
-                              if (PrefServices.getDouble('currentLat') != 0 &&
-                                  PrefServices.getDouble('currentLong') != 0)
+
+                              if (PrefServices.getDouble('currentLat') != 0.0 &&
+                                  PrefServices.getDouble('currentLong') != 0.0)
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
@@ -779,6 +728,8 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                                       "(${PrefServices.getDouble('currentLat').toStringAsFixed(4)},${PrefServices.getDouble('currentLong').toStringAsFixed(4)})",
                                       textAlign: TextAlign.center,
                                       color: ColorUtils.black,
+                                      overflow: TextOverflow.ellipsis,
+                                      maxLines: 1,
                                     ),
 
                                     /// Indian Time Zone
@@ -808,6 +759,8 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                           ),
                         ),
                       ),
+
+                      /// Delete All Location Dialog
                       InkWell(
                         onTap: () {
                           _showLocationDialog();
@@ -841,7 +794,7 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                     height: 20.h,
                   ),
 
-                  ///EDIT LOCATION
+                  /// Delete and  Rename Current LOCATION
                   Container(
                     height: 40.h,
                     width: 60.w,
@@ -851,138 +804,55 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                     ),
                     child: IconButton(
                       onPressed: () {
-                        Get.dialog(
-                          AlertDialog(
-                            title: SizedBox(
-                              height: 120.h,
-                              child: Column(
+                        if (PrefServices.getString('currentAddress')
+                            .isNotEmpty) {
+                          Get.dialog(
+                            AlertDialog(
+                              shape: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(7.r),
+                                  borderSide: BorderSide.none),
+                              titlePadding: EdgeInsets.zero,
+                              title: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
+                                  /// Delete Current location Address,lat ,lon
                                   TextButton(
-                                    onPressed: () async {
-                                      await _clearData();
-                                      sunriseSunsetController
-                                          .clearSunriseSunsetData();
-
-                                      final containIndex = googleController
-                                          .locationList
-                                          .indexWhere(
-                                              (element) => element == address);
-                                      setState(() {
-                                        address = '';
-                                        latitude = 0;
-                                        longitude = 0;
-                                        googleController.locationList
-                                            .removeAt(containIndex);
-                                      });
-                                      Get.back();
+                                    onPressed: () {
+                                      currentLocation();
                                     },
-                                    child: const CustomText(
+                                    child: CustomText(
                                       StringUtils.deleteLocationBtnTxt,
                                       fontWeight: FontWeight.w500,
                                       color: ColorUtils.black,
+                                      fontSize: 14.sp,
                                     ),
                                   ),
-                                  const Divider(),
+
+                                  Divider(
+                                    height: 0.h,
+                                    thickness: 1.h,
+                                    indent: 12.w,
+                                    endIndent: 12.w,
+                                    color: ColorUtils.black00.withOpacity(0.14),
+                                  ),
+
+                                  /// Rename this location Text
                                   TextButton(
                                     onPressed: () {
-                                      Get.back();
-                                      String newAddress = address ?? '';
-                                      double? newLatitude = latitude;
-                                      double? newLongitude = longitude;
-                                      Get.dialog(AlertDialog(
-                                        title: const CustomText(
-                                          StringUtils.enterLocationTxt,
-                                          color: ColorUtils.black,
-                                        ),
-                                        content: CommonTextField(
-                                          initialValue: newAddress,
-                                          onChange: (value) {
-                                            newAddress = value;
-                                          },
-                                        ),
-                                        actions: [
-                                          Row(
-                                            children: [
-                                              TextButton(
-                                                onPressed: () {
-                                                  Get.back();
-                                                },
-                                                child: const CustomText(
-                                                  StringUtils.cancleTxt,
-                                                  color: ColorUtils.black,
-                                                ),
-                                              ),
-                                              TextButton(
-                                                onPressed: () async {
-                                                  print(
-                                                      "==========Address====>${address!}");
-                                                  print(
-                                                      "==========AddressList====>${googleController.locationList}");
-                                                  final containIndex =
-                                                      googleController
-                                                          .locationList
-                                                          .indexWhere(
-                                                              (element) =>
-                                                                  element ==
-                                                                  address);
-                                                  List locations =
-                                                      await locationFromAddress(
-                                                          newAddress);
-                                                  if (locations.isNotEmpty) {
-                                                    newLatitude = locations
-                                                        .first.latitude;
-                                                    newLongitude = locations
-                                                        .first.longitude;
-                                                  }
-                                                  setState(() {
-                                                    address = newAddress;
-                                                    latitude = newLatitude;
-                                                    longitude = newLongitude;
-                                                    googleController
-                                                                .locationList[
-                                                            containIndex] =
-                                                        newAddress;
-                                                  });
-                                                  if (address != null &&
-                                                      latitude != null &&
-                                                      longitude != null) {
-                                                    PrefServices.setValue(
-                                                        'address', address!);
-                                                    PrefServices.setValue(
-                                                        'latitude', latitude!);
-                                                    PrefServices.setValue(
-                                                        'longitude',
-                                                        longitude!);
-                                                    await PrefServices.setValue(
-                                                        'locationList',
-                                                        googleController
-                                                            .locationList);
-                                                  }
-                                                  Get.back();
-                                                },
-                                                child: const CustomText(
-                                                  StringUtils
-                                                      .renameLocationBtnTxt,
-                                                  color: ColorUtils.black,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ],
-                                      ));
+                                      renameAddress();
                                     },
-                                    child: const CustomText(
+                                    child: CustomText(
                                       StringUtils.renameLocationTxt,
                                       fontWeight: FontWeight.w500,
                                       color: ColorUtils.black,
+                                      fontSize: 14.sp,
                                     ),
                                   ),
                                 ],
                               ),
                             ),
-                          ),
-                        );
+                          );
+                        }
                       },
                       icon: ShaderMask(
                         blendMode: BlendMode.srcIn,
@@ -1009,194 +879,221 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
 
   void _showLocationDialog() {
     Get.dialog(
-      AlertDialog(
-        title: SizedBox(
-          height: googleController.locationList.isNotEmpty ? null : 120.h,
-          child: Column(
-            children: [
-
-              googleController.locationList.isNotEmpty
-                  ? Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-
-                        googleController.locationList.isNotEmpty
-                            ? SizedBox(
-                                height:
-                                    googleController.locationList.length * 40.0,
-                                width: Get.width,
-                                child: ListView.builder(
-                                  shrinkWrap: true,
-                                  itemCount:
-                                      googleController.locationList.length,
-                                  itemBuilder: (context, index) {
-                                    return CustomText(
-                                      googleController.locationList[index],
-                                      color: ColorUtils.black,
-                                    );
-                                  },
-                                ),
-                              )
-                            : const CustomText(
-                                'Location name not found',
-                                color: ColorUtils.black,
-                              ),
-
-                        const Divider(),
-
-                        /// Delete All location
-                        TextButton(
-                          onPressed: () {
-                            _deleteAllLocationDialog();
-                          },
-                          child: const CustomText(
-                            StringUtils.deleteLocationTxt,
-                            color: ColorUtils.black,
-                          ),
-                        ),
-
-                        const Divider(),
-
-                        TextButton(
-                          onPressed: () {
-                            Get.back();
-                            Get.dialog(
-                              AlertDialog(
-                                title: SizedBox(
-                                  height: 120.h,
-                                  child: Column(
-                                    children: [
-                                      TextButton(
-                                        onPressed: () {
-                                          print("Location list NOT Empty :- CLICK");
-                                          Get.off(IntegrateGoogleMap(  address: locationController.address.value,
-                                            longitude: locationController.longitude.value,
-                                            latitude: locationController.latitude.value,));
-                                        },
-                                        child: const CustomText(
-                                          StringUtils.usgMapTxt,
-                                          color: ColorUtils.black,
-                                        ),
-                                      ),
-                                      TextButton(
-                                        onPressed: () {
-                                          Get.off(const LocationScreen());
-                                        },
-                                        child: const CustomText(
-                                          StringUtils.usgManuallyTxt,
-                                          color: ColorUtils.black,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            );
-                          },
-                          child: const CustomText(
-                            StringUtils.addLocationTxt,
-                            color: ColorUtils.black,
-                          ),
-                        ),
-
-                      ],
-                    )
-                  : Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        TextButton(
-                          onPressed: () {
-
-                            print("Location list  Empty :- CLICK");
-
-                            Get.off(IntegrateGoogleMap());
-                          },
-                          child: const CustomText(
-                            StringUtils.usgMapTxt,
-                            color: ColorUtils.black,
-                          ),
-                        ),
-                        const Divider(),
-                        TextButton(
-                          onPressed: () {
-                            Get.off(const LocationScreen());
-                          },
-                          child: const CustomText(
-                            StringUtils.usgManuallyTxt,
-                            color: ColorUtils.black,
-                          ),
-                        ),
-                      ],
+      Dialog(
+        shape: RoundedRectangleBorder(
+          borderRadius:
+              BorderRadius.circular(7.r), // Customize this value as needed
+        ),
+        insetPadding: EdgeInsets.symmetric(
+          horizontal: 30.w,
+        ),
+        child: PrefServices.getStringList("locationList").isNotEmpty
+            ? SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    ListView.builder(
+                      padding: EdgeInsets.only(left: 12.w, top: 15.h),
+                      physics: const NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      itemCount:
+                          PrefServices.getStringList("locationList").length,
+                      itemBuilder: (context, index) {
+                        return CustomText(
+                          PrefServices.getStringList("locationList")[index],
+                          color: ColorUtils.black,
+                        );
+                      },
                     ),
 
-            ],
-          ),
-        ),
+                    SizedBox(
+                      height: 10.h,
+                    ),
+                    Divider(
+                      height: 0.h,
+                      thickness: 1.h,
+                      indent: 10.w,
+                      endIndent: 10.w,
+                      color: ColorUtils.black00.withOpacity(0.14),
+                    ),
+
+                    /// Delete All location Text
+                    TextButton(
+                      onPressed: () {
+                        _deleteAllLocationDialog();
+                      },
+                      child: const CustomText(
+                        StringUtils.deleteLocationTxt,
+                        color: ColorUtils.black,
+                      ),
+                    ),
+
+                    Divider(
+                      height: 0.h,
+                      thickness: 1.h,
+                      indent: 10.w,
+                      endIndent: 10.w,
+                      color: ColorUtils.black00.withOpacity(0.14),
+                    ),
+
+                    /// Add Location Text
+                    TextButton(
+                      onPressed: () {
+                        Get.back();
+                        Get.dialog(
+                          AlertDialog(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(
+                                  7.r), // Customize this value as needed
+                            ),
+                            titlePadding: EdgeInsets.zero,
+                            title: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                TextButton(
+                                  onPressed: () {
+                                    Get.off(IntegrateGoogleMap(
+                                      address: locationController.address.value,
+                                      longitude:
+                                          locationController.longitude.value,
+                                      latitude:
+                                          locationController.latitude.value,
+                                    ));
+                                  },
+                                  child: CustomText(
+                                    StringUtils.usgMapTxt,
+                                    color: ColorUtils.black,
+                                    fontSize: 14.sp,
+                                  ),
+                                ),
+                                Divider(
+                                  height: 0.h,
+                                  thickness: 1.h,
+                                  indent: 12.w,
+                                  endIndent: 12.w,
+                                  color: ColorUtils.black00.withOpacity(0.14),
+                                ),
+                                TextButton(
+                                  onPressed: () {
+                                    Get.off(const LocationScreen());
+                                  },
+                                  child: CustomText(
+                                    StringUtils.usgManuallyTxt,
+                                    color: ColorUtils.black,
+                                    fontSize: 14.sp,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+                      },
+                      child: const CustomText(
+                        StringUtils.addLocationTxt,
+                        color: ColorUtils.black,
+                      ),
+                    ),
+                  ],
+                ),
+              )
+            : Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  TextButton(
+                    onPressed: () {
+                      Get.off(IntegrateGoogleMap());
+                    },
+                    child: CustomText(
+                      StringUtils.usgMapTxt,
+                      color: ColorUtils.black,
+                      fontSize: 14.sp,
+                    ),
+                  ),
+                  Divider(
+                    height: 0.h,
+                    thickness: 1.h,
+                    indent: 12.w,
+                    endIndent: 12.w,
+                    color: ColorUtils.black00.withOpacity(0.14),
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      Get.off(const LocationScreen());
+                    },
+                    child: CustomText(
+                      StringUtils.usgManuallyTxt,
+                      color: ColorUtils.black,
+                      fontSize: 14.sp,
+                    ),
+                  ),
+                ],
+              ),
       ),
     );
   }
 
-  checkPermission()async{
-
+  checkPermission() async {
     bool serviceEnabled;
     LocationPermission permission;
 
-    serviceEnabled=await Geolocator.isLocationServiceEnabled();
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
 
     print(serviceEnabled);
 
-    if (!serviceEnabled){
+    if (!serviceEnabled) {
       await Geolocator.openLocationSettings();
-      return ;
+      return;
     }
 
-
-    permission=await Geolocator.checkPermission();
+    permission = await Geolocator.checkPermission();
 
     print(permission);
 
-    if (permission==LocationPermission.denied){
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
 
-      permission=await Geolocator.requestPermission();
-
-      if (permission==LocationPermission.denied){
+      if (permission == LocationPermission.denied) {
         Fluttertoast.showToast(msg: 'Request Denied !');
-        return ;
+        return;
       }
-
     }
 
-    if(permission==LocationPermission.deniedForever){
+    if (permission == LocationPermission.deniedForever) {
       Fluttertoast.showToast(msg: 'Denied Forever !');
-      return ;
+      return;
     }
 
     getLocation();
-
   }
 
-  getLocation()async{
+  getLocation() async {
+    setState(() {
+      scanning = true;
+    });
 
-    setState(() {scanning=true;});
+    try {
+      Position position = await Geolocator.getCurrentPosition(
+          desiredAccuracy: LocationAccuracy.high);
 
-    try{
+      coordinates =
+          'Latitude : ${position.latitude} \nLongitude : ${position.longitude}';
 
-      Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+      List<Placemark> result =
+          await placemarkFromCoordinates(position.latitude, position.longitude);
 
-      coordinates='Latitude : ${position.latitude} \nLongitude : ${position.longitude}';
-
-      List<Placemark> result  = await placemarkFromCoordinates(position.latitude, position.longitude);
-
-      if (result.isNotEmpty){
-        address='${result[0].name}, ${result[0].locality} ${result[0].administrativeArea}';
+      if (result.isNotEmpty) {
+        address =
+            '${result[0].name}, ${result[0].locality} ${result[0].administrativeArea}';
       }
-
-
-    }catch(e){
-      Fluttertoast.showToast(msg:"${e.toString()}");
+    } catch (e) {
+      Fluttertoast.showToast(msg: e.toString());
     }
 
-    setState(() {scanning=false;});
+    setState(() {
+      scanning = false;
+    });
   }
 
   Future<void> _deleteAllLocationDialog() async {
@@ -1234,6 +1131,7 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                   fontSize: 13.sp,
                 ),
               ),
+
               SizedBox(
                 width: 10.w,
               ),
@@ -1243,13 +1141,10 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                 onTap: () {
                   googleController.clearLocationList();
                   googleController.address.value = '';
-                  sunriseSunsetController.sunset.value = '';
-                  sunriseSunsetController.sunrise.value = '';
+
                   widget.address = '';
 
                   PrefServices.setValue('currentAddress', '');
-                  PrefServices.setValue('sunrise', '');
-                  PrefServices.setValue('sunset', '');
                   PrefServices.setValue('countryName', '');
                   PrefServices.setValue('currentLat', 0.0);
                   PrefServices.setValue('currentLong', 0.0);
@@ -1272,6 +1167,186 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
           ),
         ],
       ),
+    ));
+  }
+
+  Future<void> currentLocation() {
+    Get.back();
+    return Get.dialog(AlertDialog(
+      contentPadding: EdgeInsets.symmetric(horizontal: 20.w),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(7.r), // Change border radius
+      ),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          SizedBox(
+            height: 11.h,
+          ),
+          Align(
+            alignment: Alignment.topLeft,
+            child: CustomText(
+              StringUtils.deleteThisLocation,
+              fontWeight: FontWeight.w600,
+              color: ColorUtils.black,
+              textAlign: TextAlign.left,
+              fontSize: 15.sp,
+            ),
+          ),
+          SizedBox(
+            height: 20.h,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              /// No Button
+              InkWell(
+                onTap: () {
+                  Get.back();
+                },
+                child: CustomText(
+                  StringUtils.noTxt,
+                  fontWeight: FontWeight.w600,
+                  color: ColorUtils.orange,
+                  textAlign: TextAlign.center,
+                  fontSize: 13.sp,
+                ),
+              ),
+
+              SizedBox(
+                width: 25.w,
+              ),
+
+              /// Yes Button
+              InkWell(
+                onTap: () {
+                  setState(() {
+                    googleController.locationList.removeLast();
+                    PrefServices.setValue('currentAddress', '');
+                    PrefServices.setValue('currentLat', 0.0);
+                    PrefServices.setValue('currentLong', 0.0);
+                    PrefServices.setValue('countryName', '');
+                  });
+                  Get.back();
+                },
+                child: CustomText(
+                  StringUtils.yesTxt,
+                  fontWeight: FontWeight.w600,
+                  color: ColorUtils.orange,
+                  textAlign: TextAlign.center,
+                  fontSize: 13.sp,
+                ),
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 16.h,
+          ),
+        ],
+      ),
+    ));
+  }
+
+  Future renameAddress() {
+    Get.back();
+    return Get.dialog(AlertDialog(
+      titlePadding: EdgeInsets.zero,
+      contentPadding: EdgeInsets.zero,
+      actionsPadding: EdgeInsets.zero,
+      shape: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(7.r),
+          borderSide: BorderSide.none),
+      title:  Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+
+          SizedBox(
+            height: 10.h,
+          ),
+
+          Padding(
+            padding: EdgeInsets.only(left: 13.w),
+            child: CustomText(
+              StringUtils.enterLocationTxt,
+              color: ColorUtils.black00,
+              fontWeight: FontWeight.w500,
+              fontSize: 15.sp,
+            ),
+          ),
+
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 5.w),
+            child: CommonTextField(
+
+              onChange: (value) {
+                newAddress = value;
+              },
+            ),
+          ),
+
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              /// cancel button
+              TextButton(
+                onPressed: () {
+                  Get.back();
+                },
+                child:  CustomText(
+                  StringUtils.cancleTxt,
+                  color: ColorUtils.orange,
+                  fontWeight: FontWeight.w500,
+                  fontSize: 12.sp,
+                ),
+              ),
+
+              /// Rename button
+              TextButton(
+                onPressed: () async {
+                  final currentAddress = PrefServices.getString('currentAddress');
+
+                  final containIndex = googleController.locationList
+                      .indexWhere((element) => element == currentAddress);
+
+                  print("ContainIndex :- $containIndex");
+
+                  googleController.locationList[containIndex] = newAddress;
+
+                  String renameElement =
+                  googleController.locationList[containIndex];
+                  setState(() {});
+                  print("newLocationList :- $renameElement");
+                  PrefServices.setValue('currentAddress', renameElement);
+
+                  print(
+                      "googleController.locationList :- ${googleController.locationList}");
+
+                  PrefServices.setValue(
+                      "locationList", googleController.locationList);
+
+                  PrefServices.getStringList("locationList");
+                  print(
+                      "Save locationList :- ${PrefServices.getStringList("locationList")}");
+
+                  Get.back();
+                },
+                child:  CustomText(
+                  StringUtils.renameLocationBtnTxt,
+                  color: ColorUtils.orange,
+                  fontWeight: FontWeight.w500,
+                  fontSize: 12.sp,
+                ),
+              ),
+            ],
+          ),
+        ],
+
+      ),
+
+
+
     ));
   }
 }

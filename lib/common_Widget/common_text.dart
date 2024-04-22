@@ -42,7 +42,7 @@ class CustomText extends StatelessWidget {
       softWrap: softWrap,
       style: TextStyle(
         color: color ?? Get.theme.primaryTextTheme.labelMedium!.color,
-        fontFamily: fontFamily ?? 'Poppins-Regular',
+        fontFamily: fontFamily ?? 'Poppins',
         fontWeight: fontWeight ?? FontWeight.w400,
         fontSize: fontSize ?? 14.sp,
         height: height,

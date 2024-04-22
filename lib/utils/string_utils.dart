@@ -84,12 +84,14 @@ class StringUtils {
   static const confirmTimeZone = 'confirmTimeZone';
   static const timingDownload = 'timingDownload';
   static const deleteAllLocation = 'deleteAllLocation';
+  static const deleteThisLocation = 'deleteThisLocation';
   static const confirmTxt = 'confirmTxt';
   static const renameLocationBtnTxt = 'renameLocationBtnTxt';
   static const renameLocationTxt = 'renameLocationTxt';
   static const deleteLocationBtnTxt = 'deleteLocationBtnTxt';
   static const enterLocationTxt = 'enterLocationTxt';
   static const cancleTxt = 'cancleTxt';
+  static const noTxt = 'noTxt';
   static const yesTxt = 'yesTxt';
   static const proceedTxt = 'proceedTxt';
   static const languageValidationTxt = 'languageValidationTxt';

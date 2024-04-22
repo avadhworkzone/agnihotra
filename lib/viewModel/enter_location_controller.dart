@@ -10,6 +10,7 @@ import 'package:sunrise_app/view/sunrise_sunset_screen/sunrise_sunset_screen.dar
 import 'package:sunrise_app/viewModel/google_map_controller.dart';
 
 class LocationController extends GetxController {
+
   GoogleController googleController = Get.find<GoogleController>();
   TextEditingController latitudeController = TextEditingController();
   TextEditingController longitudeController = TextEditingController();
@@ -30,7 +31,7 @@ class LocationController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    googleController.locationList.value = PrefServices.getStringList('locationList');
+    // googleController.locationList.value = PrefServices.getStringList('locationList');
   }
 
 

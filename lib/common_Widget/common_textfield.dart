@@ -6,6 +6,7 @@ import '../utils/color_utils.dart';
 typedef OnChangeString = void Function(String value);
 
 class CommonTextField extends StatelessWidget {
+
   final TextEditingController? textEditController;
   final String? title;
   final String? initialValue;
@@ -59,35 +60,29 @@ class CommonTextField extends StatelessWidget {
   /// PLEASE IMPORT GET X PACKAGE
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisSize: MainAxisSize.min,
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        TextFormField(
-          controller: textEditController,
-          textAlignVertical: textAlignVertical,
-          style: TextStyle(
-            color: ColorUtils.black,
-            fontSize: 15,
-          ),
-          keyboardType: keyBoardType ?? TextInputType.text,
-          maxLines: maxLine ?? 1,
-          onChanged: onChange,
-          validator: validator,
-          decoration: InputDecoration(
-            hintText: hintText,
-            errorStyle: TextStyle(
-              color: Colors.red,
-              fontSize: 12.sp,
-            ),
-            prefixIcon: pIcon,
-            suffixIcon: sIcon,
-            counterText: '',
-            errorMaxLines: 2,
-          ),
+    return TextFormField(
+      controller: textEditController,
+      textAlignVertical: textAlignVertical,
+      style: TextStyle(
+        color: ColorUtils.black,
+        fontSize: 15.sp,
+      ),
+      keyboardType: keyBoardType ?? TextInputType.text,
+      maxLines: maxLine ?? 1,
+      onChanged: onChange,
+      validator: validator,
+      decoration: InputDecoration(
+        contentPadding: EdgeInsets.zero, // Set contentPadding to zero
+        hintText: hintText,
+        errorStyle: TextStyle(
+          color: Colors.red,
+          fontSize: 12.sp,
         ),
-      ],
+        prefixIcon: pIcon,
+        suffixIcon: sIcon,
+        counterText: '',
+        errorMaxLines: 2,
+      ),
     );
   }
 }

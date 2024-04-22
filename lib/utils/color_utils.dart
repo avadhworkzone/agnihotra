@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 class ColorUtils {
 
   static const locContColor = Colors.black26;
+  static const black00 = Colors.black;
   static const deepOrangeColor = Colors.deepOrangeAccent;
   static const greyColor = Colors.grey;
   static const btnContColor = Colors.black12;
