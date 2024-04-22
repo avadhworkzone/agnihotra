@@ -1,4 +1,3 @@
-
 class StringUtils {
 
   static const usgMapTxt = 'usgMapTxt';
@@ -28,6 +27,7 @@ class StringUtils {
   static const mantraTxt = 'mantraTxt';
   static const settingsScreenTxt = 'settingsScreenTxt';
  // static const manualEntryTxt = 'Manual Entry';
+  static const SettingsScreenTxt = 'SettingsScreenTxt';
   static const contactsTxt = 'contactsTxt';
   static const languageTxt = 'languageTxt';
   static const aboutTxt = 'aboutTxt';
@@ -84,12 +84,15 @@ class StringUtils {
   static const changeTimeTxt = 'changeTimeTxt';
   static const timingDownload = 'timingDownload';
   static const deleteAllLocation = 'deleteAllLocation';
+  static const deleteThisLocation = 'deleteThisLocation';
   static const confirmTxt = 'confirmTxt';
   static const renameLocationBtnTxt = 'renameLocationBtnTxt';
   static const renameLocationTxt = 'renameLocationTxt';
   static const deleteLocationBtnTxt = 'deleteLocationBtnTxt';
   static const enterLocationTxt = 'enterLocationTxt';
   static const cancleTxt = 'cancleTxt';
+  static const noTxt = 'noTxt';
+  static const yesTxt = 'yesTxt';
   static const proceedTxt = 'proceedTxt';
   static const languageValidationTxt = 'languageValidationTxt';
   static const latitudeIsRequired = "latitudeIsRequired";

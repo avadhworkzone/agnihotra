@@ -1,4 +1,3 @@
-
 Map<String,String> en= {
 
   "locationSetTxt":"Location not set,click on icon!",
@@ -12,6 +11,7 @@ Map<String,String> en= {
   "notEstSouWesTxt":"(+ve for North/East and -ve for south/west)",
   "locationUseTxt":"Use this location",
   "mapLocationUseTxt":"See this location on map",
+  "noTxt":"NO",
   "latiTxt":"Latitude:",
   "longTxt":"Longitude:",
   "selectTxt":"SELECT",
@@ -63,9 +63,14 @@ Map<String,String> en= {
   "mantra24":"24 mantra",
   "timeZonTxt" :"Please confirm timesone\nfor this location",
   "standardTime":"India Standard Time(Asia/Kolkata)",
-  "changeTimeTxt":"Change Timezone",
+  "changeTimeTxt" : "Change Timezone",
+  "confirmTimeZone" : "Confirm Timezone for your location",
+  "yesTxt" : "YES",
+  "timingDownload" : "Please wait,\ntiming are being downloaded.",
+  "deleteAllLocation" : "Are you sure you wish to delete all\nlocations ?",
+  "deleteThisLocation" : "Delete this Location?",
   "confirmTxt":"Confirm",
-  "renameLocationBtnTxt":"RENAME LOCATION",
+  "renameLocationBtnTxt":"RENAME THIS LOCATION",
   "renameLocationTxt":"Rename this Location",
   "deleteLocationBtnTxt" : "Delete this Location",
   "enterLocationTxt":"Enter new name for location",
@@ -128,5 +133,6 @@ Map<String,String> en= {
 
   "proceedTxt":"PROCEED",
   "indiaStdTime":"India Standard Time"
+
 
 };

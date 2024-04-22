@@ -154,8 +154,7 @@ class GoogleController extends GetxController {
           country,
         ];
 
-        searchAddress.value =
-            addressComponents.where((element) => element.isNotEmpty).join(', ');
+        searchAddress.value = addressComponents.where((element) => element.isNotEmpty).join(', ');
         address.value = searchAddress.value;
 
         searchResultAddresses.add(searchAddress.value);
@@ -238,7 +237,8 @@ class GoogleController extends GetxController {
     return await rootBundle.loadString(assetPath);
   }
 
-  onLocationData(String addr, double lati, double long) async {
+  addLocation(String addr, double lati, double long) async {
+
     address.value = addr;
 
     print("=======> Address :- ${address.value}");

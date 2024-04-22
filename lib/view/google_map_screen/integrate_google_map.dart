@@ -15,7 +15,6 @@ import 'package:sunrise_app/viewModel/enter_location_controller.dart';
 import 'package:sunrise_app/viewModel/google_map_controller.dart';
 
 class IntegrateGoogleMap extends StatefulWidget {
-
   double? latitude;
   double? longitude;
   String? address;
@@ -25,7 +24,6 @@ class IntegrateGoogleMap extends StatefulWidget {
 
   @override
   State<IntegrateGoogleMap> createState() => _IntegrateGoogleMapState();
-
 }
 
 const kGoogleApiKey = 'AIzaSyCotiIYalOfFMwIsvVPhwnFEGxPX-CtyYo';
@@ -39,28 +37,26 @@ class _IntegrateGoogleMapState extends State<IntegrateGoogleMap> {
   void initState() {
     super.initState();
     // WidgetsBinding.instance.addPostFrameCallback((_) {
-    if (widget.latitude != null && widget.longitude != null) {
-      LatLng latLng = LatLng(widget.latitude!, widget.longitude!);
-      googleController.onAddMarkerButtonPressed(latLng);
-    }
+      if (widget.latitude != null && widget.longitude != null) {
+        LatLng latLng = LatLng(widget.latitude!, widget.longitude!);
+        googleController.onAddMarkerButtonPressed(latLng);
+      }
 
-    widget.latitude = locationController.currentLat;
-    widget.longitude = locationController.currentLong;
-    widget.address = locationController.currentAddress;
+     widget.latitude = locationController.currentLat;
+     widget.longitude = locationController.currentLong;
+     widget.address = locationController.currentAddress;
 
-    print("Init widget.longitude ===========>${widget.longitude} ${widget.latitude}");
+    print(
+        "Init widget.longitude ===========>${widget.longitude} ${widget.latitude}");
 
     // });
   }
 
-
-
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       body: Obx(
-            () {
+        () {
           if (googleController.lastMapPosition == null) {
             return const Center(child: CircularProgressIndicator());
           }
@@ -88,40 +84,40 @@ class _IntegrateGoogleMapState extends State<IntegrateGoogleMap> {
                     ),
                   ],
                 ),
-
                 Obx(() => SizedBox(
-                  height: Get.height / 1.5,
-                  child: GoogleMap(
-                    markers: googleController.markers,
-                    onMapCreated: googleController.onMapCreated,
-                    initialCameraPosition: CameraPosition(
-                      target:
-                      LatLng(widget.latitude ?? 0.0,
-                          widget.longitude ?? 0.0),
-                      zoom: 10.0,
-                    ),
-                    mapType: googleController.currentMapType.value,
-                    onCameraMove: googleController.onCameraMove,
-                    onTap: (LatLng latLng) async {
+                      height: Get.height / 1.5,
+                      child: GoogleMap(
+                        markers: googleController.markers,
+                        onMapCreated: googleController.onMapCreated,
+                        initialCameraPosition: CameraPosition(
+                          target: LatLng(
+                              widget.latitude ?? 0.0, widget.longitude ?? 0.0),
+                          zoom: 10.0,
+                        ),
+                        mapType: googleController.currentMapType.value,
+                        onCameraMove: googleController.onCameraMove,
+                        onTap: (LatLng latLng) async {
+                          Marker marker =
+                              _buildMarker(latLng, 'Custom Place Name');
+                          setState(() {
+                            googleController.markers.add(marker);
+                          });
 
+                          await googleController
+                              .onAddMarkerButtonPressed(latLng);
 
-                      Marker marker = _buildMarker(latLng, 'Custom Place Name');
-                      setState((){
-                        googleController.markers.add(marker);
-                      });
+                          googleController.lastMapPosition.value = latLng;
 
-                      await googleController.onAddMarkerButtonPressed(latLng);
-                      googleController.lastMapPosition.value = latLng;
-                      widget.latitude =
-                          googleController.lastMapPosition.value?.latitude;
-                      widget.longitude =
-                          googleController.lastMapPosition.value?.longitude;
-                      widget.address = googleController.address.value;
-                      setState(() {});
-                    },
-                  ),
-                )),
+                          widget.latitude =
+                              googleController.lastMapPosition.value?.latitude;
 
+                          widget.longitude =
+                              googleController.lastMapPosition.value?.longitude;
+                          widget.address = googleController.address.value;
+                          setState(() {});
+                        },
+                      ),
+                    )),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -134,6 +130,8 @@ class _IntegrateGoogleMapState extends State<IntegrateGoogleMap> {
                         'Address: ${widget.address}',
                         fontSize: 16.sp,
                         color: ColorUtils.black,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
                       ),
                     ),
                     SizedBox(height: 8.h),
@@ -162,7 +160,6 @@ class _IntegrateGoogleMapState extends State<IntegrateGoogleMap> {
                     ),
                     Row(
                       children: [
-
                         /// SELECT BUTTON
                         Padding(
                           padding: EdgeInsets.only(left: 5.w),
@@ -185,17 +182,16 @@ class _IntegrateGoogleMapState extends State<IntegrateGoogleMap> {
                                   'currentLat',
                                   googleController
                                       .lastMapPosition.value!.latitude);
+
                               PrefServices.setValue(
                                   'currentLong',
                                   googleController
                                       .lastMapPosition.value!.longitude);
-
-
-                              print(
-                                  "Save Address :- ${widget.address ?? googleController.address.value}");
-
-                              googleController.onLocationData(
-                                widget.address ?? googleController.address.value,
+                              PrefServices.setValue(
+                                  'countryName','India Standard Time');
+                              googleController.addLocation(
+                                widget.address ??
+                                    googleController.address.value,
                                 widget.latitude ??
                                     googleController
                                         .lastMapPosition.value!.latitude,
@@ -226,22 +222,21 @@ class _IntegrateGoogleMapState extends State<IntegrateGoogleMap> {
                               end: AlignmentDirectional.bottomEnd,
                             ),
                             onTap: () {
-
                               googleController.toggleMapType();
-                              print("googleController.currentMapType.value :- ${googleController.currentMapType.value}");
+                              print(
+                                  "googleController.currentMapType.value :- ${googleController.currentMapType.value}");
                             },
-                            title: googleController.currentMapType.value == MapType.hybrid
+                            title: googleController.currentMapType.value ==
+                                    MapType.hybrid
                                 ? StringUtils.mapViewTxt
                                 : StringUtils.satelliteTxt,
                             fontSize: 15.sp,
                           ),
                         ),
-
                       ],
                     ),
                   ],
                 ),
-
               ],
             ),
           );
@@ -293,10 +288,6 @@ class _IntegrateGoogleMapState extends State<IntegrateGoogleMap> {
       apiHeaders: await const GoogleApiHeaders().getHeaders(),
     );
     PlacesDetailsResponse details =
-    await places.getDetailsByPlaceId(p.placeId!);
-
-
+        await places.getDetailsByPlaceId(p.placeId!);
   }
-
-
 }

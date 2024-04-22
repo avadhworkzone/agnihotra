@@ -83,7 +83,7 @@ class _ChangeTimeZoneScreenState extends State<ChangeTimeZoneScreen> {
                         googleController.searchCountryController.text.isNotEmpty
                             ? googleController.filteredCountryStateName[index]
                             : googleController.countryStateName[index]
-                    ).then((value) {
+                    ).then((value){
 
                       setState(() {
 
@@ -91,6 +91,7 @@ class _ChangeTimeZoneScreenState extends State<ChangeTimeZoneScreen> {
                             ? googleController.filteredCountryStateName[index]
                             : googleController.countryStateName[index]);
                       });
+
                       _isTimezoneConfirmDialog(googleController.searchCountryController.text.isNotEmpty
                           ? googleController.filteredCountryStateName[index]
                           : googleController.countryStateName[index]);
