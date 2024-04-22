@@ -61,7 +61,7 @@ Map<String,String> gu = {
   "tilakSandhyaMantraTxt":"ત્રિકાલ સંધ્યા મંત્ર",
   "trikalMantraTxt":"ત્રિકાલ સંધ્યા મંત્ર",
   "mantra24":"24 મંત્ર",
-  "timeZonTxt":"કૃપા કરીને આ સ્થાન માટે સમયની પુષ્ટિ કરો",
+  "timeZonTxt":"કૃપા કરીને આ સ્થાન માટે\nસમયની પુષ્ટિ કરો",
   "standardTime":"ભારતીય માનક સમય(એશિયા/કોલકાતા)",
   "changeTimeTxt" : "ટાઇમઝોન બદલો",
   "confirmTxt":"પુષ્ટિ કરો",
@@ -114,7 +114,7 @@ Map<String,String> gu = {
   "annadoText":"अन्नादो भूयासम्\t ગળા પર",
   "swstiText":"स्वस्ति भूयासम्\t માથાની ટોચ",
   "settingsScreenTxt":"સેટિંગ્સ",
-  "deleteAllLocation":"આ સ્થાન કાઢી નાખો",
-  "processedTxt":"આગળ વધો"
+  "deleteAllLocation":"શું તમે ખરેખર બધા\nસ્થાનો કાઢી નાખવા માંગો છો?",
+  "proceedTxt":"આગળ વધો"
 
 };

@@ -39,16 +39,16 @@ class _IntegrateGoogleMapState extends State<IntegrateGoogleMap> {
   void initState() {
     super.initState();
     // WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (widget.latitude != null && widget.longitude != null) {
-        LatLng latLng = LatLng(widget.latitude!, widget.longitude!);
-        googleController.onAddMarkerButtonPressed(latLng);
-      }
+    if (widget.latitude != null && widget.longitude != null) {
+      LatLng latLng = LatLng(widget.latitude!, widget.longitude!);
+      googleController.onAddMarkerButtonPressed(latLng);
+    }
 
-     widget.latitude = locationController.currentLat;
-     widget.longitude = locationController.currentLong;
-     widget.address = locationController.currentAddress;
+    widget.latitude = locationController.currentLat;
+    widget.longitude = locationController.currentLong;
+    widget.address = locationController.currentAddress;
 
-     print("Init widget.longitude ===========>${widget.longitude} ${widget.latitude}");
+    print("Init widget.longitude ===========>${widget.longitude} ${widget.latitude}");
 
     // });
   }
@@ -60,7 +60,7 @@ class _IntegrateGoogleMapState extends State<IntegrateGoogleMap> {
 
     return Scaffold(
       body: Obx(
-        () {
+            () {
           if (googleController.lastMapPosition == null) {
             return const Center(child: CircularProgressIndicator());
           }
@@ -90,37 +90,37 @@ class _IntegrateGoogleMapState extends State<IntegrateGoogleMap> {
                 ),
 
                 Obx(() => SizedBox(
-                      height: Get.height / 1.5,
-                      child: GoogleMap(
-                        markers: googleController.markers,
-                        onMapCreated: googleController.onMapCreated,
-                        initialCameraPosition: CameraPosition(
-                          target:
-                              LatLng(widget.latitude ?? 0.0,
-                                  widget.longitude ?? 0.0),
-                          zoom: 10.0,
-                        ),
-                        mapType: googleController.currentMapType.value,
-                        onCameraMove: googleController.onCameraMove,
-                        onTap: (LatLng latLng) async {
+                  height: Get.height / 1.5,
+                  child: GoogleMap(
+                    markers: googleController.markers,
+                    onMapCreated: googleController.onMapCreated,
+                    initialCameraPosition: CameraPosition(
+                      target:
+                      LatLng(widget.latitude ?? 0.0,
+                          widget.longitude ?? 0.0),
+                      zoom: 10.0,
+                    ),
+                    mapType: googleController.currentMapType.value,
+                    onCameraMove: googleController.onCameraMove,
+                    onTap: (LatLng latLng) async {
 
 
-                          Marker marker = _buildMarker(latLng, 'Custom Place Name');
-                          setState((){
-                            googleController.markers.add(marker);
-                          });
+                      Marker marker = _buildMarker(latLng, 'Custom Place Name');
+                      setState((){
+                        googleController.markers.add(marker);
+                      });
 
-                          await googleController.onAddMarkerButtonPressed(latLng);
-                          googleController.lastMapPosition.value = latLng;
-                          widget.latitude =
-                              googleController.lastMapPosition.value?.latitude;
-                          widget.longitude =
-                              googleController.lastMapPosition.value?.longitude;
-                          widget.address = googleController.address.value;
-                          setState(() {});
-                        },
-                      ),
-                    )),
+                      await googleController.onAddMarkerButtonPressed(latLng);
+                      googleController.lastMapPosition.value = latLng;
+                      widget.latitude =
+                          googleController.lastMapPosition.value?.latitude;
+                      widget.longitude =
+                          googleController.lastMapPosition.value?.longitude;
+                      widget.address = googleController.address.value;
+                      setState(() {});
+                    },
+                  ),
+                )),
 
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -293,7 +293,7 @@ class _IntegrateGoogleMapState extends State<IntegrateGoogleMap> {
       apiHeaders: await const GoogleApiHeaders().getHeaders(),
     );
     PlacesDetailsResponse details =
-        await places.getDetailsByPlaceId(p.placeId!);
+    await places.getDetailsByPlaceId(p.placeId!);
 
 
   }

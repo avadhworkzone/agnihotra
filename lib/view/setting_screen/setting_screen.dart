@@ -215,12 +215,9 @@ class _SeetingScreenState extends State<SettingsScreen> {
                                     Transform.scale(
                                       scale: 0.8,
                                       child: Switch(
-                                        value: settingScreenController
-                                            .isCountDown.value,
+                                        value: settingScreenController.isCountDown.value,
                                         onChanged: (value) {
-                                          // settingScreenController.onCountDown();
                                           settingScreenController.toggleCountDown(value);
-                                          ;
                                         },
                                       ),
                                     ),

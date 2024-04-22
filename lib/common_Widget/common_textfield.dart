@@ -66,8 +66,8 @@ class CommonTextField extends StatelessWidget {
         // textAlignVertical: textAlignVertical,
 
         style: TextStyle(
-          color: ColorUtils.black,
-          fontSize: 15
+            color: ColorUtils.black,
+            fontSize: 15
         ),
         keyboardType: keyBoardType ?? TextInputType.text,
         maxLines: maxLine ?? 1,

@@ -59,7 +59,7 @@
   "tilakSandhyaMantraTxt":"Trikal sandhya mantra",
   "trikalMantraTxt":"Trikal Sandhya Mantra",
   "mantra24":"24 mantra",
-  "timeZonTxt" :"Please confirm timesone for this location",
+  "timeZonTxt" :"Please confirm timesone\nfor this location",
   "standardTime":"India Standard Time(Asia/Kolkata)",
   "changeTimeTxt":"Change Timezone",
   "confirmTxt":"Confirm",
@@ -112,7 +112,7 @@
    "annadoText":"अन्नादो भूयासम्\t On Throat",
    "swstiText":"स्वस्ति भूयासम्\t Top of the head",
    "settingsScreenTxt":"Settings",
-   "deleteAllLocation":"Delete this location",
-   "processedTxt":"PROCEED"
+   "deleteAllLocation":"Are you sure you wish to delete all\nlocations ?",
+   "proceedTxt":"PROCEED"
 
    }

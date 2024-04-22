@@ -60,7 +60,7 @@ Map<String,String> hi = {
   "tilakSandhyaMantraTxt":"त्रिकाल संध्या मंत्र",
   "trikalMantraTxt":"त्रिकाल संध्या मंत्र",
   "mantra24":"24 मंत्र",
-  "timeZonTxt":"कृपया इस स्थान के लिए टाइमवन की पुष्टि करें",
+  "timeZonTxt":"कृपया इस स्थान के लिए\nटाइमवन की पुष्टि करें",
   "standardTime":"भारतीय मानक समय(एशिया/कोलकाता)",
   "changeTimeTxt" : "समयक्षेत्र बदलें",
   "confirmTxt":"पुष्टि करना",
@@ -113,7 +113,7 @@ Map<String,String> hi = {
   "annadoText":"अन्नादो भूयासम्\t गले पर",
   "swstiText":"स्वस्ति भूयासम्\t सिर के ऊपर",
   "settingsScreenTxt":"समायोजन",
-  "deleteAllLocation":"यह स्थान हटाएँ",
-  "processedTxt":"आगे बढ़ो"
+  "deleteAllLocation":"क्या आप वाकई सभी\nस्थानों को हटाना चाहते हैं?",
+  "proceedTxt":"आगे बढ़ो"
 
 };

@@ -8,6 +8,7 @@ import 'package:sunrise_app/model/sunrise_sunset_model.dart';
 import 'package:sunrise_app/services/prefServices.dart';
 import 'package:sunrise_app/utils/const_utils.dart';
 import 'package:sunrise_app/view/sunrise_sunset_screen/sunrise_sunset_api.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:weather/weather.dart';
 
 class SunriseSunsetController extends GetxController {
@@ -19,6 +20,13 @@ class SunriseSunsetController extends GetxController {
 
   late Rx<DateTime> selectedDate = DateTime.now().obs;
   String formattedDate = DateFormat("yyyy-MM-dd").format(DateTime.now());
+  final Uri _url = Uri.parse('https://www.freeprivacypolicy.com/live/b55e5ea0-1038-4c24-b269-7359dcad9bb2');
+
+  Future<void> launchUrl() async {
+    if (!await launch(_url.toString())) {
+      throw 'Could not launch $_url';
+    }
+  }
 
 
   Future<void> selectDate(BuildContext context) async {
@@ -56,22 +64,18 @@ class SunriseSunsetController extends GetxController {
 
         // Format the DateTime object to yyyy-MM-dd format
         DateFormat outputFormat = DateFormat("yyyy-MM-dd");
-         formattedDate = outputFormat.format(date);
+        formattedDate = outputFormat.format(date);
 
-         print("formattedDate :- $formattedDate");
+        print("formattedDate :- $formattedDate");
 
-        futureSunriseSunsetTime(latitude: PrefServices.getDouble('currentLat'),
-            longitude: PrefServices.getDouble('currentLong'),
-            dateTime: formattedDate);
-
+        countryTimeZone(
+            PrefServices.getDouble('currentLat'),
+            PrefServices.getDouble('currentLong'),
+            formattedDate,
+            PrefServices.getString('countryName'));
       }
     }
-
-
   }
-
-
-
 
   void updateTime() {
     String formattedTime = DateFormat('HH:mm:ss').format(DateTime.now());
@@ -79,10 +83,10 @@ class SunriseSunsetController extends GetxController {
     currentTime.value = DateFormat.jms().format(time);
   }
 
-  RxString sunrise = ''.obs;
-  RxString sunset = ''.obs;
-  RxString futureSunriseTime = ''.obs;
-  RxString futureSunsetTime = ''.obs;
+  RxString  sunrise = ''.obs;
+  RxString  sunset = ''.obs;
+  RxString  futureSunriseTime = ''.obs;
+  RxString  futureSunsetTime = ''.obs;
   RxString  formattedSunriseTime = ''.obs;
   RxString  formattedSunsetTime = ''.obs;
 
@@ -100,7 +104,7 @@ class SunriseSunsetController extends GetxController {
 
 
 
- Future<void> getSunriseSunsetTime(double latitude, double longitude) async {
+  Future<void> getSunriseSunsetTime(double latitude, double longitude) async {
 
     isLoad.value = true;
     sunriseSunsetModel = await SunriseSunsetApi.getData(latitude, longitude);
@@ -108,8 +112,11 @@ class SunriseSunsetController extends GetxController {
     sunrise.value = sunriseSunsetModel?.results.sunrise ?? '';
     sunset.value = sunriseSunsetModel?.results.sunset ?? '';
 
+    print('sunrise${sunrise.value}');
+    print('sunset${sunset.value}');
     PrefServices.setValue('sunrise', sunrise.value);
     PrefServices.setValue('sunset', sunset.value);
+
 
     print("SunRise Value :- ${sunrise.value}");
     print("sunset Value :- ${sunset.value}");
@@ -117,6 +124,7 @@ class SunriseSunsetController extends GetxController {
     update();
 
   }
+
 
   Future<void> countryTimeZone(double latitude, double longitude,String date,String countryTimeZone) async {
 
@@ -136,41 +144,39 @@ class SunriseSunsetController extends GetxController {
 
   }
 
-  Future<void> futureSunriseSunsetTime({required double latitude, required double longitude,required String dateTime}) async {
-
-    isFutureLoad.value = true;
-    futureSunriseSunsetTimeModel = await SunriseSunsetApi.getFutureTime(latitude, longitude,dateTime,ConstUtils.googleApiKey);
-
-
-    futureSunriseTime.value = futureSunriseSunsetTimeModel?.results?.sunrise ?? '';
-    futureSunsetTime.value = futureSunriseSunsetTimeModel?.results?.sunset ?? '';
-
-
-
-    // Parse the UTC time string
-    DateTime utcSunRiseTime = DateTime.parse(futureSunriseTime.value);
-    DateTime utcSunsetTime = DateTime.parse(futureSunsetTime.value);
-
-    // Create a DateTime object with the UTC time
-    DateTime indiaSunriseTime = utcSunRiseTime.add(const Duration(hours: 5, minutes: 31,seconds: 15));
-    DateTime indiaSunsetTime = utcSunsetTime.add(const Duration(hours: 5, minutes: 28,seconds: 30));
-
-     // Format the DateTime object to 12-hour format with AM/PM
-     formattedSunriseTime.value = DateFormat('hh:mm:ss a').format(indiaSunriseTime);
-     formattedSunsetTime.value = DateFormat('hh:mm:ss a').format(indiaSunsetTime);
-
-    print("Future Sun Rise Value :- ${formattedSunriseTime.value}");
-    print("Future sunset Value :- ${formattedSunsetTime.value}");
-
-    PrefServices.setValue('futureSunrise', formattedSunriseTime.value);
-    PrefServices.setValue('futureSunset', formattedSunsetTime.value);
-
-    isFutureLoad.value = false;
-    update();
-
-  }
-
-
+  // Future<void> futureSunriseSunsetTime({required double latitude, required double longitude,required String dateTime}) async {
+  //
+  //   isFutureLoad.value = true;
+  //   futureSunriseSunsetTimeModel = await SunriseSunsetApi.getFutureTime(latitude, longitude,dateTime,ConstUtils.googleApiKey);
+  //
+  //
+  //   futureSunriseTime.value = futureSunriseSunsetTimeModel?.results?.sunrise ?? '';
+  //   futureSunsetTime.value = futureSunriseSunsetTimeModel?.results?.sunset ?? '';
+  //
+  //
+  //
+  //   // Parse the UTC time string
+  //   DateTime utcSunRiseTime = DateTime.parse(futureSunriseTime.value);
+  //   DateTime utcSunsetTime = DateTime.parse(futureSunsetTime.value);
+  //
+  //   // Create a DateTime object with the UTC time
+  //   DateTime indiaSunriseTime = utcSunRiseTime.add(const Duration(hours: 5, minutes: 31,seconds: 15));
+  //   DateTime indiaSunsetTime = utcSunsetTime.add(const Duration(hours: 5, minutes: 28,seconds: 30));
+  //
+  //   // Format the DateTime object to 12-hour format with AM/PM
+  //   formattedSunriseTime.value = DateFormat('hh:mm:ss a').format(indiaSunriseTime);
+  //   formattedSunsetTime.value = DateFormat('hh:mm:ss a').format(indiaSunsetTime);
+  //
+  //   print("Future Sun Rise Value :- ${formattedSunriseTime.value}");
+  //   print("Future sunset Value :- ${formattedSunsetTime.value}");
+  //
+  //   PrefServices.setValue('futureSunrise', formattedSunriseTime.value);
+  //   PrefServices.setValue('futureSunset', formattedSunsetTime.value);
+  //
+  //   isFutureLoad.value = false;
+  //   update();
+  //
+  // }
 
   Future<void> clearSunriseSunsetData() async {
     sunrise.value = '';
