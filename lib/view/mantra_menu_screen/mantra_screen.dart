@@ -120,7 +120,11 @@ class _MantraScreenState extends State<MantraScreen> {
                                     child: CircleAvatar(
                                       backgroundColor: ColorUtils.white,
                                       radius: 25.r,
-                                      child: LocalAssets(imagePath: AssetUtils.sunriseImages),
+                                      child: LocalAssets(
+                                          imagePath: AssetUtils.sunriseImages,
+                                        height: 30.63,
+                                        width: 30.63,
+                                      ),
                                     ),
                                   ),
                                   CustomText(
@@ -254,7 +258,11 @@ class _MantraScreenState extends State<MantraScreen> {
                                     child: CircleAvatar(
                                       backgroundColor: ColorUtils.white,
                                       radius: 27.r,
-                                      child: LocalAssets(imagePath: AssetUtils.sunsetImages),
+                                      child: LocalAssets(
+                                          imagePath: AssetUtils.sunsetImages,
+                                        height: 30.63,
+                                        width: 30.63,
+                                      ),
                                     ),
                                   ),
                                   CustomText(

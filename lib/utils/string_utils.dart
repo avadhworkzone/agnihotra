@@ -150,7 +150,7 @@ class StringUtils {
 
   static const confirmTimeZone = 'confirmTimeZone';
 
-  static const yesTxt = 'yesTxt';
+
 
 
 }
