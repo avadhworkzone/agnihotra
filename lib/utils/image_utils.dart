@@ -17,6 +17,11 @@ class AssetUtils{
   static String agniKundImages = '${imagePath}agniKund.png';
   static String tilakSndhyaImages = '${imagePath}tilakSndhya.png';
   static String directionImage = '${imagePath}directionImage.png';
+  static String agnihotraMantraImages = '${imagePath}agnihotraMantra.png';
+  static String trikalSandhyaImages = '${imagePath}trikalSandhya.png';
+  static String agniHotraPatra = '${imagePath}agniHotra_patra.png';
+  static String bgRemoveAppLogo = '${imagePath}bgRemove_appLogo.png';
+  static String bgRemoveAboutIcon = '${imagePath}bgRemove_aboutIcon.png';
 
   // ICONS
 

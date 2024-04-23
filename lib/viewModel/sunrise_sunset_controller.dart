@@ -13,7 +13,6 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:weather/weather.dart';
 
 class SunriseSunsetController extends GetxController {
- // SettingScreenController settingScreenController = Get.find<SettingScreenController>();
 
   WeatherFactory? ws;
   Rx<Weather?> weather = Rx<Weather?>(null);
@@ -105,18 +104,13 @@ class SunriseSunsetController extends GetxController {
     currentTime.value = DateFormat.jms().format(time);
   }
 
-  RxString sunrise = ''.obs;
-  RxString sunset = ''.obs;
-  RxString futureSunriseTime = ''.obs;
-  RxString futureSunsetTime = ''.obs;
-  RxString  formattedSunriseTime = ''.obs;
-  RxString  formattedSunsetTime = ''.obs;
 
 
 
 
-  RxBool isLoad = false.obs;
-  RxBool isFutureLoad = false.obs;
+
+
+
 
   Future<void> countryTimeZone(double latitude, double longitude,String date,String countryTimeZone) async {
 
@@ -132,50 +126,16 @@ class SunriseSunsetController extends GetxController {
     print("countrySunriseTimeZone Value :- ${countrySunriseTimeZone.value}");
     print("countrySunsetTimeZone Value :- ${countrySunsetTimeZone.value}");
     isCountryLoad.value = false;
-
     update();
 
   }
 
-  Future<void> futureSunriseSunsetTime({required double latitude, required double longitude,required String dateTime}) async {
 
-    isFutureLoad.value = true;
-    futureSunriseSunsetTimeModel = await SunriseSunsetApi.getDifferentCountryTime(latitude, longitude,dateTime,ConstUtils.googleApiKey);
-
-
-    futureSunriseTime.value = futureSunriseSunsetTimeModel?.results?.sunrise ?? '';
-    futureSunsetTime.value = futureSunriseSunsetTimeModel?.results?.sunset ?? '';
-
-
-
-    // Parse the UTC time string
-    DateTime utcSunRiseTime = DateTime.parse(futureSunriseTime.value);
-    DateTime utcSunsetTime = DateTime.parse(futureSunsetTime.value);
-
-    // Create a DateTime object with the UTC time
-    DateTime indiaSunriseTime = utcSunRiseTime.add(const Duration(hours: 5, minutes: 31,seconds: 15));
-    DateTime indiaSunsetTime = utcSunsetTime.add(const Duration(hours: 5, minutes: 28,seconds: 30));
-
-     // Format the DateTime object to 12-hour format with AM/PM
-     formattedSunriseTime.value = DateFormat('hh:mm:ss a').format(indiaSunriseTime);
-     formattedSunsetTime.value = DateFormat('hh:mm:ss a').format(indiaSunsetTime);
-
-    print("Future Sun Rise Value :- ${formattedSunriseTime.value}");
-    print("Future sunset Value :- ${formattedSunsetTime.value}");
-
-    PrefServices.setValue('futureSunrise', formattedSunriseTime.value);
-    PrefServices.setValue('futureSunset', formattedSunsetTime.value);
-
-    isFutureLoad.value = false;
-    update();
-
-  }
 
 
 
   Future<void> clearSunriseSunsetData() async {
-    sunrise.value = '';
-    sunset.value = '';
+
     await PrefServices.removeValue('sunrise');
     await PrefServices.removeValue('sunset');
   }
@@ -195,42 +155,4 @@ class SunriseSunsetController extends GetxController {
     return formatter.parse(timeStr);
   }
 
-  String formatDuration(Duration duration) {
-    // Calculate hours, minutes, and seconds
-    int hours = duration.inHours;
-    int minutes = duration.inMinutes.remainder(60);
-    int seconds = duration.inSeconds.remainder(60);
-
-    // Format the duration as "hh:mm:ss"
-    return "${hours.toString().padLeft(2, '0')}:${minutes.toString().padLeft(2, '0')}:${seconds.toString().padLeft(2, '0')}";
-  }
-
-
-  void onCountDown(){
-    DateTime now = DateTime.now();
-    String sunriseTime =  PrefServices.getString('countrySunriseTimeZone');
-    String sunsetTime =  PrefServices.getString('countrySunsetTimeZone');
-    DateTime sunrise = parseTime(sunriseTime);
-    DateTime sunset = parseTime(sunsetTime);
-
-    DateTime sunriseTimeWithoutYear = DateTime(now.year, now.month, now.day, sunrise.hour, sunrise.minute, sunrise.second);
-    DateTime sunsetTimeWithoutYear = DateTime(now.year, now.month, now.day, sunset.hour, sunset.minute, sunset.second);
-    DateTime currentTimeWithoutYear = DateTime(now.year, now.month, now.day, now.hour, now.minute, now.second);
-    if (currentTimeWithoutYear.isAfter(sunriseTimeWithoutYear)) {
-      if (currentTimeWithoutYear.isBefore(sunsetTimeWithoutYear)) {
-        difference.value = sunsetTimeWithoutYear.difference(currentTimeWithoutYear);
-        print("Time until sunset: ${formatDuration(difference.value)} hours.");
-        PrefServices.setValue('timeUntilTime', formatDuration(difference.value));
-      } else {
-        DateTime nextDaySunrise = sunriseTimeWithoutYear.add(Duration(days: 1));
-        difference.value = nextDaySunrise.difference(currentTimeWithoutYear);
-        print("Time until next sunrise: ${formatDuration(difference.value)} hours.");
-        PrefServices.setValue('timeUntilTime', formatDuration(difference.value));
-      }
-    } else {
-      difference.value = sunriseTimeWithoutYear.difference(currentTimeWithoutYear);
-      print("Time until sunrise: ${formatDuration(difference.value)} hours.");
-      PrefServices.setValue('timeUntilTime', formatDuration(difference.value));
-    }
-  }
 }

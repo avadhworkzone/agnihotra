@@ -7,7 +7,7 @@ import 'package:sunrise_app/common_Widget/common_text.dart';
 import 'package:sunrise_app/utils/color_utils.dart';
 import 'package:sunrise_app/utils/image_utils.dart';
 import 'package:sunrise_app/utils/string_utils.dart';
-import 'package:sunrise_app/view/sunrise_sunset_screen/sunrise_sunset_screen.dart';
+
 
 class TrikalSandhyaMantra extends StatefulWidget {
   const TrikalSandhyaMantra({super.key});
@@ -17,9 +17,12 @@ class TrikalSandhyaMantra extends StatefulWidget {
 }
 
 class _TrikalSandhyaMantraState extends State<TrikalSandhyaMantra> {
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+
       body: Stack(
         children: [
           Container(
@@ -46,7 +49,7 @@ class _TrikalSandhyaMantraState extends State<TrikalSandhyaMantra> {
                         radius: 18.r,
                         child: IconButton(
                           onPressed: () {
-                            Get.off(SunriseSunetScreen());
+                            Get.back();
                           },
                           icon: Icon(
                             size: 20.w,

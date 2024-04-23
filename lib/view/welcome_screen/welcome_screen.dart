@@ -35,30 +35,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
               ),
             ),
           ),
-        // Padding(
-        //   padding:EdgeInsets.only(top: 180.h),
-        //   child: Column(
-        //     children: [
-        //       // WELCOME
-        //        Center(
-        //          child: CustomText(
-        //              StringUtils.welcomeTxt,
-        //              fontSize: 28.sp,
-        //              fontWeight: FontWeight.w600,
-        //            ),
-        //        ),
-        //       // GET START
-        //       Center(
-        //         child: CustomText(
-        //           StringUtils.getStartTxt,
-        //           // color: Colors.white,
-        //           fontSize: 14.sp,
-        //           fontWeight: FontWeight.w500,
-        //         ),
-        //       ),
-        //     ],
-        //   ),
-        // ),
+
         ],
       ),
       bottomSheet: Container(
@@ -87,7 +64,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 color: ColorUtils.orange,
               ),
               SizedBox(height: 30.h,),
-              // HIND
+              /// HINDI
               Padding(
                 padding:EdgeInsets.only(left: 45.w,right: 45.w),
                 child: Container(
@@ -127,7 +104,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 ),
               ),
               SizedBox(height: 20.h,),
-              // ENGLISH
+              /// ENGLISH
               Padding(
                 padding:EdgeInsets.only(left: 45.w,right: 45.w),
                 child: Container(
@@ -168,7 +145,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 ),
               ),
               SizedBox(height: 20.h,),
-              // GUJARATI
+              /// GUJARATI
               Padding(
                 padding:EdgeInsets.only(left: 45.w,right: 45.w),
                 child: Container(
@@ -209,7 +186,8 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 ),
               ),
               SizedBox(height: 30.h,),
-              // SUBMIT BUTTON
+
+              /// SUBMIT BUTTON
               Padding(
                 padding:EdgeInsets.symmetric(horizontal: 80.w),
                 child: CustomBtn(

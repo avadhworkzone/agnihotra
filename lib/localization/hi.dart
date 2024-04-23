@@ -58,6 +58,7 @@ Map<String,String> hi = {
   "agnihotraMantraTxt":"अग्निहोत्र मंत्र",
   "sunriseSunsetMantraTxt":"(सूर्योदय एवं सूर्यास्त मंत्र)",
   "tilakSandhyaMantraTxt":"त्रिकाल संध्या मंत्र",
+  "agnihotraPatraText": "अग्निहोत्र पात्र का आकार",
   "trikalMantraTxt":"त्रिकाल संध्या मंत्र",
   "mantra24":"24 मंत्र",
   "timeZonTxt":"कृपया इस स्थान के लिए\nटाइमवन की पुष्टि करें",

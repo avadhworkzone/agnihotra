@@ -7,7 +7,6 @@ import 'package:sunrise_app/utils/color_utils.dart';
 import 'package:sunrise_app/utils/image_utils.dart';
 import 'package:sunrise_app/utils/string_utils.dart';
 import 'package:sunrise_app/view/sunrise_sunset_screen/sunrise_sunset_screen.dart';
-import 'package:sunrise_app/viewModel/agnihotra_mantra_controller.dart';
 
 class MantraScreen extends StatefulWidget {
   const MantraScreen({Key? key}) : super(key: key);
@@ -17,7 +16,6 @@ class MantraScreen extends StatefulWidget {
 }
 
 class _MantraScreenState extends State<MantraScreen> {
-  AgnihotraMantraController agnihotraMantraController = Get.find<AgnihotraMantraController>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,8 +23,8 @@ class _MantraScreenState extends State<MantraScreen> {
         children: [
           Container(
             decoration: BoxDecoration(
-              image:DecorationImage(
-                image:AssetImage(
+              image: DecorationImage(
+                image: AssetImage(
                   AssetUtils.backgroundImages,
                 ),
                 fit: BoxFit.cover,
@@ -39,15 +37,15 @@ class _MantraScreenState extends State<MantraScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Padding(
-                  padding:EdgeInsets.only(left: 12.w),
+                  padding: EdgeInsets.only(left: 12.w),
                   child: CircleAvatar(
                     backgroundColor: ColorUtils.white,
                     radius: 18.r,
                     child: IconButton(
                       onPressed: () {
-                        Get.off(SunriseSunetScreen());
+                        Get.back();
                       },
-                      icon:  Icon(
+                      icon: Icon(
                         size: 20.w,
                         AssetUtils.backArrowIcon,
                         color: ColorUtils.orange,
@@ -64,27 +62,86 @@ class _MantraScreenState extends State<MantraScreen> {
               ],
             ),
           ),
+
           Padding(
-            padding:EdgeInsets.only(top: 100.h),
+            padding: EdgeInsets.only(top: 100.h),
             child: SingleChildScrollView(
               child: Column(
                 children: [
-               //   SizedBox(height: 20.h,),
-                  Container(
-                    height: 65.h,
-                    width: 80.w,
-                    decoration: BoxDecoration(
-                      image: DecorationImage(image:AssetImage(AssetUtils.agniKundImages),fit: BoxFit.cover),
-                      borderRadius: BorderRadius.all(Radius.circular(5.r)),
-                      boxShadow: [
-                        BoxShadow(
-                          blurRadius: 20.r,
-                          color: ColorUtils.greyColor,
-                        )
-                      ]
+                  SizedBox(
+                    height: 20.h,
+                  ),
+
+                  /// Agnihotra Patra Size
+                  GestureDetector(
+                    onTap: (){
+                      Get.to(const AgniHotraPatraScreen());
+                    },
+                    child: Center(
+                      child: Container(
+                        height: 38.h,
+                        width: 240.w,
+                        decoration: BoxDecoration(
+                            color: ColorUtils.white,
+                            borderRadius: BorderRadius.circular(52.r)),
+                        child:  Center(
+                          child: Row(
+
+                            children: [
+
+                              SizedBox(
+                                width: 40.w,
+                              ),
+
+                              CustomText(StringUtils.agnihotraPatraText,
+                                  color: ColorUtils.black,
+                                  fontWeight: FontWeight.w600,
+                                fontSize: 13.sp,
+                              ),
+
+                              const Spacer(),
+
+                              Container(
+                                height: 25.h,
+                                width: 25.h,
+                                decoration: BoxDecoration(
+                                  gradient: const LinearGradient(
+                                    colors: [
+                                      ColorUtils.orangeCB,
+                                      ColorUtils.orangeFD
+                                    ],
+
+                                    begin: Alignment.topRight,
+
+                                    end: Alignment
+                                        .bottomLeft, // Ending point of the gradient
+
+                                  ),
+                                  borderRadius: BorderRadius.circular(25.r),
+                                ),
+                                child: const Center(
+                                  child: Icon(
+                                    Icons.arrow_forward_ios_outlined,
+                                    color: ColorUtils.white,
+                                    size: 15,
+                                  ),
+                                ),
+                              ),
+
+                              SizedBox(
+                                width: 10.w,
+                              )
+
+                            ],
+                          ),
+                        ),
+                      ),
                     ),
                   ),
-                  SizedBox(height: 20.h,),
+
+                  SizedBox(
+                    height: 20.h,
+                  ),
                   Padding(
                     padding:EdgeInsets.only(left: 20.w,right: 20.w),
                     child: Container(
@@ -100,7 +157,7 @@ class _MantraScreenState extends State<MantraScreen> {
                           Center(
                             child: Container(
                               height: 50.26.h,
-                              width: 220.43.w,
+                              width: 250.43.w,
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.all(Radius.circular(27.r)),
                                 gradient: const LinearGradient(
@@ -113,26 +170,21 @@ class _MantraScreenState extends State<MantraScreen> {
                                 ),
                               ),
                               child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
                                   Padding(
                                     padding:EdgeInsets.only(top: 5.h,bottom: 5.h),
                                     child: CircleAvatar(
                                       backgroundColor: ColorUtils.white,
                                       radius: 25.r,
-                                      child: LocalAssets(
-                                          imagePath: AssetUtils.sunriseImages,
-                                        height: 30.63,
-                                        width: 30.63,
-                                      ),
+                                      child: LocalAssets(imagePath: AssetUtils.sunriseImages),
                                     ),
                                   ),
+                                  SizedBox(width: 10.w,),
                                   CustomText(
                                     StringUtils.sunriseTxt,
                                     fontWeight: FontWeight.w600,
                                     fontSize: 17.sp,
                                   ),
-                                  SizedBox(width: 10.w,),
                                 ],
                               ),
                             ),
@@ -192,31 +244,25 @@ class _MantraScreenState extends State<MantraScreen> {
                               fontWeight: FontWeight.w500,
                               fontSize: 17.sp,
                             ),
-                            trailing:Column(
+                            trailing: Column(
                               children: [
-                                GestureDetector(
-                                  onTap: () {
-                                  agnihotraMantraController.sunriseMantraAudio();
-                                  },
-                                  child: CircleAvatar(
-                                    radius: 17.r,
-                                    backgroundColor: ColorUtils.orange,
-                                    child: Center(
-                                        child: Icon(
-                                          AssetUtils.playIcon,
-                                          color: ColorUtils.white,
-                                          size: 35.sp,
-                                        )
-                                    ),
+                                CircleAvatar(
+                                  radius: 18.r,
+                                  backgroundColor: ColorUtils.orange,
+                                  child: Center(
+                                    child: Icon(
+                                      AssetUtils.playIcon,
+                                      color: ColorUtils.white,
+                                      size: 35.sp,
+                                    )
                                   ),
                                 ),
-                                CustomText(
+                                const CustomText(
                                   StringUtils.playTxt,
                                   color: ColorUtils.orange,
                                 )
                               ],
                             ),
-
                           ),
                         ],
                       ),
@@ -238,7 +284,7 @@ class _MantraScreenState extends State<MantraScreen> {
                           Center(
                             child: Container(
                               height: 50.26.h,
-                              width: 220.43.w,
+                              width: 250.43.w,
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.all(Radius.circular(27.r)),
                                 gradient: LinearGradient(
@@ -251,26 +297,21 @@ class _MantraScreenState extends State<MantraScreen> {
                                 ),
                               ),
                               child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
                                   Padding(
                                     padding:EdgeInsets.only(top: 5.h,bottom: 5.h),
                                     child: CircleAvatar(
                                       backgroundColor: ColorUtils.white,
                                       radius: 27.r,
-                                      child: LocalAssets(
-                                          imagePath: AssetUtils.sunsetImages,
-                                        height: 30.63,
-                                        width: 30.63,
-                                      ),
+                                      child: LocalAssets(imagePath: AssetUtils.sunsetImages),
                                     ),
                                   ),
+                                  SizedBox(width: 10.w,),
                                   CustomText(
                                     StringUtils.sunsetTxt,
                                     fontWeight: FontWeight.w600,
                                     fontSize: 17.sp,
                                   ),
-                                  SizedBox(width: 10.w,),
                                 ],
                               ),
                             ),
@@ -332,20 +373,15 @@ class _MantraScreenState extends State<MantraScreen> {
                             ),
                             trailing: Column(
                               children: [
-                                GestureDetector(
-                                  onTap: () {
-                                    agnihotraMantraController.sunsetMantraAudio();
-                                  },
-                                  child: CircleAvatar(
-                                    radius: 17.r,
-                                    backgroundColor: ColorUtils.orange,
-                                    child: Center(
-                                        child: Icon(
-                                          AssetUtils.playIcon,
-                                          color: ColorUtils.white,
-                                          size: 35.sp,
-                                        )
-                                    ),
+                                CircleAvatar(
+                                  radius: 18.r,
+                                  backgroundColor: ColorUtils.orange,
+                                  child: Center(
+                                      child: Icon(
+                                        AssetUtils.playIcon,
+                                        color: ColorUtils.white,
+                                        size: 35.sp,
+                                      )
                                   ),
                                 ),
                                 const CustomText(

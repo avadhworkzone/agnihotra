@@ -37,14 +37,14 @@ class _IntegrateGoogleMapState extends State<IntegrateGoogleMap> {
   void initState() {
     super.initState();
     // WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (widget.latitude != null && widget.longitude != null) {
-        LatLng latLng = LatLng(widget.latitude!, widget.longitude!);
-        googleController.onAddMarkerButtonPressed(latLng);
-      }
+    if (widget.latitude != null && widget.longitude != null) {
+      LatLng latLng = LatLng(widget.latitude!, widget.longitude!);
+      googleController.onAddMarkerButtonPressed(latLng);
+    }
 
-     widget.latitude = locationController.currentLat;
-     widget.longitude = locationController.currentLong;
-     widget.address = locationController.currentAddress;
+    widget.latitude = locationController.currentLat;
+    widget.longitude = locationController.currentLong;
+    widget.address = locationController.currentAddress;
 
     print(
         "Init widget.longitude ===========>${widget.longitude} ${widget.latitude}");
@@ -175,8 +175,8 @@ class _IntegrateGoogleMapState extends State<IntegrateGoogleMap> {
                               end: AlignmentDirectional.bottomEnd,
                             ),
                             onTap: () async {
-
-                              PrefServices.setValue('currentAddress',widget.address);
+                              PrefServices.setValue(
+                                  'currentAddress', widget.address);
 
                               PrefServices.setValue(
                                   'currentLat',

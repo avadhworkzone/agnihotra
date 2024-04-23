@@ -53,7 +53,7 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
     }
 
     List<String> addressParts =
-    address!.split(',').map((part) => part.trim()).toList();
+        address!.split(',').map((part) => part.trim()).toList();
     addressParts.removeWhere((part) => part.isEmpty);
 
     return addressParts.join(', ');
@@ -88,7 +88,6 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
        // sunriseSunsetController.updateTime();
         settingScreenController.updateTime();
       });
-      PrefServices.getString('formattedTime');
     });
 
     PrefServices.getString('language');
@@ -99,6 +98,10 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
   String? address;
 
   String newAddress = '';
+
+  void _openDrawer() {
+    _scaffoldKey.currentState?.openDrawer();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -167,12 +170,13 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                 ),
                 InkWell(
                   onTap: () {
+                    _openDrawer();
                     Get.dialog(
                       AlertDialog(
                         content: SizedBox(
                           height: 250.h,
                           child: Obx(
-                                () => Column(
+                            () => Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 const CustomText(
@@ -181,7 +185,7 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                                 ),
                                 Row(
                                   mainAxisAlignment:
-                                  MainAxisAlignment.spaceBetween,
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     CustomText(
                                       StringUtils.hinTxt,
@@ -198,13 +202,13 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                                             .value = value.toString();
                                       },
                                       fillColor: MaterialStateColor.resolveWith(
-                                              (states) => ColorUtils.orange),
+                                          (states) => ColorUtils.orange),
                                     ),
                                   ],
                                 ),
                                 Row(
                                   mainAxisAlignment:
-                                  MainAxisAlignment.spaceBetween,
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     CustomText(
                                       StringUtils.engTxt,
@@ -221,13 +225,13 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                                             .value = value.toString();
                                       },
                                       fillColor: MaterialStateColor.resolveWith(
-                                              (states) => ColorUtils.orange),
+                                          (states) => ColorUtils.orange),
                                     ),
                                   ],
                                 ),
                                 Row(
                                   mainAxisAlignment:
-                                  MainAxisAlignment.spaceBetween,
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     CustomText(
                                       StringUtils.gujTxt,
@@ -244,7 +248,7 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                                             .value = value.toString();
                                       },
                                       fillColor: MaterialStateColor.resolveWith(
-                                              (states) => ColorUtils.orange),
+                                          (states) => ColorUtils.orange),
                                     ),
                                   ],
                                 ),
@@ -316,22 +320,28 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                 SizedBox(
                   height: 10.h,
                 ),
-                Row(
-                  children: [
-                    const Icon(
-                      AssetUtils.aboutIcon,
-                      color: ColorUtils.orange,
-                    ),
-                    SizedBox(
-                      width: 10.w,
-                    ),
-                    CustomText(
-                      StringUtils.aboutTxt,
-                      fontWeight: FontWeight.w500,
-                      fontSize: 15.sp,
-                      color: ColorUtils.black,
-                    ),
-                  ],
+                GestureDetector(
+                  onTap: () {
+                    _openDrawer();
+                    _aboutDialog();
+                  },
+                  child: Row(
+                    children: [
+                      const Icon(
+                        AssetUtils.aboutIcon,
+                        color: ColorUtils.orange,
+                      ),
+                      SizedBox(
+                        width: 10.w,
+                      ),
+                      CustomText(
+                        StringUtils.aboutTxt,
+                        fontWeight: FontWeight.w500,
+                        fontSize: 15.sp,
+                        color: ColorUtils.black,
+                      ),
+                    ],
+                  ),
                 ),
                 const Divider(),
                 SizedBox(
@@ -447,7 +457,7 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                             decoration: BoxDecoration(
                               color: ColorUtils.white,
                               borderRadius:
-                              BorderRadius.all(Radius.circular(24.r)),
+                                  BorderRadius.all(Radius.circular(24.r)),
                             ),
                             child: Row(
                               children: [
@@ -681,22 +691,23 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                         ),
                       ],
                     ),),
-                  
+
                   SizedBox(
                     height: 130.h,
                   ),
+
                   /// ADD LOCATION
-                Stack(
+                  Stack(
                     children: [
                       Padding(
                         padding:
-                        EdgeInsets.only(top: 23.h, left: 30.w, right: 30.w),
+                            EdgeInsets.only(top: 23.h, left: 30.w, right: 30.w),
                         child: Container(
                           alignment: Alignment.center,
                           decoration: BoxDecoration(
                             color: ColorUtils.white,
                             borderRadius:
-                            BorderRadius.all(Radius.circular(52.r)),
+                                BorderRadius.all(Radius.circular(52.r)),
                             border: Border.all(
                               color: ColorUtils.borderColor,
                             ),
@@ -704,9 +715,11 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                           child: Column(
                             children: [
                               ///  CURRENT ADDRESS
-                              if (PrefServices.getString('currentAddress').isNotEmpty)
+                              if (PrefServices.getString('currentAddress')
+                                  .isNotEmpty)
                                 Padding(
-                                  padding: EdgeInsets.only(left: 20.w, right: 20.w, top: 30.h),
+                                  padding: EdgeInsets.only(
+                                      left: 20.w, right: 20.w, top: 30.h),
                                   child: CustomText(
                                     PrefServices.getString('currentAddress'),
                                     textAlign: TextAlign.center,
@@ -714,9 +727,11 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                                   ),
                                 ),
 
-                              if (PrefServices.getString('currentAddress').isEmpty)
+                              if (PrefServices.getString('currentAddress')
+                                  .isEmpty)
                                 Padding(
-                                  padding: EdgeInsets.only(left: 20.w, right: 20.w, top: 30.h),
+                                  padding: EdgeInsets.only(
+                                      left: 20.w, right: 20.w, top: 30.h),
                                   child: const CustomText(
                                     StringUtils.locationSetTxt,
                                     textAlign: TextAlign.center,
@@ -826,7 +841,7 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                                   /// Delete Current location Address,lat ,lon
                                   TextButton(
                                     onPressed: () {
-                                      currentLocation();
+                                      deleteCurrentLocation();
                                     },
                                     child: CustomText(
                                       StringUtils.deleteLocationBtnTxt,
@@ -890,154 +905,154 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
       Dialog(
         shape: RoundedRectangleBorder(
           borderRadius:
-          BorderRadius.circular(7.r), // Customize this value as needed
+              BorderRadius.circular(7.r), // Customize this value as needed
         ),
         insetPadding: EdgeInsets.symmetric(
           horizontal: 30.w,
         ),
         child: PrefServices.getStringList("locationList").isNotEmpty
             ? SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              ListView.builder(
-                padding: EdgeInsets.only(left: 12.w, top: 15.h),
-                physics: const NeverScrollableScrollPhysics(),
-                shrinkWrap: true,
-                itemCount:
-                PrefServices.getStringList("locationList").length,
-                itemBuilder: (context, index) {
-                  return CustomText(
-                    PrefServices.getStringList("locationList")[index],
-                    color: ColorUtils.black,
-                  );
-                },
-              ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    ListView.builder(
+                      padding: EdgeInsets.only(left: 12.w, top: 15.h),
+                      physics: const NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      itemCount:
+                          PrefServices.getStringList("locationList").length,
+                      itemBuilder: (context, index) {
+                        return CustomText(
+                          PrefServices.getStringList("locationList")[index],
+                          color: ColorUtils.black,
+                        );
+                      },
+                    ),
 
-              SizedBox(
-                height: 10.h,
-              ),
-              Divider(
-                height: 0.h,
-                thickness: 1.h,
-                indent: 10.w,
-                endIndent: 10.w,
-                color: ColorUtils.black00.withOpacity(0.14),
-              ),
+                    SizedBox(
+                      height: 10.h,
+                    ),
+                    Divider(
+                      height: 0.h,
+                      thickness: 1.h,
+                      indent: 10.w,
+                      endIndent: 10.w,
+                      color: ColorUtils.black00.withOpacity(0.14),
+                    ),
 
-              /// Delete All location Text
-              TextButton(
-                onPressed: () {
-                  _deleteAllLocationDialog();
-                },
-                child: const CustomText(
-                  StringUtils.deleteLocationTxt,
-                  color: ColorUtils.black,
-                ),
-              ),
-
-              Divider(
-                height: 0.h,
-                thickness: 1.h,
-                indent: 10.w,
-                endIndent: 10.w,
-                color: ColorUtils.black00.withOpacity(0.14),
-              ),
-
-              /// Add Location Text
-              TextButton(
-                onPressed: () {
-                  Get.back();
-                  Get.dialog(
-                    AlertDialog(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(
-                            7.r), // Customize this value as needed
-                      ),
-                      titlePadding: EdgeInsets.zero,
-                      title: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          TextButton(
-                            onPressed: () {
-                              Get.off(IntegrateGoogleMap(
-                                address: locationController.address.value,
-                                longitude:
-                                locationController.longitude.value,
-                                latitude:
-                                locationController.latitude.value,
-                              ));
-                            },
-                            child: CustomText(
-                              StringUtils.usgMapTxt,
-                              color: ColorUtils.black,
-                              fontSize: 14.sp,
-                            ),
-                          ),
-                          Divider(
-                            height: 0.h,
-                            thickness: 1.h,
-                            indent: 12.w,
-                            endIndent: 12.w,
-                            color: ColorUtils.black00.withOpacity(0.14),
-                          ),
-                          TextButton(
-                            onPressed: () {
-                              Get.off(const LocationScreen());
-                            },
-                            child: CustomText(
-                              StringUtils.usgManuallyTxt,
-                              color: ColorUtils.black,
-                              fontSize: 14.sp,
-                            ),
-                          ),
-                        ],
+                    /// Delete All location Text
+                    TextButton(
+                      onPressed: () {
+                        _deleteAllLocationDialog();
+                      },
+                      child: const CustomText(
+                        StringUtils.deleteLocationTxt,
+                        color: ColorUtils.black,
                       ),
                     ),
-                  );
-                },
-                child: const CustomText(
-                  StringUtils.addLocationTxt,
-                  color: ColorUtils.black,
+
+                    Divider(
+                      height: 0.h,
+                      thickness: 1.h,
+                      indent: 10.w,
+                      endIndent: 10.w,
+                      color: ColorUtils.black00.withOpacity(0.14),
+                    ),
+
+                    /// Add Location Text
+                    TextButton(
+                      onPressed: () {
+                        Get.back();
+                        Get.dialog(
+                          AlertDialog(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(
+                                  7.r), // Customize this value as needed
+                            ),
+                            titlePadding: EdgeInsets.zero,
+                            title: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                TextButton(
+                                  onPressed: () {
+                                    Get.off(IntegrateGoogleMap(
+                                      address: locationController.address.value,
+                                      longitude:
+                                          locationController.longitude.value,
+                                      latitude:
+                                          locationController.latitude.value,
+                                    ));
+                                  },
+                                  child: CustomText(
+                                    StringUtils.usgMapTxt,
+                                    color: ColorUtils.black,
+                                    fontSize: 14.sp,
+                                  ),
+                                ),
+                                Divider(
+                                  height: 0.h,
+                                  thickness: 1.h,
+                                  indent: 12.w,
+                                  endIndent: 12.w,
+                                  color: ColorUtils.black00.withOpacity(0.14),
+                                ),
+                                TextButton(
+                                  onPressed: () {
+                                    Get.off(const LocationScreen());
+                                  },
+                                  child: CustomText(
+                                    StringUtils.usgManuallyTxt,
+                                    color: ColorUtils.black,
+                                    fontSize: 14.sp,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+                      },
+                      child: const CustomText(
+                        StringUtils.addLocationTxt,
+                        color: ColorUtils.black,
+                      ),
+                    ),
+                  ],
                 ),
-              ),
-            ],
-          ),
-        )
+              )
             : Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            TextButton(
-              onPressed: () {
-                Get.off(IntegrateGoogleMap());
-              },
-              child: CustomText(
-                StringUtils.usgMapTxt,
-                color: ColorUtils.black,
-                fontSize: 14.sp,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  TextButton(
+                    onPressed: () {
+                      Get.off(IntegrateGoogleMap());
+                    },
+                    child: CustomText(
+                      StringUtils.usgMapTxt,
+                      color: ColorUtils.black,
+                      fontSize: 14.sp,
+                    ),
+                  ),
+                  Divider(
+                    height: 0.h,
+                    thickness: 1.h,
+                    indent: 12.w,
+                    endIndent: 12.w,
+                    color: ColorUtils.black00.withOpacity(0.14),
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      Get.off(const LocationScreen());
+                    },
+                    child: CustomText(
+                      StringUtils.usgManuallyTxt,
+                      color: ColorUtils.black,
+                      fontSize: 14.sp,
+                    ),
+                  ),
+                ],
               ),
-            ),
-            Divider(
-              height: 0.h,
-              thickness: 1.h,
-              indent: 12.w,
-              endIndent: 12.w,
-              color: ColorUtils.black00.withOpacity(0.14),
-            ),
-            TextButton(
-              onPressed: () {
-                Get.off(const LocationScreen());
-              },
-              child: CustomText(
-                StringUtils.usgManuallyTxt,
-                color: ColorUtils.black,
-                fontSize: 14.sp,
-              ),
-            ),
-          ],
-        ),
       ),
     );
   }
@@ -1086,14 +1101,14 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
           desiredAccuracy: LocationAccuracy.high);
 
       coordinates =
-      'Latitude : ${position.latitude} \nLongitude : ${position.longitude}';
+          'Latitude : ${position.latitude} \nLongitude : ${position.longitude}';
 
       List<Placemark> result =
-      await placemarkFromCoordinates(position.latitude, position.longitude);
+          await placemarkFromCoordinates(position.latitude, position.longitude);
 
       if (result.isNotEmpty) {
         address =
-        '${result[0].name}, ${result[0].locality} ${result[0].administrativeArea}';
+            '${result[0].name}, ${result[0].locality} ${result[0].administrativeArea}';
       }
     } catch (e) {
       Fluttertoast.showToast(msg: e.toString());
