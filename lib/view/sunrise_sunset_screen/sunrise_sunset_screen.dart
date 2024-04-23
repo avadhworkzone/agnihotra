@@ -1193,7 +1193,7 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
     ));
   }
 
-  Future<void> currentLocation() {
+  Future<void> deleteCurrentLocation() {
     Get.back();
     return Get.dialog(AlertDialog(
       contentPadding: EdgeInsets.symmetric(horizontal: 20.w),
@@ -1371,5 +1371,67 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
 
 
     ));
+  }
+  Future _aboutDialog() {
+    return Get.dialog(
+      Dialog(
+        shape: RoundedRectangleBorder(
+          borderRadius:
+          BorderRadius.circular(7.r), // Customize this value as needed
+        ),
+        insetPadding: EdgeInsets.symmetric(
+          horizontal: 30.w,
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            SizedBox(
+              height: 16.h,
+            ),
+            Center(
+              child: LocalAssets(
+                imagePath: AssetUtils.bgRemoveAboutIcon,
+                fit: BoxFit.contain,
+                height: 50.r,
+                width: 50.r,
+              ),
+            ),
+            SizedBox(
+              height: 2.h,
+            ),
+            const Center(
+              child: CustomText(
+                StringUtils.appName,
+                color: ColorUtils.grey73,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            SizedBox(
+              height: 15.h,
+            ),
+            Padding(
+              padding: EdgeInsets.only(left: 15.w),
+              child: const CustomText(
+                StringUtils.inspiration,
+                color: ColorUtils.grey73,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.only(left: 15.w),
+              child: const CustomText(
+                StringUtils.guruName,
+                color: ColorUtils.grey73,
+                fontWeight: FontWeight.w300,
+              ),
+            ),
+            SizedBox(
+              height: 15.h,
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

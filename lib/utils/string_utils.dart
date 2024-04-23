@@ -154,7 +154,7 @@ class StringUtils {
 
   /// trikal sandhya mantra
 
-  static const confirmTimeZone = 'confirmTimeZone';
+
 
 
 

@@ -32,7 +32,7 @@ class _AgniHotraPatraScreenState extends State<AgniHotraPatraScreen> {
           ),
 
           Padding(
-            padding: EdgeInsets.only(left: 16.w),
+            padding: EdgeInsets.only(left: 16.w,top: 10.h),
             child: CircleAvatar(
               backgroundColor: ColorUtils.white,
               radius: 20.r,
