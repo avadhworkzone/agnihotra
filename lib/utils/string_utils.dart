@@ -64,9 +64,13 @@ class StringUtils {
   static const agnayeIdem= 'agnayeIdem';
   static const agnayeIdemTxt= 'अग्नये इदं न मम';
   static const agnihotraMantraTxt= 'agnihotraMantraTxt';
+  static const agnihotraPatraText = 'agnihotraPatraText';
   static const sunriseSunsetMantraTxt= 'sunriseSunsetMantraTxt';
   static const tilakSandhyaMantraTxt= 'tilakSandhyaMantraTxt';
   static const locationSetTxt= 'locationSetTxt';
+  static const  appName= 'appName';
+  static const  inspiration = 'inspiration';
+  static const  guruName = 'guruName';
 //  static const locationSetTxt= 'Location not set,click on icon!';
 
 
@@ -101,5 +105,6 @@ class StringUtils {
   static const validLongitude = "validLongitude";
   static const searchText = "searchText";
   static const indiaStdTime = "indiaStdTime";
+  static const sunriseMantraTxt = "sunriseMantra";
 
 }

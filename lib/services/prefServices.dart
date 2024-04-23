@@ -27,6 +27,7 @@ class PrefServices{
       Get.snackbar("Preference Error","Send valid value for store data in preference");
     }
   }
+
   static String getString(String key){
     return _pref!.getString(key) ?? "";
   }

@@ -11,6 +11,8 @@ import 'package:sunrise_app/viewModel/settings_controller.dart';
 import 'package:sunrise_app/viewModel/sunrise_sunset_controller.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+import 'view/splashScreen/splash_screen.dart';
+
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -32,10 +34,12 @@ class MyApp extends StatelessWidget {
         translations: Translation(),
         localizationsDelegates: AppLocalizations.localizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,
-        locale:  Locale(PrefServices.getString('language').isEmpty?"en_US":PrefServices.getString('language')),
+        locale:  Locale(PrefServices.getString('language').isEmpty ? "en_US" : PrefServices.getString('language')),
         fallbackLocale: const Locale('en_US'),
-        home:PrefServices.getString('language').isEmpty ? const WelcomeScreen() : SunriseSunetScreen(),
+
+        home : PrefServices.getString('language').isEmpty ? const WelcomeScreen() : const SplashScreen(),
         debugShowCheckedModeBanner: false,
+
       ),
     );
   }
@@ -46,4 +50,3 @@ class MyApp extends StatelessWidget {
   SettingScreenController settingScreenController = Get.put(SettingScreenController());
 
 }
-

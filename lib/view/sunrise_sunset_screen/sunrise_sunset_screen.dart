@@ -96,9 +96,12 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
 
   String newAddress = '';
 
+  void _openDrawer() {
+    _scaffoldKey.currentState?.openDrawer();
+  }
+
   @override
   Widget build(BuildContext context) {
-    print("New locationList :- ${PrefServices.getStringList("locationList")}");
     return Scaffold(
         key: _scaffoldKey,
         endDrawer: Drawer(
@@ -163,6 +166,7 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                 ),
                 InkWell(
                   onTap: () {
+                    _openDrawer();
                     Get.dialog(
                       AlertDialog(
                         content: SizedBox(
@@ -312,22 +316,28 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                 SizedBox(
                   height: 10.h,
                 ),
-                Row(
-                  children: [
-                    const Icon(
-                      AssetUtils.aboutIcon,
-                      color: ColorUtils.orange,
-                    ),
-                    SizedBox(
-                      width: 10.w,
-                    ),
-                    CustomText(
-                      StringUtils.aboutTxt,
-                      fontWeight: FontWeight.w500,
-                      fontSize: 15.sp,
-                      color: ColorUtils.black,
-                    ),
-                  ],
+                GestureDetector(
+                  onTap: () {
+                    _openDrawer();
+                    _aboutDialog();
+                  },
+                  child: Row(
+                    children: [
+                      const Icon(
+                        AssetUtils.aboutIcon,
+                        color: ColorUtils.orange,
+                      ),
+                      SizedBox(
+                        width: 10.w,
+                      ),
+                      CustomText(
+                        StringUtils.aboutTxt,
+                        fontWeight: FontWeight.w500,
+                        fontSize: 15.sp,
+                        color: ColorUtils.black,
+                      ),
+                    ],
+                  ),
                 ),
                 const Divider(),
                 SizedBox(
@@ -484,6 +494,7 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                   /// CALENDAR ICON
                   InkWell(
                     onTap: () async {
+
                       sunriseSunsetController.selectDate(context);
                     },
                     child: const CircleAvatar(
@@ -818,7 +829,7 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                                   /// Delete Current location Address,lat ,lon
                                   TextButton(
                                     onPressed: () {
-                                      currentLocation();
+                                      deleteCurrentLocation();
                                     },
                                     child: CustomText(
                                       StringUtils.deleteLocationBtnTxt,
@@ -1034,6 +1045,69 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
     );
   }
 
+  Future _aboutDialog() {
+    return Get.dialog(
+      Dialog(
+        shape: RoundedRectangleBorder(
+          borderRadius:
+              BorderRadius.circular(7.r), // Customize this value as needed
+        ),
+        insetPadding: EdgeInsets.symmetric(
+          horizontal: 30.w,
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            SizedBox(
+              height: 16.h,
+            ),
+            Center(
+              child: LocalAssets(
+                imagePath: AssetUtils.bgRemoveAboutIcon,
+                fit: BoxFit.contain,
+                height: 50.r,
+                width: 50.r,
+              ),
+            ),
+            SizedBox(
+              height: 2.h,
+            ),
+            const Center(
+              child: CustomText(
+                StringUtils.appName,
+                color: ColorUtils.grey73,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            SizedBox(
+              height: 15.h,
+            ),
+            Padding(
+              padding: EdgeInsets.only(left: 15.w),
+              child: const CustomText(
+                StringUtils.inspiration,
+                color: ColorUtils.grey73,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.only(left: 15.w),
+              child: const CustomText(
+                StringUtils.guruName,
+                color: ColorUtils.grey73,
+                fontWeight: FontWeight.w300,
+              ),
+            ),
+            SizedBox(
+              height: 15.h,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
   checkPermission() async {
     bool serviceEnabled;
     LocationPermission permission;
@@ -1170,7 +1244,7 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
     ));
   }
 
-  Future<void> currentLocation() {
+  Future<void> deleteCurrentLocation() {
     Get.back();
     return Get.dialog(AlertDialog(
       contentPadding: EdgeInsets.symmetric(horizontal: 20.w),
@@ -1226,6 +1300,8 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                     PrefServices.setValue('currentLat', 0.0);
                     PrefServices.setValue('currentLong', 0.0);
                     PrefServices.setValue('countryName', '');
+                    PrefServices.setValue(
+                        "locationList", googleController.locationList);
                   });
                   Get.back();
                 },
@@ -1256,16 +1332,14 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
       shape: OutlineInputBorder(
           borderRadius: BorderRadius.circular(7.r),
           borderSide: BorderSide.none),
-      title:  Column(
+      title: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-
           SizedBox(
             height: 10.h,
           ),
-
           Padding(
             padding: EdgeInsets.only(left: 13.w),
             child: CustomText(
@@ -1275,17 +1349,14 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
               fontSize: 15.sp,
             ),
           ),
-
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 5.w),
             child: CommonTextField(
-
               onChange: (value) {
                 newAddress = value;
               },
             ),
           ),
-
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
@@ -1294,7 +1365,7 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                 onPressed: () {
                   Get.back();
                 },
-                child:  CustomText(
+                child: CustomText(
                   StringUtils.cancleTxt,
                   color: ColorUtils.orange,
                   fontWeight: FontWeight.w500,
@@ -1305,34 +1376,28 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
               /// Rename button
               TextButton(
                 onPressed: () async {
-                  final currentAddress = PrefServices.getString('currentAddress');
+                  final currentAddress =
+                      PrefServices.getString('currentAddress');
 
                   final containIndex = googleController.locationList
                       .indexWhere((element) => element == currentAddress);
 
-                  print("ContainIndex :- $containIndex");
-
                   googleController.locationList[containIndex] = newAddress;
 
                   String renameElement =
-                  googleController.locationList[containIndex];
+                      googleController.locationList[containIndex];
                   setState(() {});
-                  print("newLocationList :- $renameElement");
-                  PrefServices.setValue('currentAddress', renameElement);
 
-                  print(
-                      "googleController.locationList :- ${googleController.locationList}");
+                  PrefServices.setValue('currentAddress', renameElement);
 
                   PrefServices.setValue(
                       "locationList", googleController.locationList);
 
                   PrefServices.getStringList("locationList");
-                  print(
-                      "Save locationList :- ${PrefServices.getStringList("locationList")}");
 
                   Get.back();
                 },
-                child:  CustomText(
+                child: CustomText(
                   StringUtils.renameLocationBtnTxt,
                   color: ColorUtils.orange,
                   fontWeight: FontWeight.w500,
@@ -1342,11 +1407,7 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
             ],
           ),
         ],
-
       ),
-
-
-
     ));
   }
 }

@@ -20,11 +20,14 @@ class WelcomeScreen extends StatefulWidget {
 class _WelcomeScreenState extends State<WelcomeScreen> {
   String selectedValue = '';
 
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(
         children: [
+
           Container(
             decoration: BoxDecoration(
               image:DecorationImage(
@@ -35,7 +38,8 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
               ),
             ),
           ),
-        Padding(
+
+          Padding(
           padding:EdgeInsets.only(top: 180.h),
           child: Column(
             children: [
@@ -47,7 +51,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                      fontWeight: FontWeight.w600,
                    ),
                ),
-              // GET START
+
               Center(
                 child: CustomText(
                   StringUtils.getStartTxt,
@@ -59,6 +63,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
             ],
           ),
         ),
+
         ],
       ),
       bottomSheet: Container(
@@ -87,7 +92,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 color: ColorUtils.orange,
               ),
               SizedBox(height: 30.h,),
-              // HIND
+              /// HINDI
               Padding(
                 padding:EdgeInsets.only(left: 45.w,right: 45.w),
                 child: Container(
@@ -127,7 +132,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 ),
               ),
               SizedBox(height: 20.h,),
-              // ENGLISH
+              /// ENGLISH
               Padding(
                 padding:EdgeInsets.only(left: 45.w,right: 45.w),
                 child: Container(
@@ -168,7 +173,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 ),
               ),
               SizedBox(height: 20.h,),
-              // GUJARATI
+              /// GUJARATI
               Padding(
                 padding:EdgeInsets.only(left: 45.w,right: 45.w),
                 child: Container(
@@ -209,7 +214,8 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 ),
               ),
               SizedBox(height: 30.h,),
-              // SUBMIT BUTTON
+
+              /// SUBMIT BUTTON
               Padding(
                 padding:EdgeInsets.symmetric(horizontal: 80.w),
                 child: CustomBtn(

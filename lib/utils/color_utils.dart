@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 class ColorUtils {
-
   static const locContColor = Colors.black26;
   static const black00 = Colors.black;
   static const deepOrangeColor = Colors.deepOrangeAccent;
@@ -16,5 +15,8 @@ class ColorUtils {
   static const gridentColor1 = Color(0xFFC5B20E);
   static const gridentColor2 = Color(0xFFFF4C13);
   static const gridentColor3 = Color(0xFFCF9E0E);
-  static const gridentColor4 = Color(0xFFD6A11);
+  static const gridentColor4 = Color(0x0ffd6a11);
+  static const grey73 = Color(0xFF737373);
+  static const orangeCB = Color(0xFFCBA70E);
+  static const orangeFD = Color(0xFFFD5013);
 }

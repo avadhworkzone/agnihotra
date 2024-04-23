@@ -42,7 +42,7 @@ class SunriseSunsetController extends GetxController {
         initialDate: selectedDate.value,
         firstDate: DateTime.now(),
         lastDate: DateTime.now().add(const Duration(days: 1470)),
-        builder: (BuildContext context, Widget? child) {
+        builder: (BuildContext context, Widget? child){
           return Theme(
             data: ThemeData.light().copyWith(
               colorScheme: const ColorScheme.light().copyWith(

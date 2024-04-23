@@ -243,6 +243,7 @@ class GoogleController extends GetxController {
 
     print("=======> Address :- ${address.value}");
     print("==> Lat long :- $lati $long");
+    locationList.value = PrefServices.getStringList('locationList');
     locationList.add(address.value);
     print('======LocationList=========> $locationList');
     await PrefServices.setValue('locationList', locationList);

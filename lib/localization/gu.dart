@@ -8,6 +8,7 @@ Map<String,String> gu = {
   "usgManuallyTxt":"મેન્યુઅલી દાખલ કરો",
   "manuallyEntryTxt":"મેન્યુઅલી એન્ટ્રી",
   "stdConveLocationTxt":"પ્રમાણભૂત સંમેલનોનો ઉપયોગ કરીને ડિગ્રીમાં નીચે સ્થાન દાખલ કરો",
+  "agnihotraPatraText": "અગ્નિહોત્ર પત્રનું કદ",
   "notEstSouWesTxt":"(ઉત્તર/પૂર્વ માટે +ve અને દક્ષિણ/પશ્ચિમ માટે -ve)",
   "locationUseTxt":"આ સ્થાનનો ઉપયોગ કરો",
   "mapLocationUseTxt":"નકશા પર આ સ્થાન જુઓ",

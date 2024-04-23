@@ -155,6 +155,7 @@ class _IntegrateGoogleMapState extends State<IntegrateGoogleMap> {
                         color: ColorUtils.black,
                       ),
                     ),
+
                     SizedBox(
                       height: 20.h,
                     ),
@@ -175,6 +176,7 @@ class _IntegrateGoogleMapState extends State<IntegrateGoogleMap> {
                               end: AlignmentDirectional.bottomEnd,
                             ),
                             onTap: () async {
+
                               PrefServices.setValue(
                                   'currentAddress', widget.address);
 
@@ -187,8 +189,10 @@ class _IntegrateGoogleMapState extends State<IntegrateGoogleMap> {
                                   'currentLong',
                                   googleController
                                       .lastMapPosition.value!.longitude);
-                              PrefServices.setValue(
-                                  'countryName','India Standard Time');
+
+
+                              PrefServices.setValue('countryName','India Standard Time');
+
                               googleController.addLocation(
                                 widget.address ??
                                     googleController.address.value,

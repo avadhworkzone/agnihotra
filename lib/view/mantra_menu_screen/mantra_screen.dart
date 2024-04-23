@@ -6,6 +6,7 @@ import 'package:sunrise_app/common_Widget/common_text.dart';
 import 'package:sunrise_app/utils/color_utils.dart';
 import 'package:sunrise_app/utils/image_utils.dart';
 import 'package:sunrise_app/utils/string_utils.dart';
+import 'package:sunrise_app/view/mantra_menu_screen/agnihotra_patra_screen.dart';
 import 'package:sunrise_app/view/sunrise_sunset_screen/sunrise_sunset_screen.dart';
 
 class MantraScreen extends StatefulWidget {
@@ -21,31 +22,33 @@ class _MantraScreenState extends State<MantraScreen> {
     return Scaffold(
       body: Stack(
         children: [
+
           Container(
             decoration: BoxDecoration(
-              image:DecorationImage(
-                image:AssetImage(
+              image: DecorationImage(
+                image: AssetImage(
                   AssetUtils.backgroundImages,
                 ),
                 fit: BoxFit.cover,
               ),
             ),
           ),
+
           Padding(
-            padding:EdgeInsets.only(top: 50.h),
+            padding: EdgeInsets.only(top: 50.h),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Padding(
-                  padding:EdgeInsets.only(left: 12.w),
+                  padding: EdgeInsets.only(left: 12.w),
                   child: CircleAvatar(
                     backgroundColor: ColorUtils.white,
                     radius: 18.r,
                     child: IconButton(
                       onPressed: () {
-                        Get.off(SunriseSunetScreen());
+                        Get.back();
                       },
-                      icon:  Icon(
+                      icon: Icon(
                         size: 20.w,
                         AssetUtils.backArrowIcon,
                         color: ColorUtils.orange,
@@ -62,21 +65,86 @@ class _MantraScreenState extends State<MantraScreen> {
               ],
             ),
           ),
+
           Padding(
-            padding:EdgeInsets.only(top: 100.h),
+            padding: EdgeInsets.only(top: 100.h),
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  SizedBox(height: 20.h,),
-                  Container(
-                    height: 65.h,
-                    width: 65.w,
-                    decoration: BoxDecoration(
-                      image: DecorationImage(image:AssetImage(AssetUtils.agniKundImages),fit: BoxFit.cover),
-                      borderRadius: BorderRadius.all(Radius.circular(5.r)),
+                  SizedBox(
+                    height: 20.h,
+                  ),
+
+                  /// Agnihotra Patra Size
+                  GestureDetector(
+                    onTap: (){
+                      Get.to(const AgniHotraPatraScreen());
+                    },
+                    child: Center(
+                      child: Container(
+                        height: 38.h,
+                        width: 240.w,
+                        decoration: BoxDecoration(
+                            color: ColorUtils.white,
+                            borderRadius: BorderRadius.circular(52.r)),
+                        child:  Center(
+                          child: Row(
+
+                            children: [
+
+                              SizedBox(
+                                width: 40.w,
+                              ),
+
+                              CustomText(StringUtils.agnihotraPatraText,
+                                  color: ColorUtils.black,
+                                  fontWeight: FontWeight.w600,
+                                fontSize: 13.sp,
+                              ),
+
+                              const Spacer(),
+
+                              Container(
+                                height: 25.h,
+                                width: 25.h,
+                                decoration: BoxDecoration(
+                                  gradient: const LinearGradient(
+                                    colors: [
+                                      ColorUtils.orangeCB,
+                                      ColorUtils.orangeFD
+                                    ],
+
+                                    begin: Alignment.topRight,
+
+                                    end: Alignment
+                                        .bottomLeft, // Ending point of the gradient
+
+                                  ),
+                                  borderRadius: BorderRadius.circular(25.r),
+                                ),
+                                child: const Center(
+                                  child: Icon(
+                                    Icons.arrow_forward_ios_outlined,
+                                    color: ColorUtils.white,
+                                    size: 15,
+                                  ),
+                                ),
+                              ),
+
+                              SizedBox(
+                                width: 10.w,
+                              )
+
+                            ],
+                          ),
+                        ),
+                      ),
                     ),
                   ),
-                  SizedBox(height: 20.h,),
+
+                  SizedBox(
+                    height: 20.h,
+                  ),
                   Padding(
                     padding:EdgeInsets.only(left: 20.w,right: 20.w),
                     child: Container(
@@ -166,6 +234,7 @@ class _MantraScreenState extends State<MantraScreen> {
                               fontSize: 17.sp,
                             ),
                           ),
+
                           ListTile(
                             title:CustomText(
                               StringUtils.prajapatayeIdem,
@@ -180,6 +249,7 @@ class _MantraScreenState extends State<MantraScreen> {
                               fontSize: 17.sp,
                             ),
                             trailing: Column(
+                              mainAxisSize: MainAxisSize.min,
                               children: [
                                 CircleAvatar(
                                   radius: 18.r,
@@ -192,12 +262,13 @@ class _MantraScreenState extends State<MantraScreen> {
                                     )
                                   ),
                                 ),
-                                CustomText(
+                                const CustomText(
                                   StringUtils.playTxt,
                                   color: ColorUtils.orange,
                                 )
                               ],
                             ),
+
                           ),
                         ],
                       ),
@@ -330,7 +401,9 @@ class _MantraScreenState extends State<MantraScreen> {
                       ),
                     ),
                   ),
-                  SizedBox(height: 10.h,),
+                  SizedBox(
+                    height: 10.h,
+                  ),
                 ],
               ),
             ),

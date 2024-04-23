@@ -21,6 +21,7 @@ class LocalAssets extends StatelessWidget {
       imagePath,
       height: height,
       width: width,
+
       fit: fit,
       scale: scaleSize,
       color: imgColor,
