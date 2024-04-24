@@ -2,8 +2,11 @@ Map<String,String> hi = {
 
   "locationSetTxt":"स्थान निर्धारित नहीं है, आइकन पर क्लिक करें!",
   "engTxt":"अंग्रेज़ी",
+  "appName": "अग्निहोत्र - एक रोग मुक्त अभियान",
   "gujTxt":"गुजराती",
   "hinTxt":"हिंदी",
+  "inspiration": "प्रेरणा:",
+  "guruName": "गुरुदेव श्री श्री रविशंकर",
   "usgMapTxt" :"गूगल मानचित्र का उपयोग करें",
   "usgManuallyTxt":"मैन्युअल रूप से दर्ज़ करें",
   "manuallyEntryTxt":"मैन्युअल रूप से प्रवेश",

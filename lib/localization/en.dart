@@ -1,7 +1,7 @@
 Map<String,String> en= {
 
   "locationSetTxt":"Location not set,click on icon!",
-  "appName": "Agnihotra - एक रोग मुक्त अभियान ",
+  "appName": "Agnihotra - A Disease Free Campaign",
   "guruName": "Gurudev Sri Sri Ravi Shankar",
   "inspiration": "Inspiration:",
   "engTxt":"English",

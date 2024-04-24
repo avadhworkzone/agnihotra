@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:sunrise_app/localization/translations.dart';
+import 'package:sunrise_app/medition_bell.dart';
 import 'package:sunrise_app/services/prefServices.dart';
 import 'package:sunrise_app/view/sunrise_sunset_screen/sunrise_sunset_screen.dart';
 import 'package:sunrise_app/view/welcome_screen/welcome_screen.dart';
@@ -13,7 +14,6 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'view/splashScreen/splash_screen.dart';
 
-
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -24,29 +24,29 @@ Future<void> main() async {
 class MyApp extends StatelessWidget {
   MyApp({super.key});
 
-
   @override
   Widget build(BuildContext context) {
-
     return ScreenUtilInit(
       designSize: const Size(375, 812),
       child: GetMaterialApp(
         translations: Translation(),
         localizationsDelegates: AppLocalizations.localizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,
-        locale:  Locale(PrefServices.getString('language').isEmpty ? "en_US" : PrefServices.getString('language')),
+        locale: Locale(PrefServices.getString('language').isEmpty
+            ? "en_US"
+            : PrefServices.getString('language')),
         fallbackLocale: const Locale('en_US'),
-
+        // home: const MeditionBellDemo(),
         home : PrefServices.getString('language').isEmpty ? const WelcomeScreen() : const SplashScreen(),
         debugShowCheckedModeBanner: false,
-
       ),
     );
   }
 
-  SunriseSunsetController sunriseSunsetController = Get.put(SunriseSunsetController());
+  SunriseSunsetController sunriseSunsetController =
+      Get.put(SunriseSunsetController());
   GoogleController googleController = Get.put(GoogleController());
   LocationController locationController = Get.put(LocationController());
-  SettingScreenController settingScreenController = Get.put(SettingScreenController());
-
+  SettingScreenController settingScreenController =
+      Get.put(SettingScreenController());
 }

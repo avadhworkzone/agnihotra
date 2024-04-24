@@ -437,6 +437,7 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
+
                         ///  MANTRA TXT
                         InkWell(
                           onTap: () {
@@ -1076,6 +1077,7 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
             SizedBox(
               height: 2.h,
             ),
+
             const Center(
               child: CustomText(
                 StringUtils.appName,
@@ -1083,9 +1085,11 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                 fontWeight: FontWeight.bold,
               ),
             ),
+
             SizedBox(
               height: 15.h,
             ),
+
             Padding(
               padding: EdgeInsets.only(left: 15.w),
               child: const CustomText(
