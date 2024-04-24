@@ -11,7 +11,9 @@ import 'package:sunrise_app/viewModel/google_map_controller.dart';
 
 class LocationController extends GetxController {
 
+
   GoogleController googleController = Get.find<GoogleController>();
+  GoogleMapController? mapController;
   TextEditingController latitudeController = TextEditingController();
   TextEditingController longitudeController = TextEditingController();
   final validationFormKey = GlobalKey<FormState>();
@@ -22,94 +24,65 @@ class LocationController extends GetxController {
   RxDouble lonData = 0.0.obs;
   RxBool isLoad = false.obs;
 
-  String coordinates="No Location found";
-  String currentAddress='No Address found';
+  String coordinates = "No Location found";
+  String currentAddress = 'No Address found';
 
-  double currentLat = 0.0;
-  double currentLong = 0.0;
+   double currentLat = 0.0;
+   double currentLong = 0.0;
 
-  @override
-  void onInit() {
-    super.onInit();
-    // googleController.locationList.value = PrefServices.getStringList('locationList');
-  }
+  getCurrentLocation() async {
 
-
-  checkPermission()async{
-
-    bool serviceEnabled;
-    LocationPermission permission;
-
-    serviceEnabled=await Geolocator.isLocationServiceEnabled();
-
-    print(serviceEnabled);
-
-    if (!serviceEnabled){
-      await Geolocator.openLocationSettings();
-      return ;
-    }
-
-
-    permission=await Geolocator.checkPermission();
-
-    print(permission);
-
-    if (permission==LocationPermission.denied){
-
-      permission=await Geolocator.requestPermission();
-
-      if (permission==LocationPermission.denied){
-        Fluttertoast.showToast(msg: 'Request Denied !');
-        return ;
+    try {
+      // Request permission to access the device's location
+      LocationPermission permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        // Handle case when location permission is denied
+        return;
       }
 
-    }
+      Position position = await Geolocator.getCurrentPosition(
+          desiredAccuracy: LocationAccuracy.high);
 
-    if(permission==LocationPermission.deniedForever){
-      Fluttertoast.showToast(msg: 'Denied Forever !');
-      return ;
-    }
-
-    getLocation();
-
-  }
-
-  getLocation()async{
-
-
-
-    try{
-
-      Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
-
-      coordinates='Latitude : ${position.latitude} \nLongitude : ${position.longitude}';
+      coordinates =
+          'Latitude : ${position.latitude} \nLongitude : ${position.longitude}';
       print("coordinates :- $coordinates");
       currentLat = position.latitude;
       currentLong = position.longitude;
 
-      List<Placemark> result  = await placemarkFromCoordinates(position.latitude, position.longitude);
+      List<Placemark> result =  await placemarkFromCoordinates(position.latitude, position.longitude);
 
-      if (result.isNotEmpty){
-        currentAddress ='${result[0].name}, ${result[0].locality} ${result[0].administrativeArea}';
+      print("currentLat :- $currentLat ,currentLong :- $currentLong");
+      print("Result :- $result");
+
+      if(result.isNotEmpty){
+        currentAddress =
+            '${result[0].street},${result[0].name},${result[0].locality},${result[0].administrativeArea} ${result[0].postalCode} ,${result[0].country}';
       }
 
+      if (currentAddress != '' && mapController != null){
 
-    }catch(e){
-      Fluttertoast.showToast(msg:"${e.toString()}");
+        mapController!.animateCamera(CameraUpdate.newLatLngZoom(
+          LatLng(currentLat, currentLong),
+          15.0,
+        ));
+
+      }
+
     }
-
-
+    catch (e) {
+      Fluttertoast.showToast(msg: e.toString());
+    }
   }
-
 
   void getLatLongLocation() async {
     try {
-      if (validationFormKey.currentState!.validate()){
+      if (validationFormKey.currentState!.validate()) {
         isLoad.value = true;
         latData.value = double.parse(latitudeController.text);
         lonData.value = double.parse(longitudeController.text);
 
-        List<Placemark> placemarks = await placemarkFromCoordinates(latData.value, lonData.value);
+        List<Placemark> placemarks =
+            await placemarkFromCoordinates(latData.value, lonData.value);
         String street = placemarks[0].street ?? '';
         String subLocality = placemarks[0].subLocality ?? '';
         String locality = placemarks[0].locality ?? '';
@@ -126,21 +99,20 @@ class LocationController extends GetxController {
           country
         ];
 
-        address.value = addressComponents.where((element) => element.isNotEmpty).join(', ');
+
+        address.value =
+            addressComponents.where((element) => element.isNotEmpty).join(', ');
 
         latitude.value = double.parse(latitudeController.text);
         longitude.value = double.parse(longitudeController.text);
-
 
         googleController.locationList.add(address.value);
         PrefServices.setValue('locationList', googleController.locationList);
         print("Manually Add===> ${address.value}");
 
-        PrefServices.setValue('currentAddress',address.value);
-        PrefServices.setValue('currentLat',latitude.value);
-        PrefServices.setValue('currentLong',longitude.value);
-
-
+        PrefServices.setValue('currentAddress', address.value);
+        PrefServices.setValue('currentLat', latitude.value);
+        PrefServices.setValue('currentLong', longitude.value);
 
         Get.offAll(
           SunriseSunetScreen(
@@ -162,14 +134,14 @@ class LocationController extends GetxController {
     }
   }
 
-
   void getLocationOnMap() async {
     try {
-      if (validationFormKey.currentState!.validate()){
+      if (validationFormKey.currentState!.validate()) {
         latData.value = double.parse(latitudeController.text);
-        lonData.value =double.parse(longitudeController.text);
+        lonData.value = double.parse(longitudeController.text);
 
-        List<Placemark> placemarks = await placemarkFromCoordinates(latData.value, lonData.value);
+        List<Placemark> placemarks =
+            await placemarkFromCoordinates(latData.value, lonData.value);
         String street = placemarks[0].street ?? '';
         String subLocality = placemarks[0].subLocality ?? '';
         String locality = placemarks[0].locality ?? '';
@@ -185,7 +157,8 @@ class LocationController extends GetxController {
           postalCode,
           country
         ];
-        address.value = addressComponents.where((element) => element.isNotEmpty).join(', ');
+        address.value =
+            addressComponents.where((element) => element.isNotEmpty).join(', ');
         latitude.value = double.parse(latitudeController.text);
         longitude.value = double.parse(longitudeController.text);
 
@@ -208,4 +181,3 @@ class LocationController extends GetxController {
     }
   }
 }
-

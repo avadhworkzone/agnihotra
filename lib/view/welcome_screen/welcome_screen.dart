@@ -9,6 +9,7 @@ import 'package:sunrise_app/utils/color_utils.dart';
 import 'package:sunrise_app/utils/image_utils.dart';
 import 'package:sunrise_app/utils/string_utils.dart';
 import 'package:sunrise_app/view/sunrise_sunset_screen/sunrise_sunset_screen.dart';
+import 'package:sunrise_app/viewModel/enter_location_controller.dart';
 
 class WelcomeScreen extends StatefulWidget {
   const WelcomeScreen({Key? key}) : super(key: key);
@@ -18,9 +19,16 @@ class WelcomeScreen extends StatefulWidget {
 }
 
 class _WelcomeScreenState extends State<WelcomeScreen> {
+
   String selectedValue = '';
+  LocationController locationController = Get.find<LocationController>();
 
+  @override
+  void initState() {
+    locationController.getCurrentLocation();
 
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -110,6 +118,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
+
                         CustomText(
                           StringUtils.hinTxt,
                           fontSize: 14.sp,
@@ -173,6 +182,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 ),
               ),
               SizedBox(height: 20.h,),
+
               /// GUJARATI
               Padding(
                 padding:EdgeInsets.only(left: 45.w,right: 45.w),
@@ -213,13 +223,14 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                   ),
                 ),
               ),
+
               SizedBox(height: 30.h,),
 
               /// SUBMIT BUTTON
               Padding(
-                padding:EdgeInsets.symmetric(horizontal: 80.w),
-                child: CustomBtn(
-                  height: 50.h,
+                padding : EdgeInsets.symmetric(horizontal: 80.w),
+                child : CustomBtn(
+                    height: 50.h,
                     gradient: const LinearGradient(
                         colors: [
                            ColorUtils.gridentColor1,
@@ -228,7 +239,8 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                       begin: AlignmentDirectional.topEnd,
                       end: AlignmentDirectional.bottomEnd,
                     ),
-                    onTap: () async {
+
+                  onTap: () async {
                      if(selectedValue.isNotEmpty){
                        switch(selectedValue){
                          case 'Hindi':
@@ -247,7 +259,9 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                            break;
                        }
                        Get.off(SunriseSunetScreen());
-                     }else{
+                     }
+
+                     else{
                        Fluttertoast.showToast(
                            msg: "Please Selected Language",
                            toastLength: Toast.LENGTH_SHORT,
@@ -260,6 +274,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                     title: StringUtils.submitBtnTxt,
                 ),
               ),
+
             ],
           ),
         ),

@@ -79,7 +79,7 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
           sunriseSunsetController.formattedDate,
           PrefServices.getString('countryName'));
 
-      locationController.checkPermission();
+      locationController.getCurrentLocation();
 
       sunriseSunsetController.selectedDate.value = DateTime.now();
       Timer.periodic(const Duration(seconds: 1), (timer) {
@@ -494,7 +494,6 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                   /// CALENDAR ICON
                   InkWell(
                     onTap: () async {
-
                       sunriseSunsetController.selectDate(context);
                     },
                     child: const CircleAvatar(
@@ -1014,7 +1013,11 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                 children: [
                   TextButton(
                     onPressed: () {
-                      Get.off(IntegrateGoogleMap());
+                      Get.off(IntegrateGoogleMap(
+                        latitude: locationController.currentLat,
+                        longitude: locationController.currentLong,
+                        address: locationController.currentAddress,
+                      ));
                     },
                     child: CustomText(
                       StringUtils.usgMapTxt,

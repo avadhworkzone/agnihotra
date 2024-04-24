@@ -183,7 +183,7 @@ class GoogleController extends GetxController {
       }
       update();
       return searchAddress.value;
-    } catch (e) {
+    } catch (e){
       print("Error searching locations: $e");
       return searchAddress.value;
     }

@@ -3,8 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:sunrise_app/model/country_timezone_model.dart';
-import 'package:sunrise_app/model/future_sunrise_sunsetTime_model.dart';
-import 'package:sunrise_app/model/sunrise_sunset_model.dart';
+
 import 'package:sunrise_app/services/prefServices.dart';
 import 'package:sunrise_app/view/sunrise_sunset_screen/sunrise_sunset_api.dart';
 import 'package:weather/weather.dart';
@@ -27,8 +26,7 @@ class SunriseSunsetController extends GetxController {
 
 
   RxBool isCountryLoad = false.obs;
-  SunriseSunsetModel? sunriseSunsetModel;
-  FutureSunriseSunsetTimeModel? futureSunriseSunsetTimeModel;
+
   CountryTimezoneModel? countryTimezoneModel;
   RxString selectedValue = ''.obs;
 

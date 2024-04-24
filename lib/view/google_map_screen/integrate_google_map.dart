@@ -32,6 +32,7 @@ final homeScaffoldKey = GlobalKey<ScaffoldState>();
 class _IntegrateGoogleMapState extends State<IntegrateGoogleMap> {
   final GoogleController googleController = Get.find<GoogleController>();
   LocationController locationController = Get.find<LocationController>();
+  GoogleMap? myMap;
 
   @override
   void initState() {
@@ -57,9 +58,6 @@ class _IntegrateGoogleMapState extends State<IntegrateGoogleMap> {
     return Scaffold(
       body: Obx(
         () {
-          if (googleController.lastMapPosition == null) {
-            return const Center(child: CircularProgressIndicator());
-          }
           return SingleChildScrollView(
             physics: const NeverScrollableScrollPhysics(),
             child: Column(
@@ -87,13 +85,50 @@ class _IntegrateGoogleMapState extends State<IntegrateGoogleMap> {
                 Obx(() => SizedBox(
                       height: Get.height / 1.5,
                       child: GoogleMap(
-                        markers: googleController.markers,
-                        onMapCreated: googleController.onMapCreated,
+
+                        markers: {
+                          if (locationController.currentLat ==
+                                  widget.latitude &&
+                              locationController.currentLong ==
+                                  widget.longitude)
+                            Marker(
+                              markerId: const MarkerId('currentLocation'),
+                              position: LatLng(locationController.currentLat,
+                                  locationController.currentLong),
+                              icon: BitmapDescriptor.defaultMarkerWithHue(
+                                  BitmapDescriptor.hueRed),
+                            ),
+                          ...googleController.markers,
+                        },
+
+
+                        scrollGesturesEnabled: true,
+                        compassEnabled: true,
+                        zoomGesturesEnabled: true,
+                        zoomControlsEnabled: true,
+
+                        onMapCreated: (GoogleMapController controller) {
+                          locationController.mapController = controller;
+                          locationController.getCurrentLocation();
+                        },
+                        myLocationEnabled: true,
+                        myLocationButtonEnabled: true,
+                        circles: {
+                          Circle(
+                            circleId: const CircleId('currentCircle'),
+                            center: LatLng(locationController.currentLat,
+                                locationController.currentLong),
+                            radius: 3000,
+                            fillColor: Colors.blue.shade100.withOpacity(0.5),
+                            strokeColor: Colors.blue.withOpacity(0.3),
+                            strokeWidth: 1,
+                          ),
+                        },
+
                         initialCameraPosition: CameraPosition(
-                          target: LatLng(
-                              widget.latitude ?? 0.0, widget.longitude ?? 0.0),
-                          zoom: 10.0,
-                        ),
+                            target: LatLng(locationController.currentLat,locationController.currentLong),
+                            zoom: 0),
+
                         mapType: googleController.currentMapType.value,
                         onCameraMove: googleController.onCameraMove,
                         onTap: (LatLng latLng) async {
@@ -161,6 +196,7 @@ class _IntegrateGoogleMapState extends State<IntegrateGoogleMap> {
                     ),
                     Row(
                       children: [
+
                         /// SELECT BUTTON
                         Padding(
                           padding: EdgeInsets.only(left: 5.w),
@@ -176,7 +212,6 @@ class _IntegrateGoogleMapState extends State<IntegrateGoogleMap> {
                               end: AlignmentDirectional.bottomEnd,
                             ),
                             onTap: () async {
-
                               PrefServices.setValue(
                                   'currentAddress', widget.address);
 
@@ -190,8 +225,8 @@ class _IntegrateGoogleMapState extends State<IntegrateGoogleMap> {
                                   googleController
                                       .lastMapPosition.value!.longitude);
 
-
-                              PrefServices.setValue('countryName','India Standard Time');
+                              PrefServices.setValue(
+                                  'countryName', 'India Standard Time');
 
                               googleController.addLocation(
                                 widget.address ??

@@ -88,7 +88,9 @@ class _LocationScreenState extends State<LocationScreen> {
                               color: ColorUtils.black,
                               textAlign: TextAlign.center,
                             ),
+
                             SizedBox(height: 10.h,),
+
                             CustomText(
                               StringUtils.notEstSouWesTxt,
                               fontSize: 15.sp,
@@ -96,6 +98,7 @@ class _LocationScreenState extends State<LocationScreen> {
                               color: ColorUtils.black,
                               textAlign: TextAlign.center,
                             ),
+
                             Padding(
                               padding:EdgeInsets.only(left: 8.w),
                               child: Row(
@@ -110,10 +113,11 @@ class _LocationScreenState extends State<LocationScreen> {
                                     ),
                                   ),
                                   SizedBox(width: 10.w,),
+
                                   SizedBox(
                                     width: 200.w,
                                     child: CommonTextField(
-                                      textAlignVertical: TextAlignVertical.bottom,
+                                      textAlignVertical: TextAlignVertical.center,
                                       validator: ValidationMethod.latitudeValidation,
                                       textEditController: locationController.latitudeController,
                                     ),
@@ -121,6 +125,7 @@ class _LocationScreenState extends State<LocationScreen> {
                                 ],
                               ),
                             ),
+
                             Padding(
                               padding:EdgeInsets.only(left: 8.w),
                               child: Row(
@@ -138,6 +143,7 @@ class _LocationScreenState extends State<LocationScreen> {
                                   SizedBox(
                                     width: 200.w,
                                     child: CommonTextField(
+                                      textAlignVertical: TextAlignVertical.center,
                                       validator: ValidationMethod.longitudeValidation,
                                       textEditController: locationController.longitudeController,
                                     ),
@@ -145,6 +151,7 @@ class _LocationScreenState extends State<LocationScreen> {
                                 ],
                               ),
                             ),
+
                             SizedBox(height: 70.h,),
 
                             /// Use this Location
@@ -172,6 +179,7 @@ class _LocationScreenState extends State<LocationScreen> {
                                 ),
                               );
                             }),
+
                             TextButton(
                                 onPressed:() {
                                   locationController.getLocationOnMap();
