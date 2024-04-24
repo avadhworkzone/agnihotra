@@ -53,7 +53,7 @@ class _ChangeTimeZoneScreenState extends State<ChangeTimeZoneScreen> {
               setState(() {
                 googleController.filteredCountryStateName = googleController.countryStateName
                     .where((name) =>
-                        name.toLowerCase().contains(value.toLowerCase()))
+                    name.toLowerCase().contains(value.toLowerCase()))
                     .toList();
 
               });
@@ -87,9 +87,9 @@ class _ChangeTimeZoneScreenState extends State<ChangeTimeZoneScreen> {
 
                       setState(() {
 
-                      PrefServices.setValue('countryName',googleController.searchCountryController.text.isNotEmpty
-                          ? googleController.filteredCountryStateName[index]
-                          : googleController.countryStateName[index]);
+                        PrefServices.setValue('countryName',googleController.searchCountryController.text.isNotEmpty
+                            ? googleController.filteredCountryStateName[index]
+                            : googleController.countryStateName[index]);
                       });
 
                       _isTimezoneConfirmDialog(googleController.searchCountryController.text.isNotEmpty
@@ -186,7 +186,7 @@ class _ChangeTimeZoneScreenState extends State<ChangeTimeZoneScreen> {
                   /// Yes Button
                   InkWell(
                     onTap: (){
-                     Get.to(SunriseSunetScreen());
+                      Get.to(SunriseSunetScreen());
                       googleController.searchCountryController.clear();
                     },
                     child: CustomText(

@@ -5,7 +5,10 @@ import 'package:intl/intl.dart';
 import 'package:sunrise_app/model/country_timezone_model.dart';
 
 import 'package:sunrise_app/services/prefServices.dart';
+import 'package:sunrise_app/utils/const_utils.dart';
 import 'package:sunrise_app/view/sunrise_sunset_screen/sunrise_sunset_api.dart';
+import 'package:sunrise_app/viewModel/settings_controller.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:weather/weather.dart';
 
 class SunriseSunsetController extends GetxController {
@@ -17,6 +20,13 @@ class SunriseSunsetController extends GetxController {
 
   late Rx<DateTime> selectedDate = DateTime.now().obs;
   String formattedDate = DateFormat("yyyy-MM-dd").format(DateTime.now());
+  final Uri _url = Uri.parse('https://www.freeprivacypolicy.com/live/b55e5ea0-1038-4c24-b269-7359dcad9bb2');
+
+  Future<void> launchUrl() async {
+    if (!await launch(_url.toString())) {
+      throw 'Could not launch $_url';
+    }
+  }
 
 
 

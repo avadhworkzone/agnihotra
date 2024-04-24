@@ -14,6 +14,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'view/splashScreen/splash_screen.dart';
 
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -45,8 +46,14 @@ class MyApp extends StatelessWidget {
 
   SunriseSunsetController sunriseSunsetController =
       Get.put(SunriseSunsetController());
+  SettingScreenController settingScreenController = Get.put(SettingScreenController());
+  SunriseSunsetController sunriseSunsetController = Get.put(SunriseSunsetController());
   GoogleController googleController = Get.put(GoogleController());
   LocationController locationController = Get.put(LocationController());
   SettingScreenController settingScreenController =
       Get.put(SettingScreenController());
+  AgnihotraMantraController agnihotraMantraController = Get.put(AgnihotraMantraController());
+
 }
+
+

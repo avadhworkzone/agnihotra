@@ -13,10 +13,11 @@ import 'package:sunrise_app/utils/color_utils.dart';
 import 'package:sunrise_app/utils/string_utils.dart';
 import 'package:sunrise_app/view/google_map_screen/change_timezone_scrren.dart';
 import 'package:sunrise_app/view/sunrise_sunset_screen/sunrise_sunset_screen.dart';
+import 'package:sunrise_app/viewModel/settings_controller.dart';
 
 class GoogleController extends GetxController {
 
-
+ SettingScreenController settingScreenController = Get.find<SettingScreenController>();
   final TextEditingController searchController = TextEditingController();
   final Completer<GoogleMapController> _controller = Completer();
   GoogleMapController? mapController;
@@ -45,7 +46,7 @@ class GoogleController extends GetxController {
   Future<void> onInit() async {
     super.onInit();
     address.value = PrefServices.getString('lastAddress');
-    // locationList.value = PrefServices.getStringList('locationList');
+    locationList.value = PrefServices.getStringList('locationList');
   }
 
 

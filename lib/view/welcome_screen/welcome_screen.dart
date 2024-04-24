@@ -118,7 +118,6 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-
                         CustomText(
                           StringUtils.hinTxt,
                           fontSize: 14.sp,
@@ -182,7 +181,6 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 ),
               ),
               SizedBox(height: 20.h,),
-
               /// GUJARATI
               Padding(
                 padding:EdgeInsets.only(left: 45.w,right: 45.w),

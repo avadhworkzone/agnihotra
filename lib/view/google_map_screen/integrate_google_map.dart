@@ -212,6 +212,7 @@ class _IntegrateGoogleMapState extends State<IntegrateGoogleMap> {
                               end: AlignmentDirectional.bottomEnd,
                             ),
                             onTap: () async {
+
                               PrefServices.setValue(
                                   'currentAddress', widget.address);
 

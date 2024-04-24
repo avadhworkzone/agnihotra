@@ -10,8 +10,6 @@ import 'package:sunrise_app/view/sunrise_sunset_screen/sunrise_sunset_screen.dar
 import 'package:sunrise_app/viewModel/google_map_controller.dart';
 
 class LocationController extends GetxController {
-
-
   GoogleController googleController = Get.find<GoogleController>();
   GoogleMapController? mapController;
   TextEditingController latitudeController = TextEditingController();
@@ -30,6 +28,19 @@ class LocationController extends GetxController {
    double currentLat = 0.0;
    double currentLong = 0.0;
 
+  @override
+  void onInit() {
+    super.onInit();
+    googleController.locationList.value = PrefServices.getStringList('locationList');
+  }
+
+
+  checkPermission()async{
+
+    bool serviceEnabled;
+    LocationPermission permission;
+
+    serviceEnabled=await Geolocator.isLocationServiceEnabled();
   getCurrentLocation() async {
 
     try {
@@ -73,6 +84,7 @@ class LocationController extends GetxController {
       Fluttertoast.showToast(msg: e.toString());
     }
   }
+
 
   void getLatLongLocation() async {
     try {
@@ -181,3 +193,4 @@ class LocationController extends GetxController {
     }
   }
 }
+

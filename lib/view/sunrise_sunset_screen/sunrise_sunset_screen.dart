@@ -83,7 +83,8 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
 
       sunriseSunsetController.selectedDate.value = DateTime.now();
       Timer.periodic(const Duration(seconds: 1), (timer) {
-        sunriseSunsetController.updateTime();
+       // sunriseSunsetController.updateTime();
+        settingScreenController.updateTime();
       });
     });
 
@@ -343,23 +344,28 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                 SizedBox(
                   height: 10.h,
                 ),
-                Row(
-                  children: [
-                    LocalAssets(
-                      imagePath: AssetUtils.privacyPolicyImages,
-                      height: 25.h,
-                      fit: BoxFit.fitHeight,
-                    ),
-                    SizedBox(
-                      width: 10.w,
-                    ),
-                    CustomText(
-                      StringUtils.privacyPolicyTxt,
-                      fontWeight: FontWeight.w500,
-                      fontSize: 15.sp,
-                      color: ColorUtils.black,
-                    ),
-                  ],
+                GestureDetector(
+                  onTap: () {
+                    sunriseSunsetController.launchUrl();
+                  },
+                  child: Row(
+                    children: [
+                      LocalAssets(
+                        imagePath: AssetUtils.privacyPolicyImages,
+                        height: 25.h,
+                        fit: BoxFit.fitHeight,
+                      ),
+                      SizedBox(
+                        width: 10.w,
+                      ),
+                      CustomText(
+                        StringUtils.privacyPolicyTxt,
+                        fontWeight: FontWeight.w500,
+                        fontSize: 15.sp,
+                        color: ColorUtils.black,
+                      ),
+                    ],
+                  ),
                 ),
                 const Divider(),
                 SizedBox(
@@ -437,7 +443,6 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-
                         ///  MANTRA TXT
                         InkWell(
                           onTap: () {
@@ -455,6 +460,8 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                               children: [
                                 Image.asset(
                                   AssetUtils.mantraImages,
+                                  width: 18.w,
+                                  height: 16.h,
                                 ),
                                 SizedBox(
                                   width: 8.w,
@@ -495,6 +502,7 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                   /// CALENDAR ICON
                   InkWell(
                     onTap: () async {
+
                       sunriseSunsetController.selectDate(context);
                     },
                     child: const CircleAvatar(
@@ -512,20 +520,28 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
 
                   /// Selected Date of Calender
                   Obx(() => CustomText(
-                        DateFormat('dd MMMM yyyy')
-                            .format(sunriseSunsetController.selectedDate.value),
-                        fontWeight: FontWeight.w500,
-                        fontSize: 20.sp,
-                      )),
+                    DateFormat('dd MMMM yyyy').format(sunriseSunsetController.selectedDate.value),
+                    fontWeight: FontWeight.w500,
+                    fontSize: 20.sp,
+                  )),
 
                   SizedBox(
                     height: 10.h,
                   ),
 
                   /// CURRENT TIME
-                  Obx(() => Container(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: 18.w, vertical: 5.h),
+                  Obx(() {
+                    if(settingScreenController.isCountDown.value){
+                      return CustomText(
+                        // settingScreenController.difference != null
+                        //     ? settingScreenController.formatDuration(settingScreenController.difference.value):'',
+                        PrefServices.getString('timeUntilTime'),
+                        fontWeight: FontWeight.w500,
+                        fontSize: 20.sp,
+                      );
+                    }else{
+                      return Container(
+                        padding: EdgeInsets.symmetric(horizontal: 18.w, vertical: 5.h),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.all(Radius.circular(6.r)),
                           border: Border.all(color: ColorUtils.borderColor),
@@ -536,13 +552,15 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                             ),
                           ],
                         ),
-                        child: CustomText(
-                          sunriseSunsetController.currentTime.value,
+                        child:CustomText(
+                          // sunriseSunsetController.currentTime().toString(),
+                          settingScreenController.current24HourTime.value,
                           fontWeight: FontWeight.w500,
                           fontSize: 20.sp,
                         ),
-                      )),
-
+                      );
+                    }
+                  }),
                   SizedBox(
                     height: 90.h,
                   ),
@@ -576,28 +594,22 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                                 ),
                                 child: Padding(
                                     padding: EdgeInsets.only(top: 25.h),
-                                    child: sunriseSunsetController
-                                            .isCountryLoad.value
+                                    child: sunriseSunsetController.isCountryLoad.value
                                         ? const CircularProgressIndicator(
-                                            color: ColorUtils.white,
-                                          )
-                                        : (PrefServices.getDouble(
-                                                        'currentLat') ==
-                                                    0.0 &&
-                                                PrefServices.getDouble(
-                                                        'currentLong') ==
-                                                    0.0)
-                                            ? CustomText(
-                                                '',
-                                                fontWeight: FontWeight.w500,
-                                                fontSize: 20.sp,
-                                              )
-                                            : CustomText(
-                                                PrefServices.getString(
-                                                    'countrySunriseTimeZone'),
-                                                fontWeight: FontWeight.w500,
-                                                fontSize: 20.sp,
-                                              )),
+                                      color: ColorUtils.white,
+                                    )
+                                        : (PrefServices.getDouble('currentLat') == 0.0 && PrefServices.getDouble('currentLong') == 0.0)
+                                        ? CustomText(
+                                      '',
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 20.sp,
+                                    )
+                                        : CustomText(
+                                      ' ${settingScreenController.is24Hours.value ? PrefServices.getString('formattedSunriseTime') : settingScreenController.formatTime(PrefServices.getString('countrySunriseTimeZone'), false)}',
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 20.sp,
+                                    ),
+                                ),
                               ),
                             ),
                             Positioned(
@@ -606,7 +618,10 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                                 backgroundColor: ColorUtils.white,
                                 radius: 27.r,
                                 child: LocalAssets(
-                                    imagePath: AssetUtils.sunriseImages),
+                                    imagePath: AssetUtils.sunriseImages,
+                                  height: 30.63,
+                                  width: 30.63,
+                                ),
                               ),
                             ),
                           ],
@@ -640,28 +655,23 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                                 ),
                                 child: Padding(
                                     padding: EdgeInsets.only(top: 25.h),
-                                    child: sunriseSunsetController
-                                            .isCountryLoad.value
+                                    child: sunriseSunsetController.isCountryLoad.value
                                         ? const CircularProgressIndicator(
-                                            color: ColorUtils.white,
-                                          )
-                                        : (PrefServices.getDouble(
-                                                        'currentLat') ==
-                                                    0.0 &&
-                                                PrefServices.getDouble(
-                                                        'currentLong') ==
-                                                    0.0)
-                                            ? CustomText(
-                                                '',
-                                                fontWeight: FontWeight.w500,
-                                                fontSize: 20.sp,
-                                              )
-                                            : CustomText(
-                                                PrefServices.getString(
-                                                    'countrySunsetTimeZone'),
-                                                fontWeight: FontWeight.w500,
-                                                fontSize: 20.sp,
-                                              )),
+                                      color: ColorUtils.white,
+                                    )
+                                        : (PrefServices.getDouble('currentLat') == 0.0 && PrefServices.getDouble('currentLong') == 0.0)
+                                        ? CustomText(
+                                      '',
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 20.sp,
+                                    )
+                                        :
+                                    CustomText(
+                                      ' ${settingScreenController.is24Hours.value ? PrefServices.getString('formattedSunsetTime') : settingScreenController.formatTime(PrefServices.getString('countrySunsetTimeZone'), false)}',
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 20.sp,
+                                    ),
+                                ),
                               ),
                             ),
                             Positioned(
@@ -671,14 +681,15 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                                 radius: 27.r,
                                 child: LocalAssets(
                                   imagePath: AssetUtils.sunsetImages,
+                                  height: 30.63,
+                                  width: 30.63,
                                 ),
                               ),
                             ),
                           ],
                         ),
                       ],
-                    ),
-                  ),
+                    ),),
 
                   SizedBox(
                     height: 130.h,

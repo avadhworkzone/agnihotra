@@ -6,8 +6,9 @@ import 'package:sunrise_app/common_Widget/common_text.dart';
 import 'package:sunrise_app/utils/color_utils.dart';
 import 'package:sunrise_app/utils/image_utils.dart';
 import 'package:sunrise_app/utils/string_utils.dart';
-import 'package:sunrise_app/view/mantra_menu_screen/agnihotra_patra_screen.dart';
 import 'package:sunrise_app/view/sunrise_sunset_screen/sunrise_sunset_screen.dart';
+
+import 'agnihotra_patra_screen.dart';
 
 class MantraScreen extends StatefulWidget {
   const MantraScreen({Key? key}) : super(key: key);
@@ -22,7 +23,6 @@ class _MantraScreenState extends State<MantraScreen> {
     return Scaffold(
       body: Stack(
         children: [
-
           Container(
             decoration: BoxDecoration(
               image: DecorationImage(
@@ -33,9 +33,8 @@ class _MantraScreenState extends State<MantraScreen> {
               ),
             ),
           ),
-
           Padding(
-            padding: EdgeInsets.only(top: 50.h),
+            padding:EdgeInsets.only(top: 50.h),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -179,7 +178,11 @@ class _MantraScreenState extends State<MantraScreen> {
                                     child: CircleAvatar(
                                       backgroundColor: ColorUtils.white,
                                       radius: 25.r,
-                                      child: LocalAssets(imagePath: AssetUtils.sunriseImages),
+                                      child: LocalAssets(
+                                          imagePath: AssetUtils.sunriseImages,
+                                        height: 30.63,
+                                        width: 30.63,
+                                      ),
                                     ),
                                   ),
                                   SizedBox(width: 10.w,),
@@ -234,7 +237,6 @@ class _MantraScreenState extends State<MantraScreen> {
                               fontSize: 17.sp,
                             ),
                           ),
-
                           ListTile(
                             title:CustomText(
                               StringUtils.prajapatayeIdem,
@@ -249,7 +251,6 @@ class _MantraScreenState extends State<MantraScreen> {
                               fontSize: 17.sp,
                             ),
                             trailing: Column(
-                              mainAxisSize: MainAxisSize.min,
                               children: [
                                 CircleAvatar(
                                   radius: 18.r,
@@ -268,7 +269,6 @@ class _MantraScreenState extends State<MantraScreen> {
                                 )
                               ],
                             ),
-
                           ),
                         ],
                       ),
@@ -309,7 +309,11 @@ class _MantraScreenState extends State<MantraScreen> {
                                     child: CircleAvatar(
                                       backgroundColor: ColorUtils.white,
                                       radius: 27.r,
-                                      child: LocalAssets(imagePath: AssetUtils.sunsetImages),
+                                      child: LocalAssets(
+                                          imagePath: AssetUtils.sunsetImages,
+                                        height: 30.63,
+                                        width: 30.63,
+                                      ),
                                     ),
                                   ),
                                   SizedBox(width: 10.w,),
@@ -401,9 +405,7 @@ class _MantraScreenState extends State<MantraScreen> {
                       ),
                     ),
                   ),
-                  SizedBox(
-                    height: 10.h,
-                  ),
+                  SizedBox(height: 10.h,),
                 ],
               ),
             ),
