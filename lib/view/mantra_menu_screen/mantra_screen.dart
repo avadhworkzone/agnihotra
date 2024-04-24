@@ -7,10 +7,12 @@ import 'package:sunrise_app/utils/color_utils.dart';
 import 'package:sunrise_app/utils/image_utils.dart';
 import 'package:sunrise_app/utils/string_utils.dart';
 import 'package:sunrise_app/view/sunrise_sunset_screen/sunrise_sunset_screen.dart';
+import 'package:sunrise_app/viewModel/agnihotra_mantra_controller.dart';
 
 import 'agnihotra_patra_screen.dart';
 
 class MantraScreen extends StatefulWidget {
+
   const MantraScreen({Key? key}) : super(key: key);
 
   @override
@@ -18,6 +20,9 @@ class MantraScreen extends StatefulWidget {
 }
 
 class _MantraScreenState extends State<MantraScreen> {
+
+  AgnihotraMantraController agnihotraMantraController = Get.find<AgnihotraMantraController>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -238,6 +243,8 @@ class _MantraScreenState extends State<MantraScreen> {
                             ),
                           ),
                           ListTile(
+
+
                             title:CustomText(
                               StringUtils.prajapatayeIdem,
                               color: ColorUtils.black,
@@ -250,24 +257,35 @@ class _MantraScreenState extends State<MantraScreen> {
                               fontWeight: FontWeight.w500,
                               fontSize: 17.sp,
                             ),
-                            trailing: Column(
-                              children: [
-                                CircleAvatar(
-                                  radius: 18.r,
-                                  backgroundColor: ColorUtils.orange,
-                                  child: Center(
-                                    child: Icon(
-                                      AssetUtils.playIcon,
-                                      color: ColorUtils.white,
-                                      size: 35.sp,
-                                    )
+                            trailing: GestureDetector(
+                              onTap: () {
+                                agnihotraMantraController.sunriseMantraAudio();
+                              },
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+
+                                  CircleAvatar(
+                                    radius: 18.r,
+                                    backgroundColor: ColorUtils.orange,
+                                    child: Center(
+                                      child: Icon(
+                                        AssetUtils.playIcon,
+                                        color: ColorUtils.white,
+                                        size: 28.sp,
+                                      )
+                                    ),
                                   ),
-                                ),
-                                const CustomText(
-                                  StringUtils.playTxt,
-                                  color: ColorUtils.orange,
-                                )
-                              ],
+
+                                   CustomText(
+                                    StringUtils.playTxt,
+                                    color: ColorUtils.orange,
+                                    fontWeight: FontWeight.w500,
+                                     fontSize: 10.sp,
+                                  )
+
+                                ],
+                              ),
                             ),
                           ),
                         ],
@@ -285,15 +303,17 @@ class _MantraScreenState extends State<MantraScreen> {
                       ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
+                        children : [
+
                           SizedBox(height: 10.h,),
+
                           Center(
                             child: Container(
                               height: 50.26.h,
                               width: 250.43.w,
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.all(Radius.circular(27.r)),
-                                gradient: LinearGradient(
+                                gradient: const LinearGradient(
                                   colors: [
                                     ColorUtils.gridentColor1,
                                     ColorUtils.gridentColor2,
@@ -326,6 +346,7 @@ class _MantraScreenState extends State<MantraScreen> {
                               ),
                             ),
                           ),
+
                           ListTile(
                             title:CustomText(
                               StringUtils.agnayeSwaha,
@@ -340,6 +361,7 @@ class _MantraScreenState extends State<MantraScreen> {
                               fontSize: 17.sp,
                             ),
                           ),
+
                           ListTile(
                             title:CustomText(
                               StringUtils.agnayeIdem,
@@ -354,6 +376,7 @@ class _MantraScreenState extends State<MantraScreen> {
                               fontSize: 17.sp,
                             ),
                           ),
+
                           ListTile(
                             title:CustomText(
                               StringUtils.prajapatayeSwaha,
@@ -368,6 +391,7 @@ class _MantraScreenState extends State<MantraScreen> {
                               fontSize: 17.sp,
                             ),
                           ),
+
                           ListTile(
                             title:CustomText(
                               StringUtils.prajapatayeIdem,
@@ -381,26 +405,37 @@ class _MantraScreenState extends State<MantraScreen> {
                               fontWeight: FontWeight.w500,
                               fontSize: 17.sp,
                             ),
-                            trailing: Column(
-                              children: [
-                                CircleAvatar(
-                                  radius: 18.r,
-                                  backgroundColor: ColorUtils.orange,
-                                  child: Center(
-                                      child: Icon(
-                                        AssetUtils.playIcon,
-                                        color: ColorUtils.white,
-                                        size: 35.sp,
-                                      )
+                            trailing: GestureDetector(
+                              onTap: () {
+                                agnihotraMantraController.sunsetMantraAudio();
+                              },
+                              child: Column(
+                                children: [
+
+                                  CircleAvatar(
+                                    radius: 18.r,
+                                    backgroundColor: ColorUtils.orange,
+                                    child: Center(
+                                        child: Icon(
+                                          AssetUtils.playIcon,
+                                          color: ColorUtils.white,
+                                          size: 28.sp,
+                                        )
+                                    ),
                                   ),
-                                ),
-                                const CustomText(
-                                  StringUtils.playTxt,
-                                  color: ColorUtils.orange,
-                                )
-                              ],
+
+                                  CustomText(
+                                    StringUtils.playTxt,
+                                    color: ColorUtils.orange,
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 10.sp,
+                                  )
+
+                                ],
+                              ),
                             ),
                           ),
+
                         ],
                       ),
                     ),

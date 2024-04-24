@@ -2,18 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:sunrise_app/localization/translations.dart';
-import 'package:sunrise_app/medition_bell.dart';
 import 'package:sunrise_app/services/prefServices.dart';
-import 'package:sunrise_app/view/sunrise_sunset_screen/sunrise_sunset_screen.dart';
 import 'package:sunrise_app/view/welcome_screen/welcome_screen.dart';
+import 'package:sunrise_app/viewModel/agnihotra_mantra_controller.dart';
 import 'package:sunrise_app/viewModel/enter_location_controller.dart';
 import 'package:sunrise_app/viewModel/google_map_controller.dart';
 import 'package:sunrise_app/viewModel/settings_controller.dart';
 import 'package:sunrise_app/viewModel/sunrise_sunset_controller.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
 import 'view/splashScreen/splash_screen.dart';
-
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -38,7 +35,9 @@ class MyApp extends StatelessWidget {
             : PrefServices.getString('language')),
         fallbackLocale: const Locale('en_US'),
         // home: const MeditionBellDemo(),
-        home : PrefServices.getString('language').isEmpty ? const WelcomeScreen() : const SplashScreen(),
+        home: PrefServices.getString('language').isEmpty
+            ? const WelcomeScreen()
+            : const SplashScreen(),
         debugShowCheckedModeBanner: false,
       ),
     );
@@ -46,14 +45,10 @@ class MyApp extends StatelessWidget {
 
   SunriseSunsetController sunriseSunsetController =
       Get.put(SunriseSunsetController());
-  SettingScreenController settingScreenController = Get.put(SettingScreenController());
-  SunriseSunsetController sunriseSunsetController = Get.put(SunriseSunsetController());
-  GoogleController googleController = Get.put(GoogleController());
-  LocationController locationController = Get.put(LocationController());
   SettingScreenController settingScreenController =
       Get.put(SettingScreenController());
-  AgnihotraMantraController agnihotraMantraController = Get.put(AgnihotraMantraController());
+  GoogleController googleController = Get.put(GoogleController());
+  LocationController locationController = Get.put(LocationController());
 
+  AgnihotraMantraController agnihotraMantraController =  Get.put(AgnihotraMantraController());
 }
-
-

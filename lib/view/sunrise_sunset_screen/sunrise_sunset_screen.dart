@@ -21,6 +21,7 @@ import 'package:sunrise_app/view/mantra_menu_screen/mantra_menu_screen.dart';
 import 'package:sunrise_app/view/setting_screen/setting_screen.dart';
 import 'package:sunrise_app/viewModel/enter_location_controller.dart';
 import 'package:sunrise_app/viewModel/google_map_controller.dart';
+import 'package:sunrise_app/viewModel/settings_controller.dart';
 import 'package:sunrise_app/viewModel/sunrise_sunset_controller.dart';
 
 class SunriseSunetScreen extends StatefulWidget {
@@ -38,8 +39,10 @@ class SunriseSunetScreen extends StatefulWidget {
 }
 
 class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
+
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   LocationController locationController = Get.find<LocationController>();
+  SettingScreenController settingScreenController = Get.find<SettingScreenController>();
 
   SunriseSunsetController sunriseSunsetController =
       Get.find<SunriseSunsetController>();

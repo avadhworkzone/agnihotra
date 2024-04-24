@@ -18,8 +18,7 @@ class SettingsScreen extends StatefulWidget {
 
 class _SeetingScreenState extends State<SettingsScreen> {
 
-  SettingScreenController settingScreenController = Get.find<
-      SettingScreenController>();
+  SettingScreenController settingScreenController = Get.find<SettingScreenController>();
 
   @override
   Widget build(BuildContext context) {
@@ -151,10 +150,12 @@ class _SeetingScreenState extends State<SettingsScreen> {
                                       scale: 0.8,
                                       child: Switch(
                                         value: settingScreenController.is24Hours.value,
-                                        onChanged: (value) {
+                                        onChanged: (value){
+
                                           // setState(() {
-                                          settingScreenController.toggleTimeFormat(value);
+                                          // settingScreenController.toggleTimeFormat(value);
                                           // });
+
                                         },
                                       ),
                                     ),

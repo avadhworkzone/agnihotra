@@ -25,12 +25,13 @@ class SettingScreenController extends GetxController{
   RxString current24HourTime = ''.obs;
   RxString sunrise24HourTime = ''.obs;
   RxString sunset24HourTime = ''.obs;
+
   @override
   void onInit() {
     // TODO: implement onInit
     super.onInit();
     updateTime();
-    onCountDown();
+    // onCountDown();
     is24Hours.value = PrefServices.getBool('is24Hours');
     isCountDown.value = PrefServices.getBool('isCountDown');
 
@@ -40,7 +41,7 @@ class SettingScreenController extends GetxController{
   DateTime parseTime(String timeStr) {
     // Create a DateTimeFormatter with the expected time format
     DateFormat formatter = DateFormat("hh:mm:ss a");
-    print('=======>${timeStr}');
+    print('=======>$timeStr');
      // if(timeStr.isEmpty){
      //   return DateTime.now();
      // }
@@ -48,7 +49,8 @@ class SettingScreenController extends GetxController{
     return formatter.parse(timeStr);
   }
 
-  String formatDuration(Duration duration) {
+  String formatDuration(Duration duration){
+
     // Calculate hours, minutes, and seconds
     int hours = duration.inHours;
     int minutes = duration.inMinutes.remainder(60);
@@ -92,7 +94,7 @@ class SettingScreenController extends GetxController{
     isCountDown.value = value;
     PrefServices.setValue('isCountDown', value);
     if (value) {
-      onCountDown();
+      // onCountDown();
     }
   }
 
@@ -108,7 +110,8 @@ class SettingScreenController extends GetxController{
 
 
 
-  void toggleTimeFormat(bool value) {
+  void toggleTimeFormat(bool value){
+
     is24Hours.value = value;
     is24HourFormat.value = !is24HourFormat.value;
 
@@ -117,9 +120,11 @@ class SettingScreenController extends GetxController{
     PrefServices.setValue('formattedSunriseTime', formatTime(PrefServices.getString('countrySunriseTimeZone'), value));
     PrefServices.setValue('formattedSunsetTime', formatTime(PrefServices.getString('countrySunsetTimeZone'), value));
   }
+
   RxBool is24HourFormat = false.obs;
-  String formatTime(String time, bool is24Hour) {
-    if (is24Hour) {
+  String formatTime(String time, bool is24Hour){
+
+    if (is24Hour){
       // Convert to 24-hour format
       DateTime parsedTime = DateFormat('hh:mm:ss a').parse(time);
       String formattedTime = DateFormat('HH:mm:ss').format(parsedTime);

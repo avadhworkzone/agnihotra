@@ -1,7 +1,6 @@
 import 'package:http/http.dart' as http;
 import 'package:sunrise_app/model/country_timezone_model.dart';
-import 'package:sunrise_app/model/future_sunrise_sunsetTime_model.dart';
-import 'package:sunrise_app/model/sunrise_sunset_model.dart';
+
 import 'package:sunrise_app/services/api_services.dart';
 
 
