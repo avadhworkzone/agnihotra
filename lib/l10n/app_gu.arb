@@ -55,10 +55,10 @@
   "prajapatayeIdem":"પ્રજાપતયે ઇદેમ ના મા",
   "agnayeSwaha":"અગ્નયે સ્વાહા",
   "agnayeIdem":"અગ્નયે ઈદમ ના મામા",
-  "agnihotraMantraTxt":"અગ્નિહોત્ર મંત્ર",
-  "sunriseSunsetMantraTxt":"(સૂર્યોદય અને સૂર્યાસ્ત મંત્ર)",
+  "agnihotraMantraTxt":"।। અગ્નિહોત્ર ।।",
+  "sunriseSunsetMantraTxt":".... સૂર્યોદય અને સૂર્યાસ્ત સમય ના મંત્ર ....",
   "tilakSandhyaMantraTxt":"ત્રિકાલ સંધ્યા મંત્ર",
-  "trikalMantraTxt":"ત્રિકાલ સંધ્યા મંત્ર",
+  "trikalMantraTxt":"।। ત્રિકાલ સંધ્યા ।। ",
   "mantra24":"24 મંત્ર",
   "timeZonTxt":"કૃપા કરીને આ સ્થાન માટે\nસમયની પુષ્ટિ કરો",
   "standardTime":"ભારતીય માનક સમય(એશિયા/કોલકાતા)",
@@ -114,7 +114,10 @@
   "swstiText":"स्वस्ति भूयासम्\t માથાની ટોચ",
   "settingsScreenTxt":"સેટિંગ્સ",
   "deleteAllLocation":"શું તમે ખરેખર બધા\nસ્થાનો કાઢી નાખવા માંગો છો?",
-  "proceedTxt":"આગળ વધો"
+  "proceedTxt":"આગળ વધો",
+  "appName": "અગ્નિહોત્ર - એક રોગ મુક્ત અભિયાન",
+  "inspiration":"પ્રેરણા:",
+  "guruName": "ગુરુદેવ શ્રી શ્રી રવિશંકર"
 
 
 

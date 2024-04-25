@@ -1,20 +1,20 @@
-import 'dart:async';
-
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:sunrise_app/services/prefServices.dart';
+import 'package:sunrise_app/viewModel/sunrise_sunset_controller.dart';
 
-class SettingScreenController extends GetxController {
+class SettingScreenController extends GetxController{
+
+
   RxBool on = false.obs;
+  RxBool isScreenOn = false.obs;
 
   void toggle() => on.value = on.value ? false : true;
 
   RxBool on2 = false.obs;
-
   void toggle2() => on2.value = on2.value ? false : true;
 
   RxBool on4 = false.obs;
-
   void toggle4() => on4.value = on4.value ? false : true;
 
   RxBool isCountDown = false.obs;
@@ -30,9 +30,11 @@ class SettingScreenController extends GetxController {
     // TODO: implement onInit
     super.onInit();
     updateTime();
-    // onCountDown();
+    onCountDown();
     is24Hours.value = PrefServices.getBool('is24Hours');
     isCountDown.value = PrefServices.getBool('isCountDown');
+
+
   }
 
   DateTime parseTime(String timeStr) {

@@ -100,10 +100,7 @@ class _TrikalSandhyaMantraState extends State<TrikalSandhyaMantra> {
                             fontSize: 15.sp,
                           ),
                           SizedBox(height: 15.w),
-                          commonRowWidget(
-                              number: '1',
-                              firstTitle: 'गुरूप्रार्थना',
-                              secondTitle: ' : ॐ श्रीगुरूभ्यो नमः हरिः ॐ ॥'),
+                          commonRowWidget(number: '1', firstTitle: 'गुरूप्रार्थना', secondTitle: ' : ॐ श्रीगुरूभ्यो नमः हरिः ॐ ॥'),
                           const Divider(),
                           // SizedBox(height: 15.w),
                           commonRowWidget(
@@ -223,12 +220,12 @@ class _TrikalSandhyaMantraState extends State<TrikalSandhyaMantra> {
                                 children: [
                                   commonRowWidget(secondTitle: 'ममोपात्त समस्त दुरितक्षयद्वारा श्रीपरमेश्वर प्रीत्यर्थं', fontSize: 12.sp, fontWeight: FontWeight.w500, verticalPadding: 0),
                                   SizedBox(height: 5.h,),
-                                  commonRowWidget(firstTitle: 'सुबह :' '', secondTitle: 'प्रातः सन्ध्यां समिदाधानम् च', fontWeight: FontWeight.w500, verticalPadding: 0),
+                                  commonRowWidget(firstTitle: 'सुबह : ' '', secondTitle: ' प्रातः सन्ध्यां समिदाधानम् च', fontWeight: FontWeight.w500, verticalPadding: 0),
                                   SizedBox(height: 5.h,),
-                                  commonRowWidget(firstTitle: 'दोपहर : :', secondTitle: 'माध्याह्निकं', fontWeight: FontWeight.w500, verticalPadding: 0),
+                                  commonRowWidget(firstTitle: 'दोपहर : ', secondTitle: 'माध्याह्निकं', fontWeight: FontWeight.w500, verticalPadding: 0),
                                   SizedBox(height: 5.h,),
 
-                                  commonRowWidget(firstTitle: 'शाम :', secondTitle: 'सायं सन्ध्यां समिदाधानम् च करिष्ये', fontWeight: FontWeight.w500, verticalPadding: 0)
+                                  commonRowWidget(firstTitle: 'शाम : ', secondTitle: ' सायं सन्ध्यां समिदाधानम् च करिष्ये', fontWeight: FontWeight.w500, verticalPadding: 0)
                                 ],
                               )
                             ],
@@ -381,14 +378,14 @@ class _TrikalSandhyaMantraState extends State<TrikalSandhyaMantra> {
                                       horizontalPadding: 0),
                                   commonRowWidget(
                                       secondTitle:
-                                          'मनसा वाचा हस्ताभ्याम् । पद्रयाम् उदरेण शिश्ना ।\nअहस्तदवलुम्पतु । यत्किञ्च दुरितम् मयि ।',
+                                          'मनसा वाचा हस्ताभ्याम् । पद्भयाम् उदरेण शिश्ना ।\nअहस्तदवलुम्पतु । यत्किञ्च दुरितम् मयि ।',
                                       verticalPadding: 0,
                                       fontWeight: FontWeight.w500,
                                       fontSize: 12.sp,
                                       horizontalPadding: 0),
                                   commonRowWidget(
                                       secondTitle:
-                                          'इदमहं माममृत योनौ । \nसत्ये ज्योतिषि जुहोमि स्वाहा ॥',
+                                          'इदमहं माममृत योनौ ।सत्ये ज्योतिषि जुहोमि स्वाहा ॥',
                                       verticalPadding: 0,
                                       fontWeight: FontWeight.w500,
                                       fontSize: 12.sp,
@@ -458,7 +455,7 @@ class _TrikalSandhyaMantraState extends State<TrikalSandhyaMantra> {
                           const Divider(),
                           commonRowWidget(
                               number: '11',
-                              firstTitle: 'गायत्री आवाहनम ',
+                              firstTitle: 'गायत्री आवाहनम् ',
                               secondTitle:StringUtils.avahanMudraText,
                               fontWeight: FontWeight.w500,
                               fontSize: 9.sp),
@@ -479,7 +476,7 @@ class _TrikalSandhyaMantraState extends State<TrikalSandhyaMantra> {
                                       horizontalPadding: 0),
                                   commonRowWidget(
                                       secondTitle:
-                                          'ओजोसि। सहोसि। बलमसि । भ्राजोसि । देवानां धामं नामासि ।\nविश्वमसि। विश्वायुः। सर्वमसि । सर्वायुः । अभिभुवर ॐ ॥',
+                                          'ओजोसि। सहोसि। बलमसि । भ्राजोसि । देवानां । धामं नामासि ।\nविश्वमसि। विश्वायुः। सर्वमसि । सर्वायुः । अभिभुवर ॐ ॥',
                                       verticalPadding: 0,
                                       fontWeight: FontWeight.w500,
                                       fontSize: 12.sp,
@@ -750,14 +747,14 @@ class _TrikalSandhyaMantraState extends State<TrikalSandhyaMantra> {
                                 children: [
                                   commonRowWidget(
                                       secondTitle:
-                                          'ॐ भूरग्नये प्राणाय स्वाः |\nॐ भुवर्वायवे अपानाय स्वाः ।',
+                                          'ॐ भूरग्नये प्राणाय स्वाः ||\nॐ भुवर्वायवे अपानाय स्वाः ||',
                                       verticalPadding: 0,
                                       fontWeight: FontWeight.w500,
                                       fontSize: 12.sp,
                                       horizontalPadding: 0),
                                   commonRowWidget(
                                       secondTitle:
-                                          'ॐ स्वरादित्याय व्यानाय स्वाः ।\nॐ भूर्भुवसुवः प्रजापतये स्वाः ।',
+                                          'ॐ स्वरादित्याय व्यानाय स्वाः ||\nॐ भूर्भुवसुवः प्रजापतये स्वाः ||',
                                       verticalPadding: 0,
                                       fontWeight: FontWeight.w500,
                                       fontSize: 12.sp,
@@ -928,6 +925,8 @@ class _TrikalSandhyaMantraState extends State<TrikalSandhyaMantra> {
                                           style: TextStyle(
                                             decoration: TextDecoration.underline,
                                             color: ColorUtils.black,
+                                            fontWeight: FontWeight.w600,
+                                            fontSize: 12.sp,
 
                                           ),
                                         ),
@@ -944,6 +943,10 @@ class _TrikalSandhyaMantraState extends State<TrikalSandhyaMantra> {
                                           style: TextStyle(
                                             decoration: TextDecoration.underline,
                                             color: ColorUtils.black,
+                                            fontWeight: FontWeight.w600,
+                                            fontSize: 12.sp,
+
+
 
                                           ),
                                         ),
@@ -1073,7 +1076,7 @@ class _TrikalSandhyaMantraState extends State<TrikalSandhyaMantra> {
                                                 border: Border.all(color: ColorUtils.black),
                                               ),
                                               child: CustomText(
-                                                '@noon',
+                                                '@Noon',
                                                 fontSize: 12.sp,
                                                 color: ColorUtils.black,
                                               ),
@@ -1082,7 +1085,7 @@ class _TrikalSandhyaMantraState extends State<TrikalSandhyaMantra> {
                                         ),
                                       ),
                                       Padding(
-                                        padding:EdgeInsets.only(top: 20.h,bottom: 10.h),
+                                        padding:EdgeInsets.only(top: 22.h,bottom: 10.h),
                                         child: RichText(
                                           text: TextSpan(
                                             text: 'मन्त्रहीनं क्रियाहीनं भक्तिहीनं हुताशन/ ',
@@ -1096,11 +1099,14 @@ class _TrikalSandhyaMantraState extends State<TrikalSandhyaMantra> {
                                                 style: TextStyle(
                                                   decoration: TextDecoration.underline,
                                                   color: ColorUtils.black,
+                                                  fontSize: 12.sp,
+                                                  fontWeight: FontWeight.w600,
+
 
                                                 ),
                                               ),
                                               TextSpan(
-                                                text: ' | \nयद् हुतं ',
+                                                text: ' | \nयद् हुतं/ ',
                                                 style: TextStyle(
                                                   fontSize: 12.sp,
                                                   color: ColorUtils.black,
@@ -1112,6 +1118,9 @@ class _TrikalSandhyaMantraState extends State<TrikalSandhyaMantra> {
                                                 style: TextStyle(
                                                   decoration: TextDecoration.underline,
                                                   color: ColorUtils.black,
+                                                  fontSize: 12.sp,
+                                                  fontWeight: FontWeight.w600,
+
                                                 ),
                                               ),
                                               TextSpan(
@@ -1126,7 +1135,7 @@ class _TrikalSandhyaMantraState extends State<TrikalSandhyaMantra> {
                                         ),
                                       ),
                                       Positioned(
-                                        bottom: 57.h,
+                                        bottom: 60.h,
                                         child: Row(
                                           children: [
                                             Container(
@@ -1135,7 +1144,7 @@ class _TrikalSandhyaMantraState extends State<TrikalSandhyaMantra> {
                                                 border: Border.all(color: ColorUtils.black),
                                               ),
                                               child: CustomText(
-                                                '@noon',
+                                                '@Noon',
                                                 fontSize: 12.sp,
                                                 color: ColorUtils.black,
                                               ),

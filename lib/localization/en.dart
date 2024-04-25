@@ -1,7 +1,7 @@
 Map<String,String> en= {
 
   "locationSetTxt":"Location not set,click on icon!",
-  "appName": "Agnihotra - A Disease Free Campaign",
+  "appName": "Agnihotra - एक रोग मुक्त अभियान ",
   "guruName": "Gurudev Sri Sri Ravi Shankar",
   "inspiration": "Inspiration:",
   "engTxt":"English",
@@ -61,11 +61,11 @@ Map<String,String> en= {
   "prajapatayeIdem":"prajapataye idem na mama",
   "agnayeSwaha":"agnaye swaha",
   "agnayeIdem":"agnaye idem na mama",
-  "agnihotraMantraTxt":"Agnihotra Mantra",
+  "agnihotraMantraTxt":"Agnihotra",
   "agnihotraPatraText":"Agnihotra Patra Size",
-  "sunriseSunsetMantraTxt":"(sunrise & sunset mantra)",
+  "sunriseSunsetMantraTxt":".... Sunrise & Sunset Mantra....",
   "tilakSandhyaMantraTxt":"Trikal sandhya mantra",
-  "trikalMantraTxt":"Trikal Sandhya Mantra",
+  "trikalMantraTxt":"Trikal Sandhya",
   "mantra24":"24 mantra",
   "timeZonTxt" :"Please confirm timezone\nfor this location",
   "standardTime":"India Standard Time(Asia/Kolkata)",

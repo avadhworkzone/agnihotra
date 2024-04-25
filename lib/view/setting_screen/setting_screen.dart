@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:keep_screen_on/keep_screen_on.dart';
 import 'package:sunrise_app/common_Widget/common_button.dart';
 import 'package:sunrise_app/common_Widget/common_text.dart';
 import 'package:sunrise_app/services/prefServices.dart';
@@ -17,12 +18,22 @@ class SettingsScreen extends StatefulWidget {
   State<SettingsScreen> createState() => _SeetingScreenState();
 }
 
-class _SeetingScreenState extends State<SettingsScreen>{
+class _SeetingScreenState extends State<SettingsScreen> {
 
   SettingScreenController settingScreenController = Get.find<SettingScreenController>();
 
   @override
-  Widget build(BuildContext context){
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    settingScreenController.isScreenOn.value =  PrefServices.getBool('keepScreenOn');
+    if ( settingScreenController.isScreenOn.value) {
+      KeepScreenOn.turnOn();
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       body: Obx(() =>
           Stack(
@@ -101,33 +112,35 @@ class _SeetingScreenState extends State<SettingsScreen>{
                                   ),
                                 ),
                               ),
-
                               SizedBox(
                                 height: 30.h,
                               ),
-
                               SizedBox(
                                 height: 30.h,
                                 child: Row(
                                   children: [
-
                                     CustomText(
                                       StringUtils.screenOnTxt,
                                       color: ColorUtils.orange,
                                       fontSize: 17.sp,
                                       fontWeight: FontWeight.w500,
                                     ),
-
                                     const Spacer(),
-
                                     Transform.scale(
                                       scale: 0.8,
                                       child: Switch(
-                                        value: settingScreenController.on.value,
+                                        value: settingScreenController.isScreenOn.value,
                                         onChanged: (value) {
-                                          //setState(() {
-                                          settingScreenController.toggle();
-                                          // });
+                                          settingScreenController.isScreenOn.value = value;
+                                          PrefServices.setValue('keepScreenOn',  settingScreenController.isScreenOn.value);
+                                          if (settingScreenController.isScreenOn.value) {
+                                            KeepScreenOn.turnOn();
+                                            print('screen is on');
+                                          } else {
+                                            KeepScreenOn.turnOff();
+                                            print('screen is off');
+
+                                          }
                                         },
                                       ),
                                     ),
@@ -224,7 +237,6 @@ class _SeetingScreenState extends State<SettingsScreen>{
                                       child: Switch(
                                         value: settingScreenController.isCountDown.value,
                                         onChanged: (value) {
-                                          print("settingScreenController.isCountDown.value :- ${settingScreenController.isCountDown.value}");
                                           settingScreenController.toggleCountDown(value);
                                         },
                                       ),
@@ -232,7 +244,6 @@ class _SeetingScreenState extends State<SettingsScreen>{
                                   ],
                                 ),
                               ),
-
                               CustomText(
                                 StringUtils.countDownClockTxt,
                                 color: ColorUtils.black,
@@ -254,7 +265,8 @@ class _SeetingScreenState extends State<SettingsScreen>{
                                     Transform.scale(
                                       scale: 0.8,
                                       child: Switch(
-                                        value: settingScreenController.on4.value,
+                                        value: settingScreenController.on4
+                                            .value,
                                         onChanged: (value) {
                                           //  setState(() {
                                           settingScreenController.toggle4();
