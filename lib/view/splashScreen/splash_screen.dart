@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sunrise_app/common_Widget/common_assets.dart';
 import 'package:sunrise_app/services/prefServices.dart';
+import 'package:sunrise_app/utils/image_utils.dart';
 import 'package:sunrise_app/view/sunrise_sunset_screen/sunrise_sunset_screen.dart';
 import 'package:sunrise_app/viewModel/enter_location_controller.dart';
 
@@ -13,6 +14,7 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+
   LocationController locationController = Get.find<LocationController>();
 
   @override
@@ -29,15 +31,9 @@ class _SplashScreenState extends State<SplashScreen> {
   int _currentIndex = 0;
 
   List imageUrl = [
-    "assets/images/splashImage1.svg",
-    "assets/images/splashImage2.svg",
-    // "assets/images/splashImages3.jpg",
-    // "assets/images/splashImages4.jpg",
-    //
-    // "assets/images/splashImages5.jpg",
-    // "assets/images/splashImages6.jpg",
-    // "assets/images/splashImages7.jpg",
-    // "assets/images/splashImages8.jpg",
+    (AssetUtils.splashImage1),
+    (AssetUtils.splashImage2),
+
   ];
 
   Future<void> _loadPreferences() async {

@@ -37,8 +37,7 @@ class LocationController extends GetxController {
   }
 
 
-
-    getCurrentLocation() async {
+  getCurrentLocation() async {
       try {
         // Request permission to access the device's location
         LocationPermission permission = await Geolocator.requestPermission();
@@ -60,7 +59,7 @@ class LocationController extends GetxController {
             position.latitude, position.longitude);
 
         print("currentLat :- $currentLat ,currentLong :- $currentLong");
-        print("Result :- $result");
+
 
         if (result.isNotEmpty) {
           currentAddress =

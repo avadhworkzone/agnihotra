@@ -37,6 +37,7 @@ class StringUtils {
   static const sunriseTxt = 'sunriseTxt';
   static const sunsetTxt = 'sunsetTxt';
   static const playTxt = 'playTxt';
+  static const pauseTxt = 'pauseTxt';
   static const checkTimeTxt = 'checkTimeTxt';
   static const checkDeviceTimeTxt = 'checkDeviceTimeTxt';
   static const screenOnTxt = 'screenOnTxt';

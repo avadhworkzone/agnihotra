@@ -65,7 +65,7 @@ class CommonTextField extends StatelessWidget {
         controller: textEditController,
         // textAlignVertical: textAlignVertical,
 
-        style: TextStyle(
+        style: const TextStyle(
             color: ColorUtils.black,
             fontSize: 15
         ),

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_google_places/flutter_google_places.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:google_api_headers/google_api_headers.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:google_maps_webservice/places.dart';
 import 'package:sunrise_app/common_Widget/common_button.dart';
@@ -15,6 +14,7 @@ import 'package:sunrise_app/viewModel/enter_location_controller.dart';
 import 'package:sunrise_app/viewModel/google_map_controller.dart';
 
 class IntegrateGoogleMap extends StatefulWidget {
+
   double? latitude;
   double? longitude;
   String? address;
@@ -37,7 +37,7 @@ class _IntegrateGoogleMapState extends State<IntegrateGoogleMap> {
   @override
   void initState() {
     super.initState();
-    // WidgetsBinding.instance.addPostFrameCallback((_) {
+
     if (widget.latitude != null && widget.longitude != null) {
       LatLng latLng = LatLng(widget.latitude!, widget.longitude!);
       googleController.onAddMarkerButtonPressed(latLng);
@@ -47,10 +47,9 @@ class _IntegrateGoogleMapState extends State<IntegrateGoogleMap> {
     widget.longitude = locationController.currentLong;
     widget.address = locationController.currentAddress;
 
-    print(
-        "Init widget.longitude ===========>${widget.longitude} ${widget.latitude}");
 
-    // });
+
+
   }
 
   @override
@@ -323,11 +322,5 @@ class _IntegrateGoogleMapState extends State<IntegrateGoogleMap> {
 
   Future<void> displayPredction(
       Prediction p, ScaffoldState? currentState) async {
-    GoogleMapsPlaces places = GoogleMapsPlaces(
-      apiKey: kGoogleApiKey,
-      apiHeaders: await const GoogleApiHeaders().getHeaders(),
-    );
-    PlacesDetailsResponse details =
-        await places.getDetailsByPlaceId(p.placeId!);
   }
 }

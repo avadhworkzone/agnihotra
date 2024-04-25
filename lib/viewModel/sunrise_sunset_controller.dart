@@ -3,13 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:sunrise_app/model/country_timezone_model.dart';
-
 import 'package:sunrise_app/services/prefServices.dart';
-import 'package:sunrise_app/utils/const_utils.dart';
 import 'package:sunrise_app/view/sunrise_sunset_screen/sunrise_sunset_api.dart';
-import 'package:sunrise_app/viewModel/settings_controller.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:weather/weather.dart';
+
 
 class SunriseSunsetController extends GetxController {
 

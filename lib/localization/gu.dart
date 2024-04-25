@@ -27,7 +27,6 @@ Map<String,String> gu = {
   "getStartTxt":"ચાલો, શરુ કરીએ",
   "languageChooseTxt":"તમારી ભાષા પસંદ કરો",
   "languageUseTxt":"તમે ઉપયોગ કરવાનું પસંદ કરો છો તે ભાષા પસંદ કરો",
-  "languageChooseTxt":"તમારી ભાષા પસંદ કરો",
   "submitBtnTxt":"સબમિટ કરો",
   "mantraTxt":"મંત્ર",
   "contactsTxt":"સંપર્કો",

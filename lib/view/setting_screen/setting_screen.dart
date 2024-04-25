@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:sunrise_app/common_Widget/common_button.dart';
 import 'package:sunrise_app/common_Widget/common_text.dart';
+import 'package:sunrise_app/services/prefServices.dart';
 import 'package:sunrise_app/utils/color_utils.dart';
 import 'package:sunrise_app/utils/image_utils.dart';
 import 'package:sunrise_app/utils/string_utils.dart';
@@ -16,12 +17,12 @@ class SettingsScreen extends StatefulWidget {
   State<SettingsScreen> createState() => _SeetingScreenState();
 }
 
-class _SeetingScreenState extends State<SettingsScreen> {
+class _SeetingScreenState extends State<SettingsScreen>{
 
   SettingScreenController settingScreenController = Get.find<SettingScreenController>();
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context){
     return Scaffold(
       body: Obx(() =>
           Stack(
@@ -100,20 +101,25 @@ class _SeetingScreenState extends State<SettingsScreen> {
                                   ),
                                 ),
                               ),
+
                               SizedBox(
                                 height: 30.h,
                               ),
+
                               SizedBox(
                                 height: 30.h,
                                 child: Row(
                                   children: [
+
                                     CustomText(
                                       StringUtils.screenOnTxt,
                                       color: ColorUtils.orange,
                                       fontSize: 17.sp,
                                       fontWeight: FontWeight.w500,
                                     ),
+
                                     const Spacer(),
+
                                     Transform.scale(
                                       scale: 0.8,
                                       child: Switch(
@@ -150,12 +156,10 @@ class _SeetingScreenState extends State<SettingsScreen> {
                                       scale: 0.8,
                                       child: Switch(
                                         value: settingScreenController.is24Hours.value,
-                                        onChanged: (value){
-
+                                        onChanged: (value) {
                                           // setState(() {
-                                          // settingScreenController.toggleTimeFormat(value);
+                                          settingScreenController.toggleTimeFormat(value);
                                           // });
-
                                         },
                                       ),
                                     ),
@@ -202,6 +206,8 @@ class _SeetingScreenState extends State<SettingsScreen> {
                                 fontWeight: FontWeight.w500,
                               ),
                               SizedBox(height: 20.h,),
+
+                              /// Display CountDown
                               SizedBox(
                                 height: 30.h,
                                 child: Row(
@@ -218,6 +224,7 @@ class _SeetingScreenState extends State<SettingsScreen> {
                                       child: Switch(
                                         value: settingScreenController.isCountDown.value,
                                         onChanged: (value) {
+                                          print("settingScreenController.isCountDown.value :- ${settingScreenController.isCountDown.value}");
                                           settingScreenController.toggleCountDown(value);
                                         },
                                       ),
@@ -225,6 +232,7 @@ class _SeetingScreenState extends State<SettingsScreen> {
                                   ],
                                 ),
                               ),
+
                               CustomText(
                                 StringUtils.countDownClockTxt,
                                 color: ColorUtils.black,
@@ -246,8 +254,7 @@ class _SeetingScreenState extends State<SettingsScreen> {
                                     Transform.scale(
                                       scale: 0.8,
                                       child: Switch(
-                                        value: settingScreenController.on4
-                                            .value,
+                                        value: settingScreenController.on4.value,
                                         onChanged: (value) {
                                           //  setState(() {
                                           settingScreenController.toggle4();

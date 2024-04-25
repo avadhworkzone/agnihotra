@@ -5,12 +5,14 @@ import 'package:flutter/material.dart';
 
 
 class AlarmScreen extends StatefulWidget {
+  const AlarmScreen({super.key});
+
   @override
   _AlarmScreenState createState() => _AlarmScreenState();
 }
 
 class _AlarmScreenState extends State<AlarmScreen> {
-  TextEditingController _controller = TextEditingController();
+  final TextEditingController _controller = TextEditingController();
   int _minutesBefore = 5;
 
   @override
