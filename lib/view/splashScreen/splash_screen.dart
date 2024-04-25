@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:sunrise_app/common_Widget/common_assets.dart';
 import 'package:sunrise_app/services/prefServices.dart';
 import 'package:sunrise_app/view/sunrise_sunset_screen/sunrise_sunset_screen.dart';
+import 'package:sunrise_app/viewModel/enter_location_controller.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -12,16 +13,18 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  LocationController locationController = Get.find<LocationController>();
+
 
   @override
   void initState() {
     super.initState();
     _loadPreferences().then((value){
-
+     print('SplSH=====================================>');
       Future.delayed(const Duration(seconds: 3))
           .then((value) => Get.to(SunriseSunetScreen()));
     });
-
+    locationController.getCurrentLocation();
   }
 
 
@@ -32,7 +35,7 @@ class _SplashScreenState extends State<SplashScreen> {
     "assets/images/splashImage2.svg",
     // "assets/images/splashImages3.jpg",
     // "assets/images/splashImages4.jpg",
-    //
+
     // "assets/images/splashImages5.jpg",
     // "assets/images/splashImages6.jpg",
     // "assets/images/splashImages7.jpg",
@@ -42,6 +45,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   Future<void> _loadPreferences() async {
     _currentIndex = PrefServices.getInt('currentIndex');
+
 
     _currentIndex = (_currentIndex + 1);
 
@@ -53,14 +57,16 @@ class _SplashScreenState extends State<SplashScreen> {
     await PrefServices.setValue('currentIndex', index);
   }
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // backgroundColor: Colors.amberAccent,
       body: Center(
         child: LocalAssets(
           imagePath: imageUrl[_currentIndex % imageUrl.length],
           fit: BoxFit.cover,
-          height: Get.height / 2,
+          height: Get.height,
         ),
       ),
     );

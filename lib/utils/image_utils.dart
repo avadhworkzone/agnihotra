@@ -9,8 +9,8 @@ class AssetUtils{
   // IMAGES
   static String backgroundImages = '${imagePath}backgroundImage.png';
   static String mantraImages = '${imagePath}mantra.png';
-  static String sunriseImages = '${imagePath}SunriseImage.png';
-  static String sunsetImages = '${imagePath}SunsetImage.png';
+  static String sunriseImages = '${imagePath}Sunrise_Image.png';
+  static String sunsetImages = '${imagePath}Sunset_Image.png';
   static String contactsImages = '${imagePath}contacts.png';
   static String languageImages = '${imagePath}language.png';
   static String privacyPolicyImages = '${imagePath}privacy_policy.png';

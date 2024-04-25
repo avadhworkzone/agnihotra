@@ -3,11 +3,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:sunrise_app/common_Widget/common_button.dart';
 import 'package:sunrise_app/common_Widget/common_text.dart';
+import 'package:sunrise_app/services/prefServices.dart';
 import 'package:sunrise_app/utils/color_utils.dart';
 import 'package:sunrise_app/utils/image_utils.dart';
 import 'package:sunrise_app/utils/string_utils.dart';
 import 'package:sunrise_app/utils/validation_utils.dart';
 import 'package:sunrise_app/viewModel/enter_location_controller.dart';
+import 'package:sunrise_app/viewModel/settings_controller.dart';
 import '../../common_Widget/common_textfield.dart';
 
 class LocationScreen extends StatefulWidget {
@@ -159,6 +161,7 @@ class _LocationScreenState extends State<LocationScreen> {
                                     end: AlignmentDirectional.bottomEnd,
                                   ),
                                   onTap: () {
+                                    Get.find<SettingScreenController>().toggleCountDown(PrefServices.getBool('isCountDown'));
                                     locationController.getLatLongLocation();
                                   },
                                   title:StringUtils.locationUseTxt,

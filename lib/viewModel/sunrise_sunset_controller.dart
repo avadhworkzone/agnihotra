@@ -13,15 +13,14 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:weather/weather.dart';
 
 class SunriseSunsetController extends GetxController {
-
   WeatherFactory? ws;
   Rx<Weather?> weather = Rx<Weather?>(null);
   RxString currentTime = ''.obs;
 
-
   late Rx<DateTime> selectedDate = DateTime.now().obs;
   String formattedDate = DateFormat("yyyy-MM-dd").format(DateTime.now());
-  final Uri _url = Uri.parse('https://www.freeprivacypolicy.com/live/b55e5ea0-1038-4c24-b269-7359dcad9bb2');
+  final Uri _url = Uri.parse(
+      'https://www.freeprivacypolicy.com/live/b55e5ea0-1038-4c24-b269-7359dcad9bb2');
 
   Future<void> launchUrl() async {
     if (!await launch(_url.toString())) {
@@ -29,12 +28,8 @@ class SunriseSunsetController extends GetxController {
     }
   }
 
-
-
-
   RxString countrySunriseTimeZone = ''.obs;
   RxString countrySunsetTimeZone = ''.obs;
-
 
   RxBool isCountryLoad = false.obs;
   SunriseSunsetModel? sunriseSunsetModel;
@@ -42,11 +37,8 @@ class SunriseSunsetController extends GetxController {
   CountryTimezoneModel? countryTimezoneModel;
   RxString selectedValue = ''.obs;
 
-
   Future<void> selectDate(BuildContext context) async {
-
-
-    if(PrefServices.getString('currentAddress').isNotEmpty){
+    if (PrefServices.getString('currentAddress').isNotEmpty) {
       final DateTime? picked = await showDatePicker(
         context: context,
         initialDate: selectedDate.value,
@@ -62,16 +54,16 @@ class SunriseSunsetController extends GetxController {
             child: child!,
           );
         },
-
-        selectableDayPredicate: (DateTime date){
+        selectableDayPredicate: (DateTime date) {
           return true;
         },
       );
 
-      if (picked != null && picked != selectedDate.value ){
+      if (picked != null && picked != selectedDate.value) {
         selectedDate.value = picked;
 
-        String formatDate = DateFormat('dd MMMM yyyy').format(selectedDate.value);
+        String formatDate =
+            DateFormat('dd MMMM yyyy').format(selectedDate.value);
 
         DateFormat inputFormat = DateFormat("dd MMMM yyyy");
         DateTime date = inputFormat.parse(formatDate);
@@ -87,72 +79,43 @@ class SunriseSunsetController extends GetxController {
             PrefServices.getDouble('currentLong'),
             formattedDate,
             PrefServices.getString('countryName'));
-
-
       }
     }
-
-
   }
 
-
-
-
-  void updateTime() {
-    String formattedTime = DateFormat('HH:mm:ss').format(DateTime.now());
-    DateTime time = DateFormat.Hms().parse(formattedTime);
-    currentTime.value = DateFormat.jms().format(time);
-  }
-
-
-
-
-
-
-
-
-
-  Future<void> countryTimeZone(double latitude, double longitude,String date,String countryTimeZone) async {
-
+  Future<void> countryTimeZone(double latitude, double longitude, String date,
+      String countryTimeZone) async {
     isCountryLoad.value = true;
-    countryTimezoneModel = await SunriseSunsetApi.getDifferentCountryTime(latitude, longitude,date,countryTimeZone);
+    countryTimezoneModel = await SunriseSunsetApi.getDifferentCountryTime(
+        latitude, longitude, date, countryTimeZone);
 
     countrySunriseTimeZone.value = countryTimezoneModel!.results?.sunrise ?? '';
     countrySunsetTimeZone.value = countryTimezoneModel?.results?.sunset ?? '';
 
-    PrefServices.setValue('countrySunriseTimeZone', countrySunriseTimeZone.value);
+    PrefServices.setValue(
+        'countrySunriseTimeZone', countrySunriseTimeZone.value);
     PrefServices.setValue('countrySunsetTimeZone', countrySunsetTimeZone.value);
 
     print("countrySunriseTimeZone Value :- ${countrySunriseTimeZone.value}");
     print("countrySunsetTimeZone Value :- ${countrySunsetTimeZone.value}");
     isCountryLoad.value = false;
     update();
-
   }
 
-
-
-
-
-  Future<void> clearSunriseSunsetData() async {
-
-    await PrefServices.removeValue('sunrise');
-    await PrefServices.removeValue('sunset');
-  }
-
-  late RxBool isCountdownOn = false.obs;
-  late RxString countdownTime = ''.obs;
-  Rx<Duration> difference = Rx<Duration>(Duration.zero);
-
-  DateTime parseTime(String timeStr) {
-    // Create a DateTimeFormatter with the expected time format
-    DateFormat formatter = DateFormat("hh:mm:ss a");
-    print('=======>${timeStr}');
-    // if(timeStr.isEmpty){
-    //   return DateTime.now();
-    // }
-    // Parse the time string into a DateTime object
-    return formatter.parse(timeStr);
-  }
-
+  // RxBool is24HourFormat = false.obs;
+  // String formatTime(String time, bool is24Hour) {
+  //   if (is24Hour) {
+  //     // Convert to 24-hour format
+  //     DateTime parsedTime = DateFormat('hh:mm:ss a').parse(time);
+  //     return DateFormat('HH:mm:ss').format(parsedTime);
+  //   } else {
+  //     // Convert to 12-hour format
+  //     DateTime parsedTime = DateFormat('HH:mm:ss').parse(time);
+  //     return DateFormat('hh:mm:ss a').format(parsedTime);
+  //   }
+  // }
+  //
+  // void toggleFormat() {
+  //   is24HourFormat.value = !is24HourFormat.value;
+  // }
 }

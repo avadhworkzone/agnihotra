@@ -14,8 +14,10 @@ class AgnihotraMantraController extends GetxController{
      if (sunriseAudio.playing) {
        await sunriseAudio.stop();
      } else {
-       await sunriseAudio.setAsset(AssetUtils.sunriseMantraAudio);
+
+        sunriseAudio.setAsset(AssetUtils.sunriseMantraAudio);
        await sunriseAudio.play();
+
        sunriseAudio.setLoopMode(LoopMode.one);
      }
    } catch (e) {
@@ -26,9 +28,13 @@ class AgnihotraMantraController extends GetxController{
    try {
      if (sunsetAudio.playing) {
        await sunsetAudio.stop();
-     } else {
-       await sunsetAudio.setAsset(AssetUtils.sunsetMantraAudio);
+     }
+     else{
+
+
+       sunsetAudio.setAsset(AssetUtils.sunsetMantraAudio);
        await sunsetAudio.play();
+
        sunsetAudio.setLoopMode(LoopMode.one);
      }
    } catch (e) {

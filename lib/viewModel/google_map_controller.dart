@@ -6,6 +6,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geocoding/geocoding.dart';
+import 'package:intl/intl.dart';
 import 'package:sunrise_app/common_Widget/common_button.dart';
 import 'package:sunrise_app/common_Widget/common_text.dart';
 import 'package:sunrise_app/services/prefServices.dart';
@@ -16,9 +17,9 @@ import 'package:sunrise_app/view/sunrise_sunset_screen/sunrise_sunset_screen.dar
 import 'package:sunrise_app/viewModel/settings_controller.dart';
 
 class GoogleController extends GetxController {
-
- SettingScreenController settingScreenController = Get.find<SettingScreenController>();
+  
   final TextEditingController searchController = TextEditingController();
+  SettingScreenController settingScreenController = Get.find<SettingScreenController>();
   final Completer<GoogleMapController> _controller = Completer();
   GoogleMapController? mapController;
   final RxSet<Marker> markers = <Marker>{}.obs;
@@ -340,6 +341,8 @@ class GoogleController extends GetxController {
                     ),
                     onTap: (){
                       Get.back();
+                      settingScreenController.toggleCountDown(PrefServices.getBool('isCountDown'));
+
                     },
                     title: StringUtils.confirmTxt,
                     fontSize: 15.sp,

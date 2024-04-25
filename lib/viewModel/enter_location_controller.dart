@@ -8,9 +8,11 @@ import 'package:sunrise_app/services/prefServices.dart';
 import 'package:sunrise_app/view/google_map_screen/integrate_google_map.dart';
 import 'package:sunrise_app/view/sunrise_sunset_screen/sunrise_sunset_screen.dart';
 import 'package:sunrise_app/viewModel/google_map_controller.dart';
+import 'package:sunrise_app/viewModel/settings_controller.dart';
 
 class LocationController extends GetxController {
   GoogleController googleController = Get.find<GoogleController>();
+  GoogleMapController? mapController;
   TextEditingController latitudeController = TextEditingController();
   TextEditingController longitudeController = TextEditingController();
   final validationFormKey = GlobalKey<FormState>();
@@ -34,70 +36,49 @@ class LocationController extends GetxController {
   }
 
 
-  checkPermission()async{
-
-    bool serviceEnabled;
-    LocationPermission permission;
-
-    serviceEnabled=await Geolocator.isLocationServiceEnabled();
-
-    print(serviceEnabled);
-
-    if (!serviceEnabled){
-      await Geolocator.openLocationSettings();
-      return ;
-    }
 
 
-    permission=await Geolocator.checkPermission();
-
-    print(permission);
-
-    if (permission==LocationPermission.denied){
-
-      permission=await Geolocator.requestPermission();
-
-      if (permission==LocationPermission.denied){
-        Fluttertoast.showToast(msg: 'Request Denied !');
-        return ;
+  getCurrentLocation() async {
+    try {
+      // Request permission to access the device's location
+      LocationPermission permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        // Handle case when location permission is denied
+        return;
       }
 
-    }
+      Position position = await Geolocator.getCurrentPosition(
+          desiredAccuracy: LocationAccuracy.high);
 
-    if(permission==LocationPermission.deniedForever){
-      Fluttertoast.showToast(msg: 'Denied Forever !');
-      return ;
-    }
-
-    getLocation();
-
-  }
-
-  getLocation()async{
-
-
-
-    try{
-
-      Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
-
-      coordinates='Latitude : ${position.latitude} \nLongitude : ${position.longitude}';
+      coordinates =
+      'Latitude : ${position.latitude} \nLongitude : ${position.longitude}';
       print("coordinates :- $coordinates");
       currentLat = position.latitude;
       currentLong = position.longitude;
 
-      List<Placemark> result  = await placemarkFromCoordinates(position.latitude, position.longitude);
+      List<Placemark> result = await placemarkFromCoordinates(
+          position.latitude, position.longitude);
 
-      if (result.isNotEmpty){
-        currentAddress ='${result[0].name}, ${result[0].locality} ${result[0].administrativeArea}';
+      print("currentLat :- $currentLat ,currentLong :- $currentLong");
+      print("Result :- $result");
+
+      if (result.isNotEmpty) {
+        currentAddress =
+        '${result[0].street},${result[0].name},${result[0]
+            .locality},${result[0].administrativeArea} ${result[0]
+            .postalCode} ,${result[0].country}';
       }
 
-
-    }catch(e){
-      Fluttertoast.showToast(msg:"${e.toString()}");
+      if (currentAddress != '' && mapController != null) {
+        mapController!.animateCamera(CameraUpdate.newLatLngZoom(
+          LatLng(currentLat, currentLong),
+          15.0,
+        ));
+      }
     }
-
-
+    catch (e) {
+      Fluttertoast.showToast(msg: e.toString());
+    }
   }
 
 
@@ -135,11 +116,14 @@ class LocationController extends GetxController {
         PrefServices.setValue('locationList', googleController.locationList);
         print("Manually Add===> ${address.value}");
 
-        PrefServices.setValue('currentAddress',address.value);
-        PrefServices.setValue('currentLat',latitude.value);
-        PrefServices.setValue('currentLong',longitude.value);
+        await PrefServices.setValue('currentAddress',address.value);
+        await PrefServices.setValue('currentLat',latitude.value);
+        await PrefServices.setValue('currentLong',longitude.value);
 
+        // Get.find<SettingScreenController>().toggleCountDown(PrefServices.getBool('isCountDown'));
 
+        // 21.2393701 72.8804077
+        // 16.900460 100.7746031
 
         Get.offAll(
           SunriseSunetScreen(

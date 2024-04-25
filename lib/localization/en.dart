@@ -1,9 +1,6 @@
 Map<String,String> en= {
 
   "locationSetTxt":"Location not set,click on icon!",
-  "appName": "Agnihotra - एक रोग मुक्त अभियान ",
-  "guruName": "Gurudev Sri Sri Ravi Shankar",
-  "inspiration": "Inspiration:",
   "engTxt":"English",
   "gujTxt":"Gujarati",
   "hinTxt":"Hindi",
@@ -59,11 +56,11 @@ Map<String,String> en= {
   "prajapatayeIdem":"prajapataye idem na mama",
   "agnayeSwaha":"agnaye swaha",
   "agnayeIdem":"agnaye idem na mama",
-  "agnihotraMantraTxt":"Agnihotra Mantra",
+  "agnihotraMantraTxt":"Agnihotra",
   "agnihotraPatraText":"Agnihotra Patra Size",
-  "sunriseSunsetMantraTxt":"(sunrise & sunset mantra)",
+  "sunriseSunsetMantraTxt":".... Sunrise & Sunset Mantra....",
   "tilakSandhyaMantraTxt":"Trikal sandhya mantra",
-  "trikalMantraTxt":"Trikal Sandhya Mantra",
+  "trikalMantraTxt":"Trikal Sandhya",
   "mantra24":"24 mantra",
   "timeZonTxt" :"Please confirm timesone\nfor this location",
   "standardTime":"India Standard Time(Asia/Kolkata)",
@@ -115,15 +112,15 @@ Map<String,String> en= {
   "anumatveText":"ॐ अनुमतेन्वमंस्ताः ॥ \n(pronounce as : अनुमतेन्वमग्गुस्ताः)",
   "sarswateProText":"ॐ सरस्वतेन्वमंस्ताः ||\n(pronounce as  : सरस्वतेन्वमग्गुस्ताः)",
   "applyText":"(Apply Ashes)",
-  "meghaviText":"मेधावी भूयासम्\t  On fore head(third eye)",
-  "tejasviText":"तेजस्वी भूयासम् \t  On Chest (Heart region)",
-  "varchsviText":"वर्चस्वी भूयासम् \t  Right Shoulder",
-  "brhamsviText":"ब्रह्मवर्चस्वी भूयासम\t Left Shoulder",
-  "ayushyaText":"आयुष्यमान् भूयासम्\t Navel Region",
-  "annadoText":"अन्नादो भूयासम्\t On Throat",
-  "swstiText":"स्वस्ति भूयासम्\t Top of the head",
+  "meghaviText":"मेधावी भूयासम्\tOn fore head(third eye)",
+  "tejasviText":"तेजस्वी भूयासम् \tOn Chest (Heart region)",
+  "varchsviText":"वर्चस्वी भूयासम् \tRight Shoulder",
+  "brhamsviText":"ब्रह्मवर्चस्वी भूयासम\tLeft Shoulder",
+  "ayushyaText":"आयुष्यमान् भूयासम्\tNavel Region",
+  "annadoText":"अन्नादो भूयासम्\tOn Throat",
+  "swstiText":"स्वस्ति भूयासम्\tTop of the head",
   "settingsScreenTxt":"Settings",
-  "deleteAllLocation":"Are you sure you wish to delete all\nlocations ?",
+
   "processedTxt":"PROCEED",
 
 
@@ -131,12 +128,15 @@ Map<String,String> en= {
 
   " countDownClockTxt":"display countdown or clock in center",
 
-  "confirmTimeZone" : "Confirm Timezone for your location",
-  "yesTxt" : "YES",
-  "timingDownload" : "Please wait,\ntiming are being downloaded.",
+
 
   "proceedTxt":"PROCEED",
-  "indiaStdTime":"India Standard Time"
+  "indiaStdTime":"India Standard Time",
+  "appName": "Agnihotra - A Disease Free Campaign",
+  "inspiration": "Inspiration:",
+  "guruName": "Gurudev Sri Sri Ravi Shankar"
+
+
 
 
 };

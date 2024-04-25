@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:keep_screen_on/keep_screen_on.dart';
 import 'package:sunrise_app/common_Widget/common_button.dart';
 import 'package:sunrise_app/common_Widget/common_text.dart';
+import 'package:sunrise_app/services/prefServices.dart';
 import 'package:sunrise_app/utils/color_utils.dart';
 import 'package:sunrise_app/utils/image_utils.dart';
 import 'package:sunrise_app/utils/string_utils.dart';
@@ -18,8 +20,17 @@ class SettingsScreen extends StatefulWidget {
 
 class _SeetingScreenState extends State<SettingsScreen> {
 
-  SettingScreenController settingScreenController = Get.find<
-      SettingScreenController>();
+  SettingScreenController settingScreenController = Get.find<SettingScreenController>();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    settingScreenController.isScreenOn.value =  PrefServices.getBool('keepScreenOn');
+    if ( settingScreenController.isScreenOn.value) {
+      KeepScreenOn.turnOn();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -118,11 +129,18 @@ class _SeetingScreenState extends State<SettingsScreen> {
                                     Transform.scale(
                                       scale: 0.8,
                                       child: Switch(
-                                        value: settingScreenController.on.value,
+                                        value: settingScreenController.isScreenOn.value,
                                         onChanged: (value) {
-                                          //setState(() {
-                                          settingScreenController.toggle();
-                                          // });
+                                          settingScreenController.isScreenOn.value = value;
+                                          PrefServices.setValue('keepScreenOn',  settingScreenController.isScreenOn.value);
+                                          if (settingScreenController.isScreenOn.value) {
+                                            KeepScreenOn.turnOn();
+                                            print('screen is on');
+                                          } else {
+                                            KeepScreenOn.turnOff();
+                                            print('screen is off');
+
+                                          }
                                         },
                                       ),
                                     ),

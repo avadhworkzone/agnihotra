@@ -55,11 +55,11 @@ Map<String,String> hi = {
   "prajapatayeIdem":"प्रजापतये इदेम् न मम",
   "agnayeSwaha":"अग्नये स्वाहा",
   "agnayeIdem":"अग्नये इदं न मम",
-  "agnihotraMantraTxt":"अग्निहोत्र मंत्र",
-  "sunriseSunsetMantraTxt":"(सूर्योदय एवं सूर्यास्त मंत्र)",
+  "agnihotraMantraTxt":"।। अग्निहोत्र।।",
+  "sunriseSunsetMantraTxt":".... सूर्योदय और सूर्यास्त मंत्र....",
   "tilakSandhyaMantraTxt":"त्रिकाल संध्या मंत्र",
   "agnihotraPatraText": "अग्निहोत्र पात्र का आकार",
-  "trikalMantraTxt":"त्रिकाल संध्या मंत्र",
+  "trikalMantraTxt":"।। त्रिकाल संध्या ll",
   "mantra24":"24 मंत्र",
   "timeZonTxt":"कृपया इस स्थान के लिए\nटाइमवन की पुष्टि करें",
   "standardTime":"भारतीय मानक समय(एशिया/कोलकाता)",
@@ -115,6 +115,10 @@ Map<String,String> hi = {
   "swstiText":"स्वस्ति भूयासम्\t सिर के ऊपर",
   "settingsScreenTxt":"समायोजन",
   "deleteAllLocation":"क्या आप वाकई सभी\nस्थानों को हटाना चाहते हैं?",
-  "proceedTxt":"आगे बढ़ो"
+  "proceedTxt":"आगे बढ़ो",
+  "appName": "अग्निहोत्र - एक रोग मुक्त अभियान",
+  "inspiration": "प्रेरणा:",
+  "guruName": "गुरुदेव श्री श्री रविशंकर"
+
 
 };

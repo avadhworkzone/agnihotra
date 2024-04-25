@@ -9,6 +9,7 @@ import 'package:sunrise_app/utils/color_utils.dart';
 import 'package:sunrise_app/utils/image_utils.dart';
 import 'package:sunrise_app/utils/string_utils.dart';
 import 'package:sunrise_app/view/sunrise_sunset_screen/sunrise_sunset_screen.dart';
+import 'package:sunrise_app/viewModel/enter_location_controller.dart';
 
 class WelcomeScreen extends StatefulWidget {
   const WelcomeScreen({Key? key}) : super(key: key);
@@ -18,7 +19,16 @@ class WelcomeScreen extends StatefulWidget {
 }
 
 class _WelcomeScreenState extends State<WelcomeScreen> {
+  LocationController locationController = Get.find<LocationController>();
   String selectedValue = '';
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    print('Welcome=====================================>');
+    locationController.getCurrentLocation();
+  }
 
   @override
   Widget build(BuildContext context) {
