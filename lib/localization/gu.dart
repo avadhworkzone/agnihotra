@@ -4,9 +4,6 @@ Map<String,String> gu = {
   "engTxt":"અંગ્રેજી",
   "gujTxt":"ગુજરાતી",
   "hinTxt":"હિન્દી",
-  "inspiration": "પ્રેરણા:",
-  "appName": "અગ્નિહોત્ર - એક રોગ મુક્ત અભિયાન",
-  "guruName": "ગુરુદેવ શ્રી શ્રી રવિશંકર",
   "usgMapTxt" :"ગૂગલ મેપ્સનો ઉપયોગ કરો",
   "usgManuallyTxt":"મેન્યુઅલી દાખલ કરો",
   "manuallyEntryTxt":"મેન્યુઅલી એન્ટ્રી",
@@ -19,14 +16,22 @@ Map<String,String> gu = {
   "longTxt":"રેખાંશ:",
   "selectTxt":"પસંદ કરો",
   "mapTxt":"નકશો",
+
   "mapViewTxt":"નકશો જુઓ",
   "satelliteTxt":"ઉપગ્રહ",
   "searchTxt":"સ્થાન શોધો",
   "searchBtnTxt" : "શોધો",
   "welcomeTxt":"સ્વાગત છે",
+  /// Add Today
+  "alertTxt":'ચેતવણી !',
+  "resetMsg":'રીસેટ પૂર્ણ',
+  "resetButtonNotice":"\tતમે એપને રીસેટ કરવા જઈ રહ્યાં છો જે તમામ સ્થાન સમય અને પસંદગીને કાઢી નાખશે. રીસેટ કર્યા પછી તમે નવું સ્થાન ઉમેરવા માટે સમર્થ હશો. આ વિકલ્પનો ઉપયોગ ફક્ત ડેટા ભ્રષ્ટાચાર અથવા ભૂલના કિસ્સામાં કરો.",
+  "ringAlarmTxt":"રીંગ એલાર્મ મુ",
+  /// Add Today
   "getStartTxt":"ચાલો, શરુ કરીએ",
   "languageChooseTxt":"તમારી ભાષા પસંદ કરો",
   "languageUseTxt":"તમે ઉપયોગ કરવાનું પસંદ કરો છો તે ભાષા પસંદ કરો",
+
   "submitBtnTxt":"સબમિટ કરો",
   "mantraTxt":"મંત્ર",
   "contactsTxt":"સંપર્કો",

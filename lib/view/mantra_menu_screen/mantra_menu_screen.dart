@@ -22,6 +22,7 @@ class _MantraMenuScreenState extends State<MantraMenuScreen> {
     return Scaffold(
       body: Stack(
         children: [
+
           Container(
             decoration: BoxDecoration(
               image: DecorationImage(
@@ -32,13 +33,15 @@ class _MantraMenuScreenState extends State<MantraMenuScreen> {
               ),
             ),
           ),
+
           SafeArea(
             child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 14.w),
+              padding: EdgeInsets.symmetric(horizontal: 15.w),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+
                   CircleAvatar(
                     backgroundColor: ColorUtils.white,
                     radius: 20.r,
@@ -52,152 +55,86 @@ class _MantraMenuScreenState extends State<MantraMenuScreen> {
                       ),
                     ),
                   ),
+
                   SizedBox(
                     height: 30.h,
                   ),
 
                   /// Agnihotra Mantra
-                  Stack(
-                      alignment: Alignment.topRight,
-                      children: [
-                    GestureDetector(
-                      onTap: () {
-                        Get.to(const MantraScreen());
+                  GestureDetector(
+                    onTap: () {
+                      Get.to(const MantraScreen());
+                    },
+                    child: Stack(
+                        alignment: Alignment.topRight, children: [
 
-                      },
-                      child: SizedBox(
-                        height: 180.57.h,
+                      SizedBox(
+                        height: 183.57.h,
+                        width: Get.width,
                         child: LocalAssets(
                           imagePath: AssetUtils.agnihotraMantraImages,
-                         fit: BoxFit.fill,
+                          fit: BoxFit.fill,
                         ),
                       ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(top: 10.h, right: 8.w),
-                      child:
-                      Column(
-                        children: [
-                                    CustomText(
-                                      StringUtils.agnihotraMantraTxt,
-                                      color: ColorUtils.black,
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 13.sp,
-                                    ),
-                                    CustomText(
-                                      StringUtils.sunriseSunsetMantraTxt,
-                                      color: ColorUtils.black,
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 13.sp,
-                                    )
-                        ],
-                      ),
-                      // Container(
-                      //   height: 37.h,
-                      //   width: 190.w,
-                      //   decoration: BoxDecoration(
-                      //       boxShadow: [
-                      //         BoxShadow(
-                      //             color: ColorUtils.black00.withOpacity(0.25),
-                      //             blurRadius: 4.r,
-                      //             offset: const Offset(0, 4)),
-                      //       ],
-                      //       color: ColorUtils.white,
-                      //       borderRadius: BorderRadius.circular(23.r)),
-                      //   child: Row(
-                      //     mainAxisAlignment: MainAxisAlignment.center,
-                      //     children: [
-                      //       SizedBox(
-                      //         width: 28.w,
-                      //       ),
-                      //       Column(
-                      //         mainAxisSize: MainAxisSize.min,
-                      //         crossAxisAlignment: CrossAxisAlignment.start,
-                      //         mainAxisAlignment: MainAxisAlignment.center,
-                      //         children: [
-                      //           CustomText(
-                      //             StringUtils.agnihotraMantraTxt,
-                      //             color: ColorUtils.black,
-                      //             fontWeight: FontWeight.w600,
-                      //             fontSize: 13.sp,
-                      //           ),
-                      //           CustomText(
-                      //             StringUtils.sunriseSunsetMantraTxt,
-                      //             color: ColorUtils.grey73,
-                      //             fontWeight: FontWeight.w500,
-                      //             fontSize: 10.sp,
-                      //           )
-                      //         ],
-                      //       ),
-                      //       const Spacer(),
-                      //       Container(
-                      //         height: 25.h,
-                      //         width: 25.h,
-                      //         decoration: BoxDecoration(
-                      //           gradient: const LinearGradient(
-                      //             colors: [
-                      //               ColorUtils.orangeCB,
-                      //               ColorUtils.orangeFD
-                      //             ],
-                      //
-                      //             begin: Alignment.topRight,
-                      //
-                      //             end: Alignment
-                      //                 .bottomLeft, // Ending point of the gradient
-                      //           ),
-                      //           borderRadius: BorderRadius.circular(25.r),
-                      //         ),
-                      //         child: const Center(
-                      //           child: Icon(
-                      //             Icons.arrow_forward_ios_outlined,
-                      //             color: ColorUtils.white,
-                      //             size: 15,
-                      //           ),
-                      //         ),
-                      //       ),
-                      //       SizedBox(
-                      //         width: 3.w,
-                      //       ),
-                      //     ],
-                      //   ),
-                      // ),
-                    )
-                  ]),
+
+                      Padding(
+                        padding: EdgeInsets.only(top: 10.h, right: 8.w),
+                        child: Column(
+                          children: [
+                            CustomText(
+                              StringUtils.agnihotraMantraTxt,
+                              color: ColorUtils.black,
+                              fontWeight: FontWeight.w600,
+                              fontSize: 13.sp,
+                            ),
+                            CustomText(
+                              StringUtils.sunriseSunsetMantraTxt,
+                              color: ColorUtils.black,
+                              fontWeight: FontWeight.w600,
+                              fontSize: 13.sp,
+                            )
+                          ],
+                        ),
+
+                      )
+
+                    ]),
+                  ),
+
                   SizedBox(
                     height: 16.h,
                   ),
-                  Stack(
-                      alignment: Alignment.topRight,
-                      children: [
-                    GestureDetector(
-                      onTap: () {
-                        Get.to(const TrikalSandhyaMantra());
 
-                      },
-                      child: SizedBox(
-                        height: 180.57.h,
+                  /// Trikal Sandhya
+                  GestureDetector(
+                    onTap: () {
+                      Get.to(const TrikalSandhyaMantra());
+                    },
+                    child: Stack(alignment: Alignment.topRight, children: [
+                      SizedBox(
+                        height: 187.57.h,
                         child: LocalAssets(
-                            imagePath: AssetUtils.trikalSandhyaImages,
+                          imagePath: AssetUtils.trikalSandhyaImages,
                           fit: BoxFit.fill,
-
+                          width: Get.width,
                         ),
                       ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(top: 10.h, right: 50.w),
-                      child: Column(
-                        children: [
-                          CustomText(
-                            StringUtils.trikalMantraTxt,
-                            color: ColorUtils.black,
-                            fontWeight: FontWeight.w600,
-                            fontSize: 13.sp,
-                          ),
+                      Padding(
+                        padding: EdgeInsets.only(top: 10.h, right: 50.w),
+                        child: Column(
+                          children: [
+                            CustomText(
+                              StringUtils.trikalMantraTxt,
+                              color: ColorUtils.black,
+                              fontWeight: FontWeight.w600,
+                              fontSize: 13.sp,
+                            ),
+                          ],
+                        ),
+                      )
+                    ]),
+                  ),
 
-                        ],
-                      ),
-                    )
-                  ]),
                 ],
               ),
             ),

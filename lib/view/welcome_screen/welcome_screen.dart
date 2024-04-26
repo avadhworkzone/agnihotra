@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:keep_screen_on/keep_screen_on.dart';
 import 'package:sunrise_app/common_Widget/common_button.dart';
 import 'package:sunrise_app/common_Widget/common_text.dart';
 import 'package:sunrise_app/services/prefServices.dart';
@@ -9,6 +10,8 @@ import 'package:sunrise_app/utils/color_utils.dart';
 import 'package:sunrise_app/utils/image_utils.dart';
 import 'package:sunrise_app/utils/string_utils.dart';
 import 'package:sunrise_app/view/sunrise_sunset_screen/sunrise_sunset_screen.dart';
+import 'package:sunrise_app/viewModel/enter_location_controller.dart';
+import 'package:sunrise_app/viewModel/settings_controller.dart';
 
 class WelcomeScreen extends StatefulWidget {
   const WelcomeScreen({Key? key}) : super(key: key);
@@ -19,12 +22,19 @@ class WelcomeScreen extends StatefulWidget {
 
 class _WelcomeScreenState extends State<WelcomeScreen> {
   String selectedValue = '';
+
   LocationController locationController = Get.find<LocationController>();
+  SettingScreenController settingScreenController =   Get.find<SettingScreenController>();
+
 
   @override
   void initState() {
     locationController.getCurrentLocation();
-
+    settingScreenController.isScreenOn.value = PrefServices.getBool('keepScreenOn');
+    print("settingScreenController.isScreenOn.value :- ${settingScreenController.isScreenOn.value}");
+    if (settingScreenController.isScreenOn.value){
+      KeepScreenOn.turnOn();
+    }
     super.initState();
   }
 

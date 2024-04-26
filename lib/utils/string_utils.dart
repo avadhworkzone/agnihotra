@@ -94,8 +94,15 @@ class StringUtils {
   static const confirmTxt = 'confirmTxt';
   static const renameLocationBtnTxt = 'renameLocationBtnTxt';
   static const renameLocationTxt = 'renameLocationTxt';
+
   static const deleteLocationBtnTxt = 'deleteLocationBtnTxt';
   static const enterLocationTxt = 'enterLocationTxt';
+  /// Add Today
+  static const alertTxt = 'alertTxt';
+  static const resetMsg = 'resetMsg';
+  static const resetButtonNotice = 'resetButtonNotice';
+  static const ringAlarmTxt = 'ringAlarmTxt';
+  /// Add Today
   static const cancleTxt = 'cancleTxt';
   static const noTxt = 'noTxt';
   static const yesTxt = 'yesTxt';

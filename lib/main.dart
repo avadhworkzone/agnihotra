@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:sunrise_app/localization/translations.dart';
 import 'package:sunrise_app/services/prefServices.dart';
+import 'package:sunrise_app/time_picker_demo.dart';
 import 'package:sunrise_app/view/welcome_screen/welcome_screen.dart';
 import 'package:sunrise_app/viewModel/agnihotra_mantra_controller.dart';
 import 'package:sunrise_app/viewModel/enter_location_controller.dart';
@@ -34,7 +35,7 @@ class MyApp extends StatelessWidget {
             ? "en_US"
             : PrefServices.getString('language')),
         fallbackLocale: const Locale('en_US'),
-        // home: const MeditionBellDemo(),
+        // home: const ShowTimePickerApp(),
         home: PrefServices.getString('language').isEmpty
             ? const WelcomeScreen()
             : const SplashScreen(),
@@ -49,6 +50,6 @@ class MyApp extends StatelessWidget {
       Get.put(SettingScreenController());
   GoogleController googleController = Get.put(GoogleController());
   LocationController locationController = Get.put(LocationController());
-
   AgnihotraMantraController agnihotraMantraController =  Get.put(AgnihotraMantraController());
+
 }

@@ -16,6 +16,7 @@ class SunriseSunsetController extends GetxController {
   RxString currentTime = ''.obs;
 
 
+
   late Rx<DateTime> selectedDate = DateTime.now().obs;
   String formattedDate = DateFormat("yyyy-MM-dd").format(DateTime.now());
   final Uri _url = Uri.parse('https://www.freeprivacypolicy.com/live/b55e5ea0-1038-4c24-b269-7359dcad9bb2');
@@ -25,6 +26,7 @@ class SunriseSunsetController extends GetxController {
       throw 'Could not launch $_url';
     }
   }
+
 
 
 

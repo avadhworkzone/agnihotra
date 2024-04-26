@@ -61,7 +61,7 @@ dependencies:
 
 
   audioplayers: ^5.2.1
-  just_audio:
+
   android_alarm_manager_plus: ^3.0.3
 
 

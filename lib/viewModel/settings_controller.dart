@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:sunrise_app/services/prefServices.dart';
@@ -15,7 +17,9 @@ class SettingScreenController extends GetxController{
   void toggle2() => on2.value = on2.value ? false : true;
 
   RxBool on4 = false.obs;
-  void toggle4() => on4.value = on4.value ? false : true;
+  void toggle4(){
+    on4.value = on4.value ? false : true;
+  }
 
   RxBool isCountDown = false.obs;
   Rx<Duration> difference = Rx<Duration>(Duration.zero);
@@ -26,8 +30,7 @@ class SettingScreenController extends GetxController{
   RxString countDownValue = ''.obs;
 
   @override
-  void onInit() {
-    // TODO: implement onInit
+  void onInit(){
     super.onInit();
     updateTime();
     onCountDown();

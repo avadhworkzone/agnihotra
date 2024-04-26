@@ -2,12 +2,9 @@ Map<String,String> hi = {
 
   "locationSetTxt":"स्थान निर्धारित नहीं है, आइकन पर क्लिक करें!",
   "engTxt":"अंग्रेज़ी",
-  "appName": "अग्निहोत्र - एक रोग मुक्त अभियान",
   "gujTxt":"गुजराती",
   "hinTxt":"हिंदी",
-  "inspiration": "प्रेरणा:",
-  "guruName": "गुरुदेव श्री श्री रविशंकर",
-  "usgMapTxt" :"गूगल मानचित्र का उपयोग करें",
+  "usgMapTxt" :"गूगल मेप का उपयोग करे",
   "usgManuallyTxt":"मैन्युअल रूप से दर्ज़ करें",
   "manuallyEntryTxt":"मैन्युअल रूप से प्रवेश",
   "stdConveLocationTxt":"मानक परंपराओं का उपयोग करके नीचे डिग्री में स्थान दर्ज करें",
@@ -28,7 +25,6 @@ Map<String,String> hi = {
   "languageUseTxt":"वह भाषा चुनें जिसका आप उपयोग करना पसंद करते हैं",
   "submitBtnTxt":"जमा करना",
   "mantraTxt":"मंत्र",
-  "SettingsScreenTxt":"समायोजन",
   "contactsTxt":"संपर्क",
   "languageTxt":"भाषा",
   "aboutTxt":"के बारे में",
@@ -36,6 +32,12 @@ Map<String,String> hi = {
   "shareTxt":"शेयर करना",
   "helpTxt":"मदद",
   "sunriseTxt":"सूर्योदय मंत्र",
+  /// Add Today
+  "alertTxt":'चेतावनी !',
+  "resetButtonNotice":'\tआप ऐप को रीसेट करने वाले हैं जो सभी स्थान समय और वरीयताएँ हटा देगा। आप रीसेट के बाद नया स्थान जोड़ने में सक्षम होंगे। डेटा भ्रष्टाचार या त्रुटि के मामले में केवल इस विकल्प का उपयोग करें।',
+  "resetMsg":'रीसेट पूर्ण',
+  "ringAlarmTxt":"पर अलार्म बजाओ",
+  /// Add Today
   "sunsetTxt":"सूर्यास्त मंत्र",
   "playTxt":"इसे खेलने",
   "checkTimeTxt":"समय की जांच करें",
@@ -65,7 +67,7 @@ Map<String,String> hi = {
   "agnihotraPatraText": "अग्निहोत्र पात्र का आकार",
   "trikalMantraTxt":"।। त्रिकाल संध्या ll",
   "mantra24":"24 मंत्र",
-  "timeZonTxt":"कृपया इस स्थान के लिए टाइमवन की पुष्टि करें",
+  "timeZonTxt":"कृपया इस स्थान के लिए\nटाइमवन की पुष्टि करें",
   "standardTime":"भारतीय मानक समय(एशिया/कोलकाता)",
   "changeTimeTxt" : "समयक्षेत्र बदलें",
   "confirmTxt":"पुष्टि करना",
@@ -123,8 +125,6 @@ Map<String,String> hi = {
   "appName": "अग्निहोत्र - एक रोग मुक्त अभियान",
   "inspiration": "प्रेरणा:",
   "guruName": "गुरुदेव श्री श्री रविशंकर"
-
-  "searchText":"खोज"
 
 
 };
