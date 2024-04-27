@@ -114,12 +114,13 @@ class _TrikalSandhyaMantraState extends State<TrikalSandhyaMantra> {
                           Row(
                             children: [
                               SizedBox(width: 60.w),
-                              const Align(
+                               Align(
                                   alignment: Alignment.centerLeft,
                                   child: CustomText(
                                       'ॐ अच्युताय नमः।\nॐ अनन्ताय नमः|\nॐ गोविन्दाय नमः।',
                                       color: ColorUtils.black,
                                       fontWeight: FontWeight.w500,
+                                    fontSize: 12.sp,
                                   ),
                               ),
                             ],
@@ -133,12 +134,15 @@ class _TrikalSandhyaMantraState extends State<TrikalSandhyaMantra> {
                           Row(
                             children: [
                               SizedBox(width: 60.w),
-                              const Align(
+                               Align(
                                   alignment: Alignment.centerLeft,
                                   child: CustomText(
                                       'ॐ अपवित्रः पवित्रो वा सर्वावस्थां गतोपि वा ।\nयः स्मरेत् पुण्डरीकाक्षं स बाह्याभ्यन्तरः शुचिः ॥',
                                       color: ColorUtils.black,
-                                      fontWeight: FontWeight.w500))
+                                      fontWeight: FontWeight.w500,
+                                    fontSize: 12.sp,
+                                  ),
+                              )
                             ],
                           ),
                           const Divider(),
@@ -476,7 +480,7 @@ class _TrikalSandhyaMantraState extends State<TrikalSandhyaMantra> {
                                       horizontalPadding: 0),
                                   commonRowWidget(
                                       secondTitle:
-                                          'ओजोसि। सहोसि। बलमसि । भ्राजोसि । देवानां । धामं नामासि ।\nविश्वमसि। विश्वायुः। सर्वमसि । सर्वायुः । अभिभुवर ॐ ॥',
+                                          'ओजोसि। सहोसि। बलमसि । भ्राजोसि । देवानां । धामं नामासि ।\nविश्वमसि। विश्वायुः। सर्वमसि । सर्वायुः । अभिभुवर् ॐ ॥',
                                       verticalPadding: 0,
                                       fontWeight: FontWeight.w500,
                                       fontSize: 12.sp,
@@ -712,14 +716,14 @@ class _TrikalSandhyaMantraState extends State<TrikalSandhyaMantra> {
                                 children: [
                                   commonRowWidget(
                                       secondTitle:
-                                          'ॐ अदितेनुमन्यस्व ।।\nॐ अनुमतेनुमन्यस्व ||',
+                                          'ॐ अदितेनुमन्यस्व ||\nॐ अनुमतेनुमन्यस्व ||',
                                       verticalPadding: 0,
                                       fontWeight: FontWeight.w500,
                                       fontSize: 12.sp,
                                       horizontalPadding: 0),
                                   commonRowWidget(
                                       secondTitle:
-                                          'ॐ सरस्वतेनुमन्यस्व ।\nॐ देवः सवितः प्रसुवः ॥',
+                                          'ॐ सरस्वतेनुमन्यस्व ||\nॐ देवः सवितः प्रसुवः ||',
                                       verticalPadding: 0,
                                       fontWeight: FontWeight.w500,
                                       fontSize: 12.sp,
@@ -990,7 +994,7 @@ class _TrikalSandhyaMantraState extends State<TrikalSandhyaMantra> {
                                       horizontalPadding: 0),
                                   commonRowWidget(
                                       secondTitle:
-                                          'वीरान मानो रूद्रभामितो वर्धीहविष्मन्तो नमसा विधेम ते ॥',
+                                          'वीरान‌् मानो रूद्रभामितो वर्धीहविष्मन्तो नमसा विधेम ते ॥',
                                       verticalPadding: 0,
                                       fontWeight: FontWeight.w500,
                                       fontSize: 12.sp,
@@ -1154,13 +1158,6 @@ class _TrikalSandhyaMantraState extends State<TrikalSandhyaMantra> {
                                       ),
                                     ],
                                   ),
-                                  // commonRowWidget(
-                                  //     secondTitle: 'मन्त्रहीनं क्रियाहीनं भक्तिहीनं हुताशन/ जनार्दन |\nयद् हुतं कृतं तु मया देव परिपूर्णं तदस्तु ते ।।',
-                                  //     verticalPadding: 0,
-                                  //     fontWeight: FontWeight.w500,
-                                  //     fontSize: 12.sp,
-                                  //     horizontalPadding: 0,
-                                  // ),
                                 ],
                               ),
                             ],
@@ -1183,9 +1180,11 @@ class _TrikalSandhyaMantraState extends State<TrikalSandhyaMantra> {
                                 children: [
                                   SizedBox(
                                     width: 280.h,
-                                    child: CustomText(StringUtils.surrenderingText,
+                                    child: CustomText(
+                                      StringUtils.surrenderingText,
                                       fontSize: 12.sp,
                                       color: ColorUtils.black,
+                                     fontWeight: FontWeight.w600,
                                      // maxLines: 3,
                                     ),
                                   ),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:sunrise_app/localization/translations.dart';
+import 'package:sunrise_app/meditation_bell.dart';
 import 'package:sunrise_app/services/prefServices.dart';
 import 'package:sunrise_app/view/sunrise_sunset_screen/sunrise_sunset_screen.dart';
 import 'package:sunrise_app/view/welcome_screen/welcome_screen.dart';
@@ -37,6 +38,7 @@ class MyApp extends StatelessWidget {
         locale:  Locale(PrefServices.getString('language').isEmpty ? "en_US" : PrefServices.getString('language')),
         fallbackLocale: const Locale('en_US'),
         home:PrefServices.getString('language').isEmpty ? const WelcomeScreen() : const SplashScreen(),
+     //   home: MeditationScreen(),
         debugShowCheckedModeBanner: false,
       ),
     );

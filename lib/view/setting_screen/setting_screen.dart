@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:just_audio/just_audio.dart';
 import 'package:keep_screen_on/keep_screen_on.dart';
 import 'package:sunrise_app/common_Widget/common_button.dart';
 import 'package:sunrise_app/common_Widget/common_text.dart';
@@ -29,6 +30,13 @@ class _SeetingScreenState extends State<SettingsScreen> {
     settingScreenController.isScreenOn.value =  PrefServices.getBool('keepScreenOn');
     if ( settingScreenController.isScreenOn.value) {
       KeepScreenOn.turnOn();
+    }
+    settingScreenController.audioPlayer = AudioPlayer();
+    settingScreenController. isBellRinging.value = PrefServices.getBool('isBellRinging') ?? false;
+    // settingScreenController.startBellForSunriseOrSunset();
+
+    if ( settingScreenController.isBellRinging.value) {
+      settingScreenController.startBellForSunriseOrSunset();
     }
   }
 
@@ -99,19 +107,6 @@ class _SeetingScreenState extends State<SettingsScreen> {
                                   color: ColorUtils.orange,
                                 ),
                               ),
-                              Center(
-                                child: SizedBox(
-                                  width: 300.w,
-                                  child: CustomText(
-                                    StringUtils.checkDeviceTimeTxt,
-                                    color: ColorUtils.black,
-                                    maxLines: 5,
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: 15.sp,
-                                    textAlign: TextAlign.center,
-                                  ),
-                                ),
-                              ),
                               SizedBox(
                                 height: 30.h,
                               ),
@@ -135,11 +130,8 @@ class _SeetingScreenState extends State<SettingsScreen> {
                                           PrefServices.setValue('keepScreenOn',  settingScreenController.isScreenOn.value);
                                           if (settingScreenController.isScreenOn.value) {
                                             KeepScreenOn.turnOn();
-                                            print('screen is on');
                                           } else {
                                             KeepScreenOn.turnOff();
-                                            print('screen is off');
-
                                           }
                                         },
                                       ),
@@ -200,13 +192,27 @@ class _SeetingScreenState extends State<SettingsScreen> {
                                     Transform.scale(
                                       scale: 0.8,
                                       child: Switch(
-                                        value: settingScreenController.on2
-                                            .value,
+                                        value: settingScreenController.isBellRinging.value,
                                         onChanged: (value) {
-                                          // setState(() {
-                                          settingScreenController.toggle2();
-                                          // });
+                                          settingScreenController.isBellRinging.value = value;
+                                          PrefServices.setValue('isBellRinging', settingScreenController.isBellRinging.value);
+                                          if (settingScreenController.isBellRinging.value) {
+                                            settingScreenController.startBellForSunriseOrSunset();
+                                          } else {
+                                            settingScreenController.sunriseTimer?.cancel();
+                                            settingScreenController.sunsetTimer?.cancel();
+                                          }
                                         },
+                                        // onChanged: (value) {
+                                        //   settingScreenController.isBellRinging.value = value;
+                                        //   PrefServices.setValue('isBellRinging', settingScreenController.isBellRinging.value);
+                                        //   if (settingScreenController.isBellRinging.value) {
+                                        //     settingScreenController.toggleBellFormat();
+                                        //   } else {
+                                        //     settingScreenController.sunriseTimer.cancel();
+                                        //     settingScreenController.sunsetTimer.cancel();
+                                        //     }
+                                        //   },
                                       ),
                                     ),
                                   ],

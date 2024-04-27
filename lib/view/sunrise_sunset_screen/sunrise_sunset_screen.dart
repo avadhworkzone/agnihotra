@@ -555,39 +555,6 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                         fontSize: 20.sp,
                       ),
                     );
-                    // if (settingScreenController.isCountDown.value) {
-                    //   return CustomText(
-                    //     // settingScreenController.difference != null
-                    //     //     ? settingScreenController.formatDuration(settingScreenController.difference.value):'',
-                    //   PrefServices.getString('timeUntilTime'),
-                    //
-                    //     fontWeight: FontWeight.w500,
-                    //     fontSize: 20.sp,
-                    //   );
-                    // }
-                    // else {
-                    //   return
-                    //     Container(
-                    //     padding: EdgeInsets.symmetric(
-                    //         horizontal: 18.w, vertical: 5.h),
-                    //     decoration: BoxDecoration(
-                    //       borderRadius: BorderRadius.all(Radius.circular(6.r)),
-                    //       border: Border.all(color: ColorUtils.borderColor),
-                    //       boxShadow: [
-                    //         BoxShadow(
-                    //           color: ColorUtils.white,
-                    //           blurRadius: 200.w,
-                    //         ),
-                    //       ],
-                    //     ),
-                    //     child: CustomText(
-                    //       // sunriseSunsetController.currentTime().toString(),
-                    //       settingScreenController.current24HourTime.value,
-                    //       fontWeight: FontWeight.w500,
-                    //       fontSize: 20.sp,
-                    //     ),
-                    //   );
-                    // }
                   }),
                   SizedBox(
                     height: 90.h,

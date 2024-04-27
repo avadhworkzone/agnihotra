@@ -78,89 +78,31 @@ class _MantraMenuScreenState extends State<MantraMenuScreen> {
                       child:
                       Column(
                         children: [
-                                    CustomText(
-                                      StringUtils.agnihotraMantraTxt,
-                                      color: ColorUtils.black,
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 13.sp,
-                                    ),
+                          GradientText(
+                            StringUtils.agnihotraMantraTxt,
+                            style:  TextStyle(fontSize: 20.sp,  fontWeight: FontWeight.w600,),
+                            gradient: const LinearGradient(
+                                colors: [
+                              ColorUtils.txtGradientColor2,
+                                  ColorUtils.txtGradientColor1,
+
+                                ],
+
+                              begin: Alignment.topLeft,
+                              end: Alignment.topRight,
+
+                            ),
+                          ),
+
                                     CustomText(
                                       StringUtils.sunriseSunsetMantraTxt,
-                                      color: ColorUtils.black,
+                                      color: ColorUtils.sunriseSunsetMantraColor,
                                       fontWeight: FontWeight.w600,
-                                      fontSize: 13.sp,
-                                    )
+                                      fontSize: 17.sp,
+                                    ),
+
                         ],
                       ),
-                      // Container(
-                      //   height: 37.h,
-                      //   width: 190.w,
-                      //   decoration: BoxDecoration(
-                      //       boxShadow: [
-                      //         BoxShadow(
-                      //             color: ColorUtils.black00.withOpacity(0.25),
-                      //             blurRadius: 4.r,
-                      //             offset: const Offset(0, 4)),
-                      //       ],
-                      //       color: ColorUtils.white,
-                      //       borderRadius: BorderRadius.circular(23.r)),
-                      //   child: Row(
-                      //     mainAxisAlignment: MainAxisAlignment.center,
-                      //     children: [
-                      //       SizedBox(
-                      //         width: 28.w,
-                      //       ),
-                      //       Column(
-                      //         mainAxisSize: MainAxisSize.min,
-                      //         crossAxisAlignment: CrossAxisAlignment.start,
-                      //         mainAxisAlignment: MainAxisAlignment.center,
-                      //         children: [
-                      //           CustomText(
-                      //             StringUtils.agnihotraMantraTxt,
-                      //             color: ColorUtils.black,
-                      //             fontWeight: FontWeight.w600,
-                      //             fontSize: 13.sp,
-                      //           ),
-                      //           CustomText(
-                      //             StringUtils.sunriseSunsetMantraTxt,
-                      //             color: ColorUtils.grey73,
-                      //             fontWeight: FontWeight.w500,
-                      //             fontSize: 10.sp,
-                      //           )
-                      //         ],
-                      //       ),
-                      //       const Spacer(),
-                      //       Container(
-                      //         height: 25.h,
-                      //         width: 25.h,
-                      //         decoration: BoxDecoration(
-                      //           gradient: const LinearGradient(
-                      //             colors: [
-                      //               ColorUtils.orangeCB,
-                      //               ColorUtils.orangeFD
-                      //             ],
-                      //
-                      //             begin: Alignment.topRight,
-                      //
-                      //             end: Alignment
-                      //                 .bottomLeft, // Ending point of the gradient
-                      //           ),
-                      //           borderRadius: BorderRadius.circular(25.r),
-                      //         ),
-                      //         child: const Center(
-                      //           child: Icon(
-                      //             Icons.arrow_forward_ios_outlined,
-                      //             color: ColorUtils.white,
-                      //             size: 15,
-                      //           ),
-                      //         ),
-                      //       ),
-                      //       SizedBox(
-                      //         width: 3.w,
-                      //       ),
-                      //     ],
-                      //   ),
-                      // ),
                     )
                   ]),
                   SizedBox(
@@ -184,16 +126,28 @@ class _MantraMenuScreenState extends State<MantraMenuScreen> {
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsets.only(top: 10.h, right: 50.w),
+                      padding: EdgeInsets.only(top: 10.h, right: 8.w),
                       child: Column(
                         children: [
-                          CustomText(
+                          GradientText(
                             StringUtils.trikalMantraTxt,
-                            color: ColorUtils.black,
-                            fontWeight: FontWeight.w600,
-                            fontSize: 13.sp,
-                          ),
+                            style:  TextStyle(fontSize: 20.sp,  fontWeight: FontWeight.w600,),
+                            gradient: const LinearGradient(
+                              colors: [
+                                ColorUtils.txtGradientColor2,
+                                ColorUtils.txtGradientColor1,
 
+                              ],
+                              begin: Alignment.topLeft,
+                              end: Alignment.topRight,
+                            ),
+                          ),
+                          CustomText(
+                            StringUtils.sunriseSunsetMantraTxt,
+                            color: ColorUtils.sunriseSunsetMantraColor,
+                            fontWeight: FontWeight.w600,
+                            fontSize: 17.sp,
+                          ),
                         ],
                       ),
                     )

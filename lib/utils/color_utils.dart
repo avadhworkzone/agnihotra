@@ -19,4 +19,7 @@ class ColorUtils {
   static const grey73 = Color(0xFF737373);
   static const orangeCB = Color(0xFFCBA70E);
   static const orangeFD = Color(0xFFFD5013);
+  static const txtGradientColor1 = Color(0xFFCC5917);
+  static const txtGradientColor2 = Color(0xFF6A270B);
+  static const sunriseSunsetMantraColor = Color(0xFF491722);
 }

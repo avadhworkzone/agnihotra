@@ -83,8 +83,7 @@ class SunriseSunsetController extends GetxController {
     }
   }
 
-  Future<void> countryTimeZone(double latitude, double longitude, String date,
-      String countryTimeZone) async {
+  Future<void> countryTimeZone(double latitude, double longitude, String date, String countryTimeZone) async {
     isCountryLoad.value = true;
     countryTimezoneModel = await SunriseSunsetApi.getDifferentCountryTime(
         latitude, longitude, date, countryTimeZone);
@@ -102,20 +101,4 @@ class SunriseSunsetController extends GetxController {
     update();
   }
 
-  // RxBool is24HourFormat = false.obs;
-  // String formatTime(String time, bool is24Hour) {
-  //   if (is24Hour) {
-  //     // Convert to 24-hour format
-  //     DateTime parsedTime = DateFormat('hh:mm:ss a').parse(time);
-  //     return DateFormat('HH:mm:ss').format(parsedTime);
-  //   } else {
-  //     // Convert to 12-hour format
-  //     DateTime parsedTime = DateFormat('HH:mm:ss').parse(time);
-  //     return DateFormat('hh:mm:ss a').format(parsedTime);
-  //   }
-  // }
-  //
-  // void toggleFormat() {
-  //   is24HourFormat.value = !is24HourFormat.value;
-  // }
 }

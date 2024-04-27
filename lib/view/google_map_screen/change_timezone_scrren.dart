@@ -59,6 +59,7 @@ class _ChangeTimeZoneScreenState extends State<ChangeTimeZoneScreen> {
               });
             },
             hintText: 'Search',
+
           ),
 
           SizedBox(
