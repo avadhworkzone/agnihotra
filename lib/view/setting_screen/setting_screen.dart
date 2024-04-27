@@ -12,7 +12,6 @@ import 'package:sunrise_app/view/sunrise_sunset_screen/sunrise_sunset_screen.dar
 import 'package:sunrise_app/viewModel/google_map_controller.dart';
 import 'package:sunrise_app/viewModel/settings_controller.dart';
 import 'package:keep_screen_on/keep_screen_on.dart';
-import 'package:sunrise_app/viewModel/sunrise_sunset_controller.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({Key? key}) : super(key: key);
@@ -43,7 +42,7 @@ class _SeetingScreenState extends State<SettingsScreen> {
         KeepScreenOn.turnOn();
       }
 
-      print("PrefServices.getString('selectedAlarmTime') :- ${PrefServices.getString('selectedAlarmTime')}");
+
 
     });
   }
@@ -54,8 +53,10 @@ class _SeetingScreenState extends State<SettingsScreen> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context){
+
     return Scaffold(
+
       body: Obx(
         () => Stack(
           children: [
@@ -162,10 +163,9 @@ class _SeetingScreenState extends State<SettingsScreen> {
                                         if (settingScreenController
                                             .isScreenOn.value) {
                                           KeepScreenOn.turnOn();
-                                          print('screen is on');
-                                        } else {
+                                        }
+                                        else {
                                           KeepScreenOn.turnOff();
-                                          print('screen is off');
                                         }
                                       },
                                     ),
@@ -182,6 +182,8 @@ class _SeetingScreenState extends State<SettingsScreen> {
                             SizedBox(
                               height: 20.h,
                             ),
+
+                            /// 24 hour clock
                             SizedBox(
                               height: 30.h,
                               child: Row(
@@ -199,25 +201,27 @@ class _SeetingScreenState extends State<SettingsScreen> {
                                       value: settingScreenController
                                           .is24Hours.value,
                                       onChanged: (value) {
-                                        // setState(() {
                                         settingScreenController
                                             .toggleTimeFormat(value);
-                                        // });
+
                                       },
                                     ),
                                   ),
                                 ],
                               ),
                             ),
+
                             CustomText(
                               StringUtils.timeTxt,
                               color: ColorUtils.black,
                               fontSize: 15.sp,
                               fontWeight: FontWeight.w500,
                             ),
+
                             SizedBox(
                               height: 20.h,
                             ),
+
                             SizedBox(
                               height: 30.h,
                               child: Row(
@@ -238,6 +242,7 @@ class _SeetingScreenState extends State<SettingsScreen> {
                                         settingScreenController.toggle2();
                                         // });
                                       },
+
                                     ),
                                   ),
                                 ],
@@ -298,6 +303,7 @@ class _SeetingScreenState extends State<SettingsScreen> {
                               height: 30.h,
                               child: Row(
                                 children: [
+
                                   CustomText(
                                     StringUtils.reminderTxt,
                                     color: ColorUtils.orange,
@@ -341,6 +347,7 @@ class _SeetingScreenState extends State<SettingsScreen> {
                                       },
                                     ),
                                   ),
+
                                 ],
                               ),
                             ),
@@ -402,10 +409,11 @@ class _SeetingScreenState extends State<SettingsScreen> {
           ],
         ),
       ),
+
     );
   }
 
-  ThemeData _buildShrineTheme() {
+  ThemeData _buildShrineTheme(){
     final ThemeData base = ThemeData.light();
     return base.copyWith(
       scaffoldBackgroundColor: shrineBackgroundWhite,

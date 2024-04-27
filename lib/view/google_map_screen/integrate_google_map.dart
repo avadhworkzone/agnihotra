@@ -13,6 +13,7 @@ import 'package:sunrise_app/utils/string_utils.dart';
 import 'package:sunrise_app/viewModel/enter_location_controller.dart';
 import 'package:sunrise_app/viewModel/google_map_controller.dart';
 
+
 class IntegrateGoogleMap extends StatefulWidget {
 
   double? latitude;
@@ -110,8 +111,10 @@ class _IntegrateGoogleMapState extends State<IntegrateGoogleMap> {
                           locationController.mapController = controller;
                           locationController.getCurrentLocation();
                         },
+
                         myLocationEnabled: true,
                         myLocationButtonEnabled: true,
+
                         circles: {
                           Circle(
                             circleId: const CircleId('currentCircle'),
@@ -130,7 +133,7 @@ class _IntegrateGoogleMapState extends State<IntegrateGoogleMap> {
 
                         mapType: googleController.currentMapType.value,
                         onCameraMove: googleController.onCameraMove,
-                        onTap: (LatLng latLng) async {
+                        onTap : (LatLng latLng) async {
                           Marker marker =
                               _buildMarker(latLng, 'Custom Place Name');
                           setState(() {
@@ -152,9 +155,11 @@ class _IntegrateGoogleMapState extends State<IntegrateGoogleMap> {
                         },
                       ),
                     )),
+
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+
                     SizedBox(height: 8.h),
 
                     /// Address
@@ -276,6 +281,7 @@ class _IntegrateGoogleMapState extends State<IntegrateGoogleMap> {
                     ),
                   ],
                 ),
+
               ],
             ),
           );

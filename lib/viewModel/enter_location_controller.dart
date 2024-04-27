@@ -88,8 +88,7 @@ class LocationController extends GetxController {
           latData.value = double.parse(latitudeController.text);
           lonData.value = double.parse(longitudeController.text);
 
-          List<Placemark> placemarks =
-          await placemarkFromCoordinates(latData.value, lonData.value);
+          List<Placemark> placemarks = await placemarkFromCoordinates(latData.value, lonData.value);
           String street = placemarks[0].street ?? '';
           String subLocality = placemarks[0].subLocality ?? '';
           String locality = placemarks[0].locality ?? '';

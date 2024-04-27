@@ -145,12 +145,14 @@ class SettingScreenController extends GetxController{
     bool is24Hour = PrefServices.getBool('is24Hours');
 
     if (is24Hour) {
-      // Convert to 24-hour format
       DateTime parsedTime = DateFormat('hh:mm:ss a').parse(time);
       String formattedTime = DateFormat('kk:mm:ss').format(parsedTime);
       return formattedTime;
-    } else {
+    }
+
+    else {
       return time;
     }
+
   }
 }

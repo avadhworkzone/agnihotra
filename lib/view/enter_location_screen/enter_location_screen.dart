@@ -18,6 +18,7 @@ class LocationScreen extends StatefulWidget {
 }
 
 class _LocationScreenState extends State<LocationScreen> {
+
   LocationController locationController = Get.find<LocationController>();
 
   @override
@@ -74,12 +75,14 @@ class _LocationScreenState extends State<LocationScreen> {
                         child: Column(
                           children: [
                             SizedBox(height: 50.h,),
+
                             CustomText(
                               StringUtils.manuallyEntryTxt,
                               fontSize: 19.sp,
                               fontWeight: FontWeight.w600,
                               color: ColorUtils.orange,
                             ),
+
                             SizedBox(height: 10.h,),
                             CustomText(
                               StringUtils.stdConveLocationTxt,
@@ -114,12 +117,15 @@ class _LocationScreenState extends State<LocationScreen> {
                                   ),
                                   SizedBox(width: 10.w,),
 
-                                  SizedBox(
-                                    width: 200.w,
-                                    child: CommonTextField(
-                                      textAlignVertical: TextAlignVertical.center,
-                                      validator: ValidationMethod.latitudeValidation,
-                                      textEditController: locationController.latitudeController,
+                                  Padding(
+                                    padding: EdgeInsets.only(top: 10.h),
+                                    child: SizedBox(
+                                      width: 200.w,
+                                      child: CommonTextField(
+                                        textAlignVertical: TextAlignVertical.center,
+                                        validator: ValidationMethod.latitudeValidation,
+                                        textEditController: locationController.latitudeController,
+                                      ),
                                     ),
                                   ),
                                 ],
@@ -130,6 +136,7 @@ class _LocationScreenState extends State<LocationScreen> {
                               padding:EdgeInsets.only(left: 8.w),
                               child: Row(
                                 children: [
+
                                   Padding(
                                     padding: EdgeInsets.only(top: 35.w),
                                     child: CustomText(
@@ -139,13 +146,19 @@ class _LocationScreenState extends State<LocationScreen> {
                                       color: ColorUtils.black,
                                     ),
                                   ),
+
                                   SizedBox(width: 10.w,),
-                                  SizedBox(
-                                    width: 200.w,
-                                    child: CommonTextField(
-                                      textAlignVertical: TextAlignVertical.center,
-                                      validator: ValidationMethod.longitudeValidation,
-                                      textEditController: locationController.longitudeController,
+
+                                  Padding(
+                                    padding: EdgeInsets.only(top: 10.h),
+                                    child: SizedBox(
+                                      width: 200.w,
+                                      child: CommonTextField(
+
+                                        textAlignVertical: TextAlignVertical.center,
+                                        validator: ValidationMethod.longitudeValidation,
+                                        textEditController: locationController.longitudeController,
+                                      ),
                                     ),
                                   ),
                                 ],
