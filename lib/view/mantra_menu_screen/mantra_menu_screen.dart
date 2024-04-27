@@ -22,7 +22,6 @@ class _MantraMenuScreenState extends State<MantraMenuScreen> {
     return Scaffold(
       body: Stack(
         children: [
-
           Container(
             decoration: BoxDecoration(
               image: DecorationImage(
@@ -33,7 +32,6 @@ class _MantraMenuScreenState extends State<MantraMenuScreen> {
               ),
             ),
           ),
-
           SafeArea(
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 15.w),
@@ -41,7 +39,6 @@ class _MantraMenuScreenState extends State<MantraMenuScreen> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-
                   CircleAvatar(
                     backgroundColor: ColorUtils.white,
                     radius: 20.r,
@@ -76,31 +73,39 @@ class _MantraMenuScreenState extends State<MantraMenuScreen> {
                           fit: BoxFit.fill,
                         ),
                       ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(top: 10.h, right: 8.w),
+                      child:
+                      Column(
+                        children: [
+                          GradientText(
+                            StringUtils.agnihotraMantraTxt,
+                            style:  TextStyle(fontSize: 20.sp,  fontWeight: FontWeight.w600,),
+                            gradient: const LinearGradient(
+                                colors: [
+                              ColorUtils.txtGradientColor2,
+                                  ColorUtils.txtGradientColor1,
 
-                      Padding(
-                        padding: EdgeInsets.only(top: 10.h, right: 8.w),
-                        child: Column(
-                          children: [
-                            CustomText(
-                              StringUtils.agnihotraMantraTxt,
-                              color: ColorUtils.black,
-                              fontWeight: FontWeight.w600,
-                              fontSize: 13.sp,
+                                ],
+
+                              begin: Alignment.topLeft,
+                              end: Alignment.topRight,
+
                             ),
-                            CustomText(
-                              StringUtils.sunriseSunsetMantraTxt,
-                              color: ColorUtils.black,
-                              fontWeight: FontWeight.w600,
-                              fontSize: 13.sp,
-                            )
-                          ],
-                        ),
+                          ),
 
-                      )
+                                    CustomText(
+                                      StringUtils.sunriseSunsetMantraTxt,
+                                      color: ColorUtils.sunriseSunsetMantraColor,
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 17.sp,
+                                    ),
 
-                    ]),
-                  ),
-
+                        ],
+                      ),
+                    )
+                  ]),
                   SizedBox(
                     height: 16.h,
                   ),
@@ -119,22 +124,34 @@ class _MantraMenuScreenState extends State<MantraMenuScreen> {
                           width: Get.width,
                         ),
                       ),
-                      Padding(
-                        padding: EdgeInsets.only(top: 10.h, right: 50.w),
-                        child: Column(
-                          children: [
-                            CustomText(
-                              StringUtils.trikalMantraTxt,
-                              color: ColorUtils.black,
-                              fontWeight: FontWeight.w600,
-                              fontSize: 13.sp,
-                            ),
-                          ],
-                        ),
-                      )
-                    ]),
-                  ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(top: 10.h, right: 8.w),
+                      child: Column(
+                        children: [
+                          GradientText(
+                            StringUtils.trikalMantraTxt,
+                            style:  TextStyle(fontSize: 20.sp,  fontWeight: FontWeight.w600,),
+                            gradient: const LinearGradient(
+                              colors: [
+                                ColorUtils.txtGradientColor2,
+                                ColorUtils.txtGradientColor1,
 
+                              ],
+                              begin: Alignment.topLeft,
+                              end: Alignment.topRight,
+                            ),
+                          ),
+                          CustomText(
+                            StringUtils.sunriseSunsetMantraTxt,
+                            color: ColorUtils.sunriseSunsetMantraColor,
+                            fontWeight: FontWeight.w600,
+                            fontSize: 17.sp,
+                          ),
+                        ],
+                      ),
+                    )
+                  ]),
                 ],
               ),
             ),

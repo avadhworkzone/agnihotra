@@ -65,19 +65,19 @@ class StringUtils {
   static const agnayeSwahaTxt= 'अग्नये स्वाहा';
   static const agnayeIdem= 'agnayeIdem';
   static const agnayeIdemTxt= 'अग्नये इदं न मम';
-  static const agnihotraMantraTxt= 'agnihotraMantraTxt';
+  static const agnihotraMantraTxt= ' ।। अग्निहोत्र।। ';
   static const agnihotraPatraText = 'agnihotraPatraText';
-  static const sunriseSunsetMantraTxt= 'sunriseSunsetMantraTxt';
+  static const sunriseSunsetMantraTxt= '.... सूर्योदय और सूर्यास्त मंत्र ....';
   static const tilakSandhyaMantraTxt= 'tilakSandhyaMantraTxt';
   static const locationSetTxt= 'locationSetTxt';
-  static const  appName= 'appName';
+  static const  appName= 'Agnihotra- एक रोग मुक्त अभियान';
   static const  inspiration = 'inspiration';
   static const  guruName = 'guruName';
 //  static const locationSetTxt= 'Location not set,click on icon!';
 
 
   /// trikal sandhya mantra
-  static const trikalMantraTxt= 'trikalMantraTxt';
+  static const trikalMantraTxt= '।। त्रिकाल संध्या ll';
   static const mantra24= 'mantra24';
   static const trikalSandhya= '।। त्रिकाल संध्यावदनम् ।।';
   static const guruPrathna = 'गुरूप्रार्थना';
