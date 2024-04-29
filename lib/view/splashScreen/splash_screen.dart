@@ -5,7 +5,7 @@ import 'package:sunrise_app/common_Widget/common_assets.dart';
 import 'package:sunrise_app/services/prefServices.dart';
 import 'package:sunrise_app/utils/image_utils.dart';
 import 'package:sunrise_app/view/sunrise_sunset_screen/sunrise_sunset_screen.dart';
-import 'package:sunrise_app/viewModel/enter_location_controller.dart';
+import 'package:sunrise_app/viewModel/enter_manually_location_controller.dart';
 import 'package:sunrise_app/viewModel/settings_controller.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -21,7 +21,8 @@ class _SplashScreenState extends State<SplashScreen> {
   SettingScreenController settingScreenController =   Get.find<SettingScreenController>();
 
   @override
-  void initState() {
+  void initState(){
+
     super.initState();
     _loadPreferences().then((value) {
       locationController.getCurrentLocation();
@@ -33,7 +34,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
     settingScreenController.isScreenOn.value = PrefServices.getBool('keepScreenOn');
     print("settingScreenController.isScreenOn.value :- ${settingScreenController.isScreenOn.value}");
-    if (settingScreenController.isScreenOn.value){
+    if(settingScreenController.isScreenOn.value){
       KeepScreenOn.turnOn();
     }
     locationController.getCurrentLocation();

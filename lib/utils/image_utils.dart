@@ -43,6 +43,7 @@ class AssetUtils{
   static const audioPath = 'assets/audio/';
   static const sunriseMantraAudio = '${audioPath}sunrise_mantra_audio.m4a';
   static const sunsetMantraAudio = '${audioPath}sunset_mantra_audio.m4a';
+  static const remainderAlarmAudio = '${audioPath}remainder_alarm.mp3';
 
 
 }

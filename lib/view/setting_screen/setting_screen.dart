@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
@@ -33,7 +34,10 @@ class _SeetingScreenState extends State<SettingsScreen> {
 
   @override
   void initState() {
+
     super.initState();
+    print("PrefServices.getBool('saveToggleValue') :- ${PrefServices.getBool('saveToggleValue')}");
+    print("settingScreenController.on4.value :- ${settingScreenController.on4.value}");
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       settingScreenController.isScreenOn.value =
@@ -41,9 +45,6 @@ class _SeetingScreenState extends State<SettingsScreen> {
       if (settingScreenController.isScreenOn.value) {
         KeepScreenOn.turnOn();
       }
-
-
-
     });
   }
 
@@ -53,10 +54,10 @@ class _SeetingScreenState extends State<SettingsScreen> {
   }
 
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
+
 
     return Scaffold(
-
       body: Obx(
         () => Stack(
           children: [
@@ -113,6 +114,7 @@ class _SeetingScreenState extends State<SettingsScreen> {
                             SizedBox(
                               height: 10.h,
                             ),
+
                             Center(
                               child: CustomText(
                                 StringUtils.checkTimeTxt,
@@ -121,22 +123,11 @@ class _SeetingScreenState extends State<SettingsScreen> {
                                 color: ColorUtils.orange,
                               ),
                             ),
-                            Center(
-                              child: SizedBox(
-                                width: 300.w,
-                                child: CustomText(
-                                  StringUtils.checkDeviceTimeTxt,
-                                  color: ColorUtils.black,
-                                  maxLines: 5,
-                                  fontWeight: FontWeight.w400,
-                                  fontSize: 15.sp,
-                                  textAlign: TextAlign.center,
-                                ),
-                              ),
-                            ),
+
                             SizedBox(
                               height: 30.h,
                             ),
+
                             SizedBox(
                               height: 30.h,
                               child: Row(
@@ -163,8 +154,7 @@ class _SeetingScreenState extends State<SettingsScreen> {
                                         if (settingScreenController
                                             .isScreenOn.value) {
                                           KeepScreenOn.turnOn();
-                                        }
-                                        else {
+                                        } else {
                                           KeepScreenOn.turnOff();
                                         }
                                       },
@@ -173,12 +163,14 @@ class _SeetingScreenState extends State<SettingsScreen> {
                                 ],
                               ),
                             ),
+
                             CustomText(
                               StringUtils.screenKeepTxt,
                               color: ColorUtils.black,
                               fontWeight: FontWeight.w500,
                               fontSize: 15.sp,
                             ),
+
                             SizedBox(
                               height: 20.h,
                             ),
@@ -203,7 +195,6 @@ class _SeetingScreenState extends State<SettingsScreen> {
                                       onChanged: (value) {
                                         settingScreenController
                                             .toggleTimeFormat(value);
-
                                       },
                                     ),
                                   ),
@@ -242,7 +233,6 @@ class _SeetingScreenState extends State<SettingsScreen> {
                                         settingScreenController.toggle2();
                                         // });
                                       },
-
                                     ),
                                   ),
                                 ],
@@ -303,14 +293,12 @@ class _SeetingScreenState extends State<SettingsScreen> {
                               height: 30.h,
                               child: Row(
                                 children: [
-
                                   CustomText(
                                     StringUtils.reminderTxt,
                                     color: ColorUtils.orange,
                                     fontSize: 17.sp,
                                     fontWeight: FontWeight.w500,
                                   ),
-
                                   const Spacer(),
 
                                   Transform.scale(
@@ -318,36 +306,46 @@ class _SeetingScreenState extends State<SettingsScreen> {
                                     child: Switch(
                                       value: settingScreenController.on4.value,
                                       onChanged: (value) async {
+
                                         settingScreenController.toggle4();
 
-                                        if (settingScreenController.on4.value) {
-                                        final TimeOfDay? time =
-                                             await showTimePicker(
+                                        if (PrefServices.getBool('saveToggleValue')){
+
+                                          final TimeOfDay? time = await showTimePicker(
                                             barrierDismissible: false,
                                             context: context,
-                                            initialTime: selectedTime ?? TimeOfDay.now(),
+                                            initialTime:
+                                                selectedTime ?? TimeOfDay.now(),
                                             initialEntryMode: entryMode,
                                             orientation: orientation,
                                             builder: (BuildContext context,
                                                 Widget? child) {
-
                                               return Theme(
                                                   data: _buildShrineTheme(),
                                                   child: child!);
                                             },
                                           );
 
-                                          setState((){
+                                          setState(() {
                                             selectedTime = time;
-                                            print("selectedTime :- ${selectedTime?.format(context)}");
-                                            PrefServices.setValue('selectedAlarmTime', selectedTime?.format(context).toString());
+                                            print(
+                                                "selectedTime :- ${selectedTime?.format(context)}");
+                                            PrefServices.setValue(
+                                                'selectedAlarmTime',
+                                                selectedTime
+                                                    ?.format(context)
+                                                    .toString());
                                           });
+                                          // settingScreenController.showSimpleNotification(title: 'Remainders', body: '', payload: '');
 
+                                          settingScreenController.scheduleDailyTenAMNotification();
                                         }
-                                      },
+
+
+
+                                        },
                                     ),
                                   ),
-
                                 ],
                               ),
                             ),
@@ -359,9 +357,9 @@ class _SeetingScreenState extends State<SettingsScreen> {
                               fontWeight: FontWeight.w500,
                             ),
 
-                            if(settingScreenController.on4.value)
+                            if (PrefServices.getBool('saveToggleValue'))
                               CustomText(
-                                '${StringUtils.ringAlarmTxt.tr} ${selectedTime?.format(context)}',
+                                '${StringUtils.ringAlarmTxt.tr} ${PrefServices.getString('selectedAlarmTime')}',
                                 color: ColorUtils.black,
                                 fontSize: 15.sp,
                                 fontWeight: FontWeight.w500,
@@ -409,11 +407,10 @@ class _SeetingScreenState extends State<SettingsScreen> {
           ],
         ),
       ),
-
     );
   }
 
-  ThemeData _buildShrineTheme(){
+  ThemeData _buildShrineTheme() {
     final ThemeData base = ThemeData.light();
     return base.copyWith(
       scaffoldBackgroundColor: shrineBackgroundWhite,

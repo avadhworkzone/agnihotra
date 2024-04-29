@@ -15,14 +15,15 @@ import 'package:sunrise_app/services/prefServices.dart';
 import 'package:sunrise_app/utils/color_utils.dart';
 import 'package:sunrise_app/utils/image_utils.dart';
 import 'package:sunrise_app/utils/string_utils.dart';
-import 'package:sunrise_app/view/enter_location_screen/enter_location_screen.dart';
 import 'package:sunrise_app/view/google_map_screen/integrate_google_map.dart';
 import 'package:sunrise_app/view/mantra_menu_screen/mantra_menu_screen.dart';
 import 'package:sunrise_app/view/setting_screen/setting_screen.dart';
-import 'package:sunrise_app/viewModel/enter_location_controller.dart';
+import 'package:sunrise_app/viewModel/enter_manually_location_controller.dart';
 import 'package:sunrise_app/viewModel/google_map_controller.dart';
 import 'package:sunrise_app/viewModel/settings_controller.dart';
 import 'package:sunrise_app/viewModel/sunrise_sunset_controller.dart';
+
+import '../enter_manually_location_screen/enter_manually_location_screen.dart';
 
 class SunriseSunetScreen extends StatefulWidget {
   double? latitude;
@@ -136,7 +137,7 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                         width: 10.w,
                       ),
                       CustomText(
-                        StringUtils.SettingsScreenTxt,
+                        StringUtils.settingsScreenTxt,
                         fontWeight: FontWeight.w500,
                         fontSize: 15.sp,
                         color: ColorUtils.black,
@@ -1033,7 +1034,7 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                                 ),
                                 TextButton(
                                   onPressed: () {
-                                    Get.off(const LocationScreen());
+                                    Get.off(const EnterManuallyLocationScreen());
                                   },
                                   child: CustomText(
                                     StringUtils.usgManuallyTxt,
@@ -1081,7 +1082,7 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                   ),
                   TextButton(
                     onPressed: () {
-                      Get.off(const LocationScreen());
+                      Get.off(const EnterManuallyLocationScreen());
                     },
                     child: CustomText(
                       StringUtils.usgManuallyTxt,

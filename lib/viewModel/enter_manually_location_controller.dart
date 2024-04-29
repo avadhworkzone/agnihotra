@@ -24,7 +24,7 @@ class LocationController extends GetxController {
   RxBool isLoad = false.obs;
 
   String coordinates = "No Location found";
-  String currentAddress = 'No Address found';
+  String currentAddress = '';
 
   double currentLat = 0.0;
   double currentLong = 0.0;
@@ -59,6 +59,7 @@ class LocationController extends GetxController {
             position.latitude, position.longitude);
 
         print("currentLat :- $currentLat ,currentLong :- $currentLong");
+        print("=============GET CURRENT LOCATION==========");
 
 
         if (result.isNotEmpty) {
@@ -82,8 +83,10 @@ class LocationController extends GetxController {
 
 
     void getLatLongLocation() async {
+
       try {
         if (validationFormKey.currentState!.validate()) {
+
           isLoad.value = true;
           latData.value = double.parse(latitudeController.text);
           lonData.value = double.parse(longitudeController.text);
@@ -129,23 +132,30 @@ class LocationController extends GetxController {
               value: true,
             ),
           );
+
           googleController.confirmTimeZone();
           isLoad.value = false;
           update();
           latitudeController.clear();
           longitudeController.clear();
         }
-      } catch (e) {
+      }
+      catch (e) {
         print('Error: $e');
         isLoad.value = false;
       }
     }
 
     void getLocationOnMap() async {
+
       try {
         if (validationFormKey.currentState!.validate()) {
+
           latData.value = double.parse(latitudeController.text);
           lonData.value = double.parse(longitudeController.text);
+
+          print("latData :- $latData");
+          print("lonData :- $lonData");
 
           List<Placemark> placemarks =
           await placemarkFromCoordinates(latData.value, lonData.value);
@@ -164,9 +174,7 @@ class LocationController extends GetxController {
             postalCode,
             country
           ];
-          address.value =
-              addressComponents.where((element) => element.isNotEmpty).join(
-                  ', ');
+          address.value = addressComponents.where((element) => element.isNotEmpty).join(', ');
           latitude.value = double.parse(latitudeController.text);
           longitude.value = double.parse(longitudeController.text);
 
@@ -184,7 +192,9 @@ class LocationController extends GetxController {
           latitudeController.clear();
           longitudeController.clear();
         }
-      } catch (e) {
+      }
+
+      catch(e){
         print('Error: $e');
       }
     }

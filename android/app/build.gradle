@@ -23,11 +23,15 @@ if (flutterVersionName == null) {
 }
 
 android {
+    defaultConfig {
+        multiDexEnabled true
+    }
     namespace "com.example.sunrise_app"
     compileSdkVersion 34
     ndkVersion flutter.ndkVersion
 
     compileOptions {
+        coreLibraryDesugaringEnabled true
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
@@ -65,4 +69,7 @@ flutter {
     source '../..'
 }
 
-dependencies {}
+dependencies {
+    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.2.2'
+
+}

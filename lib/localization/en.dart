@@ -134,13 +134,13 @@ Map<String,String> en= {
   "indiaStdTime":"India Standard Time",
   "appName": "Agnihotra - A Disease Free Campaign",
   "inspiration": "Inspiration:",
-  "guruName": "Gurudev Sri Sri Ravi Shankar"
+  "guruName": "Gurudev Sri Sri Ravi Shankar",
 
 "alertTxt": 'Alert !',
 'resetButtonNotice':
 '\tYou are about to RESET the app which will delete all location timing and preference. You will be able to add new location post-reset.Use this option only in case of data corruption or error.',
 "resetMsg":"Reset Complete",
-"ringAlarmTxt" : 'Ring Alarm At',
+"ringAlarmTxt" : 'Everyday Ring Alarm At',
 
 
 };

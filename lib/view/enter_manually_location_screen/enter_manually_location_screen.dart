@@ -7,17 +7,17 @@ import 'package:sunrise_app/utils/color_utils.dart';
 import 'package:sunrise_app/utils/image_utils.dart';
 import 'package:sunrise_app/utils/string_utils.dart';
 import 'package:sunrise_app/utils/validation_utils.dart';
-import 'package:sunrise_app/viewModel/enter_location_controller.dart';
+import 'package:sunrise_app/viewModel/enter_manually_location_controller.dart';
 import '../../common_Widget/common_textfield.dart';
 
-class LocationScreen extends StatefulWidget {
-  const LocationScreen({Key? key}) : super(key: key);
+class EnterManuallyLocationScreen extends StatefulWidget {
+  const EnterManuallyLocationScreen({Key? key}) : super(key: key);
 
   @override
-  State<LocationScreen> createState() => _LocationScreenState();
+  State<EnterManuallyLocationScreen> createState() => _EnterManuallyLocationScreenState();
 }
 
-class _LocationScreenState extends State<LocationScreen> {
+class _EnterManuallyLocationScreenState extends State<EnterManuallyLocationScreen> {
 
   LocationController locationController = Get.find<LocationController>();
 
@@ -70,10 +70,12 @@ class _LocationScreenState extends State<LocationScreen> {
                         color: ColorUtils.white,
                         borderRadius: BorderRadius.all(Radius.circular(10.r)),
                       ),
+
                       child: Padding(
                         padding: EdgeInsets.only(left: 10.w,right: 10.w),
                         child: Column(
                           children: [
+
                             SizedBox(height: 50.h,),
 
                             CustomText(
@@ -84,6 +86,7 @@ class _LocationScreenState extends State<LocationScreen> {
                             ),
 
                             SizedBox(height: 10.h,),
+
                             CustomText(
                               StringUtils.stdConveLocationTxt,
                               fontSize: 15.sp,
@@ -96,10 +99,10 @@ class _LocationScreenState extends State<LocationScreen> {
 
                             CustomText(
                               StringUtils.notEstSouWesTxt,
-                              fontSize: 15.sp,
-                              fontWeight: FontWeight.w500,
-                              color: ColorUtils.black,
-                              textAlign: TextAlign.center,
+                              fontSize : 15.sp,
+                              fontWeight : FontWeight.w500,
+                              color : ColorUtils.black,
+                              textAlign : TextAlign.center,
                             ),
 
                             Padding(
@@ -194,7 +197,8 @@ class _LocationScreenState extends State<LocationScreen> {
                             }),
 
                             TextButton(
-                                onPressed:() {
+                                onPressed :(){
+
                                   locationController.getLocationOnMap();
 
                                 },

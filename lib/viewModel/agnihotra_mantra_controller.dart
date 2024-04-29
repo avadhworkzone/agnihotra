@@ -17,8 +17,9 @@ class AgnihotraMantraController extends GetxController{
  }
  // Method to play or pause the audio
  Future<void> sunriseMantraAudio() async {
+
    try {
-     if (sunriseAudio.playing) {
+     if (sunriseAudio.playing){
        // If audio is already playing, pause it
        await sunriseAudio.pause();
      } else {
