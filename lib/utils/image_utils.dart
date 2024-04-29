@@ -24,6 +24,9 @@ class AssetUtils{
   static String bgRemoveAboutIcon = '${imagePath}bgRemove_aboutIcon.png';
   static String splashImage1 = '${imagePath}splashImage1.jpg';
   static String splashImage2 = '${imagePath}splashImage2.jpg';
+  static String agnihotraHvanKund = '${imagePath}agnihotraHvanKund.png';
+  static String agnihotrTxtImage = '${imagePath}agnihotraTxt.png';
+  static String loginBackgroundImage = '${imagePath}loginscreenBackground.png';
 
   // ICONS
 

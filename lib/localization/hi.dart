@@ -40,19 +40,19 @@ Map<String,String> hi = {
   "ringAlarmTxt":"रोज रोज पर अलार्म बजाओ",
   /// Add Today
   "sunsetTxt":"सूर्यास्त मंत्र",
-  "playTxt":"इसे खेलने",
+  "playTxt":"शुरु करें",
   "checkTimeTxt":"अपना समय जांचें",
   "checkDeviceTimeTxt":"इंटरनेट पर समय के साथ अपने डिवाइस का समय जांचें। कृपया ध्यान दें कि सटीकता नेटवर्क और तीसरे पक्ष के टूल-worldtimeapi.org इंटरनेट पर निर्भर है।",
   "screenOnTxt":"स्क्रीन हमेशा चालू",
-  "screenKeepTxt":"ऐप खुला रहने पर स्क्रीन को सक्रिय रखता है",
+  "screenKeepTxt":"ऐप खुला रहने पर स्क्रीन को शुरू रखता है",
   "hoursTxt":"24 घंटे की घड़ी",
-  "timeTxt":"समय प्रारूप को 12 या 24 घंटे में बदलें",
+  "timeTxt":"समयको 24 घंटे में बदलें",
   "meditationTxt":"ध्यान घंटी",
-  "ringsTxt":"इस ऐप के समय घंटी बजती है",
+  "ringsTxt":"अग्निहोत्र के समय घंटी बजती है",
   "countDownTxt":"उलटी गिनती प्रदर्शित करें",
   "countDownClockTxt":"केंद्र में उलटी गिनती या घड़ी प्रदर्शित करें",
   "reminderTxt":"अनुस्मारक",
-  "setReminderTxt":"इस ऐप के लिए अनुस्मारक सेट करें",
+  "setReminderTxt":"अग्निहोत्र के लिए अनुस्मारक सेट करें",
   "resetBtnTxt":"रीसेट",
   "deleteLocationTxt":"सभी स्थान हटाएँ",
   "addLocationTxt":"स्थान जोड़ना",
@@ -90,7 +90,7 @@ Map<String,String> hi = {
   "heartText":"(हृदय को छू लें)",
   "handsText":"(दाहिने घुटने पर फटी हथेलियों वाले सैकड़ों लोग)",
   "rightHandsText":"(दाहिने हाथ में जल)",
-  "gayatriMantraText":"(3 बार गायत्री मंत्र)",
+  "gayatriMantraText":"(3 बार गायत्री मंत्र बोलिये)",
   "waterOblationText":"(जल अर्पण)",
   "avahanMudraText":"(आवाहनमुद्रा)",
   "meditateText":"(कुछ मिनट ध्यान करें, गायत्री जप शुरू करें और उसके बाद कुछ देर ध्यान करें)",
@@ -127,7 +127,12 @@ Map<String,String> hi = {
   "appName": "अग्निहोत्र - एक रोग मुक्त अभियान",
   "inspiration": "प्रेरणा:",
   "guruName": "गुरुदेव श्री श्री रविशंकर",
-  "yesTxt" : "हाँ"
+  "yesTxt" : "हाँ",
+  "callHelpLine":'हेल्पलाइन पर कॉल करें',
+  "emailSupport":'ई - मेल समर्थन',
+  "chatSupport":'समर्थन के साथ चैट करें',
+  "feedback":'प्रतिक्रिया'
+
 
 
 

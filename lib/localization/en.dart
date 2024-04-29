@@ -135,12 +135,12 @@ Map<String,String> en= {
   "appName": "Agnihotra - A Disease Free Campaign",
   "inspiration": "Inspiration:",
   "guruName": "Gurudev Sri Sri Ravi Shankar",
+  "callHelpLine":'Call Helpline',
+  "emailSupport":'Email Support',
+  "chatSupport":'Chat with Support',
+  "feedback":'Feedback'
 
-"alertTxt": 'Alert !',
-'resetButtonNotice':
-'\tYou are about to RESET the app which will delete all location timing and preference. You will be able to add new location post-reset.Use this option only in case of data corruption or error.',
-"resetMsg":"Reset Complete",
-"ringAlarmTxt" : 'Everyday Ring Alarm At',
+
 
 
 };

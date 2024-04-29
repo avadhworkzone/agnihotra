@@ -7,10 +7,13 @@ import 'package:get/get.dart';
 import 'package:sunrise_app/localization/translations.dart';
 import 'package:flutter_timezone/flutter_timezone.dart';
 import 'package:sunrise_app/services/prefServices.dart';
+import 'package:sunrise_app/view/login_screen/login_screen.dart';
+import 'package:sunrise_app/view/sunrise_sunset_screen/sunrise_sunset_screen.dart';
 import 'package:sunrise_app/view/welcome_screen/welcome_screen.dart';
 import 'package:sunrise_app/viewModel/agnihotra_mantra_controller.dart';
 import 'package:sunrise_app/viewModel/enter_manually_location_controller.dart';
 import 'package:sunrise_app/viewModel/google_map_controller.dart';
+import 'package:sunrise_app/viewModel/help_controller.dart';
 import 'package:sunrise_app/viewModel/settings_controller.dart';
 import 'package:sunrise_app/viewModel/sunrise_sunset_controller.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -44,12 +47,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-
-
     return ScreenUtilInit(
       designSize: const Size(375, 812),
       child: GetMaterialApp(
-
         translations: Translation(),
         localizationsDelegates: AppLocalizations.localizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,
@@ -57,14 +57,13 @@ class MyApp extends StatelessWidget {
             ? "en_US"
             : PrefServices.getString('language')),
         fallbackLocale: const Locale('en_US'),
-        // home: const ShowTimePickerApp(),
-        home: PrefServices.getString('language').isEmpty
-            ? const WelcomeScreen()
-            : const SplashScreen(),
+        home:PrefServices.getString('language').isEmpty ? const WelcomeScreen() : const SplashScreen(),
+     //   home: MeditationScreen(),
         debugShowCheckedModeBanner: false,
       ),
     );
   }
+  SettingScreenController settingScreenController = Get.put(SettingScreenController());
 
   SunriseSunsetController sunriseSunsetController =
       Get.put(SunriseSunsetController());
@@ -72,6 +71,8 @@ class MyApp extends StatelessWidget {
       Get.put(SettingScreenController());
   GoogleController googleController = Get.put(GoogleController());
   LocationController locationController = Get.put(LocationController());
-  AgnihotraMantraController agnihotraMantraController =  Get.put(AgnihotraMantraController());
+  AgnihotraMantraController agnihotraMantraController = Get.put(AgnihotraMantraController());
+  HelpScreenController helpScreenController = Get.put(HelpScreenController());
 
 }
+
