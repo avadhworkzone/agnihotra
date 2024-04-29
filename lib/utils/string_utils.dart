@@ -144,6 +144,11 @@ class StringUtils {
   static const swstiText = "swstiText";
   static const surrenderingText = "surrenderingText";
   static const processedTxt = "processedTxt";
+  static const callHelpLine = "callHelpLine";
+  static const emailSupport = "emailSupport";
+  static const chatSupport = "chatSupport";
+  static const feedback = "feedback";
+  static const rogmuktaabiyanTxt = "....एक रोग मुक्त अभियान....";
 
 
 

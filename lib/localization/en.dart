@@ -134,7 +134,11 @@ Map<String,String> en= {
   "indiaStdTime":"India Standard Time",
   "appName": "Agnihotra - A Disease Free Campaign",
   "inspiration": "Inspiration:",
-  "guruName": "Gurudev Sri Sri Ravi Shankar"
+  "guruName": "Gurudev Sri Sri Ravi Shankar",
+  "callHelpLine":'Call Helpline',
+  "emailSupport":'Email Support',
+  "chatSupport":'Chat with Support',
+  "feedback":'Feedback'
 
 
 

@@ -33,11 +33,6 @@ class _SeetingScreenState extends State<SettingsScreen> {
     }
     settingScreenController.audioPlayer = AudioPlayer();
     settingScreenController. isBellRinging.value = PrefServices.getBool('isBellRinging') ?? false;
-    // settingScreenController.startBellForSunriseOrSunset();
-
-    if ( settingScreenController.isBellRinging.value) {
-      settingScreenController.startBellForSunriseOrSunset();
-    }
   }
 
   @override
@@ -193,26 +188,26 @@ class _SeetingScreenState extends State<SettingsScreen> {
                                       scale: 0.8,
                                       child: Switch(
                                         value: settingScreenController.isBellRinging.value,
-                                        onChanged: (value) {
-                                          settingScreenController.isBellRinging.value = value;
-                                          PrefServices.setValue('isBellRinging', settingScreenController.isBellRinging.value);
-                                          if (settingScreenController.isBellRinging.value) {
-                                            settingScreenController.startBellForSunriseOrSunset();
-                                          } else {
-                                            settingScreenController.sunriseTimer?.cancel();
-                                            settingScreenController.sunsetTimer?.cancel();
-                                          }
-                                        },
                                         // onChanged: (value) {
                                         //   settingScreenController.isBellRinging.value = value;
                                         //   PrefServices.setValue('isBellRinging', settingScreenController.isBellRinging.value);
                                         //   if (settingScreenController.isBellRinging.value) {
-                                        //     settingScreenController.toggleBellFormat();
+                                        //     settingScreenController.startBellForSunriseOrSunset();
                                         //   } else {
-                                        //     settingScreenController.sunriseTimer.cancel();
-                                        //     settingScreenController.sunsetTimer.cancel();
-                                        //     }
-                                        //   },
+                                        //     settingScreenController.sunriseTimer?.cancel();
+                                        //     settingScreenController.sunsetTimer?.cancel();
+                                        //   }
+                                        // },
+                                        onChanged: (value) {
+                                          settingScreenController.isBellRinging.value = value;
+                                          PrefServices.setValue('isBellRinging', settingScreenController.isBellRinging.value);
+                                          if (settingScreenController.isBellRinging.value) {
+                                            settingScreenController.toggleBellFormat();
+                                          } else {
+                                            settingScreenController.sunriseTimer?.cancel();
+                                            settingScreenController.sunsetTimer?.cancel();
+                                            }
+                                          },
                                       ),
                                     ),
                                   ],

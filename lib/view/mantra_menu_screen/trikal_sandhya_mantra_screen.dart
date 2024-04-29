@@ -209,13 +209,46 @@ class _TrikalSandhyaMantraState extends State<TrikalSandhyaMantra> {
                             ],
                           ),
                           const Divider(),
-                          commonRowWidget(
-                              number: '6',
-                              firstTitle: 'सङ्कल्पः ',
-                              secondTitle:
-                                 StringUtils.handsText,
-                              fontWeight: FontWeight.w500,
-                              fontSize: 9.sp),
+                          // commonRowWidget(
+                          //     number: '6',
+                          //     firstTitle: 'सङ्कल्पः ',
+                          //     secondTitle: StringUtils.handsText,
+                          //     fontWeight: FontWeight.w500,
+                          //     fontSize: 9.sp
+                          // ),
+                          Padding(
+                            padding: EdgeInsets.symmetric(horizontal:20.w,vertical:5.w),
+                            child: Row(
+                              children: [
+                                CustomBtn(
+                                    height: 25.h,
+                                    width: 25.w,
+                                    radius: 30,
+                                    gradient: const LinearGradient(
+                                      colors: [
+                                        ColorUtils.gridentColor1,
+                                        ColorUtils.gridentColor2,
+                                      ],
+                                      begin: AlignmentDirectional.topEnd,
+                                      end: AlignmentDirectional.bottomEnd,
+                                    ),
+                                    onTap: () {},
+                                    title: '6',
+                                ),
+                              SizedBox(width: 15.h,),
+                              CustomText('सङ्कल्पः',color: ColorUtils.orange,fontWeight: FontWeight.w600,fontSize: 13.sp),
+                                Expanded(
+                                  child: CustomText(
+                                    StringUtils.handsText,
+                                    maxLines: 3,
+                                    color: ColorUtils.black,
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 9.sp,
+                                  ),
+                                )
+                            ],
+                            ),
+                          ),
                           Row(
                             children: [
                               SizedBox(width: 40.w),
@@ -590,10 +623,9 @@ class _TrikalSandhyaMantraState extends State<TrikalSandhyaMantra> {
                           commonRowWidget(
                               secondTitle:
                                  StringUtils.directionText,
-                              verticalPadding: 0,
                               fontWeight: FontWeight.w500,
                               fontSize: 12.sp,
-                              horizontalPadding: 50),
+                              horizontalPadding: 41),
                           SizedBox(height: 10.h),
                           Row(
                             crossAxisAlignment: CrossAxisAlignment.start,

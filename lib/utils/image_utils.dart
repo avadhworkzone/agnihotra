@@ -22,6 +22,9 @@ class AssetUtils{
   static String agniHotraPatra = '${imagePath}agniHotra_patra.png';
   static String bgRemoveAppLogo = '${imagePath}bgRemove_appLogo.png';
   static String bgRemoveAboutIcon = '${imagePath}bgRemove_aboutIcon.png';
+  static String agnihotraHvanKund = '${imagePath}agnihotraHvanKund.png';
+  static String agnihotrTxtImage = '${imagePath}agnihotraTxt.png';
+  static String loginBackgroundImage = '${imagePath}loginscreenBackground.png';
 
   // ICONS
 

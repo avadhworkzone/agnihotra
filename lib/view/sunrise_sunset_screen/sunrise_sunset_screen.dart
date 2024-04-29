@@ -17,6 +17,7 @@ import 'package:sunrise_app/utils/image_utils.dart';
 import 'package:sunrise_app/utils/string_utils.dart';
 import 'package:sunrise_app/view/enter_location_screen/enter_location_screen.dart';
 import 'package:sunrise_app/view/google_map_screen/integrate_google_map.dart';
+import 'package:sunrise_app/view/help_screen/help_screen.dart';
 import 'package:sunrise_app/view/mantra_menu_screen/mantra_menu_screen.dart';
 import 'package:sunrise_app/view/setting_screen/setting_screen.dart';
 import 'package:sunrise_app/viewModel/enter_location_controller.dart';
@@ -402,22 +403,27 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                 SizedBox(
                   height: 10.h,
                 ),
-                Row(
-                  children: [
-                    const Icon(
-                      AssetUtils.helpIcon,
-                      color: ColorUtils.orange,
-                    ),
-                    SizedBox(
-                      width: 10.w,
-                    ),
-                    CustomText(
-                      StringUtils.helpTxt,
-                      fontWeight: FontWeight.w500,
-                      fontSize: 15.sp,
-                      color: ColorUtils.black,
-                    ),
-                  ],
+                GestureDetector(
+                  onTap: () {
+                    Get.to(const HelpScreen());
+                  },
+                  child: Row(
+                    children: [
+                      const Icon(
+                        AssetUtils.helpIcon,
+                        color: ColorUtils.orange,
+                      ),
+                      SizedBox(
+                        width: 10.w,
+                      ),
+                      CustomText(
+                        StringUtils.helpTxt,
+                        fontWeight: FontWeight.w500,
+                        fontSize: 15.sp,
+                        color: ColorUtils.black,
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),
@@ -690,137 +696,6 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                         ),
                       ],
                     ),),
-                  /// SUNRISE and Sunset Time
-                  // Obx(() => Row(
-                  //   mainAxisAlignment: MainAxisAlignment.center,
-                  //   children: [
-                  //     /// SUNRISE
-                  //     Stack(
-                  //       children: [
-                  //         Padding(
-                  //           padding: EdgeInsets.only(top: 23.h),
-                  //           child: Container(
-                  //             height: 79.13.h,
-                  //             width: 137.53.w,
-                  //             alignment: Alignment.center,
-                  //             decoration: BoxDecoration(
-                  //               borderRadius:
-                  //               BorderRadius.all(Radius.circular(6.r)),
-                  //               border: Border.all(
-                  //                 color: ColorUtils.borderColor,
-                  //               ),
-                  //               boxShadow: [
-                  //                 BoxShadow(
-                  //                   color: ColorUtils.white,
-                  //                   blurRadius: 300.w,
-                  //                 )
-                  //               ],
-                  //             ),
-                  //             child: Padding(
-                  //               padding: EdgeInsets.only(top: 25.h),
-                  //               child: sunriseSunsetController.isCountryLoad.value
-                  //                   ? const CircularProgressIndicator(
-                  //                 color: ColorUtils.white,
-                  //               )
-                  //                   : (PrefServices.getDouble('currentLat') == 0.0 && PrefServices.getDouble('currentLong') == 0.0)
-                  //                   ? CustomText(
-                  //                 '',
-                  //                 fontWeight: FontWeight.w500,
-                  //                 fontSize: 20.sp,
-                  //               )
-                  //                   : CustomText(
-                  //                // PrefServices.getString('countrySunriseTimeZone'),
-                  //                '${settingScreenController.formatTime(PrefServices.getString('countrySunriseTimeZone'), settingScreenController.is24HourFormat.value)}',
-                  //                // ' ${settingScreenController.is24Hours.value ? PrefServices.getString('formattedSunriseTime') : settingScreenController.formatTime(PrefServices.getString('countrySunriseTimeZone'), false)}',
-                  //                 fontWeight: FontWeight.w500,
-                  //                 fontSize: 20.sp,
-                  //               ),
-                  //             ),
-                  //           ),
-                  //         ),
-                  //         Positioned(
-                  //           left: 40.w,
-                  //           child: CircleAvatar(
-                  //             backgroundColor: ColorUtils.white,
-                  //             radius: 27.r,
-                  //             child: LocalAssets(
-                  //               imagePath: AssetUtils.sunriseImages,
-                  //               height: 30.63,
-                  //               width: 30.63,
-                  //             ),
-                  //           ),
-                  //         ),
-                  //       ],
-                  //     ),
-                  //
-                  //     SizedBox(
-                  //       width: 20.w,
-                  //     ),
-                  //
-                  //     /// SUNSET
-                  //     Stack(
-                  //       children: [
-                  //         Padding(
-                  //           padding: EdgeInsets.only(top: 23.h),
-                  //           child: Container(
-                  //             height: 79.13.h,
-                  //             width: 137.53.w,
-                  //             alignment: Alignment.center,
-                  //             decoration: BoxDecoration(
-                  //               borderRadius:
-                  //               BorderRadius.all(Radius.circular(6.r)),
-                  //               border: Border.all(
-                  //                 color: ColorUtils.borderColor,
-                  //               ),
-                  //               boxShadow: [
-                  //                 BoxShadow(
-                  //                   color: ColorUtils.white,
-                  //                   blurRadius: 200.w,
-                  //                 ),
-                  //               ],
-                  //             ),
-                  //             child: Padding(
-                  //               padding: EdgeInsets.only(top: 25.h),
-                  //               child: sunriseSunsetController.isCountryLoad.value
-                  //                   ? const CircularProgressIndicator(
-                  //                 color: ColorUtils.white,
-                  //               )
-                  //                   : (PrefServices.getDouble('currentLat') == 0.0 && PrefServices.getDouble('currentLong') == 0.0)
-                  //                   ? CustomText(
-                  //                 '',
-                  //                 fontWeight: FontWeight.w500,
-                  //                 fontSize: 20.sp,
-                  //               )
-                  //                   :
-                  //               CustomText(
-                  //                // PrefServices.getString('countrySunsetTimeZone'),
-                  //                 '${settingScreenController.formatTime(PrefServices.getString('countrySunsetTimeZone'), settingScreenController.is24HourFormat.value)}',
-                  //
-                  //                 //  ' ${settingScreenController.is24Hours.value ? PrefServices.getString('formattedSunsetTime') : settingScreenController.formatTime(PrefServices.getString('countrySunsetTimeZone'), false)}',
-                  //                 fontWeight: FontWeight.w500,
-                  //                 fontSize: 20.sp,
-                  //               ),
-                  //             ),
-                  //           ),
-                  //         ),
-                  //         Positioned(
-                  //           left: 40.w,
-                  //           child: CircleAvatar(
-                  //             backgroundColor: ColorUtils.white,
-                  //             radius: 27.r,
-                  //             child: LocalAssets(
-                  //               imagePath: AssetUtils.sunsetImages,
-                  //               height: 30.63,
-                  //               width: 30.63,
-                  //             ),
-                  //           ),
-                  //         ),
-                  //       ],
-                  //     ),
-                  //   ],
-                  // ),),
-
-
 
                   SizedBox(
                     height: 130.h,

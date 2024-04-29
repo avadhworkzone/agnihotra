@@ -1,10 +1,8 @@
 import 'dart:async';
-
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:sunrise_app/services/prefServices.dart';
-import 'package:sunrise_app/viewModel/sunrise_sunset_controller.dart';
 
 class SettingScreenController extends GetxController {
 
@@ -19,7 +17,6 @@ class SettingScreenController extends GetxController {
   void toggle2() => on2.value = on2.value ? false : true;
 
   RxBool on4 = false.obs;
-
   void toggle4() => on4.value = on4.value ? false : true;
   RxBool is24HourFormat = false.obs;
   RxBool isCountDown = false.obs;
@@ -134,136 +131,69 @@ class SettingScreenController extends GetxController {
     }
   }
 
-  // void startBellForSunrise() {
-  //
-  // String sunriseTime = PrefServices.getString('countrySunriseTimeZone');
-  // DateTime now = DateTime.now();
-  // DateTime sunrise = DateFormat('hh:mm:ss a').parse(sunriseTime);
-  //
-  //   // Check if the scheduled time is already passed for today
-  //   if (now.isAfter(sunrise)) {
-  //     // If passed, schedule the bell for the next day
-  //     sunrise = sunrise.add(const Duration(days: 1));
-  //   }
-  //
-  //   // Calculate the duration until the scheduled time
-  //   Duration durationUntilScheduledTime = sunrise.difference(now);
-  //
-  //   // Schedule the timer to ring the bell
-  // sunriseTimer = Timer(durationUntilScheduledTime, () {
-  //     if (isBellRinging.value) {
-  //       _ringBell(); // Only ring the bell if it's currently enabled
-  //     }
-  //     // Reschedule the timer for the next day
-  //     startBellForSunrise();
-  //   });
-  // }
-  //
-  // void startBellForSunset() {
-  //
-  //   String sunsetTime = PrefServices.getString('countrySunsetTimeZone');
-  //   DateTime now = DateTime.now();
-  //   DateTime sunset =  DateFormat('hh:mm:ss a').parse(sunsetTime);
-  //
-  //   // Check if the scheduled time is already passed for today
-  //   if (now.isAfter(sunset)) {
-  //     // If passed, schedule the bell for the next day
-  //     sunset = sunset.add(const Duration(days: 1));
-  //   }
-  //
-  //   // Calculate the duration until the scheduled time
-  //   Duration durationUntilScheduledTime = sunset.difference(now);
-  //
-  //   // Schedule the timer to ring the bell
-  //   sunsetTimer = Timer(durationUntilScheduledTime, () {
-  //     if (isBellRinging.value) {
-  //       _ringBell();// Only ring the bell if it's currently enabled
-  //     }
-  //     // Reschedule the timer for the next day
-  //     startBellForSunset();
-  //   });
-  // }
+  void startBellForSunrise() {
+    String sunriseTime = PrefServices.getString('countrySunriseTimeZone');
+    if (sunriseTime.isNotEmpty) {
+      DateTime now = DateTime.now();
+      DateTime sunrise = DateFormat('hh:mm:ss a').parse(sunriseTime);
 
-  void startBellForSunriseOrSunset(){
-    String sunrise = PrefServices.getString('countrySunriseTimeZone') ?? '';
-    String sunset = PrefServices.getString('countrySunsetTimeZone') ?? '';
-
-    if(sunrise.isNotEmpty && sunset.isNotEmpty){
-      DateTime sunriseTime = DateFormat('hh:mm:ss a').parse(sunrise);
-      DateTime sunsetTime = DateFormat('hh:mm:ss a').parse(sunset);
-
-      DateTime currentTime = DateTime.now();
-      if(currentTime.isCloseTo(sunriseTime,distance: const Duration(minutes: 1))||
-          currentTime.isCloseTo(sunsetTime,distance: const Duration(minutes: 1))){
-        _ringBell();
+      // Check if the scheduled time is already passed for today
+      if (sunrise.isAfter(sunrise)) {
+        // If passed, schedule the bell for the next day
+        sunrise = sunrise.add(const Duration(days: 1));
       }
+
+      // Calculate the duration until the scheduled time
+      Duration durationUntilScheduledTime = sunrise.difference(now);
+
+      // Schedule the timer to ring the bell
+      sunriseTimer = Timer(durationUntilScheduledTime, () {
+        if (isBellRinging.value) {
+          _ringBell(); // Only ring the bell if it's currently enabled
+        }
+        // Reschedule the timer for the next day
+        startBellForSunrise();
+      });
     }
   }
+
+  void startBellForSunset() {
+    String sunsetTime = PrefServices.getString('countrySunsetTimeZone');
+    if (sunsetTime.isNotEmpty) {
+      DateTime now = DateTime.now();
+      DateTime sunset = DateFormat('hh:mm:ss a').parse(sunsetTime);
+
+      // Check if the scheduled time is already passed for today
+      if (sunset.isAfter(sunset)) {
+        // If passed, schedule the bell for the next day
+        sunset = sunset.add(const Duration(days: 1));
+      }
+
+      // Calculate the duration until the scheduled time
+      Duration durationUntilScheduledTime = sunset.difference(now);
+
+      // Schedule the timer to ring the bell
+      sunsetTimer = Timer(durationUntilScheduledTime, () {
+        if (isBellRinging.value) {
+          _ringBell(); // Only ring the bell if it's currently enabled
+        }
+        // Reschedule the timer for the next day
+        startBellForSunset();
+      });
+    }
+  }
+
+
   Future<void> _ringBell() async {
      audioPlayer?.setAsset('assets/audio/meditation_bell.mp3');
     await audioPlayer?.play();
+    // You can add any additional actions here when the bell rings
   }
 
-// void startTimer() {
-  //   // Schedule the bell to ring at 12:42:00 PM
-
-  //   DateTime now = DateTime.now();
-  //   DateTime scheduledTime = DateTime(
-  //     now.year,
-  //     now.month,
-  //     now.day,
-  //     15,
-  //     35,
-  //     0,
-  //   );
-  //
-  //   // Check if the scheduled time is already passed for today
-  //   if (now.isAfter(scheduledTime)) {
-  //     // If passed, schedule the bell for the next day
-  //     scheduledTime = scheduledTime.add(const Duration(days: 1));
-  //   }
-  //
-  //   // Calculate the duration until the scheduled time
-  //   Duration durationUntilScheduledTime = scheduledTime.difference(now);
-  //
-  //   // Schedule the timer to ring the bell
-  //   timer = Timer(durationUntilScheduledTime, () {
-  //     if (isBellRinging.value) {
-  //       _ringBell(); // Only ring the bell if it's currently enabled
-  //     }
-  //     // Reschedule the timer for the next day
-  //     startTimer();
-  //   });
-  // }
-  // void startTimer() {
-  //   // Schedule the timer to ring the bell at sunrise and sunset times
-  //   timer = Timer.periodic(Duration(minutes: 1), (timer) {
-  //     // Get current time
-  //     DateTime now = DateTime.now();
-  //     // Get sunrise and sunset times from preferences
-  //     String sunriseTime = PrefServices.getString('countrySunriseTimeZone');
-  //     String sunsetTime = PrefServices.getString('countrySunsetTimeZone');
-  //     // Parse sunrise and sunset times
-  //     DateTime sunrise = DateTime.parse(sunriseTime);
-  //     DateTime sunset = DateTime.parse(sunsetTime);
-  //     // Check if current time is close to sunrise or sunset time (within 1 minute difference)
-  //     if (now.isCloseTo(sunrise, distance: Duration(minutes: 1)) || now.isCloseTo(sunset, distance: Duration(minutes: 1))) {
-  //       // Ring the bell
-  //       _ringBell();
-  //     }
-  //   });
-  // }
-  // ------------------------------------
-  // Future<void> _ringBell() async {
-  //    audioPlayer.setAsset('assets/audio/meditation_bell.mp3');
-  //   await audioPlayer.play();
-  //   // You can add any additional actions here when the bell rings
-  // }
-  //
-  // void toggleBellFormat(){
-  //   startBellForSunrise();
-  //   startBellForSunset();
-  // }
+  void toggleBellFormat(){
+    startBellForSunrise();
+    startBellForSunset();
+  }
   @override
   void onClose() {
     audioPlayer?.dispose();
@@ -272,9 +202,83 @@ class SettingScreenController extends GetxController {
     super.onClose();
   }
 
+// void startBellForSunriseOrSunset(){
+//   String sunrise = PrefServices.getString('countrySunriseTimeZone') ?? '';
+//   String sunset = PrefServices.getString('countrySunsetTimeZone') ?? '';
+//
+//   if(sunrise.isNotEmpty && sunset.isNotEmpty){
+//     DateTime sunriseTime = DateFormat('hh:mm:ss a').parse(sunrise);
+//     DateTime sunsetTime = DateFormat('hh:mm:ss a').parse(sunset);
+//
+//     DateTime currentTime = DateTime.now();
+//     print('Current Time: $currentTime');
+//     print('Sunrise Time: $sunriseTime');
+//     print('Sunset Time: $sunsetTime');
+//     if(currentTime.isCloseTo(sunriseTime,distance: const Duration(days: 1))||
+//         currentTime.isCloseTo(sunsetTime,distance: const Duration(days: 1))){
+//       _ringBell();
+//     }
+//   }
+// }
+//
+// Future<void> _ringBell() async {
+//    audioPlayer?.setAsset('assets/audio/meditation_bell.mp3');
+//   await audioPlayer?.play();
+// }
+
+// void startTimer() {
+//     // Schedule the bell to ring at 12:42:00 PM
+//
+//     DateTime now = DateTime.now();
+//     DateTime scheduledTime = DateTime(
+//       now.year,
+//       now.month,
+//       now.day,
+//       15,
+//       35,
+//       0,
+//     );
+//
+//     // Check if the scheduled time is already passed for today
+//     if (now.isAfter(scheduledTime)) {
+//       // If passed, schedule the bell for the next day
+//       scheduledTime = scheduledTime.add(const Duration(days: 1));
+//     }
+//
+//     // Calculate the duration until the scheduled time
+//     Duration durationUntilScheduledTime = scheduledTime.difference(now);
+//
+//     // Schedule the timer to ring the bell
+//     timer = Timer(durationUntilScheduledTime, () {
+//       if (isBellRinging.value) {
+//         _ringBell(); // Only ring the bell if it's currently enabled
+//       }
+//       // Reschedule the timer for the next day
+//
+//     });
+//   }
+// void startTimer() {
+//   // Schedule the timer to ring the bell at sunrise and sunset times
+//   timer = Timer.periodic(Duration(minutes: 1), (timer) {
+//     // Get current time
+//     DateTime now = DateTime.now();
+//     // Get sunrise and sunset times from preferences
+//     String sunriseTime = PrefServices.getString('countrySunriseTimeZone');
+//     String sunsetTime = PrefServices.getString('countrySunsetTimeZone');
+//     // Parse sunrise and sunset times
+//     DateTime sunrise = DateTime.parse(sunriseTime);
+//     DateTime sunset = DateTime.parse(sunsetTime);
+//     // Check if current time is close to sunrise or sunset time (within 1 minute difference)
+//     if (now.isCloseTo(sunrise, distance: Duration(minutes: 1)) || now.isCloseTo(sunset, distance: Duration(minutes: 1))) {
+//       // Ring the bell
+//       _ringBell();
+//     }
+//   });
+// }
+// ------------------------------------
 }
-extension DateTimeExtension on DateTime {
-  bool isCloseTo(DateTime other, {Duration distance = const Duration(minutes: 1)}) {
-    return isBefore(other.add(distance)) && isAfter(other.subtract(distance));
-  }
-}
+// extension DateTimeExtension on DateTime {
+//   bool isCloseTo(DateTime other, {Duration distance = const Duration(minutes: 1)}) {
+//     return isBefore(other.add(distance)) && isAfter(other.subtract(distance));
+//   }
+// }
