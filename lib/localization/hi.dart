@@ -125,9 +125,11 @@ Map<String,String> hi = {
   "callHelpLine":'हेल्पलाइन पर कॉल करें',
   "emailSupport":'ई - मेल समर्थन',
   "chatSupport":'समर्थन के साथ चैट करें',
-  "feedback":'प्रतिक्रिया'
-
-
-
+  "feedback":'प्रतिक्रिया',
+  // today
+  "feedbackOptionTxt":"कृपया फीडबैक साझा करने या परेशानी बताने के लिए एक विकल्प चुनें",
+  "shareFeedbackTxt":"मैं एक प्रतिक्रिया साझा करना चाहता हूं",
+  "shareBotherationTxt":"मैं परेशानी बताना चाहता हूं",
+  "sendBtnTxt":"भेजना"
 
 };

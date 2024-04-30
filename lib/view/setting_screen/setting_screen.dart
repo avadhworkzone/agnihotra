@@ -188,16 +188,6 @@ class _SeetingScreenState extends State<SettingsScreen> {
                                       scale: 0.8,
                                       child: Switch(
                                         value: settingScreenController.isBellRinging.value,
-                                        // onChanged: (value) {
-                                        //   settingScreenController.isBellRinging.value = value;
-                                        //   PrefServices.setValue('isBellRinging', settingScreenController.isBellRinging.value);
-                                        //   if (settingScreenController.isBellRinging.value) {
-                                        //     settingScreenController.startBellForSunriseOrSunset();
-                                        //   } else {
-                                        //     settingScreenController.sunriseTimer?.cancel();
-                                        //     settingScreenController.sunsetTimer?.cancel();
-                                        //   }
-                                        // },
                                         onChanged: (value) {
                                           settingScreenController.isBellRinging.value = value;
                                           PrefServices.setValue('isBellRinging', settingScreenController.isBellRinging.value);

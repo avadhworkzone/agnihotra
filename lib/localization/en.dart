@@ -138,9 +138,10 @@ Map<String,String> en= {
   "callHelpLine":'Call Helpline',
   "emailSupport":'Email Support',
   "chatSupport":'Chat with Support',
-  "feedback":'Feedback'
-
-
-
-
+  "feedback":'Feedback',
+  // today
+  "feedbackOptionTxt":"Please select an option to share a feedback or convey a botheration" ,
+  "shareFeedbackTxt":"I wish to share a feedback",
+  "shareBotherationTxt":"I wish to convey botheration",
+  "sendBtnTxt":"Send"
 };

@@ -8,15 +8,17 @@ class SettingScreenController extends GetxController {
 
   RxBool isScreenOn = false.obs;
 
-   AudioPlayer? audioPlayer;
-   Timer? sunriseTimer;
-   Timer? sunsetTimer;
+  AudioPlayer? audioPlayer;
+  Timer? sunriseTimer;
+  Timer? sunsetTimer;
   RxBool isBellRinging = false.obs;
 
   RxBool on2 = false.obs;
+
   void toggle2() => on2.value = on2.value ? false : true;
 
   RxBool on4 = false.obs;
+
   void toggle4() => on4.value = on4.value ? false : true;
   RxBool is24HourFormat = false.obs;
   RxBool isCountDown = false.obs;
@@ -25,6 +27,7 @@ class SettingScreenController extends GetxController {
   RxString current24HourTime = ''.obs;
   RxString sunrise24HourTime = ''.obs;
   RxString sunset24HourTime = ''.obs;
+
   @override
   void onInit() {
     // TODO: implement onInit
@@ -52,7 +55,8 @@ class SettingScreenController extends GetxController {
     int seconds = duration.inSeconds.remainder(60);
 
     // Format the duration as "hh:mm:ss"
-    return "${hours.toString().padLeft(2, '0')}:${minutes.toString().padLeft(2, '0')}:${seconds.toString().padLeft(2, '0')}";
+    return "${hours.toString().padLeft(2, '0')}:${minutes.toString().padLeft(
+        2, '0')}:${seconds.toString().padLeft(2, '0')}";
   }
 
   Future<void> onCountDown() async {
@@ -77,11 +81,12 @@ class SettingScreenController extends GetxController {
             'timeUntilTime', formatDuration(difference.value));
       } else {
         DateTime nextDaySunrise =
-            sunriseTimeWithoutYear.add(const Duration(days: 1));
+        sunriseTimeWithoutYear.add(const Duration(days: 1));
         difference.value = nextDaySunrise.difference(currentTimeWithoutYear);
         print(
-            "Time until next sunrise: ${formatDuration(difference.value)} hours.");
-        await    PrefServices.setValue(
+            "Time until next sunrise: ${formatDuration(
+                difference.value)} hours.");
+        await PrefServices.setValue(
             'timeUntilTime', formatDuration(difference.value));
       }
     } else {
@@ -105,9 +110,11 @@ class SettingScreenController extends GetxController {
   }
 
   void updateTime() {
-    String formattedTime = DateFormat(is24Hours.value ? 'HH:mm:ss' : 'h:mm:ss a').format(DateTime.now());
+    String formattedTime = DateFormat(
+        is24Hours.value ? 'HH:mm:ss' : 'h:mm:ss a').format(DateTime.now());
     current24HourTime.value = formattedTime;
   }
+
   void toggleTimeFormat(bool value) {
     is24Hours.value = value;
     is24HourFormat.value = !is24HourFormat.value;
@@ -185,15 +192,16 @@ class SettingScreenController extends GetxController {
 
 
   Future<void> _ringBell() async {
-     audioPlayer?.setAsset('assets/audio/meditation_bell.mp3');
+    audioPlayer?.setAsset('assets/audio/meditation_bell.mp3');
     await audioPlayer?.play();
     // You can add any additional actions here when the bell rings
   }
 
-  void toggleBellFormat(){
+  void toggleBellFormat() {
     startBellForSunrise();
     startBellForSunset();
   }
+
   @override
   void onClose() {
     audioPlayer?.dispose();
@@ -201,84 +209,4 @@ class SettingScreenController extends GetxController {
     sunsetTimer?.cancel();
     super.onClose();
   }
-
-// void startBellForSunriseOrSunset(){
-//   String sunrise = PrefServices.getString('countrySunriseTimeZone') ?? '';
-//   String sunset = PrefServices.getString('countrySunsetTimeZone') ?? '';
-//
-//   if(sunrise.isNotEmpty && sunset.isNotEmpty){
-//     DateTime sunriseTime = DateFormat('hh:mm:ss a').parse(sunrise);
-//     DateTime sunsetTime = DateFormat('hh:mm:ss a').parse(sunset);
-//
-//     DateTime currentTime = DateTime.now();
-//     print('Current Time: $currentTime');
-//     print('Sunrise Time: $sunriseTime');
-//     print('Sunset Time: $sunsetTime');
-//     if(currentTime.isCloseTo(sunriseTime,distance: const Duration(days: 1))||
-//         currentTime.isCloseTo(sunsetTime,distance: const Duration(days: 1))){
-//       _ringBell();
-//     }
-//   }
-// }
-//
-// Future<void> _ringBell() async {
-//    audioPlayer?.setAsset('assets/audio/meditation_bell.mp3');
-//   await audioPlayer?.play();
-// }
-
-// void startTimer() {
-//     // Schedule the bell to ring at 12:42:00 PM
-//
-//     DateTime now = DateTime.now();
-//     DateTime scheduledTime = DateTime(
-//       now.year,
-//       now.month,
-//       now.day,
-//       15,
-//       35,
-//       0,
-//     );
-//
-//     // Check if the scheduled time is already passed for today
-//     if (now.isAfter(scheduledTime)) {
-//       // If passed, schedule the bell for the next day
-//       scheduledTime = scheduledTime.add(const Duration(days: 1));
-//     }
-//
-//     // Calculate the duration until the scheduled time
-//     Duration durationUntilScheduledTime = scheduledTime.difference(now);
-//
-//     // Schedule the timer to ring the bell
-//     timer = Timer(durationUntilScheduledTime, () {
-//       if (isBellRinging.value) {
-//         _ringBell(); // Only ring the bell if it's currently enabled
-//       }
-//       // Reschedule the timer for the next day
-//
-//     });
-//   }
-// void startTimer() {
-//   // Schedule the timer to ring the bell at sunrise and sunset times
-//   timer = Timer.periodic(Duration(minutes: 1), (timer) {
-//     // Get current time
-//     DateTime now = DateTime.now();
-//     // Get sunrise and sunset times from preferences
-//     String sunriseTime = PrefServices.getString('countrySunriseTimeZone');
-//     String sunsetTime = PrefServices.getString('countrySunsetTimeZone');
-//     // Parse sunrise and sunset times
-//     DateTime sunrise = DateTime.parse(sunriseTime);
-//     DateTime sunset = DateTime.parse(sunsetTime);
-//     // Check if current time is close to sunrise or sunset time (within 1 minute difference)
-//     if (now.isCloseTo(sunrise, distance: Duration(minutes: 1)) || now.isCloseTo(sunset, distance: Duration(minutes: 1))) {
-//       // Ring the bell
-//       _ringBell();
-//     }
-//   });
-// }
-// ------------------------------------
 }
-// extension DateTimeExtension on DateTime {
-//   bool isCloseTo(DateTime other, {Duration distance = const Duration(minutes: 1)}) {
-//     return isBefore(other.add(distance)) && isAfter(other.subtract(distance));
-//   }
-// }

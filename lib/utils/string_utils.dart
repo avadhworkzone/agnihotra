@@ -149,19 +149,9 @@ class StringUtils {
   static const chatSupport = "chatSupport";
   static const feedback = "feedback";
   static const rogmuktaabiyanTxt = "....एक रोग मुक्त अभियान....";
-
-
-
-
-
-//  static const locationSetTxt= 'Location not set,click on icon!';
-
-
-  /// trikal sandhya mantra
-
-
-
-
-
-
+  //today
+  static const feedbackOptionTxt = "feedbackOptionTxt";
+  static const shareFeedbackTxt = "shareFeedbackTxt";
+  static const shareBotherationTxt = "shareBotherationTxt";
+  static const sendBtnTxt = "sendBtnTxt";
 }

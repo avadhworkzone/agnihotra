@@ -23,4 +23,6 @@ class ColorUtils {
   static const txtGradientColor2 = Color(0xFF6A270B);
   static const sunriseSunsetMantraColor = Color(0xFF491722);
   static const agnihotraTxtColor = Color(0xFF630006);
+
+
 }

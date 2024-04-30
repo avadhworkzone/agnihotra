@@ -39,6 +39,11 @@ class AssetUtils{
   static const helpIcon = Icons.help;
   static const playIcon = Icons.play_arrow;
   static const searchIcon = Icons.search;
+  //today
+  static const phoneIcon = Icons.phone;
+  static const emailIcon = Icons.email;
+  static const chatIcon = Icons.chat_bubble_outline;
+  static const feedBackIcon = Icons.feedback_outlined;
 
   // AUDIO PATH
   static const audioPath = 'assets/audio/';

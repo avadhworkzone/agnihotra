@@ -20,6 +20,7 @@ class CustomBtn extends StatelessWidget {
   final String? iconPath;
   final bool? transparent;
   final Gradient? gradient;
+  final AlignmentGeometry? alignment;
 
   const CustomBtn(
       {required this.onTap,
@@ -35,7 +36,7 @@ class CustomBtn extends StatelessWidget {
         this.withIcon = false,
         this.iconPath,
         this.isDownloadFile = false,
-        this.transparent = false, this.gradient});
+        this.transparent = false, this.gradient, this.alignment});
 
   @override
   Widget build(BuildContext context) {

@@ -52,12 +52,12 @@ Map<String,String> gu = {
   "resetBtnTxt":"રીસેટ",
   "deleteLocationTxt":"બધા સ્થાન કાઢી નાખો",
   "addLocationTxt":"સ્થાન ઉમેરો",
-  "sooryayaSwaha":"સૂર્યાય સ્વાહા",
-  "sooryayaIdem":"સૂર્યયા ઇદેમ ના મામા",
-  "prajapatayeSwaha":"પ્રજાપતયે સ્વાહા",
-  "prajapatayeIdem":"પ્રજાપતયે ઇદેમ ના મા",
-  "agnayeSwaha":"અગ્નયે સ્વાહા",
-  "agnayeIdem":"અગ્નયે ઈદમ ના મામા",
+  "sooryayaSwaha":"સૂર્યાય સ્વાહા", // Today
+  "sooryayaIdem":"સૂર્યાય ઇદં ન મમ", // Today
+  "prajapatayeSwaha":"પ્રજાપતયે સ્વાહા", // Today
+  "prajapatayeIdem":"પ્રજાપતયે ઇદં ન મમ", // Today
+  "agnayeSwaha":"અગ્નયે સ્વાહા", // Today
+  "agnayeIdem":"અગ્નયે ઇદં ન મમ", // Today
   "agnihotraMantraTxt":"।। અગ્નિહોત્ર ।।",
   "sunriseSunsetMantraTxt":".... સૂર્યોદય અને સૂર્યાસ્ત સમય ના મંત્ર ....",
   "tilakSandhyaMantraTxt":"ત્રિકાલ સંધ્યા મંત્ર",
@@ -126,8 +126,12 @@ Map<String,String> gu = {
   "callHelpLine":'હેલ્પલાઈન પર ફોન કરો',
   "emailSupport":'ઇમેઇલ આધાર',
   "chatSupport":'આધાર સાથે ચેટ કરો',
-  "feedback":'પ્રતિભાવ'
-
+  "feedback":'પ્રતિભાવ',
+  // today
+  "feedbackOptionTxt":"કૃપા કરીને પ્રતિસાદ શેર કરવા અથવા હેરાનગતિ વ્યક્ત કરવા માટે એક વિકલ્પ પસંદ કરો",
+  "shareFeedbackTxt":"હું પ્રતિસાદ શેર કરવા માંગુ છું",
+  "shareBotherationTxt":"હું પરેશાની વ્યક્ત કરવા માંગુ છું",
+  "sendBtnTxt":"મોકલો"
 
 
 };
