@@ -5,6 +5,7 @@ import 'package:sunrise_app/common_Widget/common_assets.dart';
 import 'package:sunrise_app/services/prefServices.dart';
 import 'package:sunrise_app/utils/image_utils.dart';
 import 'package:sunrise_app/view/sunrise_sunset_screen/sunrise_sunset_screen.dart';
+import 'package:sunrise_app/view/welcome_screen/welcome_screen.dart';
 import 'package:sunrise_app/viewModel/enter_manually_location_controller.dart';
 import 'package:sunrise_app/viewModel/settings_controller.dart';
 
@@ -17,7 +18,7 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
 
-  LocationController locationController = Get.find<LocationController>();
+  EnterManuallyLocationController locationController = Get.find<EnterManuallyLocationController>();
   SettingScreenController settingScreenController =   Get.find<SettingScreenController>();
 
   @override
@@ -25,13 +26,17 @@ class _SplashScreenState extends State<SplashScreen> {
 
     super.initState();
     _loadPreferences().then((value) {
-      locationController.getCurrentLocation();
 
       Future.delayed(const Duration(seconds: 7))
-          .then((value) => Get.to(SunriseSunetScreen()));
+          .then((value) => Get.to( PrefServices.getString('language').isEmpty ? const WelcomeScreen() :  SunriseSunetScreen()));
     });
 
-
+    if(PrefServices.getBool('saveToggleValue')){
+      settingScreenController.scheduleDailyNotification();
+    }
+    else{
+      settingScreenController.cancelNotification();
+    }
     settingScreenController.isScreenOn.value = PrefServices.getBool('keepScreenOn');
     print("settingScreenController.isScreenOn.value :- ${settingScreenController.isScreenOn.value}");
     if(settingScreenController.isScreenOn.value){

@@ -14,6 +14,7 @@ class StringUtils {
   static const mapViewTxt = 'mapViewTxt';
   static const satelliteTxt = 'satelliteTxt';
   static const searchTxt = 'searchTxt';
+  static const search = 'search';
   static const searchBtnTxt = 'searchBtnTxt';
   static const welcomeTxt = 'welcomeTxt';
   static const getStartTxt = 'getStartTxt';
@@ -28,7 +29,7 @@ class StringUtils {
   static const settingsScreenTxt = 'settingsScreenTxt';
  // static const manualEntryTxt = 'Manual Entry';
   static const SettingsScreenTxt = 'SettingsScreenTxt';
-  static const contactsTxt = 'contactsTxt';
+  static const teamAgnihotraTxt = 'teamAgnihotraTxt';
   static const languageTxt = 'languageTxt';
   static const aboutTxt = 'aboutTxt';
   static const privacyPolicyTxt = 'privacyPolicyTxt';
@@ -91,18 +92,17 @@ class StringUtils {
   static const timingDownload = 'timingDownload';
   static const deleteAllLocation = 'deleteAllLocation';
   static const deleteThisLocation = 'deleteThisLocation';
+  static const matraTxt = 'matraTxt';
   static const confirmTxt = 'confirmTxt';
   static const renameLocationBtnTxt = 'renameLocationBtnTxt';
   static const renameLocationTxt = 'renameLocationTxt';
 
   static const deleteLocationBtnTxt = 'deleteLocationBtnTxt';
   static const enterLocationTxt = 'enterLocationTxt';
-  /// Add Today
   static const alertTxt = 'alertTxt';
   static const resetMsg = 'resetMsg';
   static const resetButtonNotice = 'resetButtonNotice';
   static const ringAlarmTxt = 'ringAlarmTxt';
-  /// Add Today
   static const cancleTxt = 'cancleTxt';
   static const noTxt = 'noTxt';
   static const yesTxt = 'yesTxt';
@@ -159,13 +159,45 @@ class StringUtils {
   static const rogmuktaabiyanTxt = "....एक रोग मुक्त अभियान....";
 
 
+  static const feedbackOptionTxt = "feedbackOptionTxt";
+  static const shareFeedbackTxt = "shareFeedbackTxt";
+  static const shareBotherationTxt = "shareBotherationTxt";
+  static const sendBtnTxt ="sendBtnTxt";
+
+  static const loginTxt = "loginTxt";
+  static const continueGoogleTxt = "continueGoogleTxt";
+  static const orTxt = "orTxt";
+  static const logInWithTxt = "logInWithTxt";
+  static const continueWithEmailTxt = "continueWithEmailTxt";
 
 
+  /// Login Screen
+  static const chooseAccountTxt = "chooseAccountTxt";
+  static const toContinueTxt = "toContinueTxt";
+  static const emailHintTxt = "emailHintTxt";
+  static const emailAddressTxt = "emailAddressTxt";
+  static const passwordHintTxt = "passwordHintTxt";
+  static const passwordTxt = "passwordTxt";
+  static const forgetPwdTxt = "forgetPwdTxt";
+  static const addAnotherAccountTxt = "addAnotherAccountTxt";
+  static const orSignInWithTxt = "orSignInWithTxt";
+  static const doNotHaveAccountTxt = "doNotHaveAccountTxt";
 
-//  static const locationSetTxt= 'Location not set,click on icon!';
+  /// Register Screen
 
+  static const nameTxt = "nameTxt";
+  static const fullNameHintTxt = "fullNameHintTxt";
+  static const createAccountTxt = "createAccountTxt";
+  static const signUpTxt = "signUpTxt";
 
-  /// trikal sandhya mantra
+   /// Forgot Password Screen
+
+  static const forgetPwdScrrenTxt = "forgetPwdScrrenTxt";
+  static const enterYourEmailAddressTxt = "enterYourEmailAddressTxt";
+  static const resetPasswordTxt = "resetPasswordTxt";
+
+  /// Edit Profile Screen
+  static const editProfileTxt = "editProfileTxt";
 
 
 

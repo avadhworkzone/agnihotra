@@ -19,13 +19,13 @@ class EnterManuallyLocationScreen extends StatefulWidget {
 
 class _EnterManuallyLocationScreenState extends State<EnterManuallyLocationScreen> {
 
-  LocationController locationController = Get.find<LocationController>();
+  EnterManuallyLocationController enterManuallyLocationController = Get.find<EnterManuallyLocationController>();
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context){
     return Scaffold(
       body: Form(
-        key: locationController.validationFormKey,
+        key: enterManuallyLocationController.validationFormKey,
         child: Stack(
           children: [
             Container(
@@ -52,6 +52,8 @@ class _EnterManuallyLocationScreenState extends State<EnterManuallyLocationScree
                       radius: 23.r,
                       child: IconButton(
                           onPressed: () {
+                            enterManuallyLocationController.latitudeController.clear();
+                            enterManuallyLocationController.longitudeController.clear();
                              Get.back();
                           },
                           icon: const Icon(
@@ -91,7 +93,7 @@ class _EnterManuallyLocationScreenState extends State<EnterManuallyLocationScree
                               StringUtils.stdConveLocationTxt,
                               fontSize: 15.sp,
                               fontWeight: FontWeight.w500,
-                              color: ColorUtils.black,
+                              color: ColorUtils.black1F,
                               textAlign: TextAlign.center,
                             ),
 
@@ -101,7 +103,7 @@ class _EnterManuallyLocationScreenState extends State<EnterManuallyLocationScree
                               StringUtils.notEstSouWesTxt,
                               fontSize : 15.sp,
                               fontWeight : FontWeight.w500,
-                              color : ColorUtils.black,
+                              color : ColorUtils.black1F,
                               textAlign : TextAlign.center,
                             ),
 
@@ -115,7 +117,7 @@ class _EnterManuallyLocationScreenState extends State<EnterManuallyLocationScree
                                       StringUtils.latiTxt,
                                       fontWeight: FontWeight.w600,
                                       fontSize: 15.sp,
-                                      color: ColorUtils.black,
+                                      color: ColorUtils.black1F,
                                     ),
                                   ),
                                   SizedBox(width: 10.w,),
@@ -127,7 +129,7 @@ class _EnterManuallyLocationScreenState extends State<EnterManuallyLocationScree
                                       child: CommonTextField(
                                         textAlignVertical: TextAlignVertical.center,
                                         validator: ValidationMethod.latitudeValidation,
-                                        textEditController: locationController.latitudeController,
+                                        textEditController: enterManuallyLocationController.latitudeController,
                                       ),
                                     ),
                                   ),
@@ -146,7 +148,7 @@ class _EnterManuallyLocationScreenState extends State<EnterManuallyLocationScree
                                       StringUtils.longTxt,
                                       fontWeight: FontWeight.w600,
                                       fontSize: 15.sp,
-                                      color: ColorUtils.black,
+                                      color: ColorUtils.black1F,
                                     ),
                                   ),
 
@@ -160,7 +162,7 @@ class _EnterManuallyLocationScreenState extends State<EnterManuallyLocationScree
 
                                         textAlignVertical: TextAlignVertical.center,
                                         validator: ValidationMethod.longitudeValidation,
-                                        textEditController: locationController.longitudeController,
+                                        textEditController: enterManuallyLocationController.longitudeController,
                                       ),
                                     ),
                                   ),
@@ -172,7 +174,7 @@ class _EnterManuallyLocationScreenState extends State<EnterManuallyLocationScree
 
                             /// Use this Location
                             Obx((){
-                              return locationController.isLoad.value
+                              return enterManuallyLocationController.isLoad.value
                                   ? const CircularProgressIndicator()
                                   : Padding(
                                 padding:  EdgeInsets.symmetric(horizontal: 50.w),
@@ -187,7 +189,7 @@ class _EnterManuallyLocationScreenState extends State<EnterManuallyLocationScree
                                     end: AlignmentDirectional.bottomEnd,
                                   ),
                                   onTap: () {
-                                     locationController.getLatLongLocation();
+                                     enterManuallyLocationController.getLatLongLocation();
 
                                   },
                                   title:StringUtils.locationUseTxt,
@@ -199,7 +201,7 @@ class _EnterManuallyLocationScreenState extends State<EnterManuallyLocationScree
                             TextButton(
                                 onPressed :(){
 
-                                  locationController.getLocationOnMap();
+                                  enterManuallyLocationController.getLocationOnMap();
 
                                 },
                               child: CustomText(

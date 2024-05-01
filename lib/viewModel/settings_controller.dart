@@ -1,16 +1,13 @@
 import 'dart:async';
 import 'package:alarm/alarm.dart';
-import 'package:alarm/model/alarm_settings.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:sunrise_app/services/prefServices.dart';
-import 'package:sunrise_app/utils/image_utils.dart';
 import 'package:timezone/timezone.dart' as tz;
 
 class SettingScreenController extends GetxController {
-
 
   RxBool on = false.obs;
   RxBool isScreenOn = false.obs;
@@ -32,139 +29,243 @@ class SettingScreenController extends GetxController {
     await Alarm.init();
   }
 
-
   void toggle() => on.value = on.value ? false : true;
 
   RxBool on2 = false.obs;
 
   void toggle2() => on2.value = on2.value ? false : true;
 
-  RxBool on4 = PrefServices
-      .getBool('saveToggleValue')
-      .obs;
+  RxBool on4 = PrefServices.getBool('saveToggleValue').obs;
 
   void toggle4() {
     on4.value = !on4.value;
     PrefServices.setValue('saveToggleValue', on4.value);
-    print("PrefServices.getBool('saveToggleValue') :- ${PrefServices.getBool(
-        'saveToggleValue')}");
+    print(
+        "PrefServices.getBool('saveToggleValue') :- ${PrefServices.getBool('saveToggleValue')}");
     on4.value = PrefServices.getBool('saveToggleValue');
     print("Toggle .on4.value :- ${on4.value}");
   }
 
-  Future<void> remainderAlarm() async {
-    String selectedTime = PrefServices.getString('selectedAlarmTime');
-    print("Selected Time: $selectedTime");
-
-    // Parse the selected time string (e.g., '1:00 AM')
-    DateTime selectedDateTime = DateFormat.jm().parse(selectedTime);
-
-    // Get the current date and time
-    DateTime now = DateTime.now();
-
-
-    DateTime alarmDateTime = DateTime(
-      now.year,
-      now.month,
-      now.day,
-      selectedDateTime.hour,
-      selectedDateTime.minute,
-    );
-
-    // Check if the alarm time has already passed today
-    if (alarmDateTime.isBefore(now)) {
-      // If the alarm time has passed, schedule it for the next day
-      alarmDateTime = alarmDateTime.add(const Duration(days: 1));
-    }
-
-    print("Scheduled Alarm DateTime: $alarmDateTime");
-
-    // Define the alarm settings
-    final alarmSettings = AlarmSettings(
-      id: 42,
-      dateTime: alarmDateTime,
-      assetAudioPath: AssetUtils.remainderAlarmAudio,
-      loopAudio: false,
-      vibrate: false,
-      volume: 0.2,
-      fadeDuration: 3.0,
-      notificationTitle: 'Reminders',
-      notificationBody: '',
-      enableNotificationOnKill: true,
-    );
-
-    // Set the alarm using the defined settings
-    await Alarm.set(alarmSettings: alarmSettings);
-  }
-
-
-  FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
-
-  /// show a simple notification
-  //  Future showSimpleNotification({
-  //   required String title,
-  //   required String body,
-  //   required String payload,
-  // }) async {
-  //   const AndroidNotificationDetails androidNotificationDetails =
-  //   AndroidNotificationDetails('your channel id', 'your channel name',
-  //       channelDescription: 'your channel description',
-  //       importance: Importance.max,
-  //       priority: Priority.high,
-  //       ticker: 'ticker');
+  /// Medition Bell
+  // AudioPlayer? audioPlayer;
+  // Timer? sunriseTimer;
+  // Timer? sunsetTimer;
+  // RxBool isBellRinging = false.obs;
   //
-  //   const NotificationDetails notificationDetails =
-  //   NotificationDetails(android: androidNotificationDetails);
-  //   await flutterLocalNotificationsPlugin
-  //       .show(0, title, body, notificationDetails, payload: payload);
+  //
+  // void startBellForSunrise() {
+  //   String sunriseTime = PrefServices.getString('countrySunriseTimeZone');
+  //   if (sunriseTime.isNotEmpty) {
+  //     DateTime now = DateTime.now();
+  //     DateTime sunrise = DateFormat('hh:mm:ss a').parse(sunriseTime);
+  //
+  //     // Check if the scheduled time is already passed for today
+  //     if (sunrise.isAfter(sunrise)) {
+  //       // If passed, schedule the bell for the next day
+  //       sunrise = sunrise.add(const Duration(days: 1));
+  //     }
+  //
+  //     // Calculate the duration until the scheduled time
+  //     Duration durationUntilScheduledTime = sunrise.difference(now);
+  //
+  //     // Schedule the timer to ring the bell
+  //     sunriseTimer = Timer(durationUntilScheduledTime, () {
+  //       if (isBellRinging.value) {
+  //         _ringBell(); // Only ring the bell if it's currently enabled
+  //       }
+  //       // Reschedule the timer for the next day
+  //       startBellForSunrise();
+  //     });
+  //   }
+  // }
+  //
+  // void startBellForSunset() {
+  //   String sunsetTime = PrefServices.getString('countrySunsetTimeZone');
+  //   if (sunsetTime.isNotEmpty) {
+  //     DateTime now = DateTime.now();
+  //     DateTime sunset = DateFormat('hh:mm:ss a').parse(sunsetTime);
+  //
+  //     // Check if the scheduled time is already passed for today
+  //     if (sunset.isAfter(sunset)) {
+  //       // If passed, schedule the bell for the next day
+  //       sunset = sunset.add(const Duration(days: 1));
+  //     }
+  //
+  //     // Calculate the duration until the scheduled time
+  //     Duration durationUntilScheduledTime = sunset.difference(now);
+  //
+  //     // Schedule the timer to ring the bell
+  //     sunsetTimer = Timer(durationUntilScheduledTime, () {
+  //       if (isBellRinging.value) {
+  //         _ringBell(); // Only ring the bell if it's currently enabled
+  //       }
+  //       // Reschedule the timer for the next day
+  //       startBellForSunset();
+  //     });
+  //   }
+  // }
+  //
+  //
+  // Future<void> _ringBell() async {
+  //   audioPlayer?.setAsset('assets/audio/meditation_bell.mp3');
+  //   await audioPlayer?.play();
+  //   // You can add any additional actions here when the bell rings
+  // }
+  //
+  // void toggleBellFormat() {
+  //   startBellForSunrise();
+  //   startBellForSunset();
+  // }
+  //
+  // @override
+  // void onClose() {
+  //   audioPlayer?.dispose();
+  //   sunriseTimer?.cancel();
+  //   sunsetTimer?.cancel();
+  //   super.onClose();
   // }
 
-  /// Zone Schedule
+  // Future<void> remainderAlarm() async {
+  //   String selectedTime = PrefServices.getString('selectedAlarmTime');
+  //   print("Selected Time: $selectedTime");
+  //
+  //   // Parse the selected time string (e.g., '1:00 AM')
+  //   DateTime selectedDateTime = DateFormat.jm().parse(selectedTime);
+  //
+  //   // Get the current date and time
+  //   DateTime now = DateTime.now();
+  //
+  //   DateTime alarmDateTime = DateTime(
+  //     now.year,
+  //     now.month,
+  //     now.day,
+  //     selectedDateTime.hour,
+  //     selectedDateTime.minute,
+  //   );
+  //
+  //   // Check if the alarm time has already passed today
+  //   if (alarmDateTime.isBefore(now)) {
+  //     // If the alarm time has passed, schedule it for the next day
+  //     alarmDateTime = alarmDateTime.add(const Duration(days: 1));
+  //   }
+  //
+  //   print("Scheduled Alarm DateTime: $alarmDateTime");
+  //
+  //   // Define the alarm settings
+  //   final alarmSettings = AlarmSettings(
+  //     id: 42,
+  //     dateTime: alarmDateTime,
+  //     assetAudioPath: AssetUtils.remainderAlarmAudio,
+  //     loopAudio: false,
+  //     vibrate: false,
+  //     volume: 0.2,
+  //     fadeDuration: 3.0,
+  //     notificationTitle: 'Reminders',
+  //     notificationBody: '',
+  //     enableNotificationOnKill: true,
+  //   );
+  //
+  //   // Set the alarm using the defined settings
+  //   await Alarm.set(alarmSettings: alarmSettings);
+  // }
+
+  FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+      FlutterLocalNotificationsPlugin();
 
 
 
+  /// scheduleDaily Notification
 
-  Future<void> scheduleDailyTenAMNotification() async {
 
+  Future<void> scheduleDailyNotification() async {
+
+
+    const AndroidNotificationDetails androidPlatformChannelSpecifics =
+    AndroidNotificationDetails(
+      'daily_notification_channel', // Channel ID
+      'Daily Notification', // Channel name
+      // 'Shows a daily notification at a specific time', // Channel description
+      importance: Importance.high,
+      priority: Priority.high,
+      showWhen: false,
+    );
+    const NotificationDetails platformChannelSpecifics =
+    NotificationDetails(android: androidPlatformChannelSpecifics);
+
+
+    // Schedule the notification
     await flutterLocalNotificationsPlugin.zonedSchedule(
-        0,
-        'daily scheduled notification title',
-        'daily scheduled notification body',
-
-        _nextInstanceOfTenAM(),
-        const NotificationDetails(
-          android: AndroidNotificationDetails('daily notification channel id',
-              'daily notification channel name',
-              channelDescription: 'daily notification description'),
-        ),
+      0, // Notification ID
+      'Remainders',
+      '',
+      _nextInstanceOfTenAM(), // Scheduled date and time
+      platformChannelSpecifics,
+      androidAllowWhileIdle: true,
         androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
-        uiLocalNotificationDateInterpretation:
-        UILocalNotificationDateInterpretation.absoluteTime,
-        matchDateTimeComponents: DateTimeComponents.time);
+        uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime,
+        matchDateTimeComponents: DateTimeComponents.time
+    );
   }
 
-  // PrefServices.getString('selectedAlarmTime')
+  Future<void> cancelNotification() async {
+    await flutterLocalNotificationsPlugin.cancel(0);
+  }
+
+  String convertTo24HourFormat(String time12Hour){
+
+    // Example input format: "11:35 AM"
+    List<String> parts = time12Hour.split(':');
+    print("Parts :- $parts");
+    int hour = int.parse(parts[0]);
+    int minute = int.parse(parts[1].split(' ')[0]); // Extract minute (e.g., "35")
+    String period = parts[1].split(' ')[1]; // Extract period (AM or PM)
+
+    if (period == 'AM') {
+      if (hour == 12) {
+        // Special case for 12:xx AM (midnight)
+        hour = 0; // Midnight in 24-hour format
+      }
+    } else {
+      if (hour != 12){
+        // Convert PM hour to 24-hour format
+        hour += 12;
+      }
+    }
+
+    // Format the time in 24-hour format (hh:mm)
+    String hour24Format = hour.toString().padLeft(2, '0');
+    String minute24Format = minute.toString().padLeft(2, '0');
+
+    return '$hour24Format:$minute24Format';
+  }
+
   tz.TZDateTime _nextInstanceOfTenAM(){
+
+    String selectedAlarmTime = PrefServices.getString('selectedAlarmTime');
+    print("selectedAlarmTime :- $selectedAlarmTime");
+    String time24Hour  =  convertTo24HourFormat(selectedAlarmTime);
+    print("time24Hour :- $time24Hour");
+    List<String> parts = time24Hour.split(':');
+
+    print("Separated =========> $parts");
 
     final tz.TZDateTime now = tz.TZDateTime.now(tz.local);
     tz.TZDateTime scheduledDate = tz.TZDateTime(
       tz.local,
       now.year,
       now.month,
-      now.day,
-      18,
-      03,
+      now.day, int.parse(parts[0]),int.parse(parts[1])
     );
 
-    print("scheduledDate :- $scheduledDate");
-
-    if(scheduledDate.isBefore(now)){
+    if (scheduledDate.isBefore(now)) {
       scheduledDate = scheduledDate.add(const Duration(days: 1));
     }
 
+    print("scheduledDate :- $scheduledDate");
     return scheduledDate;
 
   }
+
 
   RxBool isCountDown = false.obs;
   Rx<Duration> difference = Rx<Duration>(Duration.zero);
@@ -174,117 +275,114 @@ class SettingScreenController extends GetxController {
   RxString sunset24HourTime = ''.obs;
   RxString countDownValue = ''.obs;
 
+  DateTime parseTime(String timeStr) {
+    DateFormat formatter = DateFormat("hh:mm:ss a");
 
-  DateTime parseTime(String timeStr){
+    if (timeStr.isEmpty) {
+      return DateTime.now();
+    }
 
-  DateFormat formatter = DateFormat("hh:mm:ss a");
-
-  if (timeStr.isEmpty){
-  return DateTime.now();
+    return formatter.parse(timeStr);
   }
 
-  return formatter.parse(timeStr);
-  }
+  String formatDuration(Duration duration) {
+    int hours = duration.inHours;
+    int minutes = duration.inMinutes.remainder(60);
+    int seconds = duration.inSeconds.remainder(60);
 
-  String formatDuration(Duration duration){
-
-  int hours = duration.inHours;
-  int minutes = duration.inMinutes.remainder(60);
-  int seconds = duration.inSeconds.remainder(60);
-
-  return "${hours.toString().padLeft(2, '0')}:${minutes.toString().padLeft(2, '0')}:${seconds.toString().padLeft(2, '0')}";
+    return "${hours.toString().padLeft(2, '0')}:${minutes.toString().padLeft(2, '0')}:${seconds.toString().padLeft(2, '0')}";
   }
 
   Future<String> onCountDown() async {
+    Timer.periodic(const Duration(seconds: 1), (timer) async {
+      DateTime now = DateTime.now();
+      String sunriseTime = PrefServices.getString('countrySunriseTimeZone');
+      String sunsetTime = PrefServices.getString('countrySunsetTimeZone');
+      DateTime sunrise = parseTime(sunriseTime);
+      DateTime sunset = parseTime(sunsetTime);
 
-  Timer.periodic(const Duration(seconds: 1), (timer) async {
+      DateTime sunriseTimeWithoutYear = DateTime(now.year, now.month, now.day,
+          sunrise.hour, sunrise.minute, sunrise.second);
+      DateTime sunsetTimeWithoutYear = DateTime(now.year, now.month, now.day,
+          sunset.hour, sunset.minute, sunset.second);
+      DateTime currentTimeWithoutYear = DateTime(
+          now.year, now.month, now.day, now.hour, now.minute, now.second);
 
-  DateTime now = DateTime.now();
-  String sunriseTime = PrefServices.getString('countrySunriseTimeZone');
-  String sunsetTime = PrefServices.getString('countrySunsetTimeZone');
-  DateTime sunrise = parseTime(sunriseTime);
-  DateTime sunset = parseTime(sunsetTime);
+      if (currentTimeWithoutYear.isAfter(sunriseTimeWithoutYear)) {
+        if (currentTimeWithoutYear.isBefore(sunsetTimeWithoutYear)) {
+          difference.value =
+              sunsetTimeWithoutYear.difference(currentTimeWithoutYear);
+          // print(
+          //     "Time until sunset: ${formatDuration(difference.value)} hours.");
+          await PrefServices.setValue(
+              'timeUntilTime', formatDuration(difference.value));
+        } else {
+          DateTime nextDaySunrise =
+              sunriseTimeWithoutYear.add(const Duration(days: 1));
+          difference.value = nextDaySunrise.difference(currentTimeWithoutYear);
 
-  DateTime sunriseTimeWithoutYear = DateTime(now.year, now.month, now.day,
-  sunrise.hour, sunrise.minute, sunrise.second);
-  DateTime sunsetTimeWithoutYear = DateTime(now.year, now.month, now.day,
-  sunset.hour, sunset.minute, sunset.second);
-  DateTime currentTimeWithoutYear = DateTime(
-  now.year, now.month, now.day, now.hour, now.minute, now.second);
+          // print("Time until next sunrise: ${formatDuration(difference.value)} hours.");
+          await PrefServices.setValue(
+              'timeUntilTime', formatDuration(difference.value));
+        }
+      } else {
+        difference.value =
+            sunriseTimeWithoutYear.difference(currentTimeWithoutYear);
+        // print("Time until sunrise: ${formatDuration(difference.value)} hours.");
+        await PrefServices.setValue(
+            'timeUntilTime', formatDuration(difference.value));
+      }
 
-  if (currentTimeWithoutYear.isAfter(sunriseTimeWithoutYear)) {
-  if (currentTimeWithoutYear.isBefore(sunsetTimeWithoutYear)) {
-  difference.value =
-  sunsetTimeWithoutYear.difference(currentTimeWithoutYear);
-  // print(
-  //     "Time until sunset: ${formatDuration(difference.value)} hours.");
-  await PrefServices.setValue(
-  'timeUntilTime', formatDuration(difference.value));
-  } else {
-  DateTime nextDaySunrise =
-  sunriseTimeWithoutYear.add(const Duration(days: 1));
-  difference.value = nextDaySunrise.difference(currentTimeWithoutYear);
+      countDownValue.value = PrefServices.getString('timeUntilTime');
+      PrefServices.setValue('countDownValue', countDownValue.value);
 
-  // print("Time until next sunrise: ${formatDuration(difference.value)} hours.");
-  await PrefServices.setValue('timeUntilTime', formatDuration(difference.value));
-  }
-  } else {
-  difference.value = sunriseTimeWithoutYear.difference(currentTimeWithoutYear);
-  // print("Time until sunrise: ${formatDuration(difference.value)} hours.");
-  await PrefServices.setValue(
-  'timeUntilTime', formatDuration(difference.value));
-  }
+      // Check if countdown has reached zero
+      if (difference.value.inSeconds <= 0) {
+        timer.cancel(); // Stop the timer
+      }
 
-  countDownValue.value = PrefServices.getString('timeUntilTime');
-  PrefServices.setValue('countDownValue',countDownValue.value);
+      isCountDown.value = PrefServices.getBool('isCountDown');
+    });
 
-  // Check if countdown has reached zero
-  if (difference.value.inSeconds <= 0){
-  timer.cancel(); // Stop the timer
-  }
-
-  isCountDown.value = PrefServices.getBool('isCountDown');
-  });
-
-
-  return countDownValue.value;
-
+    return countDownValue.value;
   }
 
-  void toggleCountDown(bool value){
-  isCountDown.value = value;
-  PrefServices.setValue('isCountDown', value);
-  if (value) {
-  onCountDown();
-  }
+  void toggleCountDown(bool value) {
+    isCountDown.value = value;
+    PrefServices.setValue('isCountDown', value);
+    if (value) {
+      onCountDown();
+    }
   }
 
-  void updateTime(){
-  String formattedTime = DateFormat(is24Hours.value ? 'HH:mm:ss' : 'h:mm:ss a').format(DateTime.now());
-  current24HourTime.value = formattedTime;
+  void updateTime() {
+    String formattedTime =
+        DateFormat(is24Hours.value ? 'HH:mm:ss' : 'h:mm:ss a')
+            .format(DateTime.now());
+    current24HourTime.value = formattedTime;
   }
 
   void toggleTimeFormat(bool value) {
-  is24Hours.value = value;
-  is24HourFormat.value = !is24HourFormat.value;
-  updateTime();
-  PrefServices.setValue('is24Hours', value);
+    is24Hours.value = value;
+    is24HourFormat.value = !is24HourFormat.value;
+    updateTime();
+    PrefServices.setValue('is24Hours', value);
   }
 
   RxBool is24HourFormat = false.obs;
 
-  String formatTime(String time, bool is24Hour){
-  bool is24Hour = PrefServices.getBool('is24Hours');
+  String formatTime(String time, bool is24Hour) {
+    bool is24Hour = PrefServices.getBool('is24Hours');
 
-  if (is24Hour){
-  DateTime parsedTime = DateFormat('hh:mm:ss a').parse(time);
-  String formattedTime = DateFormat('kk:mm:ss').format(parsedTime);
-  return formattedTime;
+    if (is24Hour) {
+      DateTime parsedTime = DateFormat('hh:mm:ss a').parse(time);
+      String formattedTime = DateFormat('kk:mm:ss').format(parsedTime);
+      return formattedTime;
+    } else {
+      return time;
+    }
   }
 
-  else {
-  return time;
-  }
 
-  }
+
 }

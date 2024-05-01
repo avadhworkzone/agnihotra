@@ -99,6 +99,7 @@ flutter:
   assets:
     - assets/images/
     - assets/audio/
+    - assets/icons/
     - i_them/dark_them.json
 
   # An image asset can refer to one or more resolution-specific "variants", see

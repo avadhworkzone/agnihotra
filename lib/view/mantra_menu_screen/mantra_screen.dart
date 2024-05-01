@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:sunrise_app/common_Widget/common_assets.dart';
+import 'package:sunrise_app/common_Widget/common_back_arrow.dart';
 import 'package:sunrise_app/common_Widget/common_text.dart';
 import 'package:sunrise_app/utils/color_utils.dart';
 import 'package:sunrise_app/utils/image_utils.dart';
@@ -36,35 +37,25 @@ class _MantraScreenState extends State<MantraScreen> {
               ),
             ),
           ),
-          Padding(
-            padding: EdgeInsets.only(top: 50.h),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Padding(
-                  padding: EdgeInsets.only(left: 12.w),
-                  child: CircleAvatar(
-                    backgroundColor: ColorUtils.white,
-                    radius: 18.r,
-                    child: IconButton(
-                      onPressed: () {
-                        Get.back();
-                      },
-                      icon: Icon(
-                        size: 20.w,
-                        AssetUtils.backArrowIcon,
-                        color: ColorUtils.orange,
-                      ),
-                    ),
+          SafeArea(
+            child: Padding(
+              padding: EdgeInsets.only(top: 10.h),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+
+                  SizedBox(width: 15.w),
+                   const CommonBackArrow(),
+                  SizedBox(width: 80.w),
+                  CustomText(
+                    StringUtils.agnihotraMantraTxt,
+                    fontWeight: FontWeight.w500,
+                    fontSize: 18.sp,
                   ),
-                ),
-                CustomText(
-                  StringUtils.agnihotraMantraTxt,
-                  fontWeight: FontWeight.w500,
-                  fontSize: 18.sp,
-                ),
-                SizedBox(width: 12.w)
-              ],
+                  // SizedBox(width: 12.w)
+                ],
+              ),
             ),
           ),
           Padding(
@@ -96,7 +87,7 @@ class _MantraScreenState extends State<MantraScreen> {
                               ),
                               CustomText(
                                 StringUtils.agnihotraPatraText,
-                                color: ColorUtils.black,
+                                color: ColorUtils.black1F,
                                 fontWeight: FontWeight.w600,
                                 fontSize: 13.sp,
                               ),
@@ -201,13 +192,13 @@ class _MantraScreenState extends State<MantraScreen> {
                           ListTile(
                             title: CustomText(
                               StringUtils.sooryayaSwaha,
-                              color: ColorUtils.black,
+                              color: ColorUtils.black1F,
                               fontWeight: FontWeight.w500,
                               fontSize: 17.sp,
                             ),
                             subtitle: CustomText(
                               StringUtils.sooryayaSwahaTxt,
-                              color: ColorUtils.black,
+                              color: ColorUtils.black1F,
                               fontWeight: FontWeight.w500,
                               fontSize: 17.sp,
                             ),
@@ -215,13 +206,13 @@ class _MantraScreenState extends State<MantraScreen> {
                           ListTile(
                             title: CustomText(
                               StringUtils.sooryayaIdem,
-                              color: ColorUtils.black,
+                              color: ColorUtils.black1F,
                               fontWeight: FontWeight.w500,
                               fontSize: 17.sp,
                             ),
                             subtitle: CustomText(
                               StringUtils.sooryayaIdemTxt,
-                              color: ColorUtils.black,
+                              color: ColorUtils.black1F,
                               fontWeight: FontWeight.w500,
                               fontSize: 17.sp,
                             ),
@@ -229,13 +220,13 @@ class _MantraScreenState extends State<MantraScreen> {
                           ListTile(
                             title: CustomText(
                               StringUtils.prajapatayeSwaha,
-                              color: ColorUtils.black,
+                              color: ColorUtils.black1F,
                               fontWeight: FontWeight.w500,
                               fontSize: 17.sp,
                             ),
                             subtitle: CustomText(
                               StringUtils.prajapatayeSwahaTxt,
-                              color: ColorUtils.black,
+                              color: ColorUtils.black1F,
                               fontWeight: FontWeight.w500,
                               fontSize: 17.sp,
                             ),
@@ -245,13 +236,13 @@ class _MantraScreenState extends State<MantraScreen> {
                           ListTile(
                             title: CustomText(
                               StringUtils.prajapatayeIdem,
-                              color: ColorUtils.black,
+                              color: ColorUtils.black1F,
                               fontWeight: FontWeight.w500,
                               fontSize: 17.sp,
                             ),
                             subtitle: CustomText(
                               StringUtils.prajapatayeIdemTxt,
-                              color: ColorUtils.black,
+                              color: ColorUtils.black1F,
                               fontWeight: FontWeight.w500,
                               fontSize: 17.sp,
                             ),
@@ -365,13 +356,13 @@ class _MantraScreenState extends State<MantraScreen> {
                           ListTile(
                             title: CustomText(
                               StringUtils.agnayeSwaha,
-                              color: ColorUtils.black,
+                              color: ColorUtils.black1F,
                               fontWeight: FontWeight.w500,
                               fontSize: 17.sp,
                             ),
                             subtitle: CustomText(
                               StringUtils.agnayeSwahaTxt,
-                              color: ColorUtils.black,
+                              color: ColorUtils.black1F,
                               fontWeight: FontWeight.w500,
                               fontSize: 17.sp,
                             ),
@@ -380,13 +371,13 @@ class _MantraScreenState extends State<MantraScreen> {
                           ListTile(
                             title: CustomText(
                               StringUtils.agnayeIdem,
-                              color: ColorUtils.black,
+                              color: ColorUtils.black1F,
                               fontWeight: FontWeight.w500,
                               fontSize: 17.sp,
                             ),
                             subtitle: CustomText(
                               StringUtils.agnayeIdemTxt,
-                              color: ColorUtils.black,
+                              color: ColorUtils.black1F,
                               fontWeight: FontWeight.w500,
                               fontSize: 17.sp,
                             ),
@@ -395,13 +386,13 @@ class _MantraScreenState extends State<MantraScreen> {
                           ListTile(
                             title: CustomText(
                               StringUtils.prajapatayeSwaha,
-                              color: ColorUtils.black,
+                              color: ColorUtils.black1F,
                               fontWeight: FontWeight.w500,
                               fontSize: 17.sp,
                             ),
                             subtitle: CustomText(
                               StringUtils.prajapatayeSwahaTxt,
-                              color: ColorUtils.black,
+                              color: ColorUtils.black1F,
                               fontWeight: FontWeight.w500,
                               fontSize: 17.sp,
                             ),
@@ -411,13 +402,13 @@ class _MantraScreenState extends State<MantraScreen> {
                           ListTile(
                             title: CustomText(
                               StringUtils.prajapatayeIdem,
-                              color: ColorUtils.black,
+                              color: ColorUtils.black1F,
                               fontWeight: FontWeight.w500,
                               fontSize: 17.sp,
                             ),
                             subtitle: CustomText(
                               StringUtils.prajapatayeIdemTxt,
-                              color: ColorUtils.black,
+                              color: ColorUtils.black1F,
                               fontWeight: FontWeight.w500,
                               fontSize: 17.sp,
                             ),

@@ -23,13 +23,19 @@ class WelcomeScreen extends StatefulWidget {
 class _WelcomeScreenState extends State<WelcomeScreen> {
   String selectedValue = '';
 
-  LocationController locationController = Get.find<LocationController>();
+  EnterManuallyLocationController locationController = Get.find<EnterManuallyLocationController>();
   SettingScreenController settingScreenController =   Get.find<SettingScreenController>();
 
 
   @override
   void initState() {
     locationController.getCurrentLocation();
+    if(PrefServices.getBool('saveToggleValue')) {
+      settingScreenController.scheduleDailyNotification();
+    }
+    else{
+      settingScreenController.cancelNotification();
+    }
     settingScreenController.isScreenOn.value = PrefServices.getBool('keepScreenOn');
     print("settingScreenController.isScreenOn.value :- ${settingScreenController.isScreenOn.value}");
     if (settingScreenController.isScreenOn.value){
@@ -72,7 +78,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 StringUtils.languageChooseTxt,
                 fontSize: 16.sp,
                 fontWeight: FontWeight.w600,
-                color: ColorUtils.black,
+                color: ColorUtils.black1F,
               ),
               SizedBox(height: 5.h,),
               // SELECT LANGUAGE TO USE
@@ -105,7 +111,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                           StringUtils.hinTxt,
                           fontSize: 14.sp,
                           fontWeight: FontWeight.w600,
-                          color: ColorUtils.black,
+                          color: ColorUtils.black1F,
                         ),
                         Radio(
                             value: 'Hindi',
@@ -145,7 +151,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                           StringUtils.engTxt,
                           fontSize: 14.sp,
                           fontWeight: FontWeight.w600,
-                          color: ColorUtils.black,
+                          color: ColorUtils.black1F,
                         ),
                         Radio(
                           value: 'English',
@@ -186,7 +192,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                           StringUtils.gujTxt,
                           fontSize: 14.sp,
                           fontWeight: FontWeight.w600,
-                          color: ColorUtils.black,
+                          color: ColorUtils.black1F,
                         ),
                         Radio(
                           value: 'Gujarati',

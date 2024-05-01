@@ -3,6 +3,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:sunrise_app/common_Widget/common_back_arrow.dart';
 import 'package:sunrise_app/common_Widget/common_button.dart';
 import 'package:sunrise_app/common_Widget/common_text.dart';
 import 'package:sunrise_app/services/prefServices.dart';
@@ -22,8 +23,7 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SeetingScreenState extends State<SettingsScreen> {
-  SettingScreenController settingScreenController =
-      Get.find<SettingScreenController>();
+  SettingScreenController settingScreenController = Get.find<SettingScreenController>();
   GoogleController googleController = Get.find<GoogleController>();
   TimeOfDay? selectedTime;
   TimePickerEntryMode entryMode = TimePickerEntryMode.dial;
@@ -40,6 +40,11 @@ class _SeetingScreenState extends State<SettingsScreen> {
     print("settingScreenController.on4.value :- ${settingScreenController.on4.value}");
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
+
+      /// Medition Bell Functionality
+      // settingScreenController.audioPlayer = AudioPlayer();
+      // settingScreenController. isBellRinging.value = PrefServices.getBool('isBellRinging') ?? false;
+
       settingScreenController.isScreenOn.value =
           PrefServices.getBool('keepScreenOn');
       if (settingScreenController.isScreenOn.value) {
@@ -61,6 +66,7 @@ class _SeetingScreenState extends State<SettingsScreen> {
       body: Obx(
         () => Stack(
           children: [
+
             Container(
               decoration: BoxDecoration(
                 image: DecorationImage(
@@ -71,31 +77,32 @@ class _SeetingScreenState extends State<SettingsScreen> {
                 ),
               ),
             ),
-            Padding(
-              padding: EdgeInsets.only(top: 50.h),
-              child: Row(
-                children: [
-                  Padding(
-                    padding: EdgeInsets.only(left: 12.w),
-                    child: CircleAvatar(
-                      backgroundColor: ColorUtils.white,
-                      radius: 23.r,
-                      child: IconButton(
-                        onPressed: () {
-                          Get.off(SunriseSunetScreen());
-                        },
-                        icon: const Icon(
-                          AssetUtils.backArrowIcon,
-                          color: ColorUtils.orange,
-                        ),
-                      ),
+
+            SafeArea(
+              child: Padding(
+                padding: EdgeInsets.only(top: 10.h),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+
+                    SizedBox(width: 15.w),
+                    const CommonBackArrow(),
+                    SizedBox(width: 100.w),
+                    CustomText(
+                      StringUtils.settingsScreenTxt,
+                      fontWeight: FontWeight.w500,
+                      fontSize: 18.sp,
                     ),
-                  ),
-                ],
+
+
+                  ],
+                ),
               ),
             ),
+
             Padding(
-              padding: EdgeInsets.only(top: 90.h),
+              padding: EdgeInsets.only(top: 110.h),
               child: ListView(
                 children: [
                   Padding(
@@ -166,7 +173,7 @@ class _SeetingScreenState extends State<SettingsScreen> {
 
                             CustomText(
                               StringUtils.screenKeepTxt,
-                              color: ColorUtils.black,
+                              color: ColorUtils.black1F,
                               fontWeight: FontWeight.w500,
                               fontSize: 15.sp,
                             ),
@@ -204,7 +211,7 @@ class _SeetingScreenState extends State<SettingsScreen> {
 
                             CustomText(
                               StringUtils.timeTxt,
-                              color: ColorUtils.black,
+                              color: ColorUtils.black1F,
                               fontSize: 15.sp,
                               fontWeight: FontWeight.w500,
                             ),
@@ -212,6 +219,24 @@ class _SeetingScreenState extends State<SettingsScreen> {
                             SizedBox(
                               height: 20.h,
                             ),
+
+                            /// Medition Bell
+                            // Transform.scale(
+                            //     scale: 0.8,
+                            //     child: Switch(
+                            //       value: settingScreenController.isBellRinging.value,
+                            //       onChanged: (value) {
+                            //         settingScreenController.isBellRinging.value = value;
+                            //         PrefServices.setValue('isBellRinging', settingScreenController.isBellRinging.value);
+                            //         if (settingScreenController.isBellRinging.value) {
+                            //           settingScreenController.toggleBellFormat();
+                            //         } else {
+                            //           settingScreenController.sunriseTimer?.cancel();
+                            //           settingScreenController.sunsetTimer?.cancel();
+                            //         }
+                            //       },
+                            //     ),
+                            //     ),
 
                             SizedBox(
                               height: 30.h,
@@ -241,7 +266,7 @@ class _SeetingScreenState extends State<SettingsScreen> {
 
                             CustomText(
                               StringUtils.ringsTxt,
-                              color: ColorUtils.black,
+                              color: ColorUtils.black1F,
                               fontSize: 15.sp,
                               fontWeight: FontWeight.w500,
                             ),
@@ -279,7 +304,7 @@ class _SeetingScreenState extends State<SettingsScreen> {
 
                             CustomText(
                               StringUtils.countDownClockTxt,
-                              color: ColorUtils.black,
+                              color: ColorUtils.black1F,
                               fontSize: 15.sp,
                               fontWeight: FontWeight.w500,
                             ),
@@ -309,7 +334,7 @@ class _SeetingScreenState extends State<SettingsScreen> {
 
                                         settingScreenController.toggle4();
 
-                                        if (PrefServices.getBool('saveToggleValue')){
+                                        if(PrefServices.getBool('saveToggleValue')){
 
                                           final TimeOfDay? time = await showTimePicker(
                                             barrierDismissible: false,
@@ -336,9 +361,14 @@ class _SeetingScreenState extends State<SettingsScreen> {
                                                     ?.format(context)
                                                     .toString());
                                           });
-                                          // settingScreenController.showSimpleNotification(title: 'Remainders', body: '', payload: '');
 
-                                          settingScreenController.scheduleDailyTenAMNotification();
+
+                                          settingScreenController.scheduleDailyNotification();
+
+                                        }
+                                        else{
+                                           print("==========CANCEL NOTIFICATION========");
+                                           settingScreenController.cancelNotification();
                                         }
 
 
@@ -352,7 +382,7 @@ class _SeetingScreenState extends State<SettingsScreen> {
 
                             CustomText(
                               StringUtils.setReminderTxt,
-                              color: ColorUtils.black,
+                              color: ColorUtils.black1F,
                               fontSize: 15.sp,
                               fontWeight: FontWeight.w500,
                             ),
@@ -360,7 +390,7 @@ class _SeetingScreenState extends State<SettingsScreen> {
                             if (PrefServices.getBool('saveToggleValue'))
                               CustomText(
                                 '${StringUtils.ringAlarmTxt.tr} ${PrefServices.getString('selectedAlarmTime')}',
-                                color: ColorUtils.black,
+                                color: ColorUtils.black1F,
                                 fontSize: 15.sp,
                                 fontWeight: FontWeight.w500,
                               ),

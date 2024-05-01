@@ -9,7 +9,7 @@ import 'package:sunrise_app/view/google_map_screen/integrate_google_map.dart';
 import 'package:sunrise_app/view/sunrise_sunset_screen/sunrise_sunset_screen.dart';
 import 'package:sunrise_app/viewModel/google_map_controller.dart';
 
-class LocationController extends GetxController {
+class EnterManuallyLocationController extends GetxController {
 
   GoogleController googleController = Get.find<GoogleController>();
   GoogleMapController? mapController;
@@ -149,7 +149,8 @@ class LocationController extends GetxController {
     void getLocationOnMap() async {
 
       try {
-        if (validationFormKey.currentState!.validate()) {
+
+        if(validationFormKey.currentState!.validate()){
 
           latData.value = double.parse(latitudeController.text);
           lonData.value = double.parse(longitudeController.text);
@@ -157,8 +158,7 @@ class LocationController extends GetxController {
           print("latData :- $latData");
           print("lonData :- $lonData");
 
-          List<Placemark> placemarks =
-          await placemarkFromCoordinates(latData.value, lonData.value);
+          List<Placemark> placemarks = await placemarkFromCoordinates(latData.value, lonData.value);
           String street = placemarks[0].street ?? '';
           String subLocality = placemarks[0].subLocality ?? '';
           String locality = placemarks[0].locality ?? '';
@@ -174,12 +174,17 @@ class LocationController extends GetxController {
             postalCode,
             country
           ];
+
           address.value = addressComponents.where((element) => element.isNotEmpty).join(', ');
           latitude.value = double.parse(latitudeController.text);
           longitude.value = double.parse(longitudeController.text);
 
           LatLng latLng = LatLng(latData.value, lonData.value);
           googleController.onAddMarkerButtonPressed(latLng);
+
+          print("address.value :- ${address.value}");
+          print("longitude.value :- ${longitude.value}");
+          print("latitude.value :- ${latitude.value}");
 
           Get.to(
             IntegrateGoogleMap(
@@ -188,15 +193,18 @@ class LocationController extends GetxController {
               address: address.value,
             ),
           );
+
           update();
           latitudeController.clear();
           longitudeController.clear();
+
         }
       }
 
       catch(e){
         print('Error: $e');
       }
+
     }
 
 

@@ -26,7 +26,7 @@ Map<String,String> en= {
   "languageUseTxt":"Select the language you prefer to use",
   "submitBtnTxt":"Submit",
   "mantraTxt":"Mantra",
-  "contactsTxt":"Contacts",
+  "teamAgnihotraTxt":"Team Agnihotra",
   "languageTxt":"Language",
   "aboutTxt":"About",
   "privacyPolicyTxt":"Privacy policy",
@@ -34,19 +34,20 @@ Map<String,String> en= {
   "helpTxt":"Help",
   "sunriseTxt":"Sunrise Mantra",
   "sunsetTxt":"Sunset Mantra",
-  "playTxt":"play it",
+  "playTxt":"Play it",
+  "pauseTxt":'Pause it',
   "checkTimeTxt":"Ensure your time",
   "checkDeviceTimeTxt":"check your device time with time on the internet.please note that accuracy is dependent on network and third party tools-worldtimeapi.org internet.",
   "screenOnTxt":"Screen Always On",
   "screenKeepTxt":"Keeps screen awake while app is open",
   "hoursTxt":"24 Hours Clock",
-  "timeTxt":"change time format to 12 or 24 hours",
+  "timeTxt":"Change time format to 12 or 24 hours",
   "meditationTxt":"Meditation Bell",
-  "ringsTxt":"rings bell at time of this app",
+  "ringsTxt":"Rings bell at time of this app",
   "countDownTxt":"Display Countdown",
-  "countDownClockTxt":"display countdown or clock in center",
+  "countDownClockTxt":"Display countdown or clock in center",
   "reminderTxt":"Reminders",
-  "setReminderTxt":"set reminders for this app",
+  "setReminderTxt":"Set reminders for this app",
   "resetBtnTxt":"Reset",
   "deleteLocationTxt":"Delete All Location",
   "addLocationTxt":"Add Location",
@@ -62,7 +63,7 @@ Map<String,String> en= {
   "tilakSandhyaMantraTxt":"Trikal sandhya mantra",
   "trikalMantraTxt":"Trikal Sandhya",
   "mantra24":"24 mantra",
-  "timeZonTxt" :"Please confirm timesone\nfor this location",
+  "timeZonTxt" :"Please confirm timezone\nfor this location",
   "standardTime":"India Standard Time(Asia/Kolkata)",
   "changeTimeTxt" : "Change Timezone",
   "confirmTimeZone" : "Confirm Timezone for your location",
@@ -126,7 +127,6 @@ Map<String,String> en= {
 
   "SettingsScreenTxt":"Settings",
 
-  " countDownClockTxt":"display countdown or clock in center",
 
 
 
@@ -135,12 +135,52 @@ Map<String,String> en= {
   "appName": "Agnihotra - A Disease Free Campaign",
   "inspiration": "Inspiration:",
   "guruName": "Gurudev Sri Sri Ravi Shankar",
+
+  "alertTxt": 'Alert !',
+  'resetButtonNotice':
+  '\tYou are about to RESET the app which will delete all location timing and preference. You will be able to add new location post-reset.Use this option only in case of data corruption or error.',
+  "resetMsg":"Reset Complete",
+  "ringAlarmTxt" : 'Set reminders at',
+   "search":'Search',
   "callHelpLine":'Call Helpline',
   "emailSupport":'Email Support',
   "chatSupport":'Chat with Support',
-  "feedback":'Feedback'
+  "feedback":'Feedback',
+  "feedbackOptionTxt":"Please select an option to share a feedback or convey a botheration" ,
+  "shareFeedbackTxt":"I wish to share a feedback",
+  "shareBotherationTxt":"I wish to convey botheration",
+  "sendBtnTxt":"Send",
+  "matraTxt":"Mantra",
 
+  //Login Screen
+  "doNotHaveAccountTxt":"You Don’t have any account?",
+  "loginTxt":'Log in',
+  "orSignInWithTxt":'Or sign in with',
+  "continueGoogleTxt":"Continue with google",
+  "orTxt":"OR",
+  "logInWithTxt":"Log in with",
+  "emailAddressTxt":"Email address",
+  "continueWithEmailTxt":"Continue with Email id",
+  "chooseAccountTxt":"Choose an account",
+  "passwordTxt":"Password",
+  "toContinueTxt": "to continue\n to Agnihotra - ek rog mukta abhiyan",
+  "emailHintTxt": "Enter your Email address",
+  "passwordHintTxt":"Enter your password",
+  "forgetPwdTxt":"Forgot Password?",
+  "addAnotherAccountTxt":"Add another account",
 
+  // Register Screen
+  "nameTxt":"Name",
+  "fullNameHintTxt":"Enter your Name",
+  "createAccountTxt":"Create an account",
+  "signUpTxt":"Sign up",
 
+  //Edit Profile Screen
+  "editProfileTxt":"Edit Profile",
+
+  /// Forgot Password Screen
+  "forgetPwdScrrenTxt":"Forgot Password",
+  "enterYourEmailAddressTxt":"Enter your email address for\nreset password",
+  "resetPasswordTxt":"Password Reset",
 
 };

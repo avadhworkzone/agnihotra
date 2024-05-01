@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import '../utils/color_utils.dart';
 
 typedef OnChangeString = void Function(String value);
@@ -16,19 +17,24 @@ class CommonTextField extends StatelessWidget {
   final int? inputLength;
   final String? hintText;
   final String? validationMessage;
-
+  final String? labelText;
   final String? preFixIconPath;
   final int? maxLine;
+  final TextStyle? labelStyle;
   final Widget? sIcon;
   final Widget? pIcon;
   final bool? obscureValue;
   final bool? underLineBorder;
   final bool? showLabel;
+  final InputBorder? border;
   final OnChangeString? onChange;
   final Color? titleColor;
+  final EdgeInsetsGeometry? contentPadding;
   final List<TextInputFormatter>? inputFormatters;
   final String? Function(String?)? validator;
   final TextAlignVertical? textAlignVertical;
+  final InputBorder? focusedBorder;
+  final TextStyle? hintStyle;
 
 
   const CommonTextField({
@@ -53,7 +59,7 @@ class CommonTextField extends StatelessWidget {
     this.onChange,
     this.initialValue = '',
     this.obscureValue,
-    this.titleColor = ColorUtils.black, this.textAlignVertical,
+    this.titleColor = ColorUtils.black1F, this.textAlignVertical, this.border, this.contentPadding, this.focusedBorder, this.labelText, this.labelStyle, this.hintStyle,
   });
 
   /// PLEASE IMPORT GET X PACKAGE
@@ -66,7 +72,7 @@ class CommonTextField extends StatelessWidget {
         // textAlignVertical: textAlignVertical,
 
         style: const TextStyle(
-            color: ColorUtils.black,
+            color: ColorUtils.black1F,
             fontSize: 15
         ),
         keyboardType: keyBoardType ?? TextInputType.text,
@@ -74,8 +80,13 @@ class CommonTextField extends StatelessWidget {
         onChanged: onChange,
         validator: validator,
         decoration: InputDecoration(
-          contentPadding: EdgeInsets.zero,
-          hintText: hintText,
+          focusedBorder: focusedBorder,
+          labelText: labelText,
+          labelStyle: labelStyle,
+          border: border,
+          contentPadding: contentPadding ?? EdgeInsets.zero,
+          hintText: hintText!.tr,
+          hintStyle: hintStyle,
           errorStyle: TextStyle(
             color: Colors.red,
             fontSize: 12.sp,

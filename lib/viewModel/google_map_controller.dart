@@ -24,7 +24,7 @@ class GoogleController extends GetxController {
   final RxSet<Marker> markers = <Marker>{}.obs;
   Rx<LatLng?> lastMapPosition = Rx<LatLng?>(null);
   Rx<MapType> currentMapType = MapType.hybrid.obs;
-  RxString address = ''.obs;
+RxString address = 'No Address Found'.obs;
   RxString searchAddress = ''.obs;
   RxBool isLoad = false.obs;
   RxBool result = true.obs;
@@ -284,7 +284,7 @@ class GoogleController extends GetxController {
             CustomText(
               StringUtils.timeZonTxt,
               fontWeight: FontWeight.w600,
-              color: ColorUtils.black,
+              color: ColorUtils.black1F,
               textAlign: TextAlign.center,
               fontSize: 15.sp,
             ),
@@ -294,7 +294,7 @@ class GoogleController extends GetxController {
             CustomText(
               StringUtils.standardTime,
               fontWeight: FontWeight.w500,
-              color: ColorUtils.black,
+              color: ColorUtils.black1F,
               textAlign: TextAlign.center,
               fontSize: 13.sp,
             ),
@@ -338,6 +338,7 @@ class GoogleController extends GetxController {
                       begin: AlignmentDirectional.topEnd,
                       end: AlignmentDirectional.bottomEnd,
                     ),
+
                     onTap: (){
                       Get.back();
                       settingScreenController.toggleCountDown(PrefServices.getBool('isCountDown'));

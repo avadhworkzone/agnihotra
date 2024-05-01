@@ -44,9 +44,11 @@ class _ChangeTimeZoneScreenState extends State<ChangeTimeZoneScreen> {
     return Scaffold(
       body: Column(
         children: [
+
           SizedBox(
             height: 30.h,
           ),
+
           CommonTextField(
             textEditController: googleController.searchCountryController,
             onChange: (value) {
@@ -58,7 +60,7 @@ class _ChangeTimeZoneScreenState extends State<ChangeTimeZoneScreen> {
 
               });
             },
-            hintText: 'Search',
+            hintText: StringUtils.search.tr,
 
           ),
 
@@ -151,7 +153,7 @@ class _ChangeTimeZoneScreenState extends State<ChangeTimeZoneScreen> {
                 StringUtils.confirmTimeZone,
                 fontSize: 15.sp,
                 fontWeight: FontWeight.w500,
-                color: ColorUtils.black,
+                color: ColorUtils.black1F,
               ),
               SizedBox(
                 height: 5.h,
@@ -160,7 +162,7 @@ class _ChangeTimeZoneScreenState extends State<ChangeTimeZoneScreen> {
                 countryName,
                 fontSize: 14.sp,
                 fontWeight: FontWeight.w500,
-                color: ColorUtils.black,
+                color: ColorUtils.black1F,
               ),
               SizedBox(
                 height: 20.h,

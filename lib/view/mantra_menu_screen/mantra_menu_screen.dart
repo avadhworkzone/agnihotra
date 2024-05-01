@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:sunrise_app/common_Widget/common_assets.dart';
+import 'package:sunrise_app/common_Widget/common_back_arrow.dart';
 import 'package:sunrise_app/common_Widget/common_text.dart';
 import 'package:sunrise_app/utils/color_utils.dart';
 import 'package:sunrise_app/utils/image_utils.dart';
@@ -22,7 +23,6 @@ class _MantraMenuScreenState extends State<MantraMenuScreen> {
     return Scaffold(
       body: Stack(
         children: [
-
           Container(
             decoration: BoxDecoration(
               image: DecorationImage(
@@ -33,7 +33,6 @@ class _MantraMenuScreenState extends State<MantraMenuScreen> {
               ),
             ),
           ),
-
           SafeArea(
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 15.w),
@@ -41,18 +40,22 @@ class _MantraMenuScreenState extends State<MantraMenuScreen> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  CircleAvatar(
-                    backgroundColor: ColorUtils.white,
-                    radius: 20.r,
-                    child: IconButton(
-                      onPressed: () {
-                        Get.back();
-                      },
-                      icon: const Icon(
-                        AssetUtils.backArrowIcon,
-                        color: ColorUtils.orange,
+                  SizedBox(
+                    height: 10.h,
+                  ),
+                   Row(
+
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+
+                      const CommonBackArrow(),
+                      SizedBox(width: 110.w),
+                      CustomText(
+                        StringUtils.mantraTxt,
+                        fontWeight: FontWeight.w500,
+                        fontSize: 18.sp,
                       ),
-                    ),
+                    ],
                   ),
 
                   SizedBox(
@@ -64,9 +67,7 @@ class _MantraMenuScreenState extends State<MantraMenuScreen> {
                     onTap: () {
                       Get.to(const MantraScreen());
                     },
-                    child: Stack(
-                        alignment: Alignment.topRight, children: [
-
+                    child: Stack(alignment: Alignment.topRight, children: [
                       SizedBox(
                         height: 183.57.h,
                         width: Get.width,
@@ -79,36 +80,31 @@ class _MantraMenuScreenState extends State<MantraMenuScreen> {
                         padding: EdgeInsets.only(top: 10.h, right: 8.w),
                         child: Column(
                           children: [
-
                             GradientText(
                               StringUtils.agnihotraMantraTxt,
-                              style:  TextStyle(fontSize: 15.sp,  fontWeight: FontWeight.w600,),
+                              style: TextStyle(
+                                fontSize: 15.sp,
+                                fontWeight: FontWeight.w600,
+                              ),
                               gradient: const LinearGradient(
                                 colors: [
                                   ColorUtils.txtGradientColor2,
                                   ColorUtils.txtGradientColor1,
-
                                 ],
-
                                 begin: Alignment.topLeft,
                                 end: Alignment.topRight,
-
                               ),
                             ),
-
                             CustomText(
                               StringUtils.sunriseSunsetMantraTxt,
                               color: ColorUtils.sunriseSunsetMantraColor,
                               fontWeight: FontWeight.w600,
                               fontSize: 15.sp,
                             ),
-
                           ],
                         ),
                       )
-                  ]  ),
-
-
+                    ]),
                   ),
 
                   SizedBox(
@@ -135,12 +131,14 @@ class _MantraMenuScreenState extends State<MantraMenuScreen> {
                           children: [
                             GradientText(
                               StringUtils.trikalMantraTxt,
-                              style:  TextStyle(fontSize: 15.sp,  fontWeight: FontWeight.w600,),
+                              style: TextStyle(
+                                fontSize: 15.sp,
+                                fontWeight: FontWeight.w600,
+                              ),
                               gradient: const LinearGradient(
                                 colors: [
                                   ColorUtils.txtGradientColor2,
                                   ColorUtils.txtGradientColor1,
-
                                 ],
                                 begin: Alignment.topLeft,
                                 end: Alignment.topRight,
@@ -156,7 +154,6 @@ class _MantraMenuScreenState extends State<MantraMenuScreen> {
                         ),
                       )
                     ]),
-
                   ),
                 ],
               ),
