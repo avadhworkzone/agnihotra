@@ -25,6 +25,7 @@ class CommonTextField extends StatelessWidget {
   final Widget? pIcon;
   final bool? obscureValue;
   final bool? underLineBorder;
+  final InputBorder? enabledBorder;
   final bool? showLabel;
   final InputBorder? border;
   final OnChangeString? onChange;
@@ -35,7 +36,6 @@ class CommonTextField extends StatelessWidget {
   final TextAlignVertical? textAlignVertical;
   final InputBorder? focusedBorder;
   final TextStyle? hintStyle;
-
 
   const CommonTextField({
     super.key,
@@ -59,22 +59,24 @@ class CommonTextField extends StatelessWidget {
     this.onChange,
     this.initialValue = '',
     this.obscureValue,
-    this.titleColor = ColorUtils.black1F, this.textAlignVertical, this.border, this.contentPadding, this.focusedBorder, this.labelText, this.labelStyle, this.hintStyle,
+    this.titleColor = ColorUtils.black1F,
+    this.textAlignVertical,
+    this.border,
+    this.contentPadding,
+    this.focusedBorder,
+    this.labelText,
+    this.labelStyle,
+    this.hintStyle, this.enabledBorder,
   });
 
-  /// PLEASE IMPORT GET X PACKAGE
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 40,
+      height: 40.h,
       child: TextFormField(
         controller: textEditController,
-        // textAlignVertical: textAlignVertical,
 
-        style: const TextStyle(
-            color: ColorUtils.black1F,
-            fontSize: 15
-        ),
+        style: const TextStyle(color: ColorUtils.black1F, fontSize: 15),
         keyboardType: keyBoardType ?? TextInputType.text,
         maxLines: maxLine ?? 1,
         onChanged: onChange,
@@ -84,8 +86,9 @@ class CommonTextField extends StatelessWidget {
           labelText: labelText,
           labelStyle: labelStyle,
           border: border,
+          enabledBorder: enabledBorder,
           contentPadding: contentPadding ?? EdgeInsets.zero,
-          hintText: hintText!.tr,
+          hintText: hintText,
           hintStyle: hintStyle,
           errorStyle: TextStyle(
             color: Colors.red,

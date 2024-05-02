@@ -29,6 +29,7 @@ class AssetUtils{
   static String agnihotraHvanKund = '${imagePath}agnihotraHvanKund.png';
   static String agnihotrTxtImage = '${imagePath}agnihotraTxt.png';
   static String loginBackgroundImage = '${imagePath}loginscreenBackground.png';
+  static String authScreenBg = '${imagePath}auth_screen_bg.png';
 
   /// ICONS
 
@@ -56,6 +57,10 @@ class AssetUtils{
   static const lockIcon = '${iconPath}lock.png';
   static const profileIcon = '${iconPath}profile.png';
   static const nameIcon = '${iconPath}name.png';
+  static const editProfileIcon = '${iconPath}edit_profile.png';
+
+
+
 
 
   /// AUDIO PATH

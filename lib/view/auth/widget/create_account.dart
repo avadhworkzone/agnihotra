@@ -77,9 +77,9 @@ class CreateAccount extends StatelessWidget {
               padding: EdgeInsets.symmetric(horizontal: 30.w),
               child: CommonTextField(
                 textEditController: signUpController.fullNameController,
-                border: OutlineInputBorder(
+                enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(35.r),
-                  borderSide: BorderSide(color: ColorUtils.grayE9, width: 1.5.w),
+                  borderSide: BorderSide(color: ColorUtils.grayD1, width: 1.5.w),
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderSide: BorderSide(color: ColorUtils.orange, width: 1.5.w),
@@ -127,9 +127,9 @@ class CreateAccount extends StatelessWidget {
               padding: EdgeInsets.symmetric(horizontal: 30.w),
               child: CommonTextField(
                 textEditController: signUpController.emailController,
-                border: OutlineInputBorder(
+                enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(35.r),
-                  borderSide: BorderSide(color: ColorUtils.grayE9, width: 1.5.w),
+                  borderSide: BorderSide(color: ColorUtils.grayD1, width: 1.5.w),
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderSide: BorderSide(color: ColorUtils.orange, width: 1.5.w),
@@ -177,9 +177,9 @@ class CreateAccount extends StatelessWidget {
               padding: EdgeInsets.symmetric(horizontal: 30.w),
               child: CommonTextField(
                 textEditController: signUpController.passwordController,
-                border: OutlineInputBorder(
+                enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(35.r),
-                  borderSide: BorderSide(color: ColorUtils.grayE9, width: 1.5.w),
+                  borderSide: BorderSide(color: ColorUtils.grayD1, width: 1.5.w),
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderSide: BorderSide(color: ColorUtils.orange, width: 1.5.w),

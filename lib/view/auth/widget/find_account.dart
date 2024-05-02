@@ -10,6 +10,7 @@ import 'package:sunrise_app/utils/image_utils.dart';
 import 'package:sunrise_app/utils/string_utils.dart';
 import 'package:sunrise_app/viewModel/forgot_password_controller.dart';
 
+
 class FindAccount extends StatelessWidget {
    FindAccount({super.key});
 
@@ -90,10 +91,9 @@ class FindAccount extends StatelessWidget {
               padding: EdgeInsets.symmetric(horizontal: 30.w),
               child: CommonTextField(
                 textEditController: forgotPasswordController.emailController,
-                border: OutlineInputBorder(
+                enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(35.r),
-                  borderSide:
-                      BorderSide(color: ColorUtils.grayE9, width: 1.5.w),
+                  borderSide: BorderSide(color: ColorUtils.grayD1, width: 1.5.w),
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderSide:
@@ -124,7 +124,7 @@ class FindAccount extends StatelessWidget {
           ),
 
 
-          /// Sign up button
+          /// Password Reset
           CustomBtn(
             height: 33.h,
             width: 146.w,
@@ -139,7 +139,7 @@ class FindAccount extends StatelessWidget {
             onTap: () {
               // Get.back();
             },
-            title: StringUtils.resetPasswordTxt,
+            title: StringUtils.resetPasswordBtnTxt,
             fontSize: 12.sp,
           ),
 

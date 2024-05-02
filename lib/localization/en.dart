@@ -177,10 +177,30 @@ Map<String,String> en= {
 
   //Edit Profile Screen
   "editProfileTxt":"Edit Profile",
+   "changeProfilePhotoTxt":"Change Profile Photo",
+  "removeProfilePhotoTxt":"Remove Profile Photo",
+  "cancelTxt":"Cancel",
+  "userNameTxt":"User name",
+
 
   /// Forgot Password Screen
   "forgetPwdScrrenTxt":"Forgot Password",
   "enterYourEmailAddressTxt":"Enter your email address for\nreset password",
   "resetPasswordTxt":"Password Reset",
+
+  // Reset Password Screen
+  "resetPwdTxt":"Reset Password",
+  "enterNewPwdTwiceTxt":"Enter your new password twice below\nto reset a new password",
+  "enterNewPwdTxt":"Enter new password",
+  "reEnterNewPwdTxt":"Re-enter new password",
+  "reEnterPwdHintTxt":"Re-enter your new password",
+  "genderTxt":"Gender",
+  "updateBtnTxt":"Update",
+  "selectGenderTxt":"Select Gender",
+  "maleTxt":"Male",
+  "femaleTxt":"Female",
+  "otherTxt":"Other",
+
+
 
 };

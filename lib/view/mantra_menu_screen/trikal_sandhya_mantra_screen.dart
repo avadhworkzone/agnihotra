@@ -259,7 +259,7 @@ class _TrikalSandhyaMantraState extends State<TrikalSandhyaMantra> {
                                   commonRowWidget(firstTitle: 'दोपहर : ', secondTitle: 'माध्याह्निकं', fontWeight: FontWeight.w500, verticalPadding: 0),
                                   SizedBox(height: 5.h,),
 
-                                  commonRowWidget(firstTitle: 'शाम : ', secondTitle: ' सायं सन्ध्यां समिदाधानम् च करिष्ये', fontWeight: FontWeight.w500, verticalPadding: 0)
+                                  commonRowWidget(firstTitle: 'शाम : ', secondTitle: ' सायं सन्ध्यां समिदाधानम् च करिंष्ये', fontWeight: FontWeight.w500, verticalPadding: 0)
                                 ],
                               )
                             ],
@@ -612,18 +612,21 @@ class _TrikalSandhyaMantraState extends State<TrikalSandhyaMantra> {
                           ),
 
                           const Divider(),
+
                           commonRowWidget(
                               number: '13',
                               firstTitle: 'दिग्देवता नमस्कारः',
                               fontWeight: FontWeight.w500,
                               fontSize: 9.sp),
+
                           commonRowWidget(
-                              secondTitle:
-                                 StringUtils.directionText,
+                              secondTitle: StringUtils.directionText,
                               fontWeight: FontWeight.w500,
                               fontSize: 12.sp,
                               horizontalPadding: 41),
+
                           SizedBox(height: 10.h),
+
                           Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -972,7 +975,7 @@ class _TrikalSandhyaMantraState extends State<TrikalSandhyaMantra> {
                                           ),
                                         ),
                                         TextSpan(
-                                          text: 'SANDIP',
+                                          text: '(SANDIP)',
                                           style: TextStyle(
                                             decoration: TextDecoration.underline,
                                             color: ColorUtils.black1F,
@@ -1296,17 +1299,18 @@ class _TrikalSandhyaMantraState extends State<TrikalSandhyaMantra> {
                   fontSize: 15.sp,
                 ),
           number == null ? const SizedBox() : SizedBox(width: 15.w),
-          firstTitle == null
-              ? Container(color: Colors.red, child: const SizedBox())
-              : CustomText(firstTitle,
+          if (firstTitle == null) Container(color: Colors.red, child: const SizedBox()) else CustomText(firstTitle,
                   color: ColorUtils.orange,
                   fontWeight: FontWeight.w600,
                   fontSize: 13.sp),
+
           CustomText(secondTitle ?? '',
               color: ColorUtils.black1F,
               fontWeight: fontWeight ?? FontWeight.w600,
               fontSize: fontSize ?? 13.sp,
+              overflow: TextOverflow.ellipsis,
               maxLines: 2),
+
           CustomText(thirdTitle ?? '',
               color: ColorUtils.black1F,
               fontWeight: fontWeight ?? FontWeight.w600,

@@ -199,9 +199,11 @@ class _ChangeTimeZoneScreenState extends State<ChangeTimeZoneScreen> {
                       color: ColorUtils.orange,
                     ),
                   ),
+
                   SizedBox(
                     width: 5.w,
                   ),
+
                 ],
               ),
               SizedBox(

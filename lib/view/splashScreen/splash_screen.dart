@@ -27,7 +27,7 @@ class _SplashScreenState extends State<SplashScreen> {
     super.initState();
     _loadPreferences().then((value) {
 
-      Future.delayed(const Duration(seconds: 7))
+      Future.delayed(const Duration(milliseconds: 5500))
           .then((value) => Get.to( PrefServices.getString('language').isEmpty ? const WelcomeScreen() :  SunriseSunetScreen()));
     });
 

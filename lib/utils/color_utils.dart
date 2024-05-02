@@ -16,6 +16,7 @@ class ColorUtils {
   static const black13 = Color(0xFF131212);
   static const black3F = Color(0xFF3F3F3F);
   static const grayE4 = Color(0xFFE4E7EB);
+  static const gray55 = Color(0xFF554860);
   static const grayD1 = Color(0xFFD1D1D1);
   static const grayE9 = Color(0xFFE9E9E9);
   static const grayDF = Color(0xFFDFDFDF);

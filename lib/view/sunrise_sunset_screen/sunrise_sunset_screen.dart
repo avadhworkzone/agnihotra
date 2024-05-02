@@ -7,6 +7,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:sunrise_app/animation/slide_transition_animation.dart';
 import 'package:sunrise_app/common_Widget/common_assets.dart';
 import 'package:sunrise_app/common_Widget/common_button.dart';
 import 'package:sunrise_app/common_Widget/common_text.dart';
@@ -42,12 +43,12 @@ class SunriseSunetScreen extends StatefulWidget {
 class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   EnterManuallyLocationController locationController =
-      Get.find<EnterManuallyLocationController>();
+  Get.find<EnterManuallyLocationController>();
   SettingScreenController settingScreenController =
-      Get.find<SettingScreenController>();
+  Get.find<SettingScreenController>();
 
   SunriseSunsetController sunriseSunsetController =
-      Get.find<SunriseSunsetController>();
+  Get.find<SunriseSunsetController>();
   GoogleController googleController = Get.find<GoogleController>();
 
   String formatAddress() {
@@ -56,7 +57,7 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
     }
 
     List<String> addressParts =
-        address!.split(',').map((part) => part.trim()).toList();
+    address!.split(',').map((part) => part.trim()).toList();
     addressParts.removeWhere((part) => part.isEmpty);
 
     return addressParts.join(', ');
@@ -119,7 +120,6 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
             padding: EdgeInsets.only(left: 20.w, right: 20.w),
             child: Column(
               children: [
-
                 SizedBox(
                   height: 50.h,
                 ),
@@ -131,19 +131,20 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                       decoration: BoxDecoration(
                           color: ColorUtils.grayDF,
                           borderRadius: BorderRadius.circular(50.r)),
-                      child: const LocalAssets(imagePath: AssetUtils.profileIcon,scaleSize: 3.5,),
+                      child: const LocalAssets(
+                        imagePath: AssetUtils.profileIcon,
+                        scaleSize: 3.5,
+                      ),
                     ),
                     SizedBox(
                       width: 12.w,
                     ),
-
                     CustomText(
                       'PRIYANK SOJITRA',
                       color: ColorUtils.black3F,
                       fontWeight: FontWeight.w600,
                       fontSize: 16.sp,
                     ),
-
                   ],
                 ),
                 SizedBox(
@@ -206,122 +207,135 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                         content: SizedBox(
                           height: 250.h,
                           child: Obx(
-                            () => Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const CustomText(
-                                  StringUtils.languageChooseTxt,
-                                  color: ColorUtils.black1F,
-                                ),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                                () =>
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    CustomText(
-                                      StringUtils.hinTxt,
-                                      fontSize: 14.sp,
-                                      fontWeight: FontWeight.w600,
+                                    const CustomText(
+                                      StringUtils.languageChooseTxt,
                                       color: ColorUtils.black1F,
                                     ),
-                                    Radio(
-                                      value: 'Hindi',
-                                      groupValue: sunriseSunsetController
-                                          .selectedValue.value,
-                                      onChanged: (value) {
-                                        sunriseSunsetController.selectedValue
-                                            .value = value.toString();
+                                    Row(
+                                      mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        CustomText(
+                                          StringUtils.hinTxt,
+                                          fontSize: 14.sp,
+                                          fontWeight: FontWeight.w600,
+                                          color: ColorUtils.black1F,
+                                        ),
+                                        Radio(
+                                          value: 'Hindi',
+                                          groupValue: sunriseSunsetController
+                                              .selectedValue.value,
+                                          onChanged: (value) {
+                                            sunriseSunsetController
+                                                .selectedValue
+                                                .value = value.toString();
+                                          },
+                                          fillColor: MaterialStateColor
+                                              .resolveWith(
+                                                  (states) =>
+                                              ColorUtils.orange),
+                                        ),
+                                      ],
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        CustomText(
+                                          StringUtils.engTxt,
+                                          fontSize: 14.sp,
+                                          fontWeight: FontWeight.w600,
+                                          color: ColorUtils.black1F,
+                                        ),
+                                        Radio(
+                                          value: 'English',
+                                          groupValue: sunriseSunsetController
+                                              .selectedValue.value,
+                                          onChanged: (value) {
+                                            sunriseSunsetController
+                                                .selectedValue
+                                                .value = value.toString();
+                                          },
+                                          fillColor: MaterialStateColor
+                                              .resolveWith(
+                                                  (states) =>
+                                              ColorUtils.orange),
+                                        ),
+                                      ],
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        CustomText(
+                                          StringUtils.gujTxt,
+                                          fontSize: 14.sp,
+                                          fontWeight: FontWeight.w600,
+                                          color: ColorUtils.black1F,
+                                        ),
+                                        Radio(
+                                          value: 'Gujarati',
+                                          groupValue: sunriseSunsetController
+                                              .selectedValue.value,
+                                          onChanged: (value) {
+                                            sunriseSunsetController
+                                                .selectedValue
+                                                .value = value.toString();
+                                          },
+                                          fillColor: MaterialStateColor
+                                              .resolveWith(
+                                                  (states) =>
+                                              ColorUtils.orange),
+                                        ),
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      height: 20.h,
+                                    ),
+                                    CustomBtn(
+                                      height: 50.h,
+                                      gradient: const LinearGradient(
+                                        colors: [
+                                          ColorUtils.gridentColor1,
+                                          ColorUtils.gridentColor2,
+                                        ],
+                                        begin: AlignmentDirectional.topEnd,
+                                        end: AlignmentDirectional.bottomEnd,
+                                      ),
+                                      onTap: () async {
+                                        switch (sunriseSunsetController
+                                            .selectedValue.value) {
+                                          case 'Hindi':
+                                            Get.updateLocale(
+                                                const Locale('hi'));
+                                            await PrefServices.setValue(
+                                                'language', 'hi');
+                                            break;
+                                          case 'English':
+                                            Get.updateLocale(
+                                                const Locale('en_US'));
+                                            await PrefServices.setValue(
+                                                'language', 'en_US');
+                                            break;
+                                          case 'Gujarati':
+                                            Get.updateLocale(
+                                                const Locale('gu'));
+                                            await PrefServices.setValue(
+                                                'language', 'gu');
+                                            break;
+                                          default:
+                                            break;
+                                        }
+                                        Get.back();
                                       },
-                                      fillColor: MaterialStateColor.resolveWith(
-                                          (states) => ColorUtils.orange),
+                                      title: StringUtils.submitBtnTxt,
                                     ),
                                   ],
                                 ),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    CustomText(
-                                      StringUtils.engTxt,
-                                      fontSize: 14.sp,
-                                      fontWeight: FontWeight.w600,
-                                      color: ColorUtils.black1F,
-                                    ),
-                                    Radio(
-                                      value: 'English',
-                                      groupValue: sunriseSunsetController
-                                          .selectedValue.value,
-                                      onChanged: (value) {
-                                        sunriseSunsetController.selectedValue
-                                            .value = value.toString();
-                                      },
-                                      fillColor: MaterialStateColor.resolveWith(
-                                          (states) => ColorUtils.orange),
-                                    ),
-                                  ],
-                                ),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    CustomText(
-                                      StringUtils.gujTxt,
-                                      fontSize: 14.sp,
-                                      fontWeight: FontWeight.w600,
-                                      color: ColorUtils.black1F,
-                                    ),
-                                    Radio(
-                                      value: 'Gujarati',
-                                      groupValue: sunriseSunsetController
-                                          .selectedValue.value,
-                                      onChanged: (value) {
-                                        sunriseSunsetController.selectedValue
-                                            .value = value.toString();
-                                      },
-                                      fillColor: MaterialStateColor.resolveWith(
-                                          (states) => ColorUtils.orange),
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(
-                                  height: 20.h,
-                                ),
-                                CustomBtn(
-                                  height: 50.h,
-                                  gradient: const LinearGradient(
-                                    colors: [
-                                      ColorUtils.gridentColor1,
-                                      ColorUtils.gridentColor2,
-                                    ],
-                                    begin: AlignmentDirectional.topEnd,
-                                    end: AlignmentDirectional.bottomEnd,
-                                  ),
-                                  onTap: () async {
-                                    switch (sunriseSunsetController
-                                        .selectedValue.value) {
-                                      case 'Hindi':
-                                        Get.updateLocale(const Locale('hi'));
-                                        await PrefServices.setValue(
-                                            'language', 'hi');
-                                        break;
-                                      case 'English':
-                                        Get.updateLocale(const Locale('en_US'));
-                                        await PrefServices.setValue(
-                                            'language', 'en_US');
-                                        break;
-                                      case 'Gujarati':
-                                        Get.updateLocale(const Locale('gu'));
-                                        await PrefServices.setValue(
-                                            'language', 'gu');
-                                        break;
-                                      default:
-                                        break;
-                                    }
-                                    Get.back();
-                                  },
-                                  title: StringUtils.submitBtnTxt,
-                                ),
-                              ],
-                            ),
                           ),
                         ),
                       ),
@@ -460,7 +474,6 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
         ),
         body: Stack(
           children: [
-
             Container(
               decoration: BoxDecoration(
                 image: DecorationImage(
@@ -477,7 +490,7 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                   SizedBox(
                     height: 70.h,
                   ),
-              
+
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 15.w),
                     child: Row(
@@ -487,7 +500,12 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                         ///  MANTRA TXT
                         InkWell(
                           onTap: () {
-                            Get.to(const MantraMenuScreen());
+
+                            Get.to(const MantraMenuScreen(),
+                                transition: Transition.leftToRightWithFade,
+                                duration: const Duration(milliseconds: 300));
+                            // SlideTransitionAnimation.leftToRightAnimation(Get.to(const MantraMenuScreen()) as Widget);
+
                           },
                           child: Container(
                             padding: EdgeInsets.symmetric(
@@ -495,7 +513,7 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                             decoration: BoxDecoration(
                               color: ColorUtils.white,
                               borderRadius:
-                                  BorderRadius.all(Radius.circular(24.r)),
+                              BorderRadius.all(Radius.circular(24.r)),
                             ),
                             child: Row(
                               children: [
@@ -517,7 +535,7 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                             ),
                           ),
                         ),
-              
+
                         /// MENU ICON
                         InkWell(
                           onTap: () {
@@ -532,15 +550,14 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                             ),
                           ),
                         ),
-
                       ],
                     ),
                   ),
-              
+
                   SizedBox(
                     height: 25.h,
                   ),
-              
+
                   /// CALENDAR ICON
                   InkWell(
                     onTap: () async {
@@ -554,28 +571,29 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                       ),
                     ),
                   ),
-              
+
                   SizedBox(
                     height: 10.h,
                   ),
-              
+
                   /// Selected Date of Calender
-                  Obx(() => CustomText(
+                  Obx(() =>
+                      CustomText(
                         DateFormat('dd MMMM yyyy')
                             .format(sunriseSunsetController.selectedDate.value),
                         fontWeight: FontWeight.w500,
                         fontSize: 20.sp,
                       )),
-              
+
                   SizedBox(
                     height: 10.h,
                   ),
-              
+
                   /// CURRENT TIME
                   Obx(() {
                     return Container(
                       padding:
-                          EdgeInsets.symmetric(horizontal: 18.w, vertical: 5.h),
+                      EdgeInsets.symmetric(horizontal: 18.w, vertical: 5.h),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.all(Radius.circular(6.r)),
                         border: Border.all(color: ColorUtils.borderColor),
@@ -588,24 +606,25 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                       ),
                       child: CustomText(
                         (settingScreenController.isCountDown.value &&
-                                DateFormat('dd MMMM yyyy')
-                                        .format(DateTime.now()) ==
-                                    DateFormat('dd MMMM yyyy').format(
-                                        sunriseSunsetController
-                                            .selectedDate.value) &&
-                                PrefServices.getString('currentAddress')
-                                    .isNotEmpty)
+                            DateFormat('dd MMMM yyyy')
+                                .format(DateTime.now()) ==
+                                DateFormat('dd MMMM yyyy').format(
+                                    sunriseSunsetController
+                                        .selectedDate.value) &&
+                            PrefServices
+                                .getString('currentAddress')
+                                .isNotEmpty)
                             ? settingScreenController.countDownValue.value
                             : (settingScreenController.isCountDown.value ==
-                                        true &&
-                                    DateFormat('dd MMMM yyyy')
-                                            .format(DateTime.now()) !=
-                                        DateFormat('dd MMMM yyyy').format(
-                                            sunriseSunsetController
-                                                .selectedDate.value))
-                                ? ''
-                                : settingScreenController
-                                    .current24HourTime.value,
+                            true &&
+                            DateFormat('dd MMMM yyyy')
+                                .format(DateTime.now()) !=
+                                DateFormat('dd MMMM yyyy').format(
+                                    sunriseSunsetController
+                                        .selectedDate.value))
+                            ? ''
+                            : settingScreenController
+                            .current24HourTime.value,
                         fontWeight: FontWeight.w500,
                         fontSize: 20.sp,
                       ),
@@ -614,308 +633,184 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                   SizedBox(
                     height: 90.h,
                   ),
-              
+
                   /// SUNRISE and Sunset Time
                   Obx(
-                    () => Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        /// SUNRISE
-                        Stack(
+                        () =>
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Padding(
-                              padding: EdgeInsets.only(top: 23.h),
-                              child: Container(
-                                height: 79.13.h,
-                                width: 137.53.w,
-                                alignment: Alignment.center,
-                                decoration: BoxDecoration(
-                                  borderRadius:
+
+                            /// SUNRISE
+                            Stack(
+                              children: [
+                                Padding(
+                                  padding: EdgeInsets.only(top: 23.h),
+                                  child: Container(
+                                    height: 79.13.h,
+                                    width: 137.53.w,
+                                    alignment: Alignment.center,
+                                    decoration: BoxDecoration(
+                                      borderRadius:
                                       BorderRadius.all(Radius.circular(6.r)),
-                                  border: Border.all(
-                                    color: ColorUtils.borderColor,
-                                  ),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: ColorUtils.white,
-                                      blurRadius: 300.w,
-                                    )
-                                  ],
-                                ),
-                                child: Padding(
-                                  padding: EdgeInsets.only(top: 25.h),
-                                  child: sunriseSunsetController
-                                          .isCountryLoad.value
-                                      ? const CircularProgressIndicator(
+                                      border: Border.all(
+                                        color: ColorUtils.borderColor,
+                                      ),
+                                      boxShadow: [
+                                        BoxShadow(
                                           color: ColorUtils.white,
+                                          blurRadius: 300.w,
                                         )
-                                      : (PrefServices.getDouble('currentLat') ==
-                                                  0.0 &&
-                                              PrefServices.getDouble(
-                                                      'currentLong') ==
-                                                  0.0)
-                                          ? CustomText(
-                                              '',
-                                              fontWeight: FontWeight.w500,
-                                              fontSize: 20.sp,
-                                            )
-                                          : CustomText(
-                                              settingScreenController.formatTime(
-                                                  PrefServices.getString(
-                                                      'countrySunriseTimeZone'),
-                                                  settingScreenController
-                                                      .is24HourFormat.value),
-                                              fontWeight: FontWeight.w500,
-                                              fontSize: 20.sp,
-                                            ),
-                                ),
-                              ),
-                            ),
-                            Positioned(
-                              left: 40.w,
-                              child: CircleAvatar(
-                                backgroundColor: ColorUtils.white,
-                                radius: 27.r,
-                                child: LocalAssets(
-                                  imagePath: AssetUtils.sunriseImages,
-                                  height: 30.63,
-                                  width: 30.63,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-              
-                        SizedBox(
-                          width: 20.w,
-                        ),
-              
-                        /// SUNSET
-                        Stack(
-                          children: [
-                            Padding(
-                              padding: EdgeInsets.only(top: 23.h),
-                              child: Container(
-                                height: 79.13.h,
-                                width: 137.53.w,
-                                alignment: Alignment.center,
-                                decoration: BoxDecoration(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(6.r)),
-                                  border: Border.all(
-                                    color: ColorUtils.borderColor,
-                                  ),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: ColorUtils.white,
-                                      blurRadius: 200.w,
+                                      ],
                                     ),
-                                  ],
-                                ),
-                                child: Padding(
-                                  padding: EdgeInsets.only(top: 25.h),
-                                  child: sunriseSunsetController
+                                    child: Padding(
+                                      padding: EdgeInsets.only(top: 25.h),
+                                      child: sunriseSunsetController
                                           .isCountryLoad.value
-                                      ? const CircularProgressIndicator(
-                                          color: ColorUtils.white,
-                                        )
-                                      : (PrefServices.getDouble('currentLat') ==
-                                                  0.0 &&
-                                              PrefServices.getDouble(
-                                                      'currentLong') ==
-                                                  0.0)
+                                          ? const CircularProgressIndicator(
+                                        color: ColorUtils.white,
+                                      )
+                                          : (PrefServices.getDouble(
+                                          'currentLat') ==
+                                          0.0 &&
+                                          PrefServices.getDouble(
+                                              'currentLong') ==
+                                              0.0)
                                           ? CustomText(
-                                              '',
-                                              fontWeight: FontWeight.w500,
-                                              fontSize: 20.sp,
-                                            )
+                                        '',
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 20.sp,
+                                      )
                                           : CustomText(
-                                              // PrefServices.getString('countrySunsetTimeZone'),
-                                              // settingScreenController.is24Hours.value ? PrefServices.getString('formattedSunsetTime')
-                                              //     : settingScreenController.formatTime(PrefServices.getString('countrySunsetTimeZone'), false),
-                                              settingScreenController.formatTime(
-                                                  PrefServices.getString(
-                                                      'countrySunsetTimeZone'),
-                                                  settingScreenController
-                                                      .is24HourFormat.value),
-                                              fontWeight: FontWeight.w500,
-                                              fontSize: 20.sp,
-                                            ),
+                                        settingScreenController.formatTime(
+                                            PrefServices.getString(
+                                                'countrySunriseTimeZone'),
+                                            settingScreenController
+                                                .is24HourFormat.value),
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 20.sp,
+                                      ),
+                                    ),
+                                  ),
                                 ),
-                              ),
+                                Positioned(
+                                  left: 40.w,
+                                  child: CircleAvatar(
+                                    backgroundColor: ColorUtils.white,
+                                    radius: 27.r,
+                                    child: LocalAssets(
+                                      imagePath: AssetUtils.sunriseImages,
+                                      height: 30.63,
+                                      width: 30.63,
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
-                            Positioned(
-                              left: 40.w,
-                              child: CircleAvatar(
-                                backgroundColor: ColorUtils.white,
-                                radius: 27.r,
-                                child: LocalAssets(
-                                  imagePath: AssetUtils.sunsetImages,
-                                  height: 30.63,
-                                  width: 30.63,
+
+                            SizedBox(
+                              width: 20.w,
+                            ),
+
+                            /// SUNSET
+                            Stack(
+                              children: [
+                                Padding(
+                                  padding: EdgeInsets.only(top: 23.h),
+                                  child: Container(
+                                    height: 79.13.h,
+                                    width: 137.53.w,
+                                    alignment: Alignment.center,
+                                    decoration: BoxDecoration(
+                                      borderRadius:
+                                      BorderRadius.all(Radius.circular(6.r)),
+                                      border: Border.all(
+                                        color: ColorUtils.borderColor,
+                                      ),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: ColorUtils.white,
+                                          blurRadius: 200.w,
+                                        ),
+                                      ],
+                                    ),
+                                    child: Padding(
+                                      padding: EdgeInsets.only(top: 25.h),
+                                      child: sunriseSunsetController
+                                          .isCountryLoad.value
+                                          ? const CircularProgressIndicator(
+                                        color: ColorUtils.white,
+                                      )
+                                          : (PrefServices.getDouble(
+                                          'currentLat') ==
+                                          0.0 &&
+                                          PrefServices.getDouble(
+                                              'currentLong') ==
+                                              0.0)
+                                          ? CustomText(
+                                        '',
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 20.sp,
+                                      )
+                                          : CustomText(
+                                        // PrefServices.getString('countrySunsetTimeZone'),
+                                        // settingScreenController.is24Hours.value ? PrefServices.getString('formattedSunsetTime')
+                                        //     : settingScreenController.formatTime(PrefServices.getString('countrySunsetTimeZone'), false),
+                                        settingScreenController.formatTime(
+                                            PrefServices.getString(
+                                                'countrySunsetTimeZone'),
+                                            settingScreenController
+                                                .is24HourFormat.value),
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 20.sp,
+                                      ),
+                                    ),
+                                  ),
                                 ),
-                              ),
+                                Positioned(
+                                  left: 40.w,
+                                  child: CircleAvatar(
+                                    backgroundColor: ColorUtils.white,
+                                    radius: 27.r,
+                                    child: LocalAssets(
+                                      imagePath: AssetUtils.sunsetImages,
+                                      height: 30.63,
+                                      width: 30.63,
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
                           ],
                         ),
-                      ],
-                    ),
                   ),
-              
-                  /// SUNRISE and Sunset Time
-                  // Obx(() => Row(
-                  //   mainAxisAlignment: MainAxisAlignment.center,
-                  //   children: [
-                  //     /// SUNRISE
-                  //     Stack(
-                  //       children: [
-                  //         Padding(
-                  //           padding: EdgeInsets.only(top: 23.h),
-                  //           child: Container(
-                  //             height: 79.13.h,
-                  //             width: 137.53.w,
-                  //             alignment: Alignment.center,
-                  //             decoration: BoxDecoration(
-                  //               borderRadius:
-                  //               BorderRadius.all(Radius.circular(6.r)),
-                  //               border: Border.all(
-                  //                 color: ColorUtils.borderColor,
-                  //               ),
-                  //               boxShadow: [
-                  //                 BoxShadow(
-                  //                   color: ColorUtils.white,
-                  //                   blurRadius: 300.w,
-                  //                 )
-                  //               ],
-                  //             ),
-                  //             child: Padding(
-                  //               padding: EdgeInsets.only(top: 25.h),
-                  //               child: sunriseSunsetController.isCountryLoad.value
-                  //                   ? const CircularProgressIndicator(
-                  //                 color: ColorUtils.white,
-                  //               )
-                  //                   : (PrefServices.getDouble('currentLat') == 0.0 && PrefServices.getDouble('currentLong') == 0.0)
-                  //                   ? CustomText(
-                  //                 '',
-                  //                 fontWeight: FontWeight.w500,
-                  //                 fontSize: 20.sp,
-                  //               )
-                  //                   : CustomText(
-                  //                // PrefServices.getString('countrySunriseTimeZone'),
-                  //                '${settingScreenController.formatTime(PrefServices.getString('countrySunriseTimeZone'), settingScreenController.is24HourFormat.value)}',
-                  //                // ' ${settingScreenController.is24Hours.value ? PrefServices.getString('formattedSunriseTime') : settingScreenController.formatTime(PrefServices.getString('countrySunriseTimeZone'), false)}',
-                  //                 fontWeight: FontWeight.w500,
-                  //                 fontSize: 20.sp,
-                  //               ),
-                  //             ),
-                  //           ),
-                  //         ),
-                  //         Positioned(
-                  //           left: 40.w,
-                  //           child: CircleAvatar(
-                  //             backgroundColor: ColorUtils.white,
-                  //             radius: 27.r,
-                  //             child: LocalAssets(
-                  //               imagePath: AssetUtils.sunriseImages,
-                  //               height: 30.63,
-                  //               width: 30.63,
-                  //             ),
-                  //           ),
-                  //         ),
-                  //       ],
-                  //     ),
-                  //
-                  //     SizedBox(
-                  //       width: 20.w,
-                  //     ),
-                  //
-                  //     /// SUNSET
-                  //     Stack(
-                  //       children: [
-                  //         Padding(
-                  //           padding: EdgeInsets.only(top: 23.h),
-                  //           child: Container(
-                  //             height: 79.13.h,
-                  //             width: 137.53.w,
-                  //             alignment: Alignment.center,
-                  //             decoration: BoxDecoration(
-                  //               borderRadius:
-                  //               BorderRadius.all(Radius.circular(6.r)),
-                  //               border: Border.all(
-                  //                 color: ColorUtils.borderColor,
-                  //               ),
-                  //               boxShadow: [
-                  //                 BoxShadow(
-                  //                   color: ColorUtils.white,
-                  //                   blurRadius: 200.w,
-                  //                 ),
-                  //               ],
-                  //             ),
-                  //             child: Padding(
-                  //               padding: EdgeInsets.only(top: 25.h),
-                  //               child: sunriseSunsetController.isCountryLoad.value
-                  //                   ? const CircularProgressIndicator(
-                  //                 color: ColorUtils.white,
-                  //               )
-                  //                   : (PrefServices.getDouble('currentLat') == 0.0 && PrefServices.getDouble('currentLong') == 0.0)
-                  //                   ? CustomText(
-                  //                 '',
-                  //                 fontWeight: FontWeight.w500,
-                  //                 fontSize: 20.sp,
-                  //               )
-                  //                   :
-                  //               CustomText(
-                  //                // PrefServices.getString('countrySunsetTimeZone'),
-                  //                 '${settingScreenController.formatTime(PrefServices.getString('countrySunsetTimeZone'), settingScreenController.is24HourFormat.value)}',
-                  //
-                  //                 //  ' ${settingScreenController.is24Hours.value ? PrefServices.getString('formattedSunsetTime') : settingScreenController.formatTime(PrefServices.getString('countrySunsetTimeZone'), false)}',
-                  //                 fontWeight: FontWeight.w500,
-                  //                 fontSize: 20.sp,
-                  //               ),
-                  //             ),
-                  //           ),
-                  //         ),
-                  //         Positioned(
-                  //           left: 40.w,
-                  //           child: CircleAvatar(
-                  //             backgroundColor: ColorUtils.white,
-                  //             radius: 27.r,
-                  //             child: LocalAssets(
-                  //               imagePath: AssetUtils.sunsetImages,
-                  //               height: 30.63,
-                  //               width: 30.63,
-                  //             ),
-                  //           ),
-                  //         ),
-                  //       ],
-                  //     ),
-                  //   ],
-                  // ),),
-              
+
                   SizedBox(
                     height: 130.h,
                   ),
-              
+
                   /// ADD LOCATION
                   Stack(
                     children: [
                       Padding(
                         padding:
-                            EdgeInsets.only(top: 23.h, left: 30.w, right: 30.w),
+                        EdgeInsets.only(top: 23.h, left: 30.w, right: 30.w),
                         child: Container(
                           alignment: Alignment.center,
                           decoration: BoxDecoration(
                             color: ColorUtils.white,
                             borderRadius:
-                                BorderRadius.all(Radius.circular(52.r)),
+                            BorderRadius.all(Radius.circular(52.r)),
                             border: Border.all(
                               color: ColorUtils.borderColor,
                             ),
                           ),
                           child: Column(
                             children: [
+
                               ///  CURRENT ADDRESS
-                              if (PrefServices.getString('currentAddress')
+                              if (PrefServices
+                                  .getString('currentAddress')
                                   .isNotEmpty)
                                 Padding(
                                   padding: EdgeInsets.only(
@@ -926,8 +821,9 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                                     color: ColorUtils.black1F,
                                   ),
                                 ),
-              
-                              if (PrefServices.getString('currentAddress')
+
+                              if (PrefServices
+                                  .getString('currentAddress')
                                   .isEmpty)
                                 Padding(
                                   padding: EdgeInsets.only(
@@ -938,25 +834,29 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                                     color: ColorUtils.black1F,
                                   ),
                                 ),
-              
+
                               /// Lat Long
                               SizedBox(height: 4.h),
-              
+
                               if (PrefServices.getDouble('currentLat') != 0.0 &&
                                   PrefServices.getDouble('currentLong') != 0.0)
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     CustomText(
-                                      "(${PrefServices.getDouble('currentLat').toStringAsFixed(4)},${PrefServices.getDouble('currentLong').toStringAsFixed(4)})",
+                                      "(${PrefServices.getDouble('currentLat')
+                                          .toStringAsFixed(4)},${PrefServices
+                                          .getDouble('currentLong')
+                                          .toStringAsFixed(4)})",
                                       textAlign: TextAlign.center,
                                       color: ColorUtils.black1F,
                                       overflow: TextOverflow.ellipsis,
                                       maxLines: 1,
                                     ),
-              
+
                                     /// Indian Time Zone
-                                    if (PrefServices.getString('countryName')
+                                    if (PrefServices
+                                        .getString('countryName')
                                         .isNotEmpty)
                                       CustomText(
                                         PrefServices.getString('countryName'),
@@ -965,8 +865,9 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                                         maxLines: 1,
                                         overflow: TextOverflow.ellipsis,
                                       ),
-              
-                                    if (PrefServices.getString('countryName')
+
+                                    if (PrefServices
+                                        .getString('countryName')
                                         .isEmpty)
                                       const CustomText(
                                         StringUtils.indiaStdTime,
@@ -982,7 +883,7 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                           ),
                         ),
                       ),
-              
+
                       /// Delete All Location Dialog
                       InkWell(
                         onTap: () {
@@ -1012,11 +913,11 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                       ),
                     ],
                   ),
-              
+
                   SizedBox(
                     height: 20.h,
                   ),
-              
+
                   /// Delete and  Rename Current LOCATION :- Setting Icon
                   Container(
                     height: 40.h,
@@ -1027,7 +928,8 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                     ),
                     child: IconButton(
                       onPressed: () {
-                        if (PrefServices.getString('currentAddress')
+                        if (PrefServices
+                            .getString('currentAddress')
                             .isNotEmpty) {
                           Get.dialog(
                             AlertDialog(
@@ -1038,6 +940,7 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                               title: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
+
                                   /// Delete Current location Address,lat ,lon
                                   TextButton(
                                     onPressed: () {
@@ -1050,7 +953,7 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                                       fontSize: 14.sp,
                                     ),
                                   ),
-              
+
                                   Divider(
                                     height: 0.h,
                                     thickness: 1.h,
@@ -1058,7 +961,7 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                                     endIndent: 12.w,
                                     color: ColorUtils.black00.withOpacity(0.14),
                                   ),
-              
+
                                   /// Rename this location Text
                                   TextButton(
                                     onPressed: () {
@@ -1079,13 +982,14 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                       },
                       icon: ShaderMask(
                         blendMode: BlendMode.srcIn,
-                        shaderCallback: (Rect bounds) => const RadialGradient(
-                          center: Alignment.topCenter,
-                          colors: [
-                            ColorUtils.gridentColor1,
-                            ColorUtils.gridentColor2,
-                          ],
-                        ).createShader(bounds),
+                        shaderCallback: (Rect bounds) =>
+                            const RadialGradient(
+                              center: Alignment.topCenter,
+                              colors: [
+                                ColorUtils.gridentColor1,
+                                ColorUtils.gridentColor2,
+                              ],
+                            ).createShader(bounds),
                         child: const Icon(
                           AssetUtils.seetingIcon,
                           size: 25,
@@ -1105,159 +1009,168 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
       Dialog(
         shape: RoundedRectangleBorder(
           borderRadius:
-              BorderRadius.circular(7.r), // Customize this value as needed
+          BorderRadius.circular(7.r), // Customize this value as needed
         ),
         insetPadding: EdgeInsets.symmetric(
           horizontal: 30.w,
         ),
-        child: PrefServices.getStringList("locationList").isNotEmpty
+        child: PrefServices
+            .getStringList("locationList")
+            .isNotEmpty
             ? SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    ListView.builder(
-                      padding: EdgeInsets.only(left: 12.w, top: 15.h),
-                      physics: const NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      itemCount:
-                          PrefServices.getStringList("locationList").length,
-                      itemBuilder: (context, index) {
-                        return CustomText(
-                          PrefServices.getStringList("locationList")[index],
-                          color: ColorUtils.black1F,
-                        );
-                      },
-                    ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              ListView.builder(
+                padding: EdgeInsets.only(left: 12.w, top: 15.h),
+                physics: const NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                itemCount:
+                PrefServices
+                    .getStringList("locationList")
+                    .length,
+                itemBuilder: (context, index) {
+                  return CustomText(
+                    PrefServices.getStringList("locationList")[index],
+                    color: ColorUtils.black1F,
+                  );
+                },
+              ),
 
-                    SizedBox(
-                      height: 10.h,
-                    ),
+              SizedBox(
+                height: 10.h,
+              ),
 
-                    Divider(
-                      height: 0.h,
-                      thickness: 1.h,
-                      indent: 10.w,
-                      endIndent: 10.w,
-                      color: ColorUtils.black00.withOpacity(0.14),
-                    ),
+              Divider(
+                height: 0.h,
+                thickness: 1.h,
+                indent: 10.w,
+                endIndent: 10.w,
+                color: ColorUtils.black00.withOpacity(0.14),
+              ),
 
-                    /// Delete All location Text
-                    TextButton(
-                      onPressed: () {
-                        _deleteAllLocationDialog();
-                      },
-                      child: const CustomText(
-                        StringUtils.deleteLocationTxt,
-                        color: ColorUtils.black1F,
+              /// Delete All location Text
+              TextButton(
+                onPressed: () {
+                  _deleteAllLocationDialog();
+                },
+                child: const CustomText(
+                  StringUtils.deleteLocationTxt,
+                  color: ColorUtils.black1F,
+                ),
+              ),
+
+              Divider(
+                height: 0.h,
+                thickness: 1.h,
+                indent: 10.w,
+                endIndent: 10.w,
+                color: ColorUtils.black00.withOpacity(0.14),
+              ),
+
+              /// Add Location Text
+              TextButton(
+                onPressed: () {
+                  Get.back();
+                  Get.dialog(
+                    AlertDialog(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(
+                            7.r), // Customize this value as needed
                       ),
-                    ),
+                      titlePadding: EdgeInsets.zero,
+                      title: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
 
-                    Divider(
-                      height: 0.h,
-                      thickness: 1.h,
-                      indent: 10.w,
-                      endIndent: 10.w,
-                      color: ColorUtils.black00.withOpacity(0.14),
-                    ),
+                          TextButton(
+                            onPressed: (){
 
-                    /// Add Location Text
-                    TextButton(
-                      onPressed: () {
-                        Get.back();
-                        Get.dialog(
-                          AlertDialog(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(
-                                  7.r), // Customize this value as needed
-                            ),
-                            titlePadding: EdgeInsets.zero,
-                            title: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                TextButton(
-                                  onPressed: () {
-                                    Get.off(IntegrateGoogleMap(
-                                      address:
-                                          locationController.currentAddress,
-                                      longitude: locationController.currentLong,
-                                      latitude: locationController.currentLat,
-                                    ));
-                                  },
-                                  child: CustomText(
-                                    StringUtils.usgMapTxt,
-                                    color: ColorUtils.black1F,
-                                    fontSize: 14.sp,
+                              Get.off(
+                                  IntegrateGoogleMap(
+                                    address: locationController.currentAddress,
+                                    longitude: locationController.currentLong,
+                                    latitude: locationController.currentLat,
+
                                   ),
-                                ),
-                                Divider(
-                                  height: 0.h,
-                                  thickness: 1.h,
-                                  indent: 12.w,
-                                  endIndent: 12.w,
-                                  color: ColorUtils.black00.withOpacity(0.14),
-                                ),
-                                TextButton(
-                                  onPressed: () {
-                                    Get.off(
-                                        const EnterManuallyLocationScreen());
-                                  },
-                                  child: CustomText(
-                                    StringUtils.usgManuallyTxt,
-                                    color: ColorUtils.black1F,
-                                    fontSize: 14.sp,
-                                  ),
-                                ),
-                              ],
+                              );
+
+                            },
+                            child: CustomText(
+                              StringUtils.usgMapTxt,
+                              color: ColorUtils.black1F,
+                              fontSize: 14.sp,
                             ),
                           ),
-                        );
-                      },
-                      child: const CustomText(
-                        StringUtils.addLocationTxt,
-                        color: ColorUtils.black1F,
+                          Divider(
+                            height: 0.h,
+                            thickness: 1.h,
+                            indent: 12.w,
+                            endIndent: 12.w,
+                            color: ColorUtils.black00.withOpacity(0.14),
+                          ),
+                          TextButton(
+                            onPressed: () {
+                              Get.off(
+                                  const EnterManuallyLocationScreen());
+                            },
+                            child: CustomText(
+                              StringUtils.usgManuallyTxt,
+                              color: ColorUtils.black1F,
+                              fontSize: 14.sp,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                  ],
+                  );
+                },
+                child: const CustomText(
+                  StringUtils.addLocationTxt,
+                  color: ColorUtils.black1F,
                 ),
-              )
-            : Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  TextButton(
-                    onPressed: () {
-                      Get.off(IntegrateGoogleMap(
-                        latitude: locationController.currentLat,
-                        longitude: locationController.currentLong,
-                        address: locationController.currentAddress,
-                      ));
-                    },
-                    child: CustomText(
-                      StringUtils.usgMapTxt,
-                      color: ColorUtils.black1F,
-                      fontSize: 14.sp,
-                    ),
-                  ),
-                  Divider(
-                    height: 0.h,
-                    thickness: 1.h,
-                    indent: 12.w,
-                    endIndent: 12.w,
-                    color: ColorUtils.black00.withOpacity(0.14),
-                  ),
-                  TextButton(
-                    onPressed: () {
-                      Get.off(const EnterManuallyLocationScreen());
-                    },
-                    child: CustomText(
-                      StringUtils.usgManuallyTxt,
-                      color: ColorUtils.black1F,
-                      fontSize: 14.sp,
-                    ),
-                  ),
-                ],
               ),
+            ],
+          ),
+        )
+            : Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            TextButton(
+              onPressed: () {
+                Get.off(IntegrateGoogleMap(
+                  latitude: locationController.currentLat,
+                  longitude: locationController.currentLong,
+                  address: locationController.currentAddress,
+                ));
+              },
+              child: CustomText(
+                StringUtils.usgMapTxt,
+                color: ColorUtils.black1F,
+                fontSize: 14.sp,
+              ),
+            ),
+            Divider(
+              height: 0.h,
+              thickness: 1.h,
+              indent: 12.w,
+              endIndent: 12.w,
+              color: ColorUtils.black00.withOpacity(0.14),
+            ),
+            TextButton(
+              onPressed: () {
+                Get.off(const EnterManuallyLocationScreen());
+              },
+              child: CustomText(
+                StringUtils.usgManuallyTxt,
+                color: ColorUtils.black1F,
+                fontSize: 14.sp,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -1267,7 +1180,7 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
       Dialog(
         shape: RoundedRectangleBorder(
           borderRadius:
-              BorderRadius.circular(7.r), // Customize this value as needed
+          BorderRadius.circular(7.r), // Customize this value as needed
         ),
         insetPadding: EdgeInsets.symmetric(
           horizontal: 30.w,
@@ -1369,14 +1282,15 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
           desiredAccuracy: LocationAccuracy.high);
 
       coordinates =
-          'Latitude : ${position.latitude} \nLongitude : ${position.longitude}';
+      'Latitude : ${position.latitude} \nLongitude : ${position.longitude}';
 
       List<Placemark> result =
-          await placemarkFromCoordinates(position.latitude, position.longitude);
+      await placemarkFromCoordinates(position.latitude, position.longitude);
 
       if (result.isNotEmpty) {
         address =
-            '${result[0].name}, ${result[0].locality} ${result[0].administrativeArea}';
+        '${result[0].name}, ${result[0].locality} ${result[0]
+            .administrativeArea}';
       }
     } catch (e) {
       Fluttertoast.showToast(msg: e.toString());
@@ -1490,6 +1404,7 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
+
               /// No Button
               InkWell(
                 onTap: () {
@@ -1577,6 +1492,7 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
+
               /// cancel button
               TextButton(
                 onPressed: () {
@@ -1594,7 +1510,7 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
               TextButton(
                 onPressed: () async {
                   final currentAddress =
-                      PrefServices.getString('currentAddress');
+                  PrefServices.getString('currentAddress');
 
                   final containIndex = googleController.locationList
                       .indexWhere((element) => element == currentAddress);
@@ -1604,20 +1520,22 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                   googleController.locationList[containIndex] = newAddress;
 
                   String renameElement =
-                      googleController.locationList[containIndex];
+                  googleController.locationList[containIndex];
                   setState(() {});
                   print("newLocationList :- $renameElement");
                   PrefServices.setValue('currentAddress', renameElement);
 
                   print(
-                      "googleController.locationList :- ${googleController.locationList}");
+                      "googleController.locationList :- ${googleController
+                          .locationList}");
 
                   PrefServices.setValue(
                       "locationList", googleController.locationList);
 
                   PrefServices.getStringList("locationList");
                   print(
-                      "Save locationList :- ${PrefServices.getStringList("locationList")}");
+                      "Save locationList :- ${PrefServices.getStringList(
+                          "locationList")}");
 
                   Get.back();
                 },

@@ -8,6 +8,8 @@ import 'package:sunrise_app/common_Widget/common_textfield.dart';
 import 'package:sunrise_app/utils/color_utils.dart';
 import 'package:sunrise_app/utils/image_utils.dart';
 import 'package:sunrise_app/utils/string_utils.dart';
+import 'package:sunrise_app/view/auth/widget/edit_profile_field.dart';
+import 'package:sunrise_app/view/auth/widget/edit_profile_photo.dart';
 
 class EditProfileScreen extends StatefulWidget {
   const EditProfileScreen({super.key});
@@ -19,22 +21,23 @@ class EditProfileScreen extends StatefulWidget {
 class _EditProfileScreenState extends State<EditProfileScreen> {
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
-
+    return Scaffold(
+      backgroundColor: ColorUtils.gray55,
       body: Stack(
-        alignment: Alignment.bottomCenter,
+        alignment: Alignment.topCenter,
         children: [
-
+          /// bg Image
           Container(
             decoration: BoxDecoration(
               image: DecorationImage(
                 image: AssetImage(
-                  AssetUtils.backgroundImages,
+                  AssetUtils.authScreenBg,
                 ),
                 fit: BoxFit.cover,
               ),
             ),
           ),
+
           /// App bar
           SafeArea(
             child: Padding(
@@ -61,130 +64,36 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             ),
           ),
 
-          Container(
-            height: Get.height/1.3,
-            width: Get.width,
-            decoration: BoxDecoration(
-                color: ColorUtils.white,
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(22.r),
-                  topRight: Radius.circular(22.r),
-                ),
-                boxShadow: [
-                  BoxShadow(
-                    color: ColorUtils.black00.withOpacity(0.21),
-                    offset: const Offset(0, -7),
-                    blurRadius: 20.r,
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Container(
+              height: Get.height/1.2,
+              width: Get.width,
+              decoration: BoxDecoration(
+                  color: ColorUtils.white,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(22.r),
+                    topRight: Radius.circular(22.r),
                   ),
-                ]),
-            child: Column(
-              children: [
-                SizedBox(
-                  height: 26.h,
-                ),
-                CustomText(
-                  StringUtils.chooseAccountTxt,
-                  color: ColorUtils.orangeE8,
-                  fontSize: 16.sp,
-                  fontWeight: FontWeight.w600,
-                  textAlign: TextAlign.center,
-                ),
-                CustomText(
-                  textAlign: TextAlign.center,
-                  StringUtils.toContinueTxt,
-                  color: ColorUtils.black1F,
-                  fontSize: 16.sp,
-                  fontWeight: FontWeight.w600,
-                ),
-                SizedBox(
-                  height: 33.h,
-                ),
-                SizedBox(
-                  width: 235.w,
-                  height: 45.h,
-                  child: CommonTextField(
-                    // textEditController: loginController.emailController,
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(35.r),
-                      borderSide: BorderSide(color: ColorUtils.grayE9, width: 1.5.w),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: ColorUtils.orange, width: 1.5.w),
-                      borderRadius: BorderRadius.circular(25.0),
-                    ),
-                    contentPadding: EdgeInsets.symmetric(horizontal: 20.w),
-                    hintText: StringUtils.emailHintTxt,
-                    pIcon: const LocalAssets(
-                      imagePath: AssetUtils.messageIcon,
-                      scaleSize: 3,
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  height: 13.h,
-                ),
-                SizedBox(
-                  width: 235.w,
-                  height: 45.h,
-                  child: CommonTextField(
-                    // textEditController: loginController.passwordController,
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(35.r),
-                      borderSide: BorderSide(color: ColorUtils.grayE9, width: 1.5.w),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: ColorUtils.orange, width: 1.5.w),
-                      borderRadius: BorderRadius.circular(25.0),
-                    ),
-                    contentPadding: EdgeInsets.symmetric(horizontal: 20.w),
-                    hintText: StringUtils.passwordHintTxt,
-                    pIcon: const LocalAssets(
-                      imagePath: AssetUtils.lockIcon,
-                      scaleSize: 3,
-                    ),
-                    sIcon: Icon(Icons.remove_red_eye_rounded,
-                        color: ColorUtils.gray97.withOpacity(0.6)),
-                  ),
-                ),
-                SizedBox(
-                  height: 7.h,
-                ),
-                Padding(
-                  padding: EdgeInsets.only(left: 105.w),
-                  child: CustomText(
-                    textAlign: TextAlign.center,
-                    StringUtils.forgetPwdTxt,
-                    color: ColorUtils.orangeE8,
-                    fontSize: 14.sp,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-                const Spacer(),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+
+              ),
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 15.w),
+                child: Column(
                   children: [
-                    const Icon(
-                      Icons.add,
-                      color: ColorUtils.orangeE8,
+                    SizedBox(
+                      height: 34.h,
                     ),
-                    CustomText(
-                      StringUtils.addAnotherAccountTxt,
-                      color: ColorUtils.orangeE8,
-                      fontSize: 18.sp,
-                      fontWeight: FontWeight.w600,
-                    )
+                    const EditProfilePhoto(),
+                     EditProfileField(),
+
                   ],
                 ),
-                SizedBox(
-                  height: 45.h,
-                ),
-              ],
+              ),
             ),
           ),
         ],
       ),
-
-
     );
   }
 }

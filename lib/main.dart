@@ -10,6 +10,7 @@ import 'package:sunrise_app/services/prefServices.dart';
 import 'package:sunrise_app/view/auth/forgot_password_screen.dart';
 import 'package:sunrise_app/view/auth/login_screen.dart';
 import 'package:sunrise_app/view/auth/profile/edit_profile_screen.dart';
+import 'package:sunrise_app/view/auth/reset_password_screen.dart';
 import 'package:sunrise_app/view/auth/sign_up_screen.dart';
 import 'package:sunrise_app/view/splashScreen/splash_screen.dart';
 import 'package:sunrise_app/viewModel/agnihotra_mantra_controller.dart';
@@ -18,12 +19,15 @@ import 'package:sunrise_app/viewModel/forgot_password_controller.dart';
 import 'package:sunrise_app/viewModel/google_map_controller.dart';
 import 'package:sunrise_app/viewModel/help_controller.dart';
 import 'package:sunrise_app/viewModel/login_controller.dart';
+import 'package:sunrise_app/viewModel/profile_controller.dart';
 import 'package:sunrise_app/viewModel/settings_controller.dart';
 import 'package:sunrise_app/viewModel/sign_up_controller.dart';
 import 'package:sunrise_app/viewModel/sunrise_sunset_controller.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:timezone/data/latest_all.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
+
+import 'view/auth/profile/profile_screen.dart';
 
 
 Future<void> main() async {
@@ -61,8 +65,8 @@ class MyApp extends StatelessWidget {
             ? "en_US"
             : PrefServices.getString('language')),
         fallbackLocale: const Locale('en_US'),
-        // home : const SplashScreen(),
-         home: const ForgotPasswordScreen(),
+        home : const SplashScreen(),
+         // home: const ProfileScreen(),
         debugShowCheckedModeBanner: false,
       ),
     );
@@ -77,5 +81,6 @@ class MyApp extends StatelessWidget {
   LoginController loginController = Get.put(LoginController());
   SignUpController signUpController = Get.put(SignUpController());
   ForgotPasswordController forgotPasswordController = Get.put(ForgotPasswordController());
+  ProfileController profileController = Get.put(ProfileController());
 
 }

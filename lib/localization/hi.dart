@@ -168,10 +168,38 @@ Map<String, String> hi = {
 
   //Edit Profile Screen
   "editProfileTxt": "प्रोफ़ाइल संपादित करें",
+  "changeProfilePhotoTxt":"प्रोफ़ाइल फ़ोटो बदलें",
+  "removeProfilePhotoTxt":"प्रोफ़ाइल फ़ोटो हटाएँ",
+  "cancelTxt":"रद्द करना",
+  "userNameTxt":"उपयोगकर्ता नाम",
+
+
+
 
 
   // Forgot Password Screen
   "forgetPwdScrrenTxt": "पासवर्ड भूल गए",
   "enterYourEmailAddressTxt": "पासवर्ड रीसेट करने के लिए अपना ईमेल पता दर्ज करें",
   "resetPasswordTxt": "पासवर्ड रीसेट",
+
+  // Reset Password Screen
+  "resetPwdTxt":"पासवर्ड रीसेट",
+  "enterNewPwdTwiceTxt":"नया पासवर्ड रीसेट करने के लिए नीचे अपना नया\nपासवर्ड दो बार दर्ज करें",
+  "enterNewPwdTxt":"નવો પાસવર્ડ દાખલ કરો",
+  "reEnterNewPwdTxt":"नया पासवर्ड पुनः दर्ज करें",
+  "reEnterPwdHintTxt":"अपना नया पासवर्ड पुनः दर्ज करें",
+  "genderTxt":"जाति",
+  "updateBtnTxt":"अद्यतन",
+  "selectGenderTxt":"जाति चुनें",
+  "maleTxt":"पुरुष",
+  "femaleTxt":"महिला",
+  "otherTxt":"अन्य",
+
+
+
+
+
+
+
+
 };

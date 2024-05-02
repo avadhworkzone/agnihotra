@@ -82,9 +82,9 @@ class LoginAccount extends StatelessWidget {
               padding: EdgeInsets.symmetric(horizontal: 30.w),
               child: CommonTextField(
                 textEditController: loginController.emailController,
-                border: OutlineInputBorder(
+                enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(35.r),
-                  borderSide: BorderSide(color: ColorUtils.grayE9, width: 1.5.w),
+                  borderSide: BorderSide(color: ColorUtils.grayD1, width: 1.5.w),
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderSide: BorderSide(color: ColorUtils.orange, width: 1.5.w),
@@ -132,9 +132,9 @@ class LoginAccount extends StatelessWidget {
               padding: EdgeInsets.symmetric(horizontal: 30.w),
               child: CommonTextField(
                 textEditController: loginController.passwordController,
-                border: OutlineInputBorder(
+                enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(35.r),
-                  borderSide: BorderSide(color: ColorUtils.grayE9, width: 1.5.w),
+                  borderSide: BorderSide(color: ColorUtils.grayD1, width: 1.5.w),
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderSide: BorderSide(color: ColorUtils.orange, width: 1.5.w),

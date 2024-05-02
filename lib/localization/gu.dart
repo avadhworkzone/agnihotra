@@ -98,7 +98,7 @@ Map<String, String> gu = {
   "avahanMudraText": "(આવાહન મુદ્દા)",
   "meditateText":
   "(થોડી મિનિટ ધ્યાન કરો, ગાયત્રી જાપ શરૂ કરો અને ત્યારબાદ થોડીવાર ધ્યાન કરો)",
-  "directionText": "(ઊભા થાવ અને વારાફરતી ચારે-દિશા તરફ ઝુકીને પ્રણામ કરો)",
+  "directionText": "(ઊભા થાવ અને વારાફરતી ચારે-દિશા તરફ ઝુકીને પ્રણામ\nકરો)",
   "fireText": "(અગ્નિ પ્રગટાવો)",
   "pourWaterText": "(નીચેની દિશાઓમાં પાણી રેડો)",
   "samidhaText": "(સમિધા અર્પણ કરો)",
@@ -123,11 +123,11 @@ Map<String, String> gu = {
   "applyText": "(રાખ (ભસ્મ) લગાવો)",
   "meghaviText": "मेधावी भूयासम्\t\t\t\t\t\t\t\t\t\tકપાળ પર(બંને ભમરોની વચ્ચે)",
   "tejasviText": "तेजस्वी भूयासम्\t\t\t\t\t\t\t\t\tછાતી પર (હૃદયના સ્થાને)",
-  "varchsviText": "वर्चस्वी भूयासम्\t\t\t\t\t\t\t\t\t\tજમણો ખભા પર",
+  "varchsviText": "वर्चस्वी भूयासम्\t\t\t\t\t\t\t\t\t\tજમણા ખભા પર",
   "brhamsviText": "ब्रह्मवर्चस्वी भूयासम\t\t\t\t\tડાબા ખભા પર",
   "ayushyaText": "आयुष्यमान् भूयासम्\t\t\t\tનાભિ ઉપર",
   "annadoText":
-  "अन्नादो भूयासम्\t\t\t\t\t\t\t\t\t\t\tગળા ભાગ પર(વિશુદ્રી ચક્ર પર)",
+  "अन्नादो भूयासम्\t\t\t\t\t\t\t\t\t\t\tગળાના ભાગ પર(વિશુદ્ધિ ચક્ર પર)",
   "swstiText": "स्वस्ति भूयासम्\t\t\t\t\t\t\t\t\t\t\t\tમાથાની ચોટી પર",
   "settingsScreenTxt": "સેટિંગ્સ",
   "deleteAllLocation": "શું તમે ખરેખર બધા\nસ્થાનો કાઢી નાખવા માંગો છો?",
@@ -183,10 +183,33 @@ Map<String, String> gu = {
 
   // Edit Profile Screen
   "editProfileTxt": "પ્રોફાઇલ સંપાદિત કરો",
+  "changeProfilePhotoTxt":"પ્રોફાઇલ ફોટો બદલો",
+  "removeProfilePhotoTxt":"પ્રોફાઇલ ફોટો દૂર કરો",
+  "cancelTxt":"રદ કરો",
+  "userNameTxt":"વપરાશકર્તા નામ",
 
-  // Forgot Password Screen
+// Forgot Password Screen
   "forgetPwdScrrenTxt": "પાસવર્ડ ભૂલી ગયા છો",
   "enterYourEmailAddressTxt":"પાસવર્ડ રીસેટ\n માટે તમારું ઈમેલ એડ્રેસ દાખલ કરો",
   "resetPasswordTxt":"પાસવૉર્ડ રીસેટ",
+
+  // Reset Password Screen
+  "resetPwdTxt":"પાસવર્ડ રીસેટ કરો",
+  "enterNewPwdTwiceTxt":"નવો પાસવર્ડ રીસેટ કરવા માટે નીચે બે વાર તમારો\nનવો પાસવર્ડ દાખલ કરો",
+  "enterNewPwdTxt":"नया पासवर्ड दर्ज करें",
+  "reEnterNewPwdTxt":"નવો પાસવર્ડ ફરીથી દાખલ કરો",
+  "reEnterPwdHintTxt":"તમારો નવો પાસવર્ડ ફરીથી દાખલ કરો",
+  "genderTxt":"જાતિ",
+  "updateBtnTxt":"અપડેટ કરો",
+  "selectGenderTxt":"જાતિ પસંદ કરો",
+  "maleTxt":"પુરુષ",
+  "femaleTxt":"સ્ત્રી",
+  "otherTxt":"અન્ય",
+
+
+
+
+
+
 
 };

@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sunrise_app/common_Widget/common_assets.dart';
+import 'package:sunrise_app/common_Widget/common_back_arrow.dart';
 import 'package:sunrise_app/utils/color_utils.dart';
 import 'package:sunrise_app/utils/image_utils.dart';
 import 'package:sunrise_app/view/auth/widget/find_account.dart';
+
 
 class ForgotPasswordScreen extends StatelessWidget {
   const ForgotPasswordScreen({super.key});
@@ -16,6 +18,7 @@ class ForgotPasswordScreen extends StatelessWidget {
         alignment: Alignment.bottomCenter,
         children : [
 
+
           ///bg Image
           Container(
             decoration: BoxDecoration(
@@ -27,11 +30,20 @@ class ForgotPasswordScreen extends StatelessWidget {
               ),
             ),
           ),
+          
+           SafeArea(
+            child: Padding(
+              padding: EdgeInsets.only(left: 15.w,top: 8.h),
+              child: const Align(
+                  alignment: Alignment.topLeft,
+                  child: CommonBackArrow()),
+            ),
+          ),
 
           /// App logo
           Positioned(
             left: 125.w,
-            top: 80.h,
+            top: 90.h,
             child: Container(
               decoration: BoxDecoration(
                   boxShadow: [
@@ -52,7 +64,8 @@ class ForgotPasswordScreen extends StatelessWidget {
             ),
           ),
 
-           FindAccount(),
+          FindAccount(),
+
         ],
       ),
     );

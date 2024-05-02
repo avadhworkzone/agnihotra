@@ -194,10 +194,31 @@ class StringUtils {
 
   static const forgetPwdScrrenTxt = "forgetPwdScrrenTxt";
   static const enterYourEmailAddressTxt = "enterYourEmailAddressTxt";
-  static const resetPasswordTxt = "resetPasswordTxt";
+  static const resetPasswordBtnTxt = "resetPasswordTxt";
+
+
+  /// Reset Password Screen
+
+  static const resetPwdTxt = "resetPwdTxt";
+  static const enterNewPwdTwiceTxt = "enterNewPwdTwiceTxt";
+  static const enterNewPwdTxt = "enterNewPwdTxt";
+  static const reEnterNewPwdTxt = "reEnterNewPwdTxt";
+  static const reEnterPwdHintTxt = "reEnterPwdHintTxt";
+
+
 
   /// Edit Profile Screen
   static const editProfileTxt = "editProfileTxt";
+  static const changeProfilePhotoTxt = "changeProfilePhotoTxt";
+  static const removeProfilePhotoTxt = "removeProfilePhotoTxt";
+  static const cancelTxt = "cancelTxt";
+  static const userNameTxt = "userNameTxt";
+  static const genderTxt = "genderTxt";
+  static const updateBtnTxt = "updateBtnTxt";
+  static const selectGenderTxt = "selectGenderTxt";
+  static const maleTxt = "maleTxt";
+  static const femaleTxt = "femaleTxt";
+  static const otherTxt = "otherTxt";
 
 
 
