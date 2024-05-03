@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:sunrise_app/animation/slide_transition_animation.dart';
 import 'package:sunrise_app/common_Widget/common_assets.dart';
 import 'package:sunrise_app/common_Widget/common_back_arrow.dart';
 import 'package:sunrise_app/common_Widget/common_text.dart';
 import 'package:sunrise_app/utils/color_utils.dart';
 import 'package:sunrise_app/utils/image_utils.dart';
 import 'package:sunrise_app/utils/string_utils.dart';
-import 'package:sunrise_app/view/mantra_menu_screen/mantra_screen.dart';
+import 'package:sunrise_app/view/mantra_menu_screen/sunrise_sunset_mantra_screen.dart';
 import 'package:sunrise_app/view/mantra_menu_screen/trikal_sandhya_mantra_screen.dart';
 
 class MantraMenuScreen extends StatefulWidget {
@@ -18,11 +19,14 @@ class MantraMenuScreen extends StatefulWidget {
 }
 
 class _MantraMenuScreenState extends State<MantraMenuScreen> {
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Stack(
+    return Material(
+      color: ColorUtils.white,
+      child: Stack(
         children: [
+
           Container(
             decoration: BoxDecoration(
               image: DecorationImage(
@@ -33,6 +37,7 @@ class _MantraMenuScreenState extends State<MantraMenuScreen> {
               ),
             ),
           ),
+
           SafeArea(
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 15.w),
@@ -43,7 +48,7 @@ class _MantraMenuScreenState extends State<MantraMenuScreen> {
                   SizedBox(
                     height: 10.h,
                   ),
-                   Row(
+                  Row(
 
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
@@ -65,9 +70,13 @@ class _MantraMenuScreenState extends State<MantraMenuScreen> {
                   /// Agnihotra Mantra
                   GestureDetector(
                     onTap: () {
-                      Get.to(const MantraScreen());
+
+                      SlideTransitionAnimation.rightToLeftAnimation(const SunriseSunsetMantraScreen());
+
+
                     },
-                    child: Stack(alignment: Alignment.topRight, children: [
+                    child: Stack(
+                        alignment: Alignment.topRight, children: [
                       SizedBox(
                         height: 183.57.h,
                         width: Get.width,
@@ -114,9 +123,10 @@ class _MantraMenuScreenState extends State<MantraMenuScreen> {
                   /// Trikal Sandhya
                   GestureDetector(
                     onTap: () {
-                      Get.to(const TrikalSandhyaMantra());
+                      SlideTransitionAnimation.rightToLeftAnimation(const TrikalSandhyaMantra());
                     },
                     child: Stack(alignment: Alignment.topRight, children: [
+
                       SizedBox(
                         height: 187.57.h,
                         child: LocalAssets(
@@ -125,6 +135,7 @@ class _MantraMenuScreenState extends State<MantraMenuScreen> {
                           width: Get.width,
                         ),
                       ),
+
                       Padding(
                         padding: EdgeInsets.only(top: 10.h, right: 8.w),
                         child: Column(
@@ -153,12 +164,14 @@ class _MantraMenuScreenState extends State<MantraMenuScreen> {
                           ],
                         ),
                       )
+
                     ]),
                   ),
                 ],
               ),
             ),
           )
+
         ],
       ),
     );

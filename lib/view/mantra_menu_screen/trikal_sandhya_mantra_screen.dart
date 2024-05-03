@@ -22,9 +22,9 @@ class _TrikalSandhyaMantraState extends State<TrikalSandhyaMantra> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-
-      body: Stack(
+    return Material(
+      color: ColorUtils.white,
+      child : Stack(
         children: [
 
           Container(
@@ -40,6 +40,7 @@ class _TrikalSandhyaMantraState extends State<TrikalSandhyaMantra> {
 
           Column(
             children: [
+
               SafeArea(
                 child: Padding(
                   padding: EdgeInsets.only(top: 10.h),
@@ -80,6 +81,7 @@ class _TrikalSandhyaMantraState extends State<TrikalSandhyaMantra> {
                               fontWeight: FontWeight.w600,
                               fontSize: 13.sp,
                           ),
+
                           CustomBtn(
                             height: 35.h,
                             width: 110.w,
@@ -1256,6 +1258,7 @@ class _TrikalSandhyaMantraState extends State<TrikalSandhyaMantra> {
                   ),
                 ),
               )
+
             ],
           ),
 

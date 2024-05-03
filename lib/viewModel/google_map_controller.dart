@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:intl/intl.dart';
+import 'package:sunrise_app/animation/slide_transition_animation.dart';
 import 'package:sunrise_app/common_Widget/common_button.dart';
 import 'package:sunrise_app/common_Widget/common_text.dart';
 import 'package:sunrise_app/services/prefServices.dart';
@@ -250,14 +251,14 @@ RxString address = 'No Address Found'.obs;
     await PrefServices.setValue('locationList', locationList);
 
     if(address.value.isNotEmpty){
-      Get.offAll(
-        SunriseSunetScreen(
-          latitude: lati,
-          longitude: long,
-          address: address.value,
-          value: true,
-        ),
-      );
+
+      SlideTransitionAnimation.rightToLeftAnimationOff(SunriseSunetScreen(
+        latitude: lati,
+        longitude: long,
+        address: address.value,
+        value: true,
+      ),);
+
       confirmTimeZone();
     }
 

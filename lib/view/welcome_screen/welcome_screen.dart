@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:keep_screen_on/keep_screen_on.dart';
+import 'package:sunrise_app/animation/slide_transition_animation.dart';
 import 'package:sunrise_app/common_Widget/common_button.dart';
 import 'package:sunrise_app/common_Widget/common_text.dart';
 import 'package:sunrise_app/services/prefServices.dart';
@@ -243,8 +244,11 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                          default :
                            break;
                        }
-                       Get.off(SunriseSunetScreen());
-                     }else{
+                       SlideTransitionAnimation.rightToLeftAnimationOff(SunriseSunetScreen());
+                       // Get.off(SunriseSunetScreen());
+                     }
+
+                     else{
                        Fluttertoast.showToast(
                            msg: "Please Selected Language",
                            toastLength: Toast.LENGTH_SHORT,

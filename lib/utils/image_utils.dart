@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 
-class AssetUtils{
+class AssetUtils {
 
   /// IMAGE PATH
   static String imagePath = 'assets/images/';
@@ -68,5 +68,6 @@ class AssetUtils{
   static const sunriseMantraAudio = '${audioPath}sunrise_mantra_audio.m4a';
   static const sunsetMantraAudio = '${audioPath}sunset_mantra_audio.m4a';
   static const remainderAlarmAudio = '${audioPath}remainder_alarm.mp3';
+  static const meditionBellAudio = '${audioPath}meditation_bell.mp3';
 
 }

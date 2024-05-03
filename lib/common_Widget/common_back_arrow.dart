@@ -14,7 +14,7 @@ class CommonBackArrow extends StatelessWidget {
       radius: 20.r,
       child: Center(
         child: IconButton(
-          onPressed: () {
+          onPressed: (){
             Get.back();
           },
           icon: const Icon(

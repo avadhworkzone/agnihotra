@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:sunrise_app/animation/slide_transition_animation.dart';
 import 'package:sunrise_app/common_Widget/common_text.dart';
 import 'package:sunrise_app/common_Widget/common_textfield.dart';
 import 'package:sunrise_app/services/prefServices.dart';
@@ -189,7 +190,8 @@ class _ChangeTimeZoneScreenState extends State<ChangeTimeZoneScreen> {
                   /// Yes Button
                   InkWell(
                     onTap: (){
-                      Get.to(SunriseSunetScreen());
+                      SlideTransitionAnimation.leftToRightAnimation(SunriseSunetScreen());
+                      // Get.to(SunriseSunetScreen());
                       googleController.searchCountryController.clear();
                     },
                     child: CustomText(

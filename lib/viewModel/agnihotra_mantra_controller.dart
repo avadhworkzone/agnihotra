@@ -30,7 +30,7 @@ class AgnihotraMantraController extends GetxController{
      }
 
      // Listen for player state changes
-     sunriseAudio.playerStateStream.listen((playerState) {
+     sunriseAudio.playerStateStream.listen((playerState){
        if (playerState.processingState == ProcessingState.completed){
          // When playback completes, stop the audio and update UI
          sunriseAudio.pause();

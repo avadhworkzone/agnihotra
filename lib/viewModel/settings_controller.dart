@@ -1,29 +1,18 @@
 import 'dart:async';
 import 'package:alarm/alarm.dart';
-import 'package:audioplayers/audioplayers.dart';
+import 'package:alarm/model/alarm_settings.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:just_audio/just_audio.dart';
 import 'package:sunrise_app/services/prefServices.dart';
+import 'package:sunrise_app/utils/image_utils.dart';
 import 'package:timezone/timezone.dart' as tz;
 
 class SettingScreenController extends GetxController {
-
   RxBool on = false.obs;
   RxBool isScreenOn = false.obs;
   late AudioPlayer remainderAudio;
-
-  @override
-  void onInit() {
-    super.onInit();
-    updateTime();
-    onCountDown();
-    ringAlarm();
-
-    is24Hours.value = PrefServices.getBool('is24Hours');
-    isCountDown.value = PrefServices.getBool('isCountDown');
-    remainderAudio = AudioPlayer();
-  }
 
   Future<void> ringAlarm() async {
     await Alarm.init();
@@ -47,141 +36,181 @@ class SettingScreenController extends GetxController {
   }
 
   /// Medition Bell
-  // AudioPlayer? audioPlayer;
-  // Timer? sunriseTimer;
-  // Timer? sunsetTimer;
-  // RxBool isBellRinging = false.obs;
-  //
-  //
-  // void startBellForSunrise() {
-  //   String sunriseTime = PrefServices.getString('countrySunriseTimeZone');
-  //   if (sunriseTime.isNotEmpty) {
-  //     DateTime now = DateTime.now();
-  //     DateTime sunrise = DateFormat('hh:mm:ss a').parse(sunriseTime);
-  //
-  //     // Check if the scheduled time is already passed for today
-  //     if (sunrise.isAfter(sunrise)) {
-  //       // If passed, schedule the bell for the next day
-  //       sunrise = sunrise.add(const Duration(days: 1));
-  //     }
-  //
-  //     // Calculate the duration until the scheduled time
-  //     Duration durationUntilScheduledTime = sunrise.difference(now);
-  //
-  //     // Schedule the timer to ring the bell
-  //     sunriseTimer = Timer(durationUntilScheduledTime, () {
-  //       if (isBellRinging.value) {
-  //         _ringBell(); // Only ring the bell if it's currently enabled
-  //       }
-  //       // Reschedule the timer for the next day
-  //       startBellForSunrise();
-  //     });
-  //   }
-  // }
-  //
-  // void startBellForSunset() {
-  //   String sunsetTime = PrefServices.getString('countrySunsetTimeZone');
-  //   if (sunsetTime.isNotEmpty) {
-  //     DateTime now = DateTime.now();
-  //     DateTime sunset = DateFormat('hh:mm:ss a').parse(sunsetTime);
-  //
-  //     // Check if the scheduled time is already passed for today
-  //     if (sunset.isAfter(sunset)) {
-  //       // If passed, schedule the bell for the next day
-  //       sunset = sunset.add(const Duration(days: 1));
-  //     }
-  //
-  //     // Calculate the duration until the scheduled time
-  //     Duration durationUntilScheduledTime = sunset.difference(now);
-  //
-  //     // Schedule the timer to ring the bell
-  //     sunsetTimer = Timer(durationUntilScheduledTime, () {
-  //       if (isBellRinging.value) {
-  //         _ringBell(); // Only ring the bell if it's currently enabled
-  //       }
-  //       // Reschedule the timer for the next day
-  //       startBellForSunset();
-  //     });
-  //   }
-  // }
-  //
-  //
-  // Future<void> _ringBell() async {
-  //   audioPlayer?.setAsset('assets/audio/meditation_bell.mp3');
-  //   await audioPlayer?.play();
-  //   // You can add any additional actions here when the bell rings
-  // }
-  //
-  // void toggleBellFormat() {
-  //   startBellForSunrise();
-  //   startBellForSunset();
-  // }
-  //
-  // @override
-  // void onClose() {
-  //   audioPlayer?.dispose();
-  //   sunriseTimer?.cancel();
-  //   sunsetTimer?.cancel();
-  //   super.onClose();
-  // }
+  late AudioPlayer meditionBell;
 
-  // Future<void> remainderAlarm() async {
-  //   String selectedTime = PrefServices.getString('selectedAlarmTime');
-  //   print("Selected Time: $selectedTime");
-  //
-  //   // Parse the selected time string (e.g., '1:00 AM')
-  //   DateTime selectedDateTime = DateFormat.jm().parse(selectedTime);
-  //
-  //   // Get the current date and time
-  //   DateTime now = DateTime.now();
-  //
-  //   DateTime alarmDateTime = DateTime(
-  //     now.year,
-  //     now.month,
-  //     now.day,
-  //     selectedDateTime.hour,
-  //     selectedDateTime.minute,
-  //   );
-  //
-  //   // Check if the alarm time has already passed today
-  //   if (alarmDateTime.isBefore(now)) {
-  //     // If the alarm time has passed, schedule it for the next day
-  //     alarmDateTime = alarmDateTime.add(const Duration(days: 1));
-  //   }
-  //
-  //   print("Scheduled Alarm DateTime: $alarmDateTime");
-  //
-  //   // Define the alarm settings
-  //   final alarmSettings = AlarmSettings(
-  //     id: 42,
-  //     dateTime: alarmDateTime,
-  //     assetAudioPath: AssetUtils.remainderAlarmAudio,
-  //     loopAudio: false,
-  //     vibrate: false,
-  //     volume: 0.2,
-  //     fadeDuration: 3.0,
-  //     notificationTitle: 'Reminders',
-  //     notificationBody: '',
-  //     enableNotificationOnKill: true,
-  //   );
-  //
-  //   // Set the alarm using the defined settings
-  //   await Alarm.set(alarmSettings: alarmSettings);
-  // }
+  RxBool isBellRinging = PrefServices.getBool('isBellRinging').obs;
 
+  @override
+  void onInit() {
+    super.onInit();
+    updateTime();
+    onCountDown();
+    ringAlarm();
+
+    is24Hours.value = PrefServices.getBool('is24Hours');
+    isCountDown.value = PrefServices.getBool('isCountDown');
+    remainderAudio = AudioPlayer();
+    meditionBell = AudioPlayer();
+  }
+
+  void toggleBellFormat() {
+
+
+    if (PrefServices.getString('currentAddress').isNotEmpty){
+      startBellForSunrise();
+      startBellForSunset();
+    }
+
+  }
+
+  String convert12HourTo24HourCurrentTime(String timeString) {
+    try {
+      // Split the time string by space to separate time and period
+      List<String> timeParts = timeString.split(' ');
+
+      // Extract the time component (e.g., "5:43:24") and the period (e.g., "PM")
+      String timeComponent = timeParts[0];
+      String period = timeParts[1];
+
+      // Split the time component by ":" to extract hour, minute, and second
+      List<String> timeComponents = timeComponent.split(':');
+
+      // Extract hour, minute, and second components
+      int hour = int.parse(timeComponents[0]);
+      int minute = int.parse(timeComponents[1]);
+      int second = int.parse(timeComponents[2]);
+
+      // Convert hour to 24-hour format
+      if (period == 'PM' && hour != 12) {
+        hour += 12; // Add 12 hours for PM times (except for 12 PM)
+      } else if (period == 'AM' && hour == 12) {
+        hour = 0; // Handle 12 AM (midnight) as 0 hour in 24-hour format
+      }
+
+      // Format the time in 24-hour format (HH:mm:ss)
+      String formattedTime =
+          '${hour.toString().padLeft(2, '0')}:${minute.toString().padLeft(2, '0')}:${second.toString().padLeft(2, '0')}';
+
+      return formattedTime; // Return the time in 24-hour format
+    } catch (e) {
+      print('Error converting time: $e');
+      return 'Om'; // Return null in case of error
+    }
+  }
+
+  Future<void> startBellForSunrise() async {
+    String sunriseTime = formatTime(
+        PrefServices.getString('countrySunriseTimeZone'), is24HourFormat.value);
+
+
+    DateTime currentTime = DateTime.now();
+
+    DateFormat formatter = DateFormat('h:mm:ss a');
+
+    String formattedCurrentTime = formatter.format(currentTime);
+
+    if (is24HourFormat.value) {
+      DateFormat formatter = DateFormat('hh:mm:ss a');
+      String formatted12HourCurrentTime = formatter.format(currentTime);
+      String currentHour24Time =
+          convert12HourTo24HourCurrentTime(formatted12HourCurrentTime);
+
+      if (sunriseTime == currentHour24Time) {
+        meditionBell.setAsset(AssetUtils.meditionBellAudio);
+        meditionBell.play();
+      }
+    } else if (sunriseTime == formattedCurrentTime) {
+      meditionBell.setAsset(AssetUtils.meditionBellAudio);
+      meditionBell.play();
+    }
+  }
+
+  void startBellForSunset() {
+    String sunsetTime = formatTime(
+        PrefServices.getString('countrySunsetTimeZone'), is24HourFormat.value);
+
+    DateTime currentTime = DateTime.now();
+
+    DateFormat formatter = DateFormat('h:mm:ss a');
+
+    String formattedCurrentTime = formatter.format(currentTime);
+
+    if (is24HourFormat.value) {
+      DateFormat formatter = DateFormat('hh:mm:ss a');
+      String formatted12HourCurrentTime = formatter.format(currentTime);
+      String currentHour24Time =
+          convert12HourTo24HourCurrentTime(formatted12HourCurrentTime);
+
+      if (sunsetTime == currentHour24Time) {
+        meditionBell.setAsset(AssetUtils.meditionBellAudio);
+        meditionBell.play();
+      }
+    } else if (sunsetTime == formattedCurrentTime) {
+      meditionBell.setAsset(AssetUtils.meditionBellAudio);
+      meditionBell.play();
+    }
+  }
+
+  @override
+  void onClose() {
+    meditionBell.dispose();
+
+    super.onClose();
+  }
+
+  Future<void> remainderAlarm() async {
+    String selectedTime = PrefServices.getString('selectedAlarmTime');
+    print("Selected Time: $selectedTime");
+
+    // Parse the selected time string (e.g., '1:00 AM')
+    DateTime selectedDateTime = DateFormat.jm().parse(selectedTime);
+
+    // Get the current date and time
+    DateTime now = DateTime.now();
+
+    DateTime alarmDateTime = DateTime(
+      now.year,
+      now.month,
+      now.day,
+      selectedDateTime.hour,
+      selectedDateTime.minute,
+    );
+
+    // Check if the alarm time has already passed today
+    if (alarmDateTime.isBefore(now)) {
+      // If the alarm time has passed, schedule it for the next day
+      alarmDateTime = alarmDateTime.add(const Duration(days: 1));
+    }
+
+    print("Scheduled Alarm DateTime: $alarmDateTime");
+
+    // Define the alarm settings
+    final alarmSettings = AlarmSettings(
+      id: 42,
+      dateTime: alarmDateTime,
+      assetAudioPath: AssetUtils.remainderAlarmAudio,
+      loopAudio: false,
+      vibrate: false,
+      volume: 0.2,
+      fadeDuration: 3.0,
+      notificationTitle: 'Reminders',
+      notificationBody: '',
+      enableNotificationOnKill: true,
+    );
+
+    // Set the alarm using the defined settings
+    await Alarm.set(alarmSettings: alarmSettings);
+  }
+
+  /// Flutter Local Notification
   FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
 
-
-
   /// scheduleDaily Notification
 
-
   Future<void> scheduleDailyNotification() async {
-
-
     const AndroidNotificationDetails androidPlatformChannelSpecifics =
-    AndroidNotificationDetails(
+        AndroidNotificationDetails(
       'daily_notification_channel', // Channel ID
       'Daily Notification', // Channel name
       // 'Shows a daily notification at a specific time', // Channel description
@@ -190,34 +219,33 @@ class SettingScreenController extends GetxController {
       showWhen: false,
     );
     const NotificationDetails platformChannelSpecifics =
-    NotificationDetails(android: androidPlatformChannelSpecifics);
-
+        NotificationDetails(android: androidPlatformChannelSpecifics);
 
     // Schedule the notification
     await flutterLocalNotificationsPlugin.zonedSchedule(
-      0, // Notification ID
-      'Remainders',
-      '',
-      _nextInstanceOfTenAM(), // Scheduled date and time
-      platformChannelSpecifics,
-      androidAllowWhileIdle: true,
+        0, // Notification ID
+        'Remainders',
+        '',
+        _nextInstanceOfTenAM(), // Scheduled date and time
+        platformChannelSpecifics,
+        androidAllowWhileIdle: true,
         androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
-        uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime,
-        matchDateTimeComponents: DateTimeComponents.time
-    );
+        uiLocalNotificationDateInterpretation:
+            UILocalNotificationDateInterpretation.absoluteTime,
+        matchDateTimeComponents: DateTimeComponents.time);
   }
 
   Future<void> cancelNotification() async {
     await flutterLocalNotificationsPlugin.cancel(0);
   }
 
-  String convertTo24HourFormat(String time12Hour){
-
+  String convertTo24HourFormat(String time12Hour) {
     // Example input format: "11:35 AM"
     List<String> parts = time12Hour.split(':');
     print("Parts :- $parts");
     int hour = int.parse(parts[0]);
-    int minute = int.parse(parts[1].split(' ')[0]); // Extract minute (e.g., "35")
+    int minute =
+        int.parse(parts[1].split(' ')[0]); // Extract minute (e.g., "35")
     String period = parts[1].split(' ')[1]; // Extract period (AM or PM)
 
     if (period == 'AM') {
@@ -226,7 +254,7 @@ class SettingScreenController extends GetxController {
         hour = 0; // Midnight in 24-hour format
       }
     } else {
-      if (hour != 12){
+      if (hour != 12) {
         // Convert PM hour to 24-hour format
         hour += 12;
       }
@@ -239,23 +267,18 @@ class SettingScreenController extends GetxController {
     return '$hour24Format:$minute24Format';
   }
 
-  tz.TZDateTime _nextInstanceOfTenAM(){
-
+  tz.TZDateTime _nextInstanceOfTenAM() {
     String selectedAlarmTime = PrefServices.getString('selectedAlarmTime');
     print("selectedAlarmTime :- $selectedAlarmTime");
-    String time24Hour  =  convertTo24HourFormat(selectedAlarmTime);
+    String time24Hour = convertTo24HourFormat(selectedAlarmTime);
     print("time24Hour :- $time24Hour");
     List<String> parts = time24Hour.split(':');
 
     print("Separated =========> $parts");
 
     final tz.TZDateTime now = tz.TZDateTime.now(tz.local);
-    tz.TZDateTime scheduledDate = tz.TZDateTime(
-      tz.local,
-      now.year,
-      now.month,
-      now.day, int.parse(parts[0]),int.parse(parts[1])
-    );
+    tz.TZDateTime scheduledDate = tz.TZDateTime(tz.local, now.year, now.month,
+        now.day, int.parse(parts[0]), int.parse(parts[1]));
 
     if (scheduledDate.isBefore(now)) {
       scheduledDate = scheduledDate.add(const Duration(days: 1));
@@ -263,9 +286,7 @@ class SettingScreenController extends GetxController {
 
     print("scheduledDate :- $scheduledDate");
     return scheduledDate;
-
   }
-
 
   RxBool isCountDown = false.obs;
   Rx<Duration> difference = Rx<Duration>(Duration.zero);
@@ -365,6 +386,7 @@ class SettingScreenController extends GetxController {
   void toggleTimeFormat(bool value) {
     is24Hours.value = value;
     is24HourFormat.value = !is24HourFormat.value;
+    print("24 hour Toggle Value :- ${is24HourFormat.value}");
     updateTime();
     PrefServices.setValue('is24Hours', value);
   }
@@ -382,7 +404,4 @@ class SettingScreenController extends GetxController {
       return time;
     }
   }
-
-
-
 }

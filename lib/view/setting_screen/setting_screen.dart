@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:just_audio/just_audio.dart';
 import 'package:sunrise_app/common_Widget/common_back_arrow.dart';
 import 'package:sunrise_app/common_Widget/common_button.dart';
 import 'package:sunrise_app/common_Widget/common_text.dart';
@@ -10,7 +10,6 @@ import 'package:sunrise_app/services/prefServices.dart';
 import 'package:sunrise_app/utils/color_utils.dart';
 import 'package:sunrise_app/utils/image_utils.dart';
 import 'package:sunrise_app/utils/string_utils.dart';
-import 'package:sunrise_app/view/sunrise_sunset_screen/sunrise_sunset_screen.dart';
 import 'package:sunrise_app/viewModel/google_map_controller.dart';
 import 'package:sunrise_app/viewModel/settings_controller.dart';
 import 'package:keep_screen_on/keep_screen_on.dart';
@@ -23,7 +22,8 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SeetingScreenState extends State<SettingsScreen> {
-  SettingScreenController settingScreenController = Get.find<SettingScreenController>();
+  SettingScreenController settingScreenController =
+      Get.find<SettingScreenController>();
   GoogleController googleController = Get.find<GoogleController>();
   TimeOfDay? selectedTime;
   TimePickerEntryMode entryMode = TimePickerEntryMode.dial;
@@ -31,22 +31,25 @@ class _SeetingScreenState extends State<SettingsScreen> {
   TextDirection textDirection = TextDirection.ltr;
   MaterialTapTargetSize tapTargetSize = MaterialTapTargetSize.padded;
   bool use24HourTime = false;
+  late AudioPlayer meditionBell;
 
   @override
   void initState() {
-
     super.initState();
-    print("PrefServices.getBool('saveToggleValue') :- ${PrefServices.getBool('saveToggleValue')}");
-    print("settingScreenController.on4.value :- ${settingScreenController.on4.value}");
+
+    meditionBell = AudioPlayer();
+    print(
+        "PrefServices.getBool('saveToggleValue') :- ${PrefServices.getBool('saveToggleValue')}");
+    print(
+        "settingScreenController.on4.value :- ${settingScreenController.on4.value}");
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
 
-      /// Medition Bell Functionality
-      // settingScreenController.audioPlayer = AudioPlayer();
-      // settingScreenController. isBellRinging.value = PrefServices.getBool('isBellRinging') ?? false;
 
+      /// Keep Screen On
       settingScreenController.isScreenOn.value =
           PrefServices.getBool('keepScreenOn');
+
       if (settingScreenController.isScreenOn.value) {
         KeepScreenOn.turnOn();
       }
@@ -60,13 +63,10 @@ class _SeetingScreenState extends State<SettingsScreen> {
 
   @override
   Widget build(BuildContext context) {
-
-
     return Scaffold(
       body: Obx(
         () => Stack(
           children: [
-
             Container(
               decoration: BoxDecoration(
                 image: DecorationImage(
@@ -77,7 +77,6 @@ class _SeetingScreenState extends State<SettingsScreen> {
                 ),
               ),
             ),
-
             SafeArea(
               child: Padding(
                 padding: EdgeInsets.only(top: 10.h),
@@ -85,7 +84,6 @@ class _SeetingScreenState extends State<SettingsScreen> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
-
                     SizedBox(width: 15.w),
                     const CommonBackArrow(),
                     SizedBox(width: 100.w),
@@ -94,13 +92,10 @@ class _SeetingScreenState extends State<SettingsScreen> {
                       fontWeight: FontWeight.w500,
                       fontSize: 18.sp,
                     ),
-
-
                   ],
                 ),
               ),
             ),
-
             Padding(
               padding: EdgeInsets.only(top: 110.h),
               child: ListView(
@@ -200,8 +195,7 @@ class _SeetingScreenState extends State<SettingsScreen> {
                                       value: settingScreenController
                                           .is24Hours.value,
                                       onChanged: (value) {
-                                        settingScreenController
-                                            .toggleTimeFormat(value);
+                                        settingScreenController.toggleTimeFormat(value);
                                       },
                                     ),
                                   ),
@@ -221,22 +215,6 @@ class _SeetingScreenState extends State<SettingsScreen> {
                             ),
 
                             /// Medition Bell
-                            // Transform.scale(
-                            //     scale: 0.8,
-                            //     child: Switch(
-                            //       value: settingScreenController.isBellRinging.value,
-                            //       onChanged: (value) {
-                            //         settingScreenController.isBellRinging.value = value;
-                            //         PrefServices.setValue('isBellRinging', settingScreenController.isBellRinging.value);
-                            //         if (settingScreenController.isBellRinging.value) {
-                            //           settingScreenController.toggleBellFormat();
-                            //         } else {
-                            //           settingScreenController.sunriseTimer?.cancel();
-                            //           settingScreenController.sunsetTimer?.cancel();
-                            //         }
-                            //       },
-                            //     ),
-                            //     ),
 
                             SizedBox(
                               height: 30.h,
@@ -252,11 +230,26 @@ class _SeetingScreenState extends State<SettingsScreen> {
                                   Transform.scale(
                                     scale: 0.8,
                                     child: Switch(
-                                      value: settingScreenController.on2.value,
-                                      onChanged: (value) {
-                                        // setState(() {
-                                        settingScreenController.toggle2();
-                                        // });
+                                      value: settingScreenController
+                                          .isBellRinging.value,
+                                      onChanged: (value) async {
+                                        settingScreenController
+                                            .isBellRinging.value = value;
+                                        PrefServices.setValue(
+                                            'isBellRinging',
+                                            settingScreenController
+                                                .isBellRinging.value);
+                                        settingScreenController
+                                                .isBellRinging.value =
+                                            PrefServices.getBool(
+                                                'isBellRinging');
+
+                                        print("settingScreenController.isBellRinging.value :- ${settingScreenController.isBellRinging.value}");
+
+
+
+
+
                                       },
                                     ),
                                   ),
@@ -325,18 +318,17 @@ class _SeetingScreenState extends State<SettingsScreen> {
                                     fontWeight: FontWeight.w500,
                                   ),
                                   const Spacer(),
-
                                   Transform.scale(
                                     scale: 0.8,
                                     child: Switch(
                                       value: settingScreenController.on4.value,
                                       onChanged: (value) async {
-
                                         settingScreenController.toggle4();
 
-                                        if(PrefServices.getBool('saveToggleValue')){
-
-                                          final TimeOfDay? time = await showTimePicker(
+                                        if (PrefServices.getBool(
+                                            'saveToggleValue')) {
+                                          final TimeOfDay? time =
+                                              await showTimePicker(
                                             barrierDismissible: false,
                                             context: context,
                                             initialTime:
@@ -362,18 +354,15 @@ class _SeetingScreenState extends State<SettingsScreen> {
                                                     .toString());
                                           });
 
-
-                                          settingScreenController.scheduleDailyNotification();
-
+                                          settingScreenController
+                                              .scheduleDailyNotification();
+                                        } else {
+                                          print(
+                                              "==========CANCEL NOTIFICATION========");
+                                          settingScreenController
+                                              .cancelNotification();
                                         }
-                                        else{
-                                           print("==========CANCEL NOTIFICATION========");
-                                           settingScreenController.cancelNotification();
-                                        }
-
-
-
-                                        },
+                                      },
                                     ),
                                   ),
                                 ],
@@ -459,6 +448,7 @@ class _SeetingScreenState extends State<SettingsScreen> {
           if (states.contains(MaterialState.disabled)) {
             return null;
           }
+
           if (states.contains(MaterialState.selected)) {
             return shrinePink400;
           }
@@ -627,4 +617,5 @@ class _SeetingScreenState extends State<SettingsScreen> {
       ),
     ));
   }
+
 }

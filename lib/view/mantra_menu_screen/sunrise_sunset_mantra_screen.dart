@@ -1,6 +1,8 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:sunrise_app/animation/slide_transition_animation.dart';
 import 'package:sunrise_app/common_Widget/common_assets.dart';
 import 'package:sunrise_app/common_Widget/common_text.dart';
 import 'package:sunrise_app/utils/color_utils.dart';
@@ -9,19 +11,24 @@ import 'package:sunrise_app/utils/string_utils.dart';
 import 'package:sunrise_app/viewModel/agnihotra_mantra_controller.dart';
 import 'agnihotra_patra_screen.dart';
 
-class MantraScreenDemo extends StatefulWidget {
-  const MantraScreenDemo({Key? key}) : super(key: key);
+class SunriseSunsetMantraScreen extends StatefulWidget {
+  const SunriseSunsetMantraScreen({Key? key}) : super(key: key);
 
   @override
-  State<MantraScreenDemo> createState() => _MantraScreenDemoState();
+  State<SunriseSunsetMantraScreen> createState() =>
+      _SunriseSunsetMantraScreenState();
 }
 
-class _MantraScreenDemoState extends State<MantraScreenDemo> {
-  AgnihotraMantraController agnihotraMantraController = Get.find<AgnihotraMantraController>();
+class _SunriseSunsetMantraScreenState extends State<SunriseSunsetMantraScreen> {
+  AgnihotraMantraController agnihotraMantraController =
+      Get.find<AgnihotraMantraController>();
+  late AudioPlayer meditionBell;
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Stack(
+    return Material(
+      color: ColorUtils.white,
+      child: Stack(
         children: [
           Container(
             decoration: BoxDecoration(
@@ -33,38 +40,41 @@ class _MantraScreenDemoState extends State<MantraScreenDemo> {
               ),
             ),
           ),
-          Padding(
-            padding:EdgeInsets.only(top: 50.h),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Padding(
-                  padding: EdgeInsets.only(left: 12.w),
-                  child: CircleAvatar(
+          SafeArea(
+            child: Padding(
+              padding: EdgeInsets.only(top: 10.h),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  SizedBox(width: 15.w),
+                  CircleAvatar(
                     backgroundColor: ColorUtils.white,
-                    radius: 18.r,
-                    child: IconButton(
-                      onPressed: () {
-                        Get.back();
-                      },
-                      icon: Icon(
-                        size: 20.w,
-                        AssetUtils.backArrowIcon,
-                        color: ColorUtils.orange,
+                    radius: 20.r,
+                    child: Center(
+                      child: IconButton(
+                        onPressed: () {
+                          Get.back();
+                        },
+                        icon: const Icon(
+                          size: 22,
+                          AssetUtils.backArrowIcon,
+                          color: ColorUtils.orange,
+                        ),
                       ),
                     ),
                   ),
-                ),
-                CustomText(
-                  StringUtils.agnihotraMantraTxt,
-                  fontWeight: FontWeight.w500,
-                  fontSize: 18.sp,
-                ),
-                SizedBox(width: 12.w)
-              ],
+                  SizedBox(width: 80.w),
+                  CustomText(
+                    StringUtils.agnihotraMantraTxt,
+                    fontWeight: FontWeight.w500,
+                    fontSize: 18.sp,
+                  ),
+                  // SizedBox(width: 12.w)
+                ],
+              ),
             ),
           ),
-
           Padding(
             padding: EdgeInsets.only(top: 100.h),
             child: SingleChildScrollView(
@@ -76,8 +86,9 @@ class _MantraScreenDemoState extends State<MantraScreenDemo> {
 
                   /// Agnihotra Patra Size
                   GestureDetector(
-                    onTap: (){
-                      Get.to(const AgniHotraPatraScreen());
+                    onTap: () {
+                      SlideTransitionAnimation.rightToLeftAnimation(
+                          const AgniHotraPatraScreen());
                     },
                     child: Center(
                       child: Container(
@@ -86,23 +97,19 @@ class _MantraScreenDemoState extends State<MantraScreenDemo> {
                         decoration: BoxDecoration(
                             color: ColorUtils.white,
                             borderRadius: BorderRadius.circular(52.r)),
-                        child:  Center(
+                        child: Center(
                           child: Row(
-
                             children: [
-
                               SizedBox(
                                 width: 40.w,
                               ),
-
-                              CustomText(StringUtils.agnihotraPatraText,
+                              CustomText(
+                                StringUtils.agnihotraPatraText,
                                 color: ColorUtils.black1F,
                                 fontWeight: FontWeight.w600,
                                 fontSize: 13.sp,
                               ),
-
                               const Spacer(),
-
                               Container(
                                 height: 25.h,
                                 width: 25.h,
@@ -117,7 +124,6 @@ class _MantraScreenDemoState extends State<MantraScreenDemo> {
 
                                     end: Alignment
                                         .bottomLeft, // Ending point of the gradient
-
                                   ),
                                   borderRadius: BorderRadius.circular(25.r),
                                 ),
@@ -129,11 +135,9 @@ class _MantraScreenDemoState extends State<MantraScreenDemo> {
                                   ),
                                 ),
                               ),
-
                               SizedBox(
                                 width: 10.w,
                               )
-
                             ],
                           ),
                         ),
@@ -144,8 +148,9 @@ class _MantraScreenDemoState extends State<MantraScreenDemo> {
                   SizedBox(
                     height: 20.h,
                   ),
+
                   Padding(
-                    padding:EdgeInsets.only(left: 20.w,right: 20.w),
+                    padding: EdgeInsets.only(left: 20.w, right: 20.w),
                     child: Container(
                       width: Get.width,
                       decoration: BoxDecoration(
@@ -155,13 +160,17 @@ class _MantraScreenDemoState extends State<MantraScreenDemo> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          SizedBox(height: 10.h,),
+                          SizedBox(
+                            height: 10.h,
+                          ),
+
                           Center(
                             child: Container(
                               height: 50.26.h,
                               width: 250.43.w,
                               decoration: BoxDecoration(
-                                borderRadius: BorderRadius.all(Radius.circular(27.r)),
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(27.r)),
                                 gradient: const LinearGradient(
                                   colors: [
                                     ColorUtils.gridentColor1,
@@ -174,7 +183,8 @@ class _MantraScreenDemoState extends State<MantraScreenDemo> {
                               child: Row(
                                 children: [
                                   Padding(
-                                    padding:EdgeInsets.only(top: 5.h,bottom: 5.h),
+                                    padding:
+                                        EdgeInsets.only(top: 5.h, bottom: 5.h),
                                     child: CircleAvatar(
                                       backgroundColor: ColorUtils.white,
                                       radius: 25.r,
@@ -185,7 +195,9 @@ class _MantraScreenDemoState extends State<MantraScreenDemo> {
                                       ),
                                     ),
                                   ),
-                                  SizedBox(width: 10.w,),
+                                  SizedBox(
+                                    width: 10.w,
+                                  ),
                                   CustomText(
                                     StringUtils.sunriseTxt,
                                     fontWeight: FontWeight.w600,
@@ -195,8 +207,9 @@ class _MantraScreenDemoState extends State<MantraScreenDemo> {
                               ),
                             ),
                           ),
+
                           ListTile(
-                            title:CustomText(
+                            title: CustomText(
                               StringUtils.sooryayaSwaha,
                               color: ColorUtils.black1F,
                               fontWeight: FontWeight.w500,
@@ -209,81 +222,108 @@ class _MantraScreenDemoState extends State<MantraScreenDemo> {
                               fontSize: 17.sp,
                             ),
                           ),
+
                           ListTile(
-                            title:CustomText(
+                            title: CustomText(
                               StringUtils.sooryayaIdem,
                               color: ColorUtils.black1F,
                               fontWeight: FontWeight.w500,
                               fontSize: 17.sp,
                             ),
-                            subtitle:CustomText(
+                            subtitle: CustomText(
                               StringUtils.sooryayaIdemTxt,
                               color: ColorUtils.black1F,
                               fontWeight: FontWeight.w500,
                               fontSize: 17.sp,
                             ),
                           ),
+
                           ListTile(
-                            title:CustomText(
+                            title: CustomText(
                               StringUtils.prajapatayeSwaha,
                               color: ColorUtils.black1F,
                               fontWeight: FontWeight.w500,
                               fontSize: 17.sp,
                             ),
-                            subtitle:CustomText(
+                            subtitle: CustomText(
                               StringUtils.prajapatayeSwahaTxt,
                               color: ColorUtils.black1F,
                               fontWeight: FontWeight.w500,
                               fontSize: 17.sp,
                             ),
                           ),
+
+                          /// Sunrise Manta
                           ListTile(
-                            title:CustomText(
+                            title: CustomText(
                               StringUtils.prajapatayeIdem,
                               color: ColorUtils.black1F,
                               fontWeight: FontWeight.w500,
                               fontSize: 17.sp,
                             ),
-                            subtitle:  CustomText(
+                            subtitle: CustomText(
                               StringUtils.prajapatayeIdemTxt,
                               color: ColorUtils.black1F,
                               fontWeight: FontWeight.w500,
                               fontSize: 17.sp,
                             ),
-                            trailing: Column(
-                              children: [
-                                GestureDetector(
+                            trailing: GetBuilder<AgnihotraMantraController>(
+                              builder: (controller) {
+                                return GestureDetector(
                                   onTap: () {
+
+
+
                                     setState(() {
-                                      agnihotraMantraController.sunriseMantraAudio();
+                                      if (!agnihotraMantraController
+                                          .sunsetAudio.playing) {
+                                        agnihotraMantraController
+                                            .sunriseMantraAudio();
+                                      }
                                     });
                                   },
-                                  child: CircleAvatar(
-                                    radius: 18.r,
-                                    backgroundColor: ColorUtils.orange,
-                                    child: Center(
-                                        child: Icon(
-                                          agnihotraMantraController.sunriseAudio.playing ? Icons.pause : Icons.play_arrow,
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      CircleAvatar(
+                                        radius: 18.r,
+                                        backgroundColor: ColorUtils.orange,
+                                        child: Center(
+                                            child: Icon(
+                                          agnihotraMantraController
+                                                  .sunriseAudio.playing
+                                              ? Icons.pause
+                                              : Icons.play_arrow,
                                           color: ColorUtils.white,
-                                          size: 35.sp,
-                                        )
-                                    ),
+                                          size: 28.sp,
+                                        )),
+                                      ),
+                                      CustomText(
+                                        agnihotraMantraController
+                                                .sunriseAudio.playing
+                                            ? StringUtils.pauseTxt
+                                            : StringUtils.playTxt,
+                                        color: ColorUtils.orange,
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 10.sp,
+                                      )
+                                    ],
                                   ),
-                                ),
-                                const CustomText(
-                                  StringUtils.playTxt,
-                                  color: ColorUtils.orange,
-                                )
-                              ],
+                                );
+                              },
                             ),
                           ),
                         ],
                       ),
                     ),
                   ),
-                  SizedBox(height: 20.h,),
+
+                  SizedBox(
+                    height: 20.h,
+                  ),
+
                   Padding(
-                    padding:EdgeInsets.only(left: 20.w,right: 20.w),
+                    padding: EdgeInsets.only(left: 20.w, right: 20.w),
                     child: Container(
                       width: Get.width,
                       decoration: BoxDecoration(
@@ -293,13 +333,17 @@ class _MantraScreenDemoState extends State<MantraScreenDemo> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          SizedBox(height: 10.h,),
+                          SizedBox(
+                            height: 10.h,
+                          ),
+
                           Center(
                             child: Container(
                               height: 50.26.h,
                               width: 250.43.w,
                               decoration: BoxDecoration(
-                                borderRadius: BorderRadius.all(Radius.circular(27.r)),
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(27.r)),
                                 gradient: const LinearGradient(
                                   colors: [
                                     ColorUtils.gridentColor1,
@@ -312,7 +356,8 @@ class _MantraScreenDemoState extends State<MantraScreenDemo> {
                               child: Row(
                                 children: [
                                   Padding(
-                                    padding:EdgeInsets.only(top: 5.h,bottom: 5.h),
+                                    padding:
+                                        EdgeInsets.only(top: 5.h, bottom: 5.h),
                                     child: CircleAvatar(
                                       backgroundColor: ColorUtils.white,
                                       radius: 27.r,
@@ -323,7 +368,9 @@ class _MantraScreenDemoState extends State<MantraScreenDemo> {
                                       ),
                                     ),
                                   ),
-                                  SizedBox(width: 10.w,),
+                                  SizedBox(
+                                    width: 10.w,
+                                  ),
                                   CustomText(
                                     StringUtils.sunsetTxt,
                                     fontWeight: FontWeight.w600,
@@ -333,8 +380,9 @@ class _MantraScreenDemoState extends State<MantraScreenDemo> {
                               ),
                             ),
                           ),
+
                           ListTile(
-                            title:CustomText(
+                            title: CustomText(
                               StringUtils.agnayeSwaha,
                               color: ColorUtils.black1F,
                               fontWeight: FontWeight.w500,
@@ -347,14 +395,15 @@ class _MantraScreenDemoState extends State<MantraScreenDemo> {
                               fontSize: 17.sp,
                             ),
                           ),
+
                           ListTile(
-                            title:CustomText(
+                            title: CustomText(
                               StringUtils.agnayeIdem,
                               color: ColorUtils.black1F,
                               fontWeight: FontWeight.w500,
                               fontSize: 17.sp,
                             ),
-                            subtitle:CustomText(
+                            subtitle: CustomText(
                               StringUtils.agnayeIdemTxt,
                               color: ColorUtils.black1F,
                               fontWeight: FontWeight.w500,
@@ -363,13 +412,13 @@ class _MantraScreenDemoState extends State<MantraScreenDemo> {
                           ),
 
                           ListTile(
-                            title:CustomText(
+                            title: CustomText(
                               StringUtils.prajapatayeSwaha,
                               color: ColorUtils.black1F,
                               fontWeight: FontWeight.w500,
                               fontSize: 17.sp,
                             ),
-                            subtitle:CustomText(
+                            subtitle: CustomText(
                               StringUtils.prajapatayeSwahaTxt,
                               color: ColorUtils.black1F,
                               fontWeight: FontWeight.w500,
@@ -377,52 +426,70 @@ class _MantraScreenDemoState extends State<MantraScreenDemo> {
                             ),
                           ),
 
+                          /// sunset Mantra
                           ListTile(
-                            title:CustomText(
+                            title: CustomText(
                               StringUtils.prajapatayeIdem,
                               color: ColorUtils.black1F,
                               fontWeight: FontWeight.w500,
                               fontSize: 17.sp,
                             ),
-                            subtitle:  CustomText(
+                            subtitle: CustomText(
                               StringUtils.prajapatayeIdemTxt,
                               color: ColorUtils.black1F,
                               fontWeight: FontWeight.w500,
                               fontSize: 17.sp,
                             ),
-                            trailing: Column(
-                              children: [
-                                GestureDetector(
+                            trailing: GetBuilder<AgnihotraMantraController>(
+                              builder: (GetxController controller) {
+                                return GestureDetector(
                                   onTap: () {
                                     setState(() {
-                                      agnihotraMantraController.sunsetMantraAudio();
+                                      if (!agnihotraMantraController
+                                          .sunriseAudio.playing) {
+                                        agnihotraMantraController
+                                            .sunsetMantraAudio();
+                                      }
                                     });
                                   },
-                                  child: CircleAvatar(
-                                    radius: 18.r,
-                                    backgroundColor: ColorUtils.orange,
-                                    child: Center(
-                                      child: Icon(
-                                        agnihotraMantraController.sunsetAudio.playing ? Icons.pause : Icons.play_arrow,
-                                        color: ColorUtils.white,
-                                        size: 35.sp,
+                                  child: Column(
+                                    children: [
+                                      CircleAvatar(
+                                        radius: 18.r,
+                                        backgroundColor: ColorUtils.orange,
+                                        child: Center(
+                                            child: Icon(
+                                          agnihotraMantraController
+                                                  .sunsetAudio.playing
+                                              ? Icons.pause
+                                              : Icons.play_arrow,
+                                          color: ColorUtils.white,
+                                          size: 28.sp,
+                                        )),
                                       ),
-                                    ),
+                                      CustomText(
+                                        agnihotraMantraController
+                                                .sunsetAudio.playing
+                                            ? StringUtils.pauseTxt
+                                            : StringUtils.playTxt,
+                                        color: ColorUtils.orange,
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 10.sp,
+                                      )
+                                    ],
                                   ),
-                                ),
-                                const CustomText(
-                                  StringUtils.playTxt,
-                                  color: ColorUtils.orange,
-                                )
-                              ],
+                                );
+                              },
                             ),
                           ),
-
                         ],
                       ),
                     ),
                   ),
-                  SizedBox(height: 10.h,),
+
+                  SizedBox(
+                    height: 10.h,
+                  ),
                 ],
               ),
             ),

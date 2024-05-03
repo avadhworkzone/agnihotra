@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:sunrise_app/animation/slide_transition_animation.dart';
 import 'package:sunrise_app/common_Widget/common_back_arrow.dart';
 import 'package:sunrise_app/common_Widget/common_text.dart';
 import 'package:sunrise_app/utils/color_utils.dart';
@@ -125,7 +126,8 @@ class _HelpScreenState extends State<HelpScreen> {
                           SizedBox(height: 10.h,),
                           ListTile(
                             onTap: () {
-                              Get.to(const FeedbackScreen());
+                              SlideTransitionAnimation.rightToLeftAnimation(const FeedbackScreen());
+                              // Get.to(const FeedbackScreen());
                             },
                             leading: const Icon(
                               AssetUtils.feedBackIcon,

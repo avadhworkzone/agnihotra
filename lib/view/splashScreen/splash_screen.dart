@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:keep_screen_on/keep_screen_on.dart';
+import 'package:sunrise_app/animation/slide_transition_animation.dart';
 import 'package:sunrise_app/common_Widget/common_assets.dart';
 import 'package:sunrise_app/services/prefServices.dart';
 import 'package:sunrise_app/utils/image_utils.dart';
@@ -25,10 +26,11 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState(){
 
     super.initState();
+
     _loadPreferences().then((value) {
 
       Future.delayed(const Duration(milliseconds: 5500))
-          .then((value) => Get.to( PrefServices.getString('language').isEmpty ? const WelcomeScreen() :  SunriseSunetScreen()));
+          .then((value) => SlideTransitionAnimation.rightToLeftAnimationOff(PrefServices.getString('language').isEmpty ? const WelcomeScreen() :  SunriseSunetScreen()));
     });
 
     if(PrefServices.getBool('saveToggleValue')){
