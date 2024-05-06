@@ -39,19 +39,18 @@ class SunriseSunetScreen extends StatefulWidget {
 
   @override
   State<SunriseSunetScreen> createState() => _SunriseSunetScreenState();
+
 }
 
 class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
-  EnterManuallyLocationController locationController =
-      Get.find<EnterManuallyLocationController>();
-  SettingScreenController settingScreenController =
-      Get.find<SettingScreenController>();
 
-  SunriseSunsetController sunriseSunsetController =
-      Get.find<SunriseSunsetController>();
+  EnterManuallyLocationController locationController = Get.find<EnterManuallyLocationController>();
+  SettingScreenController settingScreenController = Get.find<SettingScreenController>();
+
+  SunriseSunsetController sunriseSunsetController = Get.find<SunriseSunsetController>();
   GoogleController googleController = Get.find<GoogleController>();
 
-  String formatAddress() {
+  String formatAddress(){
     if (address == null || (latitude == 0 && longitude == 0)) {
       return StringUtils.locationSetTxt;
     }
@@ -113,18 +112,23 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
   Widget build(BuildContext context){
     return Scaffold(
         key: _globalKey,
+
         endDrawer: Drawer(
           width: 250.w,
+
           shape: OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(28.r)),
           ),
+
           child: Padding(
             padding: EdgeInsets.only(left: 20.w, right: 20.w),
             child: Column(
               children: [
+
                 SizedBox(
                   height: 50.h,
                 ),
+
                 Row(
                   children: [
                     Container(
@@ -149,6 +153,7 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                     ),
                   ],
                 ),
+
                 SizedBox(
                   height: 20.h,
                 ),
@@ -177,10 +182,13 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                     ],
                   ),
                 ),
+
                 const Divider(),
+
                 SizedBox(
                   height: 10.h,
                 ),
+
                 Row(
                   children: [
                     LocalAssets(
@@ -199,12 +207,15 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                     ),
                   ],
                 ),
+
                 const Divider(),
+
                 SizedBox(
                   height: 10.h,
                 ),
+
                 InkWell(
-                  onTap: () {
+                  onTap: (){
                     openDrawer();
                     Get.dialog(
                       AlertDialog(
@@ -245,12 +256,14 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
+
                                     CustomText(
                                       StringUtils.engTxt,
                                       fontSize: 14.sp,
                                       fontWeight: FontWeight.w600,
                                       color: ColorUtils.black1F,
                                     ),
+
                                     Radio(
                                       value: 'English',
                                       groupValue: sunriseSunsetController
@@ -287,9 +300,11 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                                     ),
                                   ],
                                 ),
+
                                 SizedBox(
                                   height: 20.h,
                                 ),
+
                                 CustomBtn(
                                   height: 50.h,
                                   gradient: const LinearGradient(
@@ -334,6 +349,7 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                   },
                   child: Row(
                     children: [
+
                       LocalAssets(
                         imagePath: AssetUtils.languageImages,
                         height: 25.h,
@@ -351,10 +367,13 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                     ],
                   ),
                 ),
+
                 const Divider(),
+
                 SizedBox(
                   height: 10.h,
                 ),
+
                 GestureDetector(
                   onTap: () {
                     openDrawer();
@@ -378,10 +397,13 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                     ],
                   ),
                 ),
+
                 const Divider(),
+
                 SizedBox(
                   height: 10.h,
                 ),
+
                 GestureDetector(
                   onTap: () {
                     sunriseSunsetController.launchUrl();
@@ -405,10 +427,13 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                     ],
                   ),
                 ),
+
                 const Divider(),
+
                 SizedBox(
                   height: 10.h,
                 ),
+
                 InkWell(
                   onTap: () {
                     Share.share('https://play.google.com/store/apps/details?id=com.example.sunrise_app');
@@ -431,10 +456,13 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                     ],
                   ),
                 ),
+
                 const Divider(),
+
                 SizedBox(
                   height: 10.h,
                 ),
+
                 GestureDetector(
                   onTap: () {
                     openDrawer();
@@ -459,10 +487,12 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                     ],
                   ),
                 ),
+
               ],
             ),
           ),
         ),
+
         body: Stack(
           children: [
             Container(
@@ -577,13 +607,13 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                   ),
 
                   /// CURRENT TIME
-                  Obx(() {
-                    settingScreenController.toggleBellFormat();
+                  Obx((){
 
+                    settingScreenController.toggleBellFormat();
+                    // settingScreenController.scheduleDailyNotification();
 
                     return Container(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 18.w, vertical: 5.h),
+                      padding: EdgeInsets.symmetric(horizontal: 18.w, vertical: 5.h),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.all(Radius.circular(6.r)),
                         border: Border.all(color: ColorUtils.borderColor),
@@ -619,6 +649,7 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                       ),
                     );
                   }),
+
                   SizedBox(
                     height: 90.h,
                   ),
@@ -657,11 +688,8 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                                       ? const CircularProgressIndicator(
                                           color: ColorUtils.white,
                                         )
-                                      : (PrefServices.getDouble('currentLat') ==
-                                                  0.0 &&
-                                              PrefServices.getDouble(
-                                                      'currentLong') ==
-                                                  0.0)
+                                      : (PrefServices.getDouble('currentLat') == 0.0 &&
+                                              PrefServices.getDouble('currentLong') == 0.0)
                                           ? CustomText(
                                               '',
                                               fontWeight: FontWeight.w500,
@@ -803,8 +831,7 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                                   ),
                                 ),
 
-                              if (PrefServices.getString('currentAddress')
-                                  .isEmpty)
+                              if (PrefServices.getString('currentAddress').isEmpty)
                                 Padding(
                                   padding: EdgeInsets.only(
                                       left: 20.w, right: 20.w, top: 30.h),
@@ -969,6 +996,7 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                       ),
                     ),
                   ),
+
                 ],
               ),
             ),
@@ -1274,7 +1302,8 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
 
   Future<void> _deleteAllLocationDialog() async {
     Get.back();
-    return Get.dialog(AlertDialog(
+    return Get.dialog(
+        AlertDialog(
       contentPadding: EdgeInsets.symmetric(horizontal: 20.w),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(7.r), // Change border radius
@@ -1300,7 +1329,7 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                   Get.back();
                 },
                 child: CustomText(
-                  StringUtils.cancleTxt,
+                  StringUtils.cancleCapitalTxt,
                   fontWeight: FontWeight.w600,
                   color: ColorUtils.orange,
                   textAlign: TextAlign.center,
@@ -1453,7 +1482,7 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
           ),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 5.w),
-            child: CommonTextField(
+            child: CommonTextFormField(
               onChange: (value) {
                 newAddress = value;
               },
@@ -1468,7 +1497,7 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                   Get.back();
                 },
                 child: CustomText(
-                  StringUtils.cancleTxt,
+                  StringUtils.cancleCapitalTxt,
                   color: ColorUtils.orange,
                   fontWeight: FontWeight.w500,
                   fontSize: 12.sp,
@@ -1519,4 +1548,5 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
       ),
     ));
   }
+
 }

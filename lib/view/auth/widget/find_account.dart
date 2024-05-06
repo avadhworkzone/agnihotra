@@ -89,7 +89,7 @@ class FindAccount extends StatelessWidget {
             height: 45.h,
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 30.w),
-              child: CommonTextField(
+              child: CommonTextFormField(
                 textEditController: forgotPasswordController.emailController,
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(35.r),

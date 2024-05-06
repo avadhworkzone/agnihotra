@@ -10,7 +10,7 @@ import 'package:sunrise_app/view/welcome_screen/welcome_screen.dart';
 import 'package:sunrise_app/viewModel/enter_manually_location_controller.dart';
 import 'package:sunrise_app/viewModel/settings_controller.dart';
 
-class SplashScreen extends StatefulWidget {
+class SplashScreen extends StatefulWidget{
   const SplashScreen({super.key});
 
   @override
@@ -27,18 +27,20 @@ class _SplashScreenState extends State<SplashScreen> {
 
     super.initState();
 
+    settingScreenController.toggleBellFormat();
     _loadPreferences().then((value) {
 
       Future.delayed(const Duration(milliseconds: 5500))
           .then((value) => SlideTransitionAnimation.rightToLeftAnimationOff(PrefServices.getString('language').isEmpty ? const WelcomeScreen() :  SunriseSunetScreen()));
     });
 
-    if(PrefServices.getBool('saveToggleValue')){
-      settingScreenController.scheduleDailyNotification();
-    }
-    else{
-      settingScreenController.cancelNotification();
-    }
+    /// Remainder
+    // if(PrefServices.getBool('saveToggleValue')){
+    //   settingScreenController.scheduleDailyNotification();
+    // }
+    // else {
+    //   settingScreenController.cancelNotification();
+    // }
     settingScreenController.isScreenOn.value = PrefServices.getBool('keepScreenOn');
     print("settingScreenController.isScreenOn.value :- ${settingScreenController.isScreenOn.value}");
     if(settingScreenController.isScreenOn.value){

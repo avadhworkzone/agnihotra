@@ -75,7 +75,7 @@ class CreateAccount extends StatelessWidget {
             height: 45.h,
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 30.w),
-              child: CommonTextField(
+              child: CommonTextFormField(
                 textEditController: signUpController.fullNameController,
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(35.r),
@@ -125,7 +125,7 @@ class CreateAccount extends StatelessWidget {
             height: 45.h,
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 30.w),
-              child: CommonTextField(
+              child: CommonTextFormField(
                 textEditController: signUpController.emailController,
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(35.r),
@@ -175,7 +175,7 @@ class CreateAccount extends StatelessWidget {
             height: 45.h,
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 30.w),
-              child: CommonTextField(
+              child: CommonTextFormField(
                 textEditController: signUpController.passwordController,
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(35.r),

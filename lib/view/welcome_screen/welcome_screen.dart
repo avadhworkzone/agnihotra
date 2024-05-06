@@ -31,12 +31,14 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   @override
   void initState() {
     locationController.getCurrentLocation();
-    if(PrefServices.getBool('saveToggleValue')) {
-      settingScreenController.scheduleDailyNotification();
-    }
-    else{
-      settingScreenController.cancelNotification();
-    }
+
+    /// Remainder
+    // if(PrefServices.getBool('saveToggleValue')) {
+    //   settingScreenController.scheduleDailyNotification();
+    // }
+    // else{
+    //   settingScreenController.cancelNotification();
+    // }
     settingScreenController.isScreenOn.value = PrefServices.getBool('keepScreenOn');
     print("settingScreenController.isScreenOn.value :- ${settingScreenController.isScreenOn.value}");
     if (settingScreenController.isScreenOn.value){

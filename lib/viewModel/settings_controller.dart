@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:alarm/alarm.dart';
-import 'package:alarm/model/alarm_settings.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -10,9 +10,12 @@ import 'package:sunrise_app/utils/image_utils.dart';
 import 'package:timezone/timezone.dart' as tz;
 
 class SettingScreenController extends GetxController {
+
   RxBool on = false.obs;
   RxBool isScreenOn = false.obs;
   late AudioPlayer remainderAudio;
+  TextEditingController remainderTimeController = TextEditingController();
+  RxString formatted12HourSunsetTime = PrefServices.getString('formatted12HourSunsetTime').obs;
 
   Future<void> ringAlarm() async {
     await Alarm.init();
@@ -29,8 +32,7 @@ class SettingScreenController extends GetxController {
   void toggle4() {
     on4.value = !on4.value;
     PrefServices.setValue('saveToggleValue', on4.value);
-    print(
-        "PrefServices.getBool('saveToggleValue') :- ${PrefServices.getBool('saveToggleValue')}");
+    print("PrefServices.getBool('saveToggleValue') :- ${PrefServices.getBool('saveToggleValue')}");
     on4.value = PrefServices.getBool('saveToggleValue');
     print("Toggle .on4.value :- ${on4.value}");
   }
@@ -54,13 +56,10 @@ class SettingScreenController extends GetxController {
   }
 
   void toggleBellFormat() {
-
-
-    if (PrefServices.getString('currentAddress').isNotEmpty){
+    if (PrefServices.getString('currentAddress').isNotEmpty) {
       startBellForSunrise();
       startBellForSunset();
     }
-
   }
 
   String convert12HourTo24HourCurrentTime(String timeString) {
@@ -99,8 +98,7 @@ class SettingScreenController extends GetxController {
   }
 
   Future<void> startBellForSunrise() async {
-    String sunriseTime = formatTime(
-        PrefServices.getString('countrySunriseTimeZone'), is24HourFormat.value);
+    String sunriseTime = formatTime(PrefServices.getString('countrySunriseTimeZone'), is24HourFormat.value);
 
 
     DateTime currentTime = DateTime.now();
@@ -108,6 +106,7 @@ class SettingScreenController extends GetxController {
     DateFormat formatter = DateFormat('h:mm:ss a');
 
     String formattedCurrentTime = formatter.format(currentTime);
+    // print("===== formattedCurrentTime :- $formattedCurrentTime");
 
     if (is24HourFormat.value) {
       DateFormat formatter = DateFormat('hh:mm:ss a');
@@ -125,9 +124,9 @@ class SettingScreenController extends GetxController {
     }
   }
 
-  void startBellForSunset() {
-    String sunsetTime = formatTime(
-        PrefServices.getString('countrySunsetTimeZone'), is24HourFormat.value);
+  void startBellForSunset(){
+
+    String sunsetTime = formatTime(PrefServices.getString('countrySunsetTimeZone'), is24HourFormat.value);
 
     DateTime currentTime = DateTime.now();
 
@@ -141,7 +140,7 @@ class SettingScreenController extends GetxController {
       String currentHour24Time =
           convert12HourTo24HourCurrentTime(formatted12HourCurrentTime);
 
-      if (sunsetTime == currentHour24Time) {
+      if (sunsetTime == currentHour24Time){
         meditionBell.setAsset(AssetUtils.meditionBellAudio);
         meditionBell.play();
       }
@@ -158,68 +157,31 @@ class SettingScreenController extends GetxController {
     super.onClose();
   }
 
-  Future<void> remainderAlarm() async {
-    String selectedTime = PrefServices.getString('selectedAlarmTime');
-    print("Selected Time: $selectedTime");
-
-    // Parse the selected time string (e.g., '1:00 AM')
-    DateTime selectedDateTime = DateFormat.jm().parse(selectedTime);
-
-    // Get the current date and time
-    DateTime now = DateTime.now();
-
-    DateTime alarmDateTime = DateTime(
-      now.year,
-      now.month,
-      now.day,
-      selectedDateTime.hour,
-      selectedDateTime.minute,
-    );
-
-    // Check if the alarm time has already passed today
-    if (alarmDateTime.isBefore(now)) {
-      // If the alarm time has passed, schedule it for the next day
-      alarmDateTime = alarmDateTime.add(const Duration(days: 1));
-    }
-
-    print("Scheduled Alarm DateTime: $alarmDateTime");
-
-    // Define the alarm settings
-    final alarmSettings = AlarmSettings(
-      id: 42,
-      dateTime: alarmDateTime,
-      assetAudioPath: AssetUtils.remainderAlarmAudio,
-      loopAudio: false,
-      vibrate: false,
-      volume: 0.2,
-      fadeDuration: 3.0,
-      notificationTitle: 'Reminders',
-      notificationBody: '',
-      enableNotificationOnKill: true,
-    );
-
-    // Set the alarm using the defined settings
-    await Alarm.set(alarmSettings: alarmSettings);
-  }
 
   /// Flutter Local Notification
-  FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-      FlutterLocalNotificationsPlugin();
+  FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
 
   /// scheduleDaily Notification
 
   Future<void> scheduleDailyNotification() async {
+
     const AndroidNotificationDetails androidPlatformChannelSpecifics =
         AndroidNotificationDetails(
-      'daily_notification_channel', // Channel ID
-      'Daily Notification', // Channel name
-      // 'Shows a daily notification at a specific time', // Channel description
+      'id', // Channel ID
+      'name', // Channel name
       importance: Importance.high,
+      playSound: true,
+      sound: RawResourceAndroidNotificationSound('remainder_alarm'),
       priority: Priority.high,
       showWhen: false,
     );
-    const NotificationDetails platformChannelSpecifics =
-        NotificationDetails(android: androidPlatformChannelSpecifics);
+
+    const iosNotificatonDetail = DarwinNotificationDetails(
+      sound: 'remainder_alarm.mp4',
+    );
+
+    NotificationDetails platformChannelSpecifics = const NotificationDetails(
+        android: androidPlatformChannelSpecifics, iOS: iosNotificatonDetail);
 
     // Schedule the notification
     await flutterLocalNotificationsPlugin.zonedSchedule(
@@ -233,60 +195,70 @@ class SettingScreenController extends GetxController {
         uiLocalNotificationDateInterpretation:
             UILocalNotificationDateInterpretation.absoluteTime,
         matchDateTimeComponents: DateTimeComponents.time);
+
   }
 
   Future<void> cancelNotification() async {
     await flutterLocalNotificationsPlugin.cancel(0);
   }
 
-  String convertTo24HourFormat(String time12Hour) {
-    // Example input format: "11:35 AM"
-    List<String> parts = time12Hour.split(':');
-    print("Parts :- $parts");
-    int hour = int.parse(parts[0]);
-    int minute =
-        int.parse(parts[1].split(' ')[0]); // Extract minute (e.g., "35")
-    String period = parts[1].split(' ')[1]; // Extract period (AM or PM)
 
-    if (period == 'AM') {
-      if (hour == 12) {
-        // Special case for 12:xx AM (midnight)
-        hour = 0; // Midnight in 24-hour format
-      }
-    } else {
-      if (hour != 12) {
-        // Convert PM hour to 24-hour format
-        hour += 12;
-      }
-    }
 
-    // Format the time in 24-hour format (hh:mm)
-    String hour24Format = hour.toString().padLeft(2, '0');
-    String minute24Format = minute.toString().padLeft(2, '0');
+  tz.TZDateTime _nextInstanceOfTenAM(){
 
-    return '$hour24Format:$minute24Format';
-  }
+    String sunsetTime = formatTime(PrefServices.getString('countrySunsetTimeZone'), is24HourFormat.value);
+    // String sunsetTime = "5:40:00 PM";
+    print("sunsetTime :- $sunsetTime");
 
-  tz.TZDateTime _nextInstanceOfTenAM() {
-    String selectedAlarmTime = PrefServices.getString('selectedAlarmTime');
-    print("selectedAlarmTime :- $selectedAlarmTime");
-    String time24Hour = convertTo24HourFormat(selectedAlarmTime);
-    print("time24Hour :- $time24Hour");
-    List<String> parts = time24Hour.split(':');
+    // Parse the time string into a DateTime object
+    DateTime convertedSunsetTime = parseTimeString(sunsetTime);
+    print("convertedSunsetTime :- $convertedSunsetTime");
 
-    print("Separated =========> $parts");
+    int substractMin = int.parse(remainderTimeController.text.toString());
+    print("substractMin :- $substractMin");
+
+    // Subtract 14 minutes from the DateTime object
+    DateTime newTime = subtractMinutes(convertedSunsetTime,substractMin);
+
+    print("==================>New Time :- $newTime");
+
+
+    // Format the new time as a string in 24-hour clock format
+    String formatted24HourSunsetTime = DateFormat('HH:mm:ss').format(newTime);
+    formatted12HourSunsetTime.value = DateFormat('hh:mm:ss a').format(newTime);
+    print("formatted12HourSunsetTime :- $formatted12HourSunsetTime");
+    PrefServices.setValue('formatted12HourSunsetTime',formatted12HourSunsetTime);
+
+    print("formattedNewTime :- $formatted24HourSunsetTime");
+    print("Original Sunset Time :- $sunsetTime");
+
+    List<String> parts = formatted24HourSunsetTime.split(':');
 
     final tz.TZDateTime now = tz.TZDateTime.now(tz.local);
-    tz.TZDateTime scheduledDate = tz.TZDateTime(tz.local, now.year, now.month,
-        now.day, int.parse(parts[0]), int.parse(parts[1]));
 
-    if (scheduledDate.isBefore(now)) {
-      scheduledDate = scheduledDate.add(const Duration(days: 1));
-    }
+    tz.TZDateTime scheduledDate = tz.TZDateTime(
+      tz.local,
+      now.year,
+      now.month,
+      now.day,
+/// 24 - hour format
+      int.parse(parts[0]),
+      int.parse(parts[1]),
+      int.parse(parts[2]),
+   );
+
+    // if (scheduledDate.isAfter(now)){
+    //   scheduledDate = scheduledDate.add(const Duration(days: 1));
+    // }
 
     print("scheduledDate :- $scheduledDate");
     return scheduledDate;
   }
+
+  DateTime subtractMinutes(DateTime dateTime, int minutes){
+    return dateTime.subtract(Duration(minutes: minutes));
+  }
+
 
   RxBool isCountDown = false.obs;
   Rx<Duration> difference = Rx<Duration>(Duration.zero);
@@ -296,10 +268,19 @@ class SettingScreenController extends GetxController {
   RxString sunset24HourTime = ''.obs;
   RxString countDownValue = ''.obs;
 
-  DateTime parseTime(String timeStr) {
+  // Function to parse a time string into a DateTime object
+  DateTime parseTimeString(String timeString) {
+    // Create a DateFormat object with the expected time format
+    DateFormat format = DateFormat('h:mm:ss a');
+
+    // Parse the time string into a DateTime object
+    return format.parse(timeString);
+  }
+
+  DateTime parsedTime(String timeStr){
     DateFormat formatter = DateFormat("hh:mm:ss a");
 
-    if (timeStr.isEmpty) {
+    if (timeStr.isEmpty){
       return DateTime.now();
     }
 
@@ -319,8 +300,8 @@ class SettingScreenController extends GetxController {
       DateTime now = DateTime.now();
       String sunriseTime = PrefServices.getString('countrySunriseTimeZone');
       String sunsetTime = PrefServices.getString('countrySunsetTimeZone');
-      DateTime sunrise = parseTime(sunriseTime);
-      DateTime sunset = parseTime(sunsetTime);
+      DateTime sunrise = parsedTime(sunriseTime);
+      DateTime sunset = parsedTime(sunsetTime);
 
       DateTime sunriseTimeWithoutYear = DateTime(now.year, now.month, now.day,
           sunrise.hour, sunrise.minute, sunrise.second);

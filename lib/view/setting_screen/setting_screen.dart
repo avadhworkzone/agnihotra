@@ -6,6 +6,7 @@ import 'package:just_audio/just_audio.dart';
 import 'package:sunrise_app/common_Widget/common_back_arrow.dart';
 import 'package:sunrise_app/common_Widget/common_button.dart';
 import 'package:sunrise_app/common_Widget/common_text.dart';
+import 'package:sunrise_app/common_Widget/common_textfield.dart';
 import 'package:sunrise_app/services/prefServices.dart';
 import 'package:sunrise_app/utils/color_utils.dart';
 import 'package:sunrise_app/utils/image_utils.dart';
@@ -25,7 +26,6 @@ class _SeetingScreenState extends State<SettingsScreen> {
   SettingScreenController settingScreenController =
       Get.find<SettingScreenController>();
   GoogleController googleController = Get.find<GoogleController>();
-  TimeOfDay? selectedTime;
   TimePickerEntryMode entryMode = TimePickerEntryMode.dial;
   Orientation? orientation;
   TextDirection textDirection = TextDirection.ltr;
@@ -44,8 +44,6 @@ class _SeetingScreenState extends State<SettingsScreen> {
         "settingScreenController.on4.value :- ${settingScreenController.on4.value}");
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-
-
       /// Keep Screen On
       settingScreenController.isScreenOn.value =
           PrefServices.getBool('keepScreenOn');
@@ -59,6 +57,40 @@ class _SeetingScreenState extends State<SettingsScreen> {
   @override
   void dispose() {
     super.dispose();
+  }
+
+  String remainderTime = '';
+
+  void _validateInput(String input) {
+    if (input.isEmpty) {
+      return; // No input, do nothing
+    }
+
+    try {
+      int value = int.parse(input);
+
+      if (value < 2 || value > 120) {
+        PrefServices.setValue('saveToggleValue', false);
+        // Invalid value range
+        Fluttertoast.showToast(
+          msg: 'Invalid value! Please enter a number between 2 and 120.',
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.TOP,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+        );
+      }
+    } catch (e) {
+      PrefServices.setValue('saveToggleValue', false);
+      // Invalid input (not a valid integer)
+      Fluttertoast.showToast(
+        msg: 'Invalid value! Please enter a valid number.',
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.TOP,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+      );
+    }
   }
 
   @override
@@ -195,7 +227,8 @@ class _SeetingScreenState extends State<SettingsScreen> {
                                       value: settingScreenController
                                           .is24Hours.value,
                                       onChanged: (value) {
-                                        settingScreenController.toggleTimeFormat(value);
+                                        settingScreenController
+                                            .toggleTimeFormat(value);
                                       },
                                     ),
                                   ),
@@ -244,12 +277,8 @@ class _SeetingScreenState extends State<SettingsScreen> {
                                             PrefServices.getBool(
                                                 'isBellRinging');
 
-                                        print("settingScreenController.isBellRinging.value :- ${settingScreenController.isBellRinging.value}");
-
-
-
-
-
+                                        print(
+                                            "settingScreenController.isBellRinging.value :- ${settingScreenController.isBellRinging.value}");
                                       },
                                     ),
                                   ),
@@ -327,35 +356,7 @@ class _SeetingScreenState extends State<SettingsScreen> {
 
                                         if (PrefServices.getBool(
                                             'saveToggleValue')) {
-                                          final TimeOfDay? time =
-                                              await showTimePicker(
-                                            barrierDismissible: false,
-                                            context: context,
-                                            initialTime:
-                                                selectedTime ?? TimeOfDay.now(),
-                                            initialEntryMode: entryMode,
-                                            orientation: orientation,
-                                            builder: (BuildContext context,
-                                                Widget? child) {
-                                              return Theme(
-                                                  data: _buildShrineTheme(),
-                                                  child: child!);
-                                            },
-                                          );
-
-                                          setState(() {
-                                            selectedTime = time;
-                                            print(
-                                                "selectedTime :- ${selectedTime?.format(context)}");
-                                            PrefServices.setValue(
-                                                'selectedAlarmTime',
-                                                selectedTime
-                                                    ?.format(context)
-                                                    .toString());
-                                          });
-
-                                          settingScreenController
-                                              .scheduleDailyNotification();
+                                          remainderDialog();
                                         } else {
                                           print(
                                               "==========CANCEL NOTIFICATION========");
@@ -376,13 +377,13 @@ class _SeetingScreenState extends State<SettingsScreen> {
                               fontWeight: FontWeight.w500,
                             ),
 
-                            if (PrefServices.getBool('saveToggleValue'))
-                              CustomText(
-                                '${StringUtils.ringAlarmTxt.tr} ${PrefServices.getString('selectedAlarmTime')}',
-                                color: ColorUtils.black1F,
-                                fontSize: 15.sp,
-                                fontWeight: FontWeight.w500,
-                              ),
+                            if(PrefServices.getBool('saveToggleValue'))
+                               Obx(() => CustomText(
+                                    '${StringUtils.ringAlarmTxt.tr} ${settingScreenController.formatted12HourSunsetTime.value}',
+                                    color: ColorUtils.black1F,
+                                    fontSize: 15.sp,
+                                    fontWeight: FontWeight.w500,
+                                  )),
 
                             SizedBox(
                               height: 20.h,
@@ -429,120 +430,6 @@ class _SeetingScreenState extends State<SettingsScreen> {
     );
   }
 
-  ThemeData _buildShrineTheme() {
-    final ThemeData base = ThemeData.light();
-    return base.copyWith(
-      scaffoldBackgroundColor: shrineBackgroundWhite,
-      cardColor: shrineBackgroundWhite,
-      buttonTheme: ButtonThemeData(
-        colorScheme: _shrineColorScheme,
-        textTheme: ButtonTextTheme.normal,
-      ),
-      primaryIconTheme: _customIconTheme(base.iconTheme),
-      textTheme: _buildShrineTextTheme(base.textTheme),
-      primaryTextTheme: _buildShrineTextTheme(base.primaryTextTheme),
-      iconTheme: _customIconTheme(base.iconTheme),
-      checkboxTheme: CheckboxThemeData(
-        fillColor: MaterialStateProperty.resolveWith<Color?>(
-            (Set<MaterialState> states) {
-          if (states.contains(MaterialState.disabled)) {
-            return null;
-          }
-
-          if (states.contains(MaterialState.selected)) {
-            return shrinePink400;
-          }
-          return null;
-        }),
-      ),
-      radioTheme: RadioThemeData(
-        fillColor: MaterialStateProperty.resolveWith<Color?>(
-            (Set<MaterialState> states) {
-          if (states.contains(MaterialState.disabled)) {
-            return null;
-          }
-          if (states.contains(MaterialState.selected)) {
-            return Colors.blue;
-          }
-          return null;
-        }),
-      ),
-      switchTheme: SwitchThemeData(
-        thumbColor: MaterialStateProperty.resolveWith<Color?>(
-            (Set<MaterialState> states) {
-          if (states.contains(MaterialState.disabled)) {
-            return null;
-          }
-          if (states.contains(MaterialState.selected)) {
-            return Colors.blue;
-          }
-          return null;
-        }),
-        trackColor: MaterialStateProperty.resolveWith<Color?>(
-            (Set<MaterialState> states) {
-          if (states.contains(MaterialState.disabled)) {
-            return null;
-          }
-          if (states.contains(MaterialState.selected)) {
-            return Colors.blue;
-          }
-          return null;
-        }),
-      ),
-      colorScheme: _shrineColorScheme.copyWith(error: shrineErrorRed),
-    );
-  }
-
-  final ColorScheme _shrineColorScheme = ColorScheme(
-    primary: const Color(0xFFFD5013).withOpacity(0.8),
-    secondary: const Color(0xFFFD5013).withOpacity(0.8),
-    surface: shrineSurfaceWhite,
-    background: shrineBackgroundWhite,
-    error: shrineErrorRed,
-    onPrimary: shrineBrown900,
-    onSecondary: shrineBrown900,
-    onSurface: shrineBrown900,
-    onBackground: shrineBrown900,
-    onError: shrineSurfaceWhite,
-    brightness: Brightness.light,
-  );
-
-  static const Color shrinePink400 = Color(0xFFEAA4A4);
-
-  static const Color shrineBrown900 = Color(0xFF442B2D);
-
-  static const Color shrineErrorRed = Color(0xFFC5032B);
-
-  static const Color shrineSurfaceWhite = Color(0xFFFFFBFA);
-  static const Color shrineBackgroundWhite = Colors.white;
-
-  static const defaultLetterSpacing = 0.03;
-
-  IconThemeData _customIconTheme(IconThemeData original) {
-    return original.copyWith(color: shrineBrown900);
-  }
-
-  TextTheme _buildShrineTextTheme(TextTheme base) {
-    return base
-        .copyWith(
-          bodySmall: base.bodySmall!.copyWith(
-            fontWeight: FontWeight.w400,
-            fontSize: 14,
-            letterSpacing: defaultLetterSpacing,
-          ),
-          labelLarge: base.labelLarge!.copyWith(
-            fontWeight: FontWeight.w500,
-            fontSize: 14,
-            letterSpacing: defaultLetterSpacing,
-          ),
-        )
-        .apply(
-          fontFamily: 'Rubik',
-          displayColor: shrineBrown900,
-          bodyColor: shrineBrown900,
-        );
-  }
-
   Future resetButtonDialog() {
     return Get.dialog(AlertDialog(
       titlePadding: EdgeInsets.zero,
@@ -582,7 +469,7 @@ class _SeetingScreenState extends State<SettingsScreen> {
                     Get.back();
                   },
                   child: CustomText(
-                    StringUtils.cancleTxt,
+                    StringUtils.cancleCapitalTxt,
                     color: ColorUtils.orange,
                     fontWeight: FontWeight.w500,
                     fontSize: 12.sp,
@@ -618,4 +505,108 @@ class _SeetingScreenState extends State<SettingsScreen> {
     ));
   }
 
+  Future remainderDialog() {
+    settingScreenController.remainderTimeController.clear();
+    return Get.dialog(
+      barrierDismissible: false,
+      AlertDialog(
+        contentPadding: EdgeInsets.zero,
+        shape: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(3.r),
+            borderSide: BorderSide.none),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(
+              height: 15.h,
+            ),
+            Padding(
+              padding: EdgeInsets.only(left: 20.w),
+              child: CustomText(
+                StringUtils.enterTimeInMinText,
+                color: ColorUtils.black1F,
+                fontSize: 15.sp,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+            CommonTextFormField(
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please enter a number';
+                }
+                try {
+                  int parsedValue = int.parse(value);
+                  if (parsedValue < 2 || parsedValue > 120) {
+                    return 'Please enter a number between 2 and 120';
+                  }
+                } catch (e) {
+                  return 'Please enter a valid number';
+                }
+                return null;
+              },
+              onChange: (value) {
+                remainderTime = value;
+              },
+              height: 25.sp,
+              contentPadding: EdgeInsets.only(bottom: 11.h),
+              keyBoardType: TextInputType.number,
+              textEditController:
+                  settingScreenController.remainderTimeController,
+            ),
+            SizedBox(
+              height: 25.h,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                /// CANCEL Textbutton
+                InkWell(
+                  onTap: () {
+                    Get.back();
+                  },
+                  child: CustomText(
+                    StringUtils.cancleCapitalTxt,
+                    color: ColorUtils.orange,
+                    fontWeight: FontWeight.w500,
+                    fontSize: 12.sp,
+                  ),
+                ),
+
+                SizedBox(
+                  width: 20.w,
+                ),
+
+                /// OK Textbutton
+                InkWell(
+                  onTap: () {
+                    _validateInput(remainderTime);
+                    print(
+                        "Get Value Remainder:- ${PrefServices.getBool('saveToggleValue')}");
+                    settingScreenController.on4.value =  PrefServices.getBool('saveToggleValue');
+                    settingScreenController.scheduleDailyNotification().then((value) => Get.back());
+                     Get.back();
+
+                    },
+                  child: CustomText(
+                    StringUtils.okTxt,
+                    color: ColorUtils.orange,
+                    fontWeight: FontWeight.w500,
+                    fontSize: 12.sp,
+                  ),
+                ),
+
+                SizedBox(
+                  width: 15.w,
+                ),
+              ],
+            ),
+            SizedBox(
+              height: 10.h,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 }

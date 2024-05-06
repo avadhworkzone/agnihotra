@@ -103,6 +103,7 @@ Map<String, String> hi = {
   "sandipText": "(संदीप)",
   "surrenderingText": "(हमारे सभी कार्यों, विचारों और उनके परिणामों को समर्पित करते हुए,\nजल अर्पित करते हुए)",
   "roundText": "प्राणायामे विनियोगः (5 राउंड)",
+  "enterTimeInMinText":"समय मिनटों में दर्ज करें (2-120):",
   "eastText": "सन्ध्यायै नमः  - पूर्व",
   "southText": "सावित्रै नमः  - दक्षिण",
   "gaytrenamText": "गायत्रै नमः  - पश्चिम",
@@ -194,6 +195,7 @@ Map<String, String> hi = {
   "maleTxt":"पुरुष",
   "femaleTxt":"महिला",
   "otherTxt":"अन्य",
+  "okTxt":"ठीक है",
 
 
 

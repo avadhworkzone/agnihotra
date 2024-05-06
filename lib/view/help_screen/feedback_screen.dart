@@ -96,12 +96,12 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                             textColor: ColorUtils.black1F,
                           ),
                           SizedBox(height: 30.h,),
-                          CommonTextField(
+                          CommonTextFormField(
                             hintText: 'Full Name',
                             textEditController: helpScreenController.fullNameController,
                           ),
                           SizedBox(height: 30.h,),
-                          CommonTextField(
+                          CommonTextFormField(
                             hintText: 'Your Message',
                             textEditController: helpScreenController.yourMessageController,
                           ),

@@ -6,7 +6,7 @@ import '../utils/color_utils.dart';
 
 typedef OnChangeString = void Function(String value);
 
-class CommonTextField extends StatelessWidget {
+class CommonTextFormField extends StatelessWidget {
   final TextEditingController? textEditController;
   final String? title;
   final String? initialValue;
@@ -15,6 +15,8 @@ class CommonTextField extends StatelessWidget {
   final TextInputType? keyBoardType;
   final String? regularExpression;
   final int? inputLength;
+  final double? height;
+  final Brightness? keyboardAppearance;
   final String? hintText;
   final String? validationMessage;
   final String? labelText;
@@ -37,7 +39,7 @@ class CommonTextField extends StatelessWidget {
   final InputBorder? focusedBorder;
   final TextStyle? hintStyle;
 
-  const CommonTextField({
+  const CommonTextFormField({
     super.key,
     this.regularExpression,
     this.inputFormatters,
@@ -66,22 +68,23 @@ class CommonTextField extends StatelessWidget {
     this.focusedBorder,
     this.labelText,
     this.labelStyle,
-    this.hintStyle, this.enabledBorder,
+    this.hintStyle, this.enabledBorder, this.keyboardAppearance, this.height,
   });
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 40.h,
+      height: height ?? 40.h,
       child: TextFormField(
         controller: textEditController,
-
-        style: const TextStyle(color: ColorUtils.black1F, fontSize: 15),
+        style:  TextStyle(color: ColorUtils.black1F, fontSize: 15.sp),
         keyboardType: keyBoardType ?? TextInputType.text,
         maxLines: maxLine ?? 1,
         onChanged: onChange,
         validator: validator,
+
         decoration: InputDecoration(
+
           focusedBorder: focusedBorder,
           labelText: labelText,
           labelStyle: labelStyle,

@@ -62,6 +62,7 @@ Map<String, String> gu = {
   "મધ્યમાં નેક્ષ્ટ અગ્નિહોત્રના સમયની ઊંધીગણત્રી અથવા ઘડિયાળ દર્શાવો",
   "reminderTxt": "રીમાઇન્ડર્સ",
   "setReminderTxt": " અગ્નિહોત્ર માટે રીમાઇન્ડર્સ સેટ કરો",
+  "enterTimeInMinText":"મિનિટમાં સમય દાખલ કરો (2-120):",
   "resetBtnTxt": "રીસેટ",
   "deleteLocationTxt": "બધા સ્થાન કાઢી નાખો",
   "addLocationTxt": "સ્થાન ઉમેરો",
@@ -205,7 +206,7 @@ Map<String, String> gu = {
   "maleTxt":"પુરુષ",
   "femaleTxt":"સ્ત્રી",
   "otherTxt":"અન્ય",
-
+  "okTxt":"બરાબર",
 
 
 

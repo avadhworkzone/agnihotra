@@ -19,6 +19,7 @@ class StringUtils {
   static const welcomeTxt = 'welcomeTxt';
   static const getStartTxt = 'getStartTxt';
   static const languageChooseTxt = 'languageChooseTxt';
+  static const enterTimeInMinText = 'enterTimeInMinText';
   static const languageUseTxt = 'languageUseTxt';
   static const hindiTxt = 'Hindi';
   static const englishTxt = 'English';
@@ -103,7 +104,7 @@ class StringUtils {
   static const resetMsg = 'resetMsg';
   static const resetButtonNotice = 'resetButtonNotice';
   static const ringAlarmTxt = 'ringAlarmTxt';
-  static const cancleTxt = 'cancleTxt';
+  static const cancleCapitalTxt = 'cancleTxt';
   static const noTxt = 'noTxt';
   static const yesTxt = 'yesTxt';
   static const proceedTxt = 'proceedTxt';
@@ -219,6 +220,7 @@ class StringUtils {
   static const maleTxt = "maleTxt";
   static const femaleTxt = "femaleTxt";
   static const otherTxt = "otherTxt";
+  static const okTxt = "okTxt";
 
 
 

@@ -45,7 +45,7 @@ class EditProfileField extends StatelessWidget {
         /// UserName Field
         SizedBox(
           height: 45.h,
-          child: CommonTextField(
+          child: CommonTextFormField(
             textEditController: profileController.userNameController,
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(6.r),
@@ -80,7 +80,7 @@ class EditProfileField extends StatelessWidget {
         /// Name Field
         SizedBox(
           height: 45.h,
-          child: CommonTextField(
+          child: CommonTextFormField(
             textEditController: profileController.nameController,
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(6.r),
@@ -116,7 +116,7 @@ class EditProfileField extends StatelessWidget {
         /// Email Address Field
         SizedBox(
           height: 45.h,
-          child: CommonTextField(
+          child: CommonTextFormField(
             textEditController: profileController.emailController,
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(6.r),

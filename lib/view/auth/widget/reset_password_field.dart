@@ -86,7 +86,7 @@ class ResetPasswordField extends StatelessWidget {
             height: 45.h,
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 30.w),
-              child: CommonTextField(
+              child: CommonTextFormField(
                 textEditController: forgotPasswordController.passwordController,
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(35.r),
@@ -135,7 +135,7 @@ class ResetPasswordField extends StatelessWidget {
             height: 45.h,
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 30.w),
-              child: CommonTextField(
+              child: CommonTextFormField(
                 textEditController: forgotPasswordController.resetPasswordController,
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(35.r),

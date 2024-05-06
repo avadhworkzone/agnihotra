@@ -48,6 +48,7 @@ Map<String,String> en= {
   "countDownClockTxt":"Display countdown or clock in center",
   "reminderTxt":"Reminders",
   "setReminderTxt":"Set Reminder for Agnihotra",
+  "enterTimeInMinText":"Enter time in minutes (2-120):",
   "resetBtnTxt":"Reset",
   "deleteLocationTxt":"Delete All Location",
   "addLocationTxt":"Add Location",
@@ -200,6 +201,7 @@ Map<String,String> en= {
   "maleTxt":"Male",
   "femaleTxt":"Female",
   "otherTxt":"Other",
+  "okTxt":"OK",
 
 
 

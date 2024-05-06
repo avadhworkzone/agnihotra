@@ -80,7 +80,7 @@ class LoginAccount extends StatelessWidget {
             height: 45.h,
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 30.w),
-              child: CommonTextField(
+              child: CommonTextFormField(
                 textEditController: loginController.emailController,
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(35.r),
@@ -130,7 +130,7 @@ class LoginAccount extends StatelessWidget {
             height: 45.h,
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 30.w),
-              child: CommonTextField(
+              child: CommonTextFormField(
                 textEditController: loginController.passwordController,
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(35.r),

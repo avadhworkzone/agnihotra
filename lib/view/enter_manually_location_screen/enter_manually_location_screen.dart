@@ -126,7 +126,7 @@ class _EnterManuallyLocationScreenState extends State<EnterManuallyLocationScree
                                     padding: EdgeInsets.only(top: 10.h),
                                     child: SizedBox(
                                       width: 200.w,
-                                      child: CommonTextField(
+                                      child: CommonTextFormField(
                                         textAlignVertical: TextAlignVertical.center,
                                         validator: ValidationMethod.latitudeValidation,
                                         textEditController: enterManuallyLocationController.latitudeController,
@@ -158,7 +158,7 @@ class _EnterManuallyLocationScreenState extends State<EnterManuallyLocationScree
                                     padding: EdgeInsets.only(top: 10.h),
                                     child: SizedBox(
                                       width: 200.w,
-                                      child: CommonTextField(
+                                      child: CommonTextFormField(
 
                                         textAlignVertical: TextAlignVertical.center,
                                         validator: ValidationMethod.longitudeValidation,

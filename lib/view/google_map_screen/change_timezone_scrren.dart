@@ -50,7 +50,7 @@ class _ChangeTimeZoneScreenState extends State<ChangeTimeZoneScreen> {
             height: 30.h,
           ),
 
-          CommonTextField(
+          CommonTextFormField(
             textEditController: googleController.searchCountryController,
             onChange: (value) {
               setState(() {
@@ -177,7 +177,7 @@ class _ChangeTimeZoneScreenState extends State<ChangeTimeZoneScreen> {
                       googleController.searchCountryController.clear();
                     },
                     child: CustomText(
-                      StringUtils.cancleTxt,
+                      StringUtils.cancleCapitalTxt,
                       fontSize: 12.sp,
                       fontWeight: FontWeight.w500,
                       color: ColorUtils.orange,

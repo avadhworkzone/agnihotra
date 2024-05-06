@@ -1,17 +1,17 @@
+import 'dart:async';
 import 'dart:io';
+import 'dart:ui';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_background_service/flutter_background_service.dart';
+import 'package:flutter_background_service_android/flutter_background_service_android.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:sunrise_app/localization/translations.dart';
 import 'package:flutter_timezone/flutter_timezone.dart';
 import 'package:sunrise_app/services/local_notification.dart';
 import 'package:sunrise_app/services/prefServices.dart';
-import 'package:sunrise_app/view/auth/forgot_password_screen.dart';
-import 'package:sunrise_app/view/auth/login_screen.dart';
-import 'package:sunrise_app/view/auth/profile/edit_profile_screen.dart';
-import 'package:sunrise_app/view/auth/reset_password_screen.dart';
-import 'package:sunrise_app/view/auth/sign_up_screen.dart';
 import 'package:sunrise_app/view/splashScreen/splash_screen.dart';
 import 'package:sunrise_app/viewModel/agnihotra_mantra_controller.dart';
 import 'package:sunrise_app/viewModel/enter_manually_location_controller.dart';
@@ -27,16 +27,75 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:timezone/data/latest_all.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 
-import 'view/auth/profile/profile_screen.dart';
-
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await _configureLocalTimeZone();
+    await initializeService();
   await LocalNotification.init();
   await PrefServices.init();
   runApp(MyApp());
+}
+
+
+Future<void> initializeService() async {
+  final service = FlutterBackgroundService();
+
+  await service.configure(
+    androidConfiguration: AndroidConfiguration(
+      onStart: onStart,
+      autoStart: false,
+      isForegroundMode: true,
+      // notificationChannelId: 'my_foreground',
+      // initialNotificationContent: 'running',
+      foregroundServiceNotificationId: 888,
+    ),
+    iosConfiguration: IosConfiguration(
+      autoStart: true,
+      onForeground: onStart,
+      onBackground: onIosBackground,
+    ),
+  );
+}
+
+
+@pragma('vm:entry-point')
+void onStart(ServiceInstance service) async {
+  DartPluginRegistrant.ensureInitialized();
+  if (service is AndroidServiceInstance) {
+    service.on('setAsForeground').listen((event) {
+      service.setAsForegroundService();
+    });
+    service.on('setAsBackground').listen((event) {
+      service.setAsBackgroundService();
+    });
+  }
+  service.on('stopService').listen((event) {
+    service.stopSelf();
+  });
+
+  final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+  FlutterLocalNotificationsPlugin();
+
+  // // bring to foreground
+  Timer.periodic(const Duration(seconds: 1), (timer) async {
+    if (service is AndroidServiceInstance) {
+      if (await service.isForegroundService()) {
+        flutterLocalNotificationsPlugin.show(
+          0, 'This is foreground', '${DateTime.now()}',
+          const NotificationDetails(
+            android: AndroidNotificationDetails(
+              "notificationChannelId",
+              'MY FOREGROUND SERVICE',
+              icon: 'ic_bg_service_small',
+              ongoing: true,
+            ),
+          ),
+        );
+      }
+    }
+  });
 }
 
 Future<void> _configureLocalTimeZone() async {
@@ -46,6 +105,13 @@ Future<void> _configureLocalTimeZone() async {
   tz.initializeTimeZones();
   final String timeZoneName = await FlutterTimezone.getLocalTimezone();
   tz.setLocalLocation(tz.getLocation(timeZoneName));
+}
+
+@pragma('vm:entry-point')
+Future<bool> onIosBackground(ServiceInstance service) async {
+  WidgetsFlutterBinding.ensureInitialized();
+  DartPluginRegistrant.ensureInitialized();
+  return true;
 }
 
 class MyApp extends StatelessWidget {
