@@ -5,17 +5,34 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:just_audio/just_audio.dart';
+import 'package:sunrise_app/common_Widget/common_fluttertoast.dart';
 import 'package:sunrise_app/services/prefServices.dart';
 import 'package:sunrise_app/utils/image_utils.dart';
 import 'package:timezone/timezone.dart' as tz;
 
 class SettingScreenController extends GetxController {
 
+  RxBool isCountDown = false.obs;
+  Rx<Duration> difference = Rx<Duration>(Duration.zero);
+  RxBool is24Hours = false.obs;
+  RxString current24HourTime = ''.obs;
+  RxString sunrise24HourTime = ''.obs;
+  RxString sunset24HourTime = ''.obs;
+  RxString countDownValue = ''.obs;
+
+
   RxBool on = false.obs;
   RxBool isScreenOn = false.obs;
   late AudioPlayer remainderAudio;
-  TextEditingController remainderTimeController = TextEditingController();
+  TextEditingController remainderSunsetTimeController = TextEditingController();
+  TextEditingController remainderSunRiseTimeController = TextEditingController();
   RxString formatted12HourSunsetTime = PrefServices.getString('formatted12HourSunsetTime').obs;
+
+  /// 12 Hour clock
+  // String sunsetTime = formatTime(PrefServices.getString('countrySunsetTimeZone'), is24HourFormat.value);
+
+  // String sunsetTime = '5:00:00 PM';
+  // String sunriseTime = '5:30:00 AM';
 
   Future<void> ringAlarm() async {
     await Alarm.init();
@@ -29,7 +46,17 @@ class SettingScreenController extends GetxController {
 
   RxBool on4 = PrefServices.getBool('saveToggleValue').obs;
 
-  void toggle4() {
+  RxBool on5 = PrefServices.getBool('saveSunriseToggleValue').obs;
+
+  void sunriseRemainderToggle(){
+    on5.value = !on5.value;
+    PrefServices.setValue('saveSunriseToggleValue', on5.value);
+    print("PrefServices.getBool('saveSunriseToggleValue') :- ${PrefServices.getBool('saveSunriseToggleValue')}");
+    on5.value = PrefServices.getBool('saveSunriseToggleValue');
+    print("Toggle .on5.value :- ${on5.value}");
+  }
+
+  void toggle4(){
     on4.value = !on4.value;
     PrefServices.setValue('saveToggleValue', on4.value);
     print("PrefServices.getBool('saveToggleValue') :- ${PrefServices.getBool('saveToggleValue')}");
@@ -43,7 +70,7 @@ class SettingScreenController extends GetxController {
   RxBool isBellRinging = PrefServices.getBool('isBellRinging').obs;
 
   @override
-  void onInit() {
+  void onInit(){
     super.onInit();
     updateTime();
     onCountDown();
@@ -93,7 +120,7 @@ class SettingScreenController extends GetxController {
       return formattedTime; // Return the time in 24-hour format
     } catch (e) {
       print('Error converting time: $e');
-      return 'Om'; // Return null in case of error
+      return ''; // Return null in case of error
     }
   }
 
@@ -151,19 +178,58 @@ class SettingScreenController extends GetxController {
   }
 
   @override
-  void onClose() {
+  void onClose(){
     meditionBell.dispose();
 
     super.onClose();
   }
 
 
+  int currentAndSunsetTimeDifference(){
+
+    String sunsetTime = formatTime(PrefServices.getString('countrySunsetTimeZone'), is24HourFormat.value);
+
+    DateTime convertedSunsetTime = parseTimeString(sunsetTime, is24Hour: is24HourFormat.value);
+    DateTime convertedCurrentTime = parseTimeString(current24HourTime.value,is24Hour: is24HourFormat.value);
+
+      Duration timeDifference = convertedSunsetTime.difference(convertedCurrentTime);
+
+      print("timeDifference :- ${timeDifference.inMinutes}");
+
+      return timeDifference.inMinutes;
+
+  }
+
+  int  remainderAndSunsetTimeDifference(){
+
+    String sunsetTime = formatTime(PrefServices.getString('countrySunsetTimeZone'), is24HourFormat.value);
+
+    DateTime convertedSunsetTime = parseTimeString(sunsetTime,is24Hour: is24HourFormat.value);
+    print("convertedSunsetTime :- $convertedSunsetTime");
+
+    int substractMin = int.parse(remainderSunsetTimeController.text.toString());
+    print("remainder substractMin :- $substractMin");
+
+
+    DateTime newTime = subtractMinutes(convertedSunsetTime,substractMin);
+
+    print("===========> newTime :- $newTime");
+
+    Duration remainderTimeDifference = convertedSunsetTime.difference(newTime);
+
+    print("remainderTimeDifference :- ${remainderTimeDifference.inMinutes}");
+
+    return remainderTimeDifference.inMinutes;
+
+  }
+
+
   /// Flutter Local Notification
   FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
 
-  /// scheduleDaily Notification
+  /// scheduleDaily sunset Notification
 
-  Future<void> scheduleDailyNotification() async {
+  Future<void> scheduleDailySunsetNotification() async {
 
     const AndroidNotificationDetails androidPlatformChannelSpecifics =
         AndroidNotificationDetails(
@@ -183,18 +249,59 @@ class SettingScreenController extends GetxController {
     NotificationDetails platformChannelSpecifics = const NotificationDetails(
         android: androidPlatformChannelSpecifics, iOS: iosNotificatonDetail);
 
+
+
     // Schedule the notification
     await flutterLocalNotificationsPlugin.zonedSchedule(
         0, // Notification ID
         'Remainders',
         '',
-        _nextInstanceOfTenAM(), // Scheduled date and time
+        _scheduledSunsetDateTime(), // Scheduled date and time
         platformChannelSpecifics,
         androidAllowWhileIdle: true,
         androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
-        uiLocalNotificationDateInterpretation:
-            UILocalNotificationDateInterpretation.absoluteTime,
+        uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime,
         matchDateTimeComponents: DateTimeComponents.time);
+
+
+  }
+
+  ///  scheduleDaily sunrise Notification
+
+  Future<void> scheduleDailySunriseNotification() async {
+
+    const AndroidNotificationDetails androidPlatformChannelSpecifics =
+    AndroidNotificationDetails(
+      'id', // Channel ID
+      'name', // Channel name
+      importance: Importance.high,
+      playSound: true,
+      sound: RawResourceAndroidNotificationSound('remainder_alarm'),
+      priority: Priority.high,
+      showWhen: false,
+    );
+
+    const iosNotificatonDetail = DarwinNotificationDetails(
+      sound: 'remainder_alarm.mp4',
+    );
+
+    NotificationDetails platformChannelSpecifics = const NotificationDetails(
+        android: androidPlatformChannelSpecifics, iOS: iosNotificatonDetail);
+
+
+
+    // Schedule the notification
+    await flutterLocalNotificationsPlugin.zonedSchedule(
+         0,
+        'Remainders',
+        '',
+        _scheduledSunriseDateTime(), // Scheduled date and time
+        platformChannelSpecifics,
+        androidAllowWhileIdle: true,
+        androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
+        uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime,
+        matchDateTimeComponents: DateTimeComponents.time);
+
 
   }
 
@@ -204,55 +311,108 @@ class SettingScreenController extends GetxController {
 
 
 
-  tz.TZDateTime _nextInstanceOfTenAM(){
+
+  tz.TZDateTime _scheduledSunsetDateTime(){
 
     String sunsetTime = formatTime(PrefServices.getString('countrySunsetTimeZone'), is24HourFormat.value);
-    // String sunsetTime = "5:40:00 PM";
+
+
+
     print("sunsetTime :- $sunsetTime");
 
     // Parse the time string into a DateTime object
-    DateTime convertedSunsetTime = parseTimeString(sunsetTime);
-    print("convertedSunsetTime :- $convertedSunsetTime");
+    DateTime convertedSunsetTime = parseTimeString(sunsetTime, is24Hour: is24HourFormat.value);
 
-    int substractMin = int.parse(remainderTimeController.text.toString());
-    print("substractMin :- $substractMin");
 
-    // Subtract 14 minutes from the DateTime object
+    int substractMin = int.parse(remainderSunsetTimeController.text.toString());
+
+    // Subtract  minutes from the DateTime object
     DateTime newTime = subtractMinutes(convertedSunsetTime,substractMin);
 
-    print("==================>New Time :- $newTime");
 
 
     // Format the new time as a string in 24-hour clock format
     String formatted24HourSunsetTime = DateFormat('HH:mm:ss').format(newTime);
-    formatted12HourSunsetTime.value = DateFormat('hh:mm:ss a').format(newTime);
-    print("formatted12HourSunsetTime :- $formatted12HourSunsetTime");
-    PrefServices.setValue('formatted12HourSunsetTime',formatted12HourSunsetTime);
+     formatted12HourSunsetTime.value = DateFormat('hh:mm:ss a').format(newTime);
+    PrefServices.setValue('formatted12HourSunsetTime',formatted12HourSunsetTime.value);
 
-    print("formattedNewTime :- $formatted24HourSunsetTime");
-    print("Original Sunset Time :- $sunsetTime");
+
 
     List<String> parts = formatted24HourSunsetTime.split(':');
 
     final tz.TZDateTime now = tz.TZDateTime.now(tz.local);
-
+    print("Now :- $now");
     tz.TZDateTime scheduledDate = tz.TZDateTime(
       tz.local,
       now.year,
       now.month,
       now.day,
-/// 24 - hour format
+      /// 24 - hour format
       int.parse(parts[0]),
       int.parse(parts[1]),
       int.parse(parts[2]),
    );
 
-    // if (scheduledDate.isAfter(now)){
+    // if(scheduledDate.isAfter(now)){
     //   scheduledDate = scheduledDate.add(const Duration(days: 1));
+    //   print("Next Date scheduledDate :- $scheduledDate");
     // }
 
     print("scheduledDate :- $scheduledDate");
     return scheduledDate;
+
+  }
+
+  tz.TZDateTime _scheduledSunriseDateTime(){
+
+    // String sunsetTime = formatTime(PrefServices.getString('countrySunsetTimeZone'), is24HourFormat.value);
+    String sunsetTime = '7:00:00 PM';
+
+
+
+    print("sunsetTime :- $sunsetTime");
+
+    // Parse the time string into a DateTime object
+    DateTime convertedSunriseTime = parseTimeString(sunsetTime, is24Hour: is24HourFormat.value);
+
+
+    int substractMin = int.parse(remainderSunRiseTimeController.text.toString());
+
+    // Subtract  minutes from the DateTime object
+    DateTime newTime = subtractMinutes(convertedSunriseTime,substractMin);
+
+
+
+    // Format the new time as a string in 24-hour clock format
+    String formatted24HourSunsetTime = DateFormat('HH:mm:ss').format(newTime);
+    formatted12HourSunsetTime.value = DateFormat('hh:mm:ss a').format(newTime);
+    PrefServices.setValue('formatted12HourSunsetTime',formatted12HourSunsetTime.value);
+
+
+
+    List<String> parts = formatted24HourSunsetTime.split(':');
+
+    final tz.TZDateTime now = tz.TZDateTime.now(tz.local);
+    print("Now :- $now");
+    tz.TZDateTime scheduledDate = tz.TZDateTime(
+      tz.local,
+      now.year,
+      now.month,
+      now.day,
+      /// 24 - hour format
+      int.parse(parts[0]),
+      int.parse(parts[1]),
+      int.parse(parts[2]),
+    );
+
+    // if(scheduledDate.isAfter(now)){
+    //   scheduledDate = scheduledDate.add(const Duration(days: 1));
+    //   print("Next Date scheduledDate :- $scheduledDate");
+    // }
+
+    print("scheduledDate :- $scheduledDate");
+    return scheduledDate;
+
   }
 
   DateTime subtractMinutes(DateTime dateTime, int minutes){
@@ -260,22 +420,33 @@ class SettingScreenController extends GetxController {
   }
 
 
-  RxBool isCountDown = false.obs;
-  Rx<Duration> difference = Rx<Duration>(Duration.zero);
-  RxBool is24Hours = false.obs;
-  RxString current24HourTime = ''.obs;
-  RxString sunrise24HourTime = ''.obs;
-  RxString sunset24HourTime = ''.obs;
-  RxString countDownValue = ''.obs;
+
 
   // Function to parse a time string into a DateTime object
-  DateTime parseTimeString(String timeString) {
-    // Create a DateFormat object with the expected time format
-    DateFormat format = DateFormat('h:mm:ss a');
+  DateTime parseTimeString(String timeString,{required bool is24Hour}){
 
-    // Parse the time string into a DateTime object
-    return format.parse(timeString);
+    print("is24Hour :- $is24Hour");
+
+    if (is24Hour){
+      print("====== timeString =========> $timeString");
+      DateTime parsedTime = DateFormat('HH:mm:ss').parse(timeString);
+      print("====== parsedTime  =========> :- $parsedTime");
+
+      return parsedTime;
+    }
+
+    else {
+      DateTime parsedTime = DateFormat('h:mm:ss a').parse(timeString);
+      print("parsedTime :- $parsedTime");
+      return parsedTime;
+    }
+
+
+
   }
+
+
+
 
   DateTime parsedTime(String timeStr){
     DateFormat formatter = DateFormat("hh:mm:ss a");
@@ -364,7 +535,7 @@ class SettingScreenController extends GetxController {
     current24HourTime.value = formattedTime;
   }
 
-  void toggleTimeFormat(bool value) {
+  void toggleTimeFormat(bool value){
     is24Hours.value = value;
     is24HourFormat.value = !is24HourFormat.value;
     print("24 hour Toggle Value :- ${is24HourFormat.value}");
@@ -374,15 +545,60 @@ class SettingScreenController extends GetxController {
 
   RxBool is24HourFormat = false.obs;
 
-  String formatTime(String time, bool is24Hour) {
+  String formatTime(String time, bool is24Hour){
     bool is24Hour = PrefServices.getBool('is24Hours');
 
-    if (is24Hour) {
+    if (is24Hour){
       DateTime parsedTime = DateFormat('hh:mm:ss a').parse(time);
       String formattedTime = DateFormat('kk:mm:ss').format(parsedTime);
       return formattedTime;
-    } else {
+    }
+    else {
       return time;
     }
   }
+
+
+  void validateSunsetInput(String input) {
+    if (input.isEmpty) {
+      return; // No input, do nothing
+    }
+
+    try {
+      int value = int.parse(input);
+
+      if (value < 2 || value > 120) {
+        PrefServices.setValue('saveToggleValue', false);
+        // Invalid value range
+
+        commonFlutterToastMsg(
+            'Invalid value! Please enter a number between 2 and 120.');
+      }
+    } catch (e) {
+      PrefServices.setValue('saveToggleValue', false);
+      commonFlutterToastMsg('Invalid value! Please enter a valid number.');
+    }
+  }
+
+  void validateSunriseInput(String input) {
+    if (input.isEmpty) {
+      return; // No input, do nothing
+    }
+
+    try {
+      int value = int.parse(input);
+
+      if (value < 2 || value > 120) {
+        PrefServices.setValue('saveToggleValue', false);
+        // Invalid value range
+
+        commonFlutterToastMsg(
+            'Invalid value! Please enter a number between 2 and 120.');
+      }
+    } catch (e) {
+      PrefServices.setValue('saveToggleValue', false);
+      commonFlutterToastMsg('Invalid value! Please enter a valid number.');
+    }
+  }
+
 }

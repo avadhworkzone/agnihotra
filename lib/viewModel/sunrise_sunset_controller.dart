@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:sunrise_app/common_Widget/common_fluttertoast.dart';
 import 'package:sunrise_app/model/country_timezone_model.dart';
 import 'package:sunrise_app/services/prefServices.dart';
 import 'package:sunrise_app/utils/const_utils.dart';
@@ -137,6 +138,7 @@ class SunriseSunsetController extends GetxController {
     await PrefServices.removeValue('sunrise');
     await PrefServices.removeValue('sunset');
   }
+
 
 
 }

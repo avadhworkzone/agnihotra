@@ -610,7 +610,7 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                   Obx((){
 
                     settingScreenController.toggleBellFormat();
-                    // settingScreenController.scheduleDailyNotification();
+
 
                     return Container(
                       padding: EdgeInsets.symmetric(horizontal: 18.w, vertical: 5.h),
@@ -659,6 +659,7 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                     () => Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
+
                         /// SUNRISE
                         Stack(
                           children: [
@@ -764,14 +765,9 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                                               fontSize: 20.sp,
                                             )
                                           : CustomText(
-                                              // PrefServices.getString('countrySunsetTimeZone'),
-                                              // settingScreenController.is24Hours.value ? PrefServices.getString('formattedSunsetTime')
-                                              //     : settingScreenController.formatTime(PrefServices.getString('countrySunsetTimeZone'), false),
                                               settingScreenController.formatTime(
-                                                  PrefServices.getString(
-                                                      'countrySunsetTimeZone'),
-                                                  settingScreenController
-                                                      .is24HourFormat.value),
+                                                  PrefServices.getString('countrySunsetTimeZone'),
+                                                  settingScreenController.is24HourFormat.value),
                                               fontWeight: FontWeight.w500,
                                               fontSize: 20.sp,
                                             ),
@@ -792,6 +788,7 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                             ),
                           ],
                         ),
+
                       ],
                     ),
                   ),

@@ -50,7 +50,8 @@ class StringUtils {
   static const ringsTxt = 'ringsTxt';
   static const countDownTxt = 'countDownTxt';
   static const countDownClockTxt = 'countDownClockTxt';
-  static const reminderTxt = 'reminderTxt';
+  static const sunsetReminderTxt = 'reminderTxt';
+  static const sunriseReminderTxt = 'sunriseReminderTxt';
   static const setReminderTxt = 'setReminderTxt';
   static const resetBtnTxt = 'resetBtnTxt';
   static const deleteLocationTxt = 'deleteLocationTxt';

@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:sunrise_app/animation/slide_transition_animation.dart';
 import 'package:sunrise_app/common_Widget/common_back_arrow.dart';
 import 'package:sunrise_app/common_Widget/common_text.dart';
 import 'package:sunrise_app/utils/color_utils.dart';
 import 'package:sunrise_app/utils/image_utils.dart';
 import 'package:sunrise_app/utils/string_utils.dart';
-import 'package:sunrise_app/view/help_screen/feedback_screen.dart';
-import 'package:sunrise_app/view/sunrise_sunset_screen/sunrise_sunset_screen.dart';
 import 'package:sunrise_app/viewModel/help_controller.dart';
 
 class HelpScreen extends StatefulWidget {
@@ -107,7 +104,9 @@ class _HelpScreenState extends State<HelpScreen> {
                               fontSize: 15.sp,
                             ),
                           ),
+
                           SizedBox(height: 10.h,),
+
                           ListTile(
                             onTap: () {
                                helpScreenController.sendingWhatsappMsg();
@@ -123,23 +122,7 @@ class _HelpScreenState extends State<HelpScreen> {
                               fontSize: 15.sp,
                             ),
                           ),
-                          SizedBox(height: 10.h,),
-                          ListTile(
-                            onTap: () {
-                              SlideTransitionAnimation.rightToLeftAnimation(const FeedbackScreen());
-                              // Get.to(const FeedbackScreen());
-                            },
-                            leading: const Icon(
-                              AssetUtils.feedBackIcon,
-                              color: ColorUtils.orange,
-                            ),
-                            title:CustomText(
-                              StringUtils.feedback,
-                              fontWeight: FontWeight.w500,
-                              fontSize: 15.sp,
-                              color: ColorUtils.black1F,
-                            ),
-                          ),
+
                         ],
                       ),
                     ),
