@@ -2,11 +2,11 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:intl/intl.dart';
+import 'package:sunrise_app/animation/slide_transition_animation.dart';
 import 'package:sunrise_app/common_Widget/common_button.dart';
 import 'package:sunrise_app/common_Widget/common_text.dart';
 import 'package:sunrise_app/services/prefServices.dart';
@@ -25,7 +25,7 @@ class GoogleController extends GetxController {
   final RxSet<Marker> markers = <Marker>{}.obs;
   Rx<LatLng?> lastMapPosition = Rx<LatLng?>(null);
   Rx<MapType> currentMapType = MapType.hybrid.obs;
-  RxString address = ''.obs;
+RxString address = 'No Address Found'.obs;
   RxString searchAddress = ''.obs;
   RxBool isLoad = false.obs;
   RxBool result = true.obs;
@@ -185,7 +185,7 @@ class GoogleController extends GetxController {
       }
       update();
       return searchAddress.value;
-    } catch (e) {
+    } catch (e){
       print("Error searching locations: $e");
       return searchAddress.value;
     }
@@ -251,14 +251,14 @@ class GoogleController extends GetxController {
     await PrefServices.setValue('locationList', locationList);
 
     if(address.value.isNotEmpty){
-      Get.offAll(
-        SunriseSunetScreen(
-          latitude: lati,
-          longitude: long,
-          address: address.value,
-          value: true,
-        ),
-      );
+
+      SlideTransitionAnimation.rightToLeftAnimationOff(SunriseSunetScreen(
+        latitude: lati,
+        longitude: long,
+        address: address.value,
+        value: true,
+      ),);
+
       confirmTimeZone();
     }
 
@@ -285,7 +285,7 @@ class GoogleController extends GetxController {
             CustomText(
               StringUtils.timeZonTxt,
               fontWeight: FontWeight.w600,
-              color: ColorUtils.black,
+              color: ColorUtils.black1F,
               textAlign: TextAlign.center,
               fontSize: 15.sp,
             ),
@@ -295,7 +295,7 @@ class GoogleController extends GetxController {
             CustomText(
               StringUtils.standardTime,
               fontWeight: FontWeight.w500,
-              color: ColorUtils.black,
+              color: ColorUtils.black1F,
               textAlign: TextAlign.center,
               fontSize: 13.sp,
             ),
@@ -339,6 +339,7 @@ class GoogleController extends GetxController {
                       begin: AlignmentDirectional.topEnd,
                       end: AlignmentDirectional.bottomEnd,
                     ),
+
                     onTap: (){
                       Get.back();
                       settingScreenController.toggleCountDown(PrefServices.getBool('isCountDown'));

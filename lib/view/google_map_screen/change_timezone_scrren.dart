@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:sunrise_app/animation/slide_transition_animation.dart';
 import 'package:sunrise_app/common_Widget/common_text.dart';
 import 'package:sunrise_app/common_Widget/common_textfield.dart';
 import 'package:sunrise_app/services/prefServices.dart';
@@ -44,10 +45,12 @@ class _ChangeTimeZoneScreenState extends State<ChangeTimeZoneScreen> {
     return Scaffold(
       body: Column(
         children: [
+
           SizedBox(
             height: 30.h,
           ),
-          CommonTextField(
+
+          CommonTextFormField(
             textEditController: googleController.searchCountryController,
             onChange: (value) {
               setState(() {
@@ -58,7 +61,7 @@ class _ChangeTimeZoneScreenState extends State<ChangeTimeZoneScreen> {
 
               });
             },
-            hintText: 'Search',
+            hintText: StringUtils.search.tr,
 
           ),
 
@@ -151,7 +154,7 @@ class _ChangeTimeZoneScreenState extends State<ChangeTimeZoneScreen> {
                 StringUtils.confirmTimeZone,
                 fontSize: 15.sp,
                 fontWeight: FontWeight.w500,
-                color: ColorUtils.black,
+                color: ColorUtils.black1F,
               ),
               SizedBox(
                 height: 5.h,
@@ -160,7 +163,7 @@ class _ChangeTimeZoneScreenState extends State<ChangeTimeZoneScreen> {
                 countryName,
                 fontSize: 14.sp,
                 fontWeight: FontWeight.w500,
-                color: ColorUtils.black,
+                color: ColorUtils.black1F,
               ),
               SizedBox(
                 height: 20.h,
@@ -174,7 +177,7 @@ class _ChangeTimeZoneScreenState extends State<ChangeTimeZoneScreen> {
                       googleController.searchCountryController.clear();
                     },
                     child: CustomText(
-                      StringUtils.cancleTxt,
+                      StringUtils.cancleCapitalTxt,
                       fontSize: 12.sp,
                       fontWeight: FontWeight.w500,
                       color: ColorUtils.orange,
@@ -187,7 +190,8 @@ class _ChangeTimeZoneScreenState extends State<ChangeTimeZoneScreen> {
                   /// Yes Button
                   InkWell(
                     onTap: (){
-                      Get.to(SunriseSunetScreen());
+                      SlideTransitionAnimation.leftToRightAnimation(SunriseSunetScreen());
+                      // Get.to(SunriseSunetScreen());
                       googleController.searchCountryController.clear();
                     },
                     child: CustomText(
@@ -197,9 +201,11 @@ class _ChangeTimeZoneScreenState extends State<ChangeTimeZoneScreen> {
                       color: ColorUtils.orange,
                     ),
                   ),
+
                   SizedBox(
                     width: 5.w,
                   ),
+
                 ],
               ),
               SizedBox(

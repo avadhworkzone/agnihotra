@@ -14,10 +14,12 @@ class StringUtils {
   static const mapViewTxt = 'mapViewTxt';
   static const satelliteTxt = 'satelliteTxt';
   static const searchTxt = 'searchTxt';
+  static const search = 'search';
   static const searchBtnTxt = 'searchBtnTxt';
   static const welcomeTxt = 'welcomeTxt';
   static const getStartTxt = 'getStartTxt';
   static const languageChooseTxt = 'languageChooseTxt';
+  static const enterTimeInMinText = 'enterTimeInMinText';
   static const languageUseTxt = 'languageUseTxt';
   static const hindiTxt = 'Hindi';
   static const englishTxt = 'English';
@@ -28,7 +30,7 @@ class StringUtils {
   static const settingsScreenTxt = 'settingsScreenTxt';
  // static const manualEntryTxt = 'Manual Entry';
   static const SettingsScreenTxt = 'SettingsScreenTxt';
-  static const contactsTxt = 'contactsTxt';
+  static const teamAgnihotraTxt = 'teamAgnihotraTxt';
   static const languageTxt = 'languageTxt';
   static const aboutTxt = 'aboutTxt';
   static const privacyPolicyTxt = 'privacyPolicyTxt';
@@ -37,6 +39,7 @@ class StringUtils {
   static const sunriseTxt = 'sunriseTxt';
   static const sunsetTxt = 'sunsetTxt';
   static const playTxt = 'playTxt';
+  static const pauseTxt = 'pauseTxt';
   static const checkTimeTxt = 'checkTimeTxt';
   static const checkDeviceTimeTxt = 'checkDeviceTimeTxt';
   static const screenOnTxt = 'screenOnTxt';
@@ -47,7 +50,8 @@ class StringUtils {
   static const ringsTxt = 'ringsTxt';
   static const countDownTxt = 'countDownTxt';
   static const countDownClockTxt = 'countDownClockTxt';
-  static const reminderTxt = 'reminderTxt';
+  static const sunsetReminderTxt = 'reminderTxt';
+  static const sunriseReminderTxt = 'sunriseReminderTxt';
   static const setReminderTxt = 'setReminderTxt';
   static const resetBtnTxt = 'resetBtnTxt';
   static const deleteLocationTxt = 'deleteLocationTxt';
@@ -90,12 +94,18 @@ class StringUtils {
   static const timingDownload = 'timingDownload';
   static const deleteAllLocation = 'deleteAllLocation';
   static const deleteThisLocation = 'deleteThisLocation';
+  static const matraTxt = 'matraTxt';
   static const confirmTxt = 'confirmTxt';
   static const renameLocationBtnTxt = 'renameLocationBtnTxt';
   static const renameLocationTxt = 'renameLocationTxt';
+
   static const deleteLocationBtnTxt = 'deleteLocationBtnTxt';
   static const enterLocationTxt = 'enterLocationTxt';
-  static const cancleTxt = 'cancleTxt';
+  static const alertTxt = 'alertTxt';
+  static const resetMsg = 'resetMsg';
+  static const resetButtonNotice = 'resetButtonNotice';
+  static const ringAlarmTxt = 'ringAlarmTxt';
+  static const cancleCapitalTxt = 'cancleTxt';
   static const noTxt = 'noTxt';
   static const yesTxt = 'yesTxt';
   static const proceedTxt = 'proceedTxt';
@@ -149,9 +159,73 @@ class StringUtils {
   static const chatSupport = "chatSupport";
   static const feedback = "feedback";
   static const rogmuktaabiyanTxt = "....एक रोग मुक्त अभियान....";
-  //today
+
+
   static const feedbackOptionTxt = "feedbackOptionTxt";
   static const shareFeedbackTxt = "shareFeedbackTxt";
   static const shareBotherationTxt = "shareBotherationTxt";
-  static const sendBtnTxt = "sendBtnTxt";
+  static const sendBtnTxt ="sendBtnTxt";
+
+  static const loginTxt = "loginTxt";
+  static const continueGoogleTxt = "continueGoogleTxt";
+  static const orTxt = "orTxt";
+  static const logInWithTxt = "logInWithTxt";
+  static const continueWithEmailTxt = "continueWithEmailTxt";
+
+
+  /// Login Screen
+  static const chooseAccountTxt = "chooseAccountTxt";
+  static const toContinueTxt = "toContinueTxt";
+  static const emailHintTxt = "emailHintTxt";
+  static const emailAddressTxt = "emailAddressTxt";
+  static const passwordHintTxt = "passwordHintTxt";
+  static const passwordTxt = "passwordTxt";
+  static const forgetPwdTxt = "forgetPwdTxt";
+  static const addAnotherAccountTxt = "addAnotherAccountTxt";
+  static const orSignInWithTxt = "orSignInWithTxt";
+  static const doNotHaveAccountTxt = "doNotHaveAccountTxt";
+
+  /// Register Screen
+
+  static const nameTxt = "nameTxt";
+  static const fullNameHintTxt = "fullNameHintTxt";
+  static const createAccountTxt = "createAccountTxt";
+  static const signUpTxt = "signUpTxt";
+
+   /// Forgot Password Screen
+
+  static const forgetPwdScrrenTxt = "forgetPwdScrrenTxt";
+  static const enterYourEmailAddressTxt = "enterYourEmailAddressTxt";
+  static const resetPasswordBtnTxt = "resetPasswordTxt";
+
+
+  /// Reset Password Screen
+
+  static const resetPwdTxt = "resetPwdTxt";
+  static const enterNewPwdTwiceTxt = "enterNewPwdTwiceTxt";
+  static const enterNewPwdTxt = "enterNewPwdTxt";
+  static const reEnterNewPwdTxt = "reEnterNewPwdTxt";
+  static const reEnterPwdHintTxt = "reEnterPwdHintTxt";
+
+
+
+  /// Edit Profile Screen
+  static const editProfileTxt = "editProfileTxt";
+  static const changeProfilePhotoTxt = "changeProfilePhotoTxt";
+  static const removeProfilePhotoTxt = "removeProfilePhotoTxt";
+  static const cancelTxt = "cancelTxt";
+  static const userNameTxt = "userNameTxt";
+  static const genderTxt = "genderTxt";
+  static const updateBtnTxt = "updateBtnTxt";
+  static const selectGenderTxt = "selectGenderTxt";
+  static const maleTxt = "maleTxt";
+  static const femaleTxt = "femaleTxt";
+  static const otherTxt = "otherTxt";
+  static const okTxt = "okTxt";
+
+
+
+
+
+
 }

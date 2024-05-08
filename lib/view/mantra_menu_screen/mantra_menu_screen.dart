@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:sunrise_app/animation/slide_transition_animation.dart';
 import 'package:sunrise_app/common_Widget/common_assets.dart';
+import 'package:sunrise_app/common_Widget/common_back_arrow.dart';
 import 'package:sunrise_app/common_Widget/common_text.dart';
 import 'package:sunrise_app/utils/color_utils.dart';
 import 'package:sunrise_app/utils/image_utils.dart';
 import 'package:sunrise_app/utils/string_utils.dart';
-import 'package:sunrise_app/view/mantra_menu_screen/mantra_screen.dart';
+import 'package:sunrise_app/view/mantra_menu_screen/sunrise_sunset_mantra_screen.dart';
 import 'package:sunrise_app/view/mantra_menu_screen/trikal_sandhya_mantra_screen.dart';
 
 class MantraMenuScreen extends StatefulWidget {
@@ -17,11 +19,14 @@ class MantraMenuScreen extends StatefulWidget {
 }
 
 class _MantraMenuScreenState extends State<MantraMenuScreen> {
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Stack(
+    return Material(
+      color: ColorUtils.white,
+      child: Stack(
         children: [
+
           Container(
             decoration: BoxDecoration(
               image: DecorationImage(
@@ -32,130 +37,141 @@ class _MantraMenuScreenState extends State<MantraMenuScreen> {
               ),
             ),
           ),
+
           SafeArea(
             child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 14.w),
+              padding: EdgeInsets.symmetric(horizontal: 15.w),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  CircleAvatar(
-                    backgroundColor: ColorUtils.white,
-                    radius: 20.r,
-                    child: IconButton(
-                      onPressed: () {
-                        Get.back();
-                      },
-                      icon: const Icon(
-                        AssetUtils.backArrowIcon,
-                        color: ColorUtils.orange,
-                      ),
-                    ),
+                  SizedBox(
+                    height: 10.h,
                   ),
+                  Row(
+
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+
+                      const CommonBackArrow(),
+                      SizedBox(width: 110.w),
+                      CustomText(
+                        StringUtils.mantraTxt,
+                        fontWeight: FontWeight.w500,
+                        fontSize: 18.sp,
+                      ),
+                    ],
+                  ),
+
                   SizedBox(
                     height: 30.h,
                   ),
 
                   /// Agnihotra Mantra
-                  Stack(
-                      alignment: Alignment.topRight,
-                      children: [
-                    GestureDetector(
-                      onTap: () {
-                        Get.to(const MantraScreen());
+                  GestureDetector(
+                    onTap: () {
 
-                      },
-                      child: SizedBox(
-                        height: 180.57.h,
+                      SlideTransitionAnimation.rightToLeftAnimation(const SunriseSunsetMantraScreen());
+
+
+                    },
+                    child: Stack(
+                        alignment: Alignment.topRight, children: [
+                      SizedBox(
+                        height: 183.57.h,
+                        width: Get.width,
                         child: LocalAssets(
                           imagePath: AssetUtils.agnihotraMantraImages,
-                         fit: BoxFit.fill,
+                          fit: BoxFit.fill,
                         ),
                       ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(top: 10.h, right: 8.w),
-                      child:
-                      Column(
-                        children: [
-                          GradientText(
-                            StringUtils.agnihotraMantraTxt,
-                            style:  TextStyle(fontSize: 20.sp,  fontWeight: FontWeight.w600,),
-                            gradient: const LinearGradient(
+                      Padding(
+                        padding: EdgeInsets.only(top: 10.h, right: 8.w),
+                        child: Column(
+                          children: [
+                            GradientText(
+                              StringUtils.agnihotraMantraTxt,
+                              style: TextStyle(
+                                fontSize: 15.sp,
+                                fontWeight: FontWeight.w600,
+                              ),
+                              gradient: const LinearGradient(
                                 colors: [
-                              ColorUtils.txtGradientColor2,
+                                  ColorUtils.txtGradientColor2,
                                   ColorUtils.txtGradientColor1,
-
                                 ],
-
-                              begin: Alignment.topLeft,
-                              end: Alignment.topRight,
-
+                                begin: Alignment.topLeft,
+                                end: Alignment.topRight,
+                              ),
                             ),
-                          ),
+                            CustomText(
+                              StringUtils.sunriseSunsetMantraTxt,
+                              color: ColorUtils.sunriseSunsetMantraColor,
+                              fontWeight: FontWeight.w600,
+                              fontSize: 15.sp,
+                            ),
+                          ],
+                        ),
+                      )
+                    ]),
+                  ),
 
-                                    CustomText(
-                                      StringUtils.sunriseSunsetMantraTxt,
-                                      color: ColorUtils.sunriseSunsetMantraColor,
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 17.sp,
-                                    ),
-
-                        ],
-                      ),
-                    )
-                  ]),
                   SizedBox(
                     height: 16.h,
                   ),
-                  Stack(
-                      alignment: Alignment.topRight,
-                      children: [
-                    GestureDetector(
-                      onTap: () {
-                        Get.to(const TrikalSandhyaMantra());
 
-                      },
-                      child: SizedBox(
-                        height: 180.57.h,
+                  /// Trikal Sandhya
+                  GestureDetector(
+                    onTap: () {
+                      SlideTransitionAnimation.rightToLeftAnimation(const TrikalSandhyaMantra());
+                    },
+                    child: Stack(alignment: Alignment.topRight, children: [
+
+                      SizedBox(
+                        height: 187.57.h,
                         child: LocalAssets(
-                            imagePath: AssetUtils.trikalSandhyaImages,
+                          imagePath: AssetUtils.trikalSandhyaImages,
                           fit: BoxFit.fill,
-
+                          width: Get.width,
                         ),
                       ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(top: 10.h, right: 8.w),
-                      child: Column(
-                        children: [
-                          GradientText(
-                            StringUtils.trikalMantraTxt,
-                            style:  TextStyle(fontSize: 20.sp,  fontWeight: FontWeight.w600,),
-                            gradient: const LinearGradient(
-                              colors: [
-                                ColorUtils.txtGradientColor2,
-                                ColorUtils.txtGradientColor1,
 
-                              ],
-                              begin: Alignment.topLeft,
-                              end: Alignment.topRight,
+                      Padding(
+                        padding: EdgeInsets.only(top: 10.h, right: 8.w),
+                        child: Column(
+                          children: [
+                            GradientText(
+                              StringUtils.trikalMantraTxt,
+                              style: TextStyle(
+                                fontSize: 15.sp,
+                                fontWeight: FontWeight.w600,
+                              ),
+                              gradient: const LinearGradient(
+                                colors: [
+                                  ColorUtils.txtGradientColor2,
+                                  ColorUtils.txtGradientColor1,
+                                ],
+                                begin: Alignment.topLeft,
+                                end: Alignment.topRight,
+                              ),
                             ),
-                          ),
-                          CustomText(
-                            StringUtils.sunriseSunsetMantraTxt,
-                            color: ColorUtils.sunriseSunsetMantraColor,
-                            fontWeight: FontWeight.w600,
-                            fontSize: 17.sp,
-                          ),
-                        ],
-                      ),
-                    )
-                  ]),
+                            CustomText(
+                              StringUtils.sunriseSunsetMantraTxt,
+                              color: ColorUtils.sunriseSunsetMantraColor,
+                              fontWeight: FontWeight.w600,
+                              fontSize: 15.sp,
+                            ),
+                          ],
+                        ),
+                      )
+
+                    ]),
+                  ),
                 ],
               ),
             ),
           )
+
         ],
       ),
     );

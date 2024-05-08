@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:keep_screen_on/keep_screen_on.dart';
+import 'package:sunrise_app/animation/slide_transition_animation.dart';
 import 'package:sunrise_app/common_Widget/common_button.dart';
 import 'package:sunrise_app/common_Widget/common_text.dart';
 import 'package:sunrise_app/services/prefServices.dart';
@@ -9,7 +11,8 @@ import 'package:sunrise_app/utils/color_utils.dart';
 import 'package:sunrise_app/utils/image_utils.dart';
 import 'package:sunrise_app/utils/string_utils.dart';
 import 'package:sunrise_app/view/sunrise_sunset_screen/sunrise_sunset_screen.dart';
-import 'package:sunrise_app/viewModel/enter_location_controller.dart';
+import 'package:sunrise_app/viewModel/enter_manually_location_controller.dart';
+import 'package:sunrise_app/viewModel/settings_controller.dart';
 
 class WelcomeScreen extends StatefulWidget {
   const WelcomeScreen({Key? key}) : super(key: key);
@@ -19,15 +22,29 @@ class WelcomeScreen extends StatefulWidget {
 }
 
 class _WelcomeScreenState extends State<WelcomeScreen> {
-  LocationController locationController = Get.find<LocationController>();
   String selectedValue = '';
+
+  EnterManuallyLocationController locationController = Get.find<EnterManuallyLocationController>();
+  SettingScreenController settingScreenController =   Get.find<SettingScreenController>();
+
 
   @override
   void initState() {
-    // TODO: implement initState
-    super.initState();
-    print('Welcome=====================================>');
     locationController.getCurrentLocation();
+
+    /// Remainder
+    // if(PrefServices.getBool('saveToggleValue')) {
+    //   settingScreenController.scheduleDailyNotification();
+    // }
+    // else{
+    //   settingScreenController.cancelNotification();
+    // }
+    settingScreenController.isScreenOn.value = PrefServices.getBool('keepScreenOn');
+    print("settingScreenController.isScreenOn.value :- ${settingScreenController.isScreenOn.value}");
+    if (settingScreenController.isScreenOn.value){
+      KeepScreenOn.turnOn();
+    }
+    super.initState();
   }
 
   @override
@@ -35,6 +52,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
     return Scaffold(
       body: Stack(
         children: [
+
           Container(
             decoration: BoxDecoration(
               image:DecorationImage(
@@ -63,7 +81,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 StringUtils.languageChooseTxt,
                 fontSize: 16.sp,
                 fontWeight: FontWeight.w600,
-                color: ColorUtils.black,
+                color: ColorUtils.black1F,
               ),
               SizedBox(height: 5.h,),
               // SELECT LANGUAGE TO USE
@@ -96,7 +114,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                           StringUtils.hinTxt,
                           fontSize: 14.sp,
                           fontWeight: FontWeight.w600,
-                          color: ColorUtils.black,
+                          color: ColorUtils.black1F,
                         ),
                         Radio(
                             value: 'Hindi',
@@ -136,7 +154,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                           StringUtils.engTxt,
                           fontSize: 14.sp,
                           fontWeight: FontWeight.w600,
-                          color: ColorUtils.black,
+                          color: ColorUtils.black1F,
                         ),
                         Radio(
                           value: 'English',
@@ -177,7 +195,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                           StringUtils.gujTxt,
                           fontSize: 14.sp,
                           fontWeight: FontWeight.w600,
-                          color: ColorUtils.black,
+                          color: ColorUtils.black1F,
                         ),
                         Radio(
                           value: 'Gujarati',
@@ -228,8 +246,11 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                          default :
                            break;
                        }
-                       Get.off(SunriseSunetScreen());
-                     }else{
+                       SlideTransitionAnimation.rightToLeftAnimationOff(SunriseSunetScreen());
+                       // Get.off(SunriseSunetScreen());
+                     }
+
+                     else{
                        Fluttertoast.showToast(
                            msg: "Please Selected Language",
                            toastLength: Toast.LENGTH_SHORT,

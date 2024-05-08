@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:keep_screen_on/keep_screen_on.dart';
+import 'package:sunrise_app/animation/slide_transition_animation.dart';
 import 'package:sunrise_app/common_Widget/common_assets.dart';
 import 'package:sunrise_app/services/prefServices.dart';
+import 'package:sunrise_app/utils/image_utils.dart';
 import 'package:sunrise_app/view/sunrise_sunset_screen/sunrise_sunset_screen.dart';
-import 'package:sunrise_app/viewModel/enter_location_controller.dart';
+import 'package:sunrise_app/view/welcome_screen/welcome_screen.dart';
+import 'package:sunrise_app/viewModel/enter_manually_location_controller.dart';
+import 'package:sunrise_app/viewModel/settings_controller.dart';
 
-class SplashScreen extends StatefulWidget {
+class SplashScreen extends StatefulWidget{
   const SplashScreen({super.key});
 
   @override
@@ -13,26 +18,43 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  LocationController locationController = Get.find<LocationController>();
 
+  EnterManuallyLocationController locationController = Get.find<EnterManuallyLocationController>();
+  SettingScreenController settingScreenController =   Get.find<SettingScreenController>();
 
   @override
-  void initState() {
+  void initState(){
+
     super.initState();
-    _loadPreferences().then((value){
-     print('SplSH=====================================>');
-      Future.delayed(const Duration(seconds: 3))
-          .then((value) => Get.to(SunriseSunetScreen()));
+
+    settingScreenController.toggleBellFormat();
+    _loadPreferences().then((value) {
+
+      Future.delayed(const Duration(milliseconds: 5500))
+          .then((value) => SlideTransitionAnimation.rightToLeftAnimationOff(PrefServices.getString('language').isEmpty ? const WelcomeScreen() :  SunriseSunetScreen()));
     });
+
+    /// Remainder
+    // if(PrefServices.getBool('saveToggleValue')){
+    //   settingScreenController.scheduleDailyNotification();
+    // }
+    // else {
+    //   settingScreenController.cancelNotification();
+    // }
+    settingScreenController.isScreenOn.value = PrefServices.getBool('keepScreenOn');
+    print("settingScreenController.isScreenOn.value :- ${settingScreenController.isScreenOn.value}");
+    if(settingScreenController.isScreenOn.value){
+      KeepScreenOn.turnOn();
+    }
     locationController.getCurrentLocation();
   }
-
 
   int _currentIndex = 0;
 
   List imageUrl = [
-    "assets/images/splashImage1.svg",
-    "assets/images/splashImage2.svg",
+    (AssetUtils.splashImage1),
+    (AssetUtils.splashImage2),
+
     // "assets/images/splashImages3.jpg",
     // "assets/images/splashImages4.jpg",
 
@@ -41,6 +63,7 @@ class _SplashScreenState extends State<SplashScreen> {
     // "assets/images/splashImages7.jpg",
     // "assets/images/splashImages8.jpg",
   ];
+
 
 
   Future<void> _loadPreferences() async {
@@ -65,8 +88,12 @@ class _SplashScreenState extends State<SplashScreen> {
       body: Center(
         child: LocalAssets(
           imagePath: imageUrl[_currentIndex % imageUrl.length],
+
           fit: BoxFit.cover,
           height: Get.height,
+          width: Get.width,
+
+
         ),
       ),
     );

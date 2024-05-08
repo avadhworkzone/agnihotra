@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
+<key>LSApplicationQueriesSchemes</key>
+<array>
+  <string>sms</string>
+  <string>tel</string>
+</array>
 <dict>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
@@ -54,5 +59,61 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+</dict>
+
+<key>UIBackgroundModes</key>
+<array>
+    <string>fetch</string>
+    <string>remote-notification</string>
+</array>
+<key>UIUserNotificationCategory</key>
+<dict>
+    <key>categories</key>
+    <array>
+        <dict>
+            <key>actions</key>
+            <array>
+                <dict>
+                    <key>activationMode</key>
+                    <string>background</string>
+                    <key>authenticationRequired</key>
+                    <false/>
+                    <key>destructive</key>
+                    <false/>
+                    <key>identifier</key>
+                    <string>READ_IDENTIFIER</string>
+                    <key>title</key>
+                    <string>Read</string>
+                </dict>
+            </array>
+            <key>identifier</key>
+            <string>MESSAGE_CATEGORY</string>
+        </dict>
+    </array>
+</dict>
+<key>UIUserNotificationSettings</key>
+<dict>
+    <key>categories</key>
+    <array>
+        <dict>
+            <key>actions</key>
+            <array>
+                <dict>
+                    <key>activationMode</key>
+                    <string>background</string>
+                    <key>authenticationRequired</key>
+                    <false/>
+                    <key>destructive</key>
+                    <false/>
+                    <key>identifier</key>
+                    <string>READ_IDENTIFIER</string>
+                    <key>title</key>
+                    <string>Read</string>
+                </dict>
+            </array>
+            <key>identifier</key>
+            <string>MESSAGE_CATEGORY</string>
+        </dict>
+    </array>
 </dict>
 </plist>

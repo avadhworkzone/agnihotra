@@ -2,25 +2,26 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:sunrise_app/common_Widget/common_fluttertoast.dart';
 import 'package:sunrise_app/model/country_timezone_model.dart';
-import 'package:sunrise_app/model/future_sunrise_sunsetTime_model.dart';
-import 'package:sunrise_app/model/sunrise_sunset_model.dart';
 import 'package:sunrise_app/services/prefServices.dart';
 import 'package:sunrise_app/utils/const_utils.dart';
 import 'package:sunrise_app/view/sunrise_sunset_screen/sunrise_sunset_api.dart';
-import 'package:sunrise_app/viewModel/settings_controller.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:weather/weather.dart';
 
+
 class SunriseSunsetController extends GetxController {
+
   WeatherFactory? ws;
   Rx<Weather?> weather = Rx<Weather?>(null);
   RxString currentTime = ''.obs;
 
+
+
   late Rx<DateTime> selectedDate = DateTime.now().obs;
   String formattedDate = DateFormat("yyyy-MM-dd").format(DateTime.now());
-  final Uri _url = Uri.parse(
-      'https://www.freeprivacypolicy.com/live/b55e5ea0-1038-4c24-b269-7359dcad9bb2');
+  final Uri _url = Uri.parse(ConstUtils.privacyPolicyLink);
 
   Future<void> launchUrl() async {
     if (!await launch(_url.toString())) {
@@ -28,23 +29,30 @@ class SunriseSunsetController extends GetxController {
     }
   }
 
+
+
+
+
   RxString countrySunriseTimeZone = ''.obs;
   RxString countrySunsetTimeZone = ''.obs;
 
+
   RxBool isCountryLoad = false.obs;
-  SunriseSunsetModel? sunriseSunsetModel;
-  FutureSunriseSunsetTimeModel? futureSunriseSunsetTimeModel;
+
   CountryTimezoneModel? countryTimezoneModel;
   RxString selectedValue = ''.obs;
 
+
   Future<void> selectDate(BuildContext context) async {
-    if (PrefServices.getString('currentAddress').isNotEmpty) {
+
+
+    if(PrefServices.getString('currentAddress').isNotEmpty){
       final DateTime? picked = await showDatePicker(
         context: context,
         initialDate: selectedDate.value,
         firstDate: DateTime.now(),
         lastDate: DateTime.now().add(const Duration(days: 1470)),
-        builder: (BuildContext context, Widget? child) {
+        builder: (BuildContext context, Widget? child){
           return Theme(
             data: ThemeData.light().copyWith(
               colorScheme: const ColorScheme.light().copyWith(
@@ -54,16 +62,16 @@ class SunriseSunsetController extends GetxController {
             child: child!,
           );
         },
-        selectableDayPredicate: (DateTime date) {
+
+        selectableDayPredicate: (DateTime date){
           return true;
         },
       );
 
-      if (picked != null && picked != selectedDate.value) {
+      if (picked != null && picked != selectedDate.value ){
         selectedDate.value = picked;
 
-        String formatDate =
-            DateFormat('dd MMMM yyyy').format(selectedDate.value);
+        String formatDate = DateFormat('dd MMMM yyyy').format(selectedDate.value);
 
         DateFormat inputFormat = DateFormat("dd MMMM yyyy");
         DateTime date = inputFormat.parse(formatDate);
@@ -79,26 +87,58 @@ class SunriseSunsetController extends GetxController {
             PrefServices.getDouble('currentLong'),
             formattedDate,
             PrefServices.getString('countryName'));
+
+
       }
     }
+
+
   }
 
-  Future<void> countryTimeZone(double latitude, double longitude, String date, String countryTimeZone) async {
-    isCountryLoad.value = true;
-    countryTimezoneModel = await SunriseSunsetApi.getDifferentCountryTime(
-        latitude, longitude, date, countryTimeZone);
 
-    countrySunriseTimeZone.value = countryTimezoneModel!.results?.sunrise ?? '';
+
+
+  void updateTime() {
+    String formattedTime = DateFormat('HH:mm:ss').format(DateTime.now());
+    DateTime time = DateFormat.Hms().parse(formattedTime);
+    currentTime.value = DateFormat.jms().format(time);
+  }
+
+
+
+
+
+
+
+
+
+  Future<void> countryTimeZone(double latitude, double longitude,String date,String countryTimeZone) async {
+
+    isCountryLoad.value = true;
+    countryTimezoneModel = await SunriseSunsetApi.getDifferentCountryTime(latitude, longitude,date,countryTimeZone);
+
+    countrySunriseTimeZone.value = countryTimezoneModel?.results?.sunrise ?? '';
     countrySunsetTimeZone.value = countryTimezoneModel?.results?.sunset ?? '';
 
-    PrefServices.setValue(
-        'countrySunriseTimeZone', countrySunriseTimeZone.value);
+    PrefServices.setValue('countrySunriseTimeZone', countrySunriseTimeZone.value);
     PrefServices.setValue('countrySunsetTimeZone', countrySunsetTimeZone.value);
 
     print("countrySunriseTimeZone Value :- ${countrySunriseTimeZone.value}");
     print("countrySunsetTimeZone Value :- ${countrySunsetTimeZone.value}");
     isCountryLoad.value = false;
     update();
+
   }
+
+
+
+
+
+  Future<void> clearSunriseSunsetData() async {
+    await PrefServices.removeValue('sunrise');
+    await PrefServices.removeValue('sunset');
+  }
+
+
 
 }

@@ -23,7 +23,7 @@ class CustomBtn extends StatelessWidget {
   final AlignmentGeometry? alignment;
 
   const CustomBtn(
-      {required this.onTap,
+      {super.key, required this.onTap,
         required this.title,
         this.radius,
         this.borderColor,
@@ -55,7 +55,7 @@ class CustomBtn extends StatelessWidget {
           onTap: onTap,
           child: Center(
             child: CustomText(
-              title!,
+              title!.tr,
               fontWeight: FontWeight.w600,
               color: textColor ?? ColorUtils.white,
               fontSize: fontSize ?? 17.sp,
