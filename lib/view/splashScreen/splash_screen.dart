@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:keep_screen_on/keep_screen_on.dart';
 import 'package:sunrise_app/animation/slide_transition_animation.dart';
 import 'package:sunrise_app/common_Widget/common_assets.dart';
@@ -9,6 +10,9 @@ import 'package:sunrise_app/view/sunrise_sunset_screen/sunrise_sunset_screen.dar
 import 'package:sunrise_app/view/welcome_screen/welcome_screen.dart';
 import 'package:sunrise_app/viewModel/enter_manually_location_controller.dart';
 import 'package:sunrise_app/viewModel/settings_controller.dart';
+import 'package:sunrise_app/viewModel/sunrise_sunset_controller.dart';
+
+import '../../utils/string_utils.dart';
 
 class SplashScreen extends StatefulWidget{
   const SplashScreen({super.key});
@@ -21,32 +25,52 @@ class _SplashScreenState extends State<SplashScreen> {
 
   EnterManuallyLocationController locationController = Get.find<EnterManuallyLocationController>();
   SettingScreenController settingScreenController =   Get.find<SettingScreenController>();
+  SunriseSunsetController sunriseSunsetController = Get.find<SunriseSunsetController>();
 
   @override
   void initState(){
 
     super.initState();
 
-    settingScreenController.toggleBellFormat();
-    _loadPreferences().then((value) {
+    print("sunriseSunsetController.formattedDate========> :- ${sunriseSunsetController.formattedDate}");
+
+
+    remainderAndBellNotification();
+    _loadPreferences().then((value){
 
       Future.delayed(const Duration(milliseconds: 5500))
           .then((value) => SlideTransitionAnimation.rightToLeftAnimationOff(PrefServices.getString('language').isEmpty ? const WelcomeScreen() :  SunriseSunetScreen()));
     });
 
-    /// Remainder
-    // if(PrefServices.getBool('saveToggleValue')){
-    //   settingScreenController.scheduleDailyNotification();
-    // }
-    // else {
-    //   settingScreenController.cancelNotification();
-    // }
+
     settingScreenController.isScreenOn.value = PrefServices.getBool('keepScreenOn');
     print("settingScreenController.isScreenOn.value :- ${settingScreenController.isScreenOn.value}");
     if(settingScreenController.isScreenOn.value){
       KeepScreenOn.turnOn();
     }
     locationController.getCurrentLocation();
+  }
+
+  Future<void> remainderAndBellNotification() async {
+
+    await sunriseSunsetController.countryTommorowTimeZone(
+        PrefServices.getDouble('currentLat'),
+        PrefServices.getDouble('currentLong'),
+        DateFormat("yyyy-MM-dd").format(
+            DateTime.now().add(const Duration(days: 1))),
+        PrefServices.getString('countryName'));
+
+    await sunriseSunsetController.countryTodayTimeZone(
+        PrefServices.getDouble('currentLat'),
+        PrefServices.getDouble('currentLong'),
+        sunriseSunsetController.formattedDate,
+        PrefServices.getString('countryName')).then((value){
+
+
+
+      settingScreenController.remainderNotificationLogic();
+      settingScreenController.meditionBellNotificationLogic();
+    });
   }
 
   int _currentIndex = 0;

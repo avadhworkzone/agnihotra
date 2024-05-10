@@ -61,7 +61,7 @@ Map<String, String> gu = {
   "countDownTxt": "ડિસ્પ્લે કાઉન્ટડાઉન",
   "countDownClockTxt":
   "મધ્યમાં નેક્ષ્ટ અગ્નિહોત્રના સમયની ઊંધીગણત્રી અથવા ઘડિયાળ દર્શાવો",
-  "reminderTxt": "સૂર્યાસ્ત સમય માટે રીમાઇન્ડર્સ",
+  "reminderTxt": "રીમાઇન્ડર્સ",
   "setReminderTxt": " અગ્નિહોત્ર માટે રીમાઇન્ડર્સ સેટ કરો",
   "enterTimeInMinText":"મિનિટમાં સમય દાખલ કરો (2-120):",
   "resetBtnTxt": "રીસેટ",

@@ -51,7 +51,7 @@ Map<String, String> hi = {
   "ringsTxt": "अग्निहोत्र के समय घंटी बजती है",
   "countDownTxt": "उलटी गिनती प्रदर्शित करें",
   "countDownClockTxt": "केंद्र में उलटी गिनती या घड़ी प्रदर्शित करें",
-  "reminderTxt": "सूर्यास्त के समय के लिए अनुस्मारक",
+  "reminderTxt": "अनुस्मारक",
   "sunriseReminderTxt": "सूर्योदय के समय के लिए अनुस्मारक",
   "setReminderTxt": "अग्निहोत्र के लिए अनुस्मारक सेट करें",
   "resetBtnTxt": "रीसेट",
