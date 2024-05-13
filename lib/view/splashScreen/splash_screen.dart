@@ -53,6 +53,12 @@ class _SplashScreenState extends State<SplashScreen> {
 
   Future<void> remainderAndBellNotification() async {
 
+    await sunriseSunsetController.countryTodayTimeZone(
+        PrefServices.getDouble('currentLat'),
+        PrefServices.getDouble('currentLong'),
+        sunriseSunsetController.formattedDate,
+        PrefServices.getString('countryName'));
+
     await sunriseSunsetController.countryTommorowTimeZone(
         PrefServices.getDouble('currentLat'),
         PrefServices.getDouble('currentLong'),
@@ -60,17 +66,13 @@ class _SplashScreenState extends State<SplashScreen> {
             DateTime.now().add(const Duration(days: 1))),
         PrefServices.getString('countryName'));
 
-    await sunriseSunsetController.countryTodayTimeZone(
-        PrefServices.getDouble('currentLat'),
-        PrefServices.getDouble('currentLong'),
-        sunriseSunsetController.formattedDate,
-        PrefServices.getString('countryName')).then((value){
+
 
 
 
       settingScreenController.remainderNotificationLogic();
       settingScreenController.meditionBellNotificationLogic();
-    });
+
   }
 
   int _currentIndex = 0;
@@ -79,13 +81,7 @@ class _SplashScreenState extends State<SplashScreen> {
     (AssetUtils.splashImage1),
     (AssetUtils.splashImage2),
 
-    // "assets/images/splashImages3.jpg",
-    // "assets/images/splashImages4.jpg",
 
-    // "assets/images/splashImages5.jpg",
-    // "assets/images/splashImages6.jpg",
-    // "assets/images/splashImages7.jpg",
-    // "assets/images/splashImages8.jpg",
   ];
 
 

@@ -156,6 +156,7 @@ class _SunriseSunetScreenState extends State<SunriseSunetScreen> {
                   onTap: () {
 
 
+
                     openDrawer();
                     SlideTransitionAnimation.rightToLeftAnimation(
                         const SettingsScreen());

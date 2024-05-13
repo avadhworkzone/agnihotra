@@ -13,8 +13,8 @@ import 'package:timezone/timezone.dart' as tz;
 import 'package:timezone/timezone.dart';
 
 class SettingScreenController extends GetxController {
-  SunriseSunsetController sunriseSunsetController =
-      Get.put(SunriseSunsetController());
+
+  SunriseSunsetController sunriseSunsetController = Get.put(SunriseSunsetController());
   RxBool isCountDown = false.obs;
   Rx<Duration> difference = Rx<Duration>(Duration.zero);
   RxBool is24Hours = false.obs;
@@ -152,6 +152,7 @@ class SettingScreenController extends GetxController {
   }
 
   String convert12HourTo24HourCurrentTime(String timeString) {
+
     try {
       // Split the time string by space to separate time and period
       List<String> timeParts = timeString.split(' ');
@@ -289,21 +290,19 @@ class SettingScreenController extends GetxController {
 
     print("convertedSunsetTime :- $convertedSunsetTime");
 
-    print(
-        "Save value of field Remainder:- ${PrefServices.getString(StringUtils.saveRemainderTextfieldKey)}");
+    print("Save value of field Remainder:- ${PrefServices.getString(StringUtils.saveRemainderTextfieldKey)}");
 
-    int substractMin = int.parse(
-        PrefServices.getString(StringUtils.saveRemainderTextfieldKey));
+    int substractMin = int.parse(PrefServices.getString(StringUtils.saveRemainderTextfieldKey));
 
     print("============substractMin :- $substractMin");
+
     PrefServices.setValue(StringUtils.subStractMinuteKey, substractMin);
-    int saveSubstractValue =
-        PrefServices.getInt(StringUtils.subStractMinuteKey);
+
+    int saveSubstractValue = PrefServices.getInt(StringUtils.subStractMinuteKey);
 
     print("saveSubstractValue :- $saveSubstractValue");
 
-    print(
-        "==================== substractMin :- $substractMin ======================");
+    print("==================== substractMin :- $substractMin ======================");
 
     // Subtract  minutes from the DateTime object
     DateTime newTime = subtractMinutes(convertedSunsetTime, saveSubstractValue);
@@ -555,8 +554,10 @@ class SettingScreenController extends GetxController {
   }
 
   Future<void> meditionBellNotificationLogic() async {
+
     if (PrefServices.getBool('isBellRinging') &&
         PrefServices.getString('currentAddress').isNotEmpty) {
+
       /// Tommorow time API call
       await sunriseSunsetController.countryTommorowTimeZone(
           PrefServices.getDouble('currentLat'),
@@ -600,7 +601,7 @@ class SettingScreenController extends GetxController {
       String todaySunset =
           sunriseSunsetController.countryTodaySunsetTimeZone.value;
 
-      print("todayTime :- $todaySunset");
+      print("todaySunset :- $todaySunset");
 
       DateTime twelveHourTodaySunsetTime = twelveHourFormat.parse(todaySunset);
 
@@ -613,7 +614,7 @@ class SettingScreenController extends GetxController {
         now.year,
         now.month,
         now.day,
-        // 09,45,00,
+        // 10,47,00,
         int.parse(splitTodayTime[0]),
         int.parse(splitTodayTime[1]),
         int.parse(splitTodayTime[2]),
@@ -638,15 +639,14 @@ class SettingScreenController extends GetxController {
         now.year,
         now.month,
         now.day,
-        // 01,45,00
+        // 10,40,00
         int.parse(splitTodaySunriseTime[0]),
         int.parse(splitTodaySunriseTime[1]),
         int.parse(splitTodaySunriseTime[2]),
       );
 
       /// tommorow Sunrise Time
-      String tommorowSunrise =
-          sunriseSunsetController.countryTommorowSunriseTimeZone.value;
+      String tommorowSunrise = sunriseSunsetController.countryTommorowSunriseTimeZone.value;
 
       print("tommorowSunrise :- $tommorowSunrise");
 
@@ -669,8 +669,8 @@ class SettingScreenController extends GetxController {
         int.parse(splitTommorowSunriseTime[2]),
       );
 
-      print("tommorowSunriseTime :- $tommorowSunriseTime");
-      print("todaySunriseTime :- $todaySunriseTime");
+      print("tommorowSunriseTime Bell :- $tommorowSunriseTime");
+      print("todaySunriseTime Bell :- $todaySunriseTime");
 
       print("tommorowSunsetTime ===============:- $tommorowSunsetTime");
 
@@ -678,34 +678,44 @@ class SettingScreenController extends GetxController {
 
       print("current time :- $now");
 
-      if (todaySunriseTime.isBefore(todaySunsetTime) &&
-          todaySunriseTime.isAfter(now)) {
+      if (todaySunriseTime.isBefore(todaySunsetTime) && todaySunriseTime.isAfter(now)) {
         print(
             "Today Sunrise Time====================== ${sunriseSunsetController.countryTodaySunriseTimeZone.value}");
 
         sunsetMeditionBellNotification(
-            sunriseSunsetController.countryTodaySunriseTimeZone.value, false);
-      } else if (todaySunsetTime.isAfter(todaySunriseTime) &&
+            // '10:40:00 AM',
+            sunriseSunsetController.countryTodaySunriseTimeZone.value,
+            false);
+
+      }
+
+      else if (todaySunsetTime.isAfter(todaySunriseTime) &&
           todaySunsetTime.isAfter(now)) {
+
         print(
             "Today Sunset Time====================== ${sunriseSunsetController.countryTodaySunsetTimeZone.value}");
 
         sunsetMeditionBellNotification(
-            sunriseSunsetController.countryTodaySunsetTimeZone.value, false);
-      } else if (tommorowSunriseTime.isAfter(todaySunsetTime) &&
+         // '10:47:00 AM',
+          sunriseSunsetController.countryTodaySunsetTimeZone.value,
+            false);
+      }
+
+      else if (tommorowSunriseTime.isAfter(todaySunsetTime) &&
           tommorowSunriseTime.isAfter(now)) {
         print(
             "Tommorow Sunrise Time====================== ${sunriseSunsetController.countryTommorowSunriseTimeZone.value}");
 
-        ///FOR TOMORROW
+        ///FOR TOMORROW Sunrise Time
 
         sunsetMeditionBellNotification(
             sunriseSunsetController.countryTommorowSunriseTimeZone.value, true);
-      } else {
+      }
+      else {
         print(
             "Tommorow Sunset Time====================== ${sunriseSunsetController.countryTomorrowSunsetTimeZone.value}");
 
-        ///FOR TOMORROW
+        ///FOR TOMORROW Sunset Time
 
         sunsetMeditionBellNotification(
             sunriseSunsetController.countryTomorrowSunsetTimeZone.value, true);
@@ -715,7 +725,9 @@ class SettingScreenController extends GetxController {
     }
   }
 
+
   Future<void> remainderNotificationLogic() async {
+
     if (PrefServices.getBool('saveRemainderToggleValue') &&
         PrefServices.getString('currentAddress').isNotEmpty) {
       /// Today Sunset Time
@@ -742,7 +754,7 @@ class SettingScreenController extends GetxController {
         now.year,
         now.month,
         now.day,
-        // 14,12,00,
+        // 08,15,00,
         int.parse(splitTodayTime[0]),
         int.parse(splitTodayTime[1]),
         int.parse(splitTodayTime[2]),
@@ -796,7 +808,7 @@ class SettingScreenController extends GetxController {
         now.year,
         now.month,
         now.day,
-        // 14,10,00,
+        // 07,45,00,
         int.parse(splitTodaySunriseTime[0]),
         int.parse(splitTodaySunriseTime[1]),
         int.parse(splitTodaySunriseTime[2]),
@@ -824,7 +836,7 @@ class SettingScreenController extends GetxController {
         now.year,
         now.month,
         now.day + 1,
-        // 09,45,00,
+        // 07,35,00,
         int.parse(splitTommorowSunriseTime[0]),
         int.parse(splitTommorowSunriseTime[1]),
         int.parse(splitTommorowSunriseTime[2]),
@@ -835,28 +847,30 @@ class SettingScreenController extends GetxController {
       print("todaySunriseTime :- $todaySunriseTime");
       print("tommorowSunriseTime :- $tommorowSunriseTime");
 
-      if (todaySunriseTime.isBefore(todaySunsetTime) &&
-          todaySunriseTime.isAfter(now)) {
-        print(
-            "Today Sunrise Time ============>:- ${sunriseSunsetController.countryTodaySunriseTimeZone.value}");
+      if(todaySunriseTime.isBefore(todaySunsetTime) && todaySunriseTime.isAfter(now)){
+
+        print("Today Sunrise Time ============>:- ${sunriseSunsetController.countryTodaySunriseTimeZone.value}");
 
         scheduleRemainderNotification(
-                // '2:10:00 PM',
+                // '07:45:00 AM',
                 sunriseSunsetController.countryTodaySunriseTimeZone.value,
                 false)
             .then((value) => Get.back());
-      } else if (todaySunsetTime.isAfter(todaySunriseTime) &&
+      }
+      else if (todaySunsetTime.isAfter(todaySunriseTime) &&
           todaySunsetTime.isAfter(now)) {
-        print(
-            "Today SunSet Time ==========>:- ${sunriseSunsetController.countryTodaySunsetTimeZone.value}");
+
+        print("Today SunSet Time ==========>:- ${sunriseSunsetController.countryTodaySunsetTimeZone.value}");
 
         scheduleRemainderNotification(
-                // '2:12:00 PM',
+                // '08:15:00 AM',
                 sunriseSunsetController.countryTodaySunsetTimeZone.value,
                 false)
             .then((value) => Get.back());
-      } else if (tommorowSunriseTime.isAfter(todaySunsetTime) &&
-          tommorowSunriseTime.isAfter(now)) {
+      }
+      else if (tommorowSunriseTime.isAfter(todaySunsetTime) &&
+          tommorowSunriseTime.isAfter(now)){
+
         print(
             "Tommorow Sunrise Time====================== ${sunriseSunsetController.countryTommorowSunriseTimeZone.value}");
 
@@ -864,19 +878,23 @@ class SettingScreenController extends GetxController {
                 sunriseSunsetController.countryTommorowSunriseTimeZone.value,
                 true)
             .then((value) => Get.back());
-      } else {
-        print(
-            "Tommorow Sunset Time :- ${sunriseSunsetController.countryTomorrowSunsetTimeZone.value}");
+      }
+      else {
+
+        print("Tommorow Sunset Time :- ${sunriseSunsetController.countryTomorrowSunsetTimeZone.value}");
 
         scheduleRemainderNotification(
                 sunriseSunsetController.countryTomorrowSunsetTimeZone.value,
                 true)
             .then((value) => Get.back());
+
       }
 
       Get.back();
-    } else {
+    }
+    else {
       cancelAllNotification();
     }
   }
+
 }

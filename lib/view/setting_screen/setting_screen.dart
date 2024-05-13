@@ -64,6 +64,9 @@ class _SeetingScreenState extends State<SettingsScreen> {
           DateFormat("yyyy-MM-dd").format(
               DateTime.now().add(const Duration(days: 1))),
           PrefServices.getString('countryName'));
+
+
+      // settingScreenController.remainderNotificationLogic();
     });
   }
 
@@ -81,6 +84,7 @@ class _SeetingScreenState extends State<SettingsScreen> {
       body: Obx(
         () => Stack(
           children: [
+
             Container(
               decoration: BoxDecoration(
                 image: DecorationImage(
@@ -91,6 +95,7 @@ class _SeetingScreenState extends State<SettingsScreen> {
                 ),
               ),
             ),
+
             SafeArea(
               child: Padding(
                 padding: EdgeInsets.only(top: 10.h),
@@ -114,12 +119,14 @@ class _SeetingScreenState extends State<SettingsScreen> {
                 ),
               ),
             ),
+
             Padding(
               padding: EdgeInsets.only(top: 110.h),
               child: ListView(
-                scrollDirection: Axis.vertical,
-                physics: const NeverScrollableScrollPhysics(),
-                children: [
+                scrollDirection : Axis.vertical,
+                physics : const NeverScrollableScrollPhysics(),
+                children : [
+
                   Padding(
                     padding: EdgeInsets.only(left: 20.w, right: 20.w),
                     child: Container(
@@ -443,9 +450,11 @@ class _SeetingScreenState extends State<SettingsScreen> {
                       ),
                     ),
                   ),
+
                 ],
               ),
             ),
+
           ],
         ),
       ),
