@@ -80,7 +80,7 @@ class _ChangeTimeZoneScreenState extends State<ChangeTimeZoneScreen> {
                 return InkWell(
                   onTap: (){
 
-                    sunriseSunsetController.countryTimeZone(
+                    sunriseSunsetController.countryTodayTimeZone(
                         PrefServices.getDouble('currentLat'),
                         PrefServices.getDouble('currentLong'),
                         sunriseSunsetController.formattedDate,

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:sunrise_app/common_Widget/common_back_arrow.dart';
 import 'package:sunrise_app/common_Widget/common_button.dart';
@@ -13,6 +13,7 @@ import 'package:sunrise_app/services/prefServices.dart';
 import 'package:sunrise_app/utils/color_utils.dart';
 import 'package:sunrise_app/utils/image_utils.dart';
 import 'package:sunrise_app/utils/string_utils.dart';
+import 'package:sunrise_app/view/sunrise_sunset_screen/sunrise_sunset_screen.dart';
 import 'package:sunrise_app/viewModel/google_map_controller.dart';
 import 'package:sunrise_app/viewModel/settings_controller.dart';
 import 'package:keep_screen_on/keep_screen_on.dart';
@@ -26,35 +27,47 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SeetingScreenState extends State<SettingsScreen> {
-
-  SettingScreenController settingScreenController = Get.find<SettingScreenController>();
+  SettingScreenController settingScreenController =
+      Get.find<SettingScreenController>();
   GoogleController googleController = Get.find<GoogleController>();
   TimePickerEntryMode entryMode = TimePickerEntryMode.dial;
   Orientation? orientation;
-  TextDirection textDirection = TextDirection.ltr;
   MaterialTapTargetSize tapTargetSize = MaterialTapTargetSize.padded;
   bool use24HourTime = false;
   late AudioPlayer meditionBell;
-  SunriseSunsetController sunriseSunsetController = Get.find<SunriseSunsetController>();
+  SunriseSunsetController sunriseSunsetController =
+      Get.find<SunriseSunsetController>();
 
   @override
   void initState() {
     super.initState();
 
     meditionBell = AudioPlayer();
-    print("PrefServices.getBool('saveToggleValue') :- ${PrefServices.getBool('saveToggleValue')}");
-    print("settingScreenController.on4.value :- ${settingScreenController.on4.value}");
-    print("settingScreenController.formatted12HourSunsetTime.value :- ${settingScreenController.formatted12HourSunsetTime.value}");
+
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
 
     WidgetsBinding.instance.addPostFrameCallback((_){
 
-      // settingScreenController.scheduleDailyNotification();
-      /// Keep Screen On
-      settingScreenController.isScreenOn.value = PrefServices.getBool('keepScreenOn');
 
-      if (settingScreenController.isScreenOn.value){
+
+      /// Keep Screen On
+      settingScreenController.isScreenOn.value =
+          PrefServices.getBool('keepScreenOn');
+
+      if (settingScreenController.isScreenOn.value) {
         KeepScreenOn.turnOn();
       }
+      print("Remaidner Toggle Value :- ${settingScreenController.on4.value}");
+
+      await sunriseSunsetController.countryTommorowTimeZone(
+          PrefServices.getDouble('currentLat'),
+          PrefServices.getDouble('currentLong'),
+          DateFormat("yyyy-MM-dd").format(
+              DateTime.now().add(const Duration(days: 1))),
+          PrefServices.getString('countryName'));
+
+
+      // settingScreenController.remainderNotificationLogic();
     });
   }
 
@@ -65,8 +78,6 @@ class _SeetingScreenState extends State<SettingsScreen> {
 
   String substractSunsetTime = '';
   String substractSunriseTime = '';
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -92,7 +103,11 @@ class _SeetingScreenState extends State<SettingsScreen> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
                     SizedBox(width: 15.w),
-                    const CommonBackArrow(),
+                     CommonBackArrow(
+                       onPressed: () {
+                         Get.to(SunriseSunetScreen());
+                       },
+                     ),
                     SizedBox(width: 100.w),
                     CustomText(
                       StringUtils.settingsScreenTxt,
@@ -106,7 +121,10 @@ class _SeetingScreenState extends State<SettingsScreen> {
             Padding(
               padding: EdgeInsets.only(top: 110.h),
               child: ListView(
-                children: [
+                scrollDirection : Axis.vertical,
+                physics : const NeverScrollableScrollPhysics(),
+                children : [
+
                   Padding(
                     padding: EdgeInsets.only(left: 20.w, right: 20.w),
                     child: Container(
@@ -137,6 +155,7 @@ class _SeetingScreenState extends State<SettingsScreen> {
                               height: 30.h,
                             ),
 
+                            /// Screen Always on
                             SizedBox(
                               height: 30.h,
                               child: Row(
@@ -156,6 +175,7 @@ class _SeetingScreenState extends State<SettingsScreen> {
                                       onChanged: (value) {
                                         settingScreenController
                                             .isScreenOn.value = value;
+
                                         PrefServices.setValue(
                                             'keepScreenOn',
                                             settingScreenController
@@ -202,6 +222,7 @@ class _SeetingScreenState extends State<SettingsScreen> {
                                       value: settingScreenController
                                           .is24Hours.value,
                                       onChanged: (value) {
+                                        print("value :- $value");
                                         settingScreenController
                                             .toggleTimeFormat(value);
                                       },
@@ -228,35 +249,43 @@ class _SeetingScreenState extends State<SettingsScreen> {
                               height: 30.h,
                               child: Row(
                                 children: [
-
                                   CustomText(
                                     StringUtils.meditationTxt,
                                     color: ColorUtils.orange,
                                     fontSize: 17.sp,
                                     fontWeight: FontWeight.w500,
                                   ),
-
                                   const Spacer(),
-
                                   Transform.scale(
                                     scale: 0.8,
                                     child: Switch(
                                       value: settingScreenController
                                           .isBellRinging.value,
                                       onChanged: (value) async {
+                                        if (googleController
+                                            .locationList.isEmpty) {
+                                          commonFlutterToastMsg(
+                                              'Please Add Location');
+                                        } else {
+                                          settingScreenController
+                                              .isBellRinging.value = value;
+                                        }
 
-                                        settingScreenController.isBellRinging.value = value;
                                         PrefServices.setValue(
                                             'isBellRinging',
                                             settingScreenController
                                                 .isBellRinging.value);
 
                                         settingScreenController
-                                            .isBellRinging.value =
+                                                .isBellRinging.value =
                                             PrefServices.getBool(
                                                 'isBellRinging');
 
-                                        print("settingScreenController.isBellRinging.value :- ${settingScreenController.isBellRinging.value}");
+                                        print(
+                                            "settingScreenController.isBellRinging.value :- ${settingScreenController.isBellRinging.value}");
+
+                                        settingScreenController
+                                            .meditionBellNotificationLogic();
                                       },
                                     ),
                                   ),
@@ -313,59 +342,9 @@ class _SeetingScreenState extends State<SettingsScreen> {
                               height: 20.h,
                             ),
 
-                            /// Remainder for sunrise
-                            SizedBox(
-                              height: 30.h,
-                              child: Row(
-                                children: [
-                                  CustomText(
-                                    StringUtils.sunriseReminderTxt,
-                                    color: ColorUtils.orange,
-                                    fontSize: 17.sp,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                  const Spacer(),
-                                  Transform.scale(
-                                    scale: 0.8,
-                                    child: Switch(
-                                      value: settingScreenController.on5.value,
-                                      onChanged: (value) async {
-                                        settingScreenController.sunriseRemainderToggle();
 
-                                        if (PrefServices.getBool('saveSunriseToggleValue')){
-                                          sunriseRemainderDialog();
-                                        }
-                                        else {
-                                          print("==========CANCEL NOTIFICATION========");
-                                          settingScreenController.cancelNotification();
-                                        }
-                                      },
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
 
-                            CustomText(
-                              StringUtils.setReminderTxt,
-                              color: ColorUtils.black1F,
-                              fontSize: 15.sp,
-                              fontWeight: FontWeight.w500,
-                            ),
-
-                            if (PrefServices.getBool('saveSunsetToggleValue'))
-                              CustomText(
-                                '${StringUtils.ringAlarmTxt.tr} ',
-                                color: ColorUtils.black1F,
-                                fontSize: 15.sp,
-                                fontWeight: FontWeight.w500,
-                              ),
-
-                            SizedBox(
-                              height: 20.h,
-                            ),
-
-                            /// Remainder for sunset
+                            /// Remainder
                             SizedBox(
                               height: 30.h,
                               child: Row(
@@ -382,16 +361,26 @@ class _SeetingScreenState extends State<SettingsScreen> {
                                     child: Switch(
                                       value: settingScreenController.on4.value,
                                       onChanged: (value) async {
-                                        settingScreenController.toggle4();
+
+                                        if (googleController
+                                            .locationList.isEmpty) {
+                                          commonFlutterToastMsg(
+                                              'Please Add Location');
+                                        } else {
+                                          settingScreenController
+                                              .remainderToggle();
+
+
+                                        }
 
                                         if (PrefServices.getBool(
-                                            'saveToggleValue')) {
-                                          sunsetRemainderDialog();
+                                            'saveRemainderToggleValue')) {
+                                          remainderDialog();
                                         } else {
                                           print(
                                               "==========CANCEL NOTIFICATION========");
                                           settingScreenController
-                                              .cancelNotification();
+                                              .cancelAllNotification();
                                         }
                                       },
                                     ),
@@ -407,23 +396,30 @@ class _SeetingScreenState extends State<SettingsScreen> {
                               fontWeight: FontWeight.w500,
                             ),
 
-                            if (PrefServices.getBool('saveToggleValue'))
+                            if (PrefServices.getBool('saveRemainderToggleValue'))
                               Obx(() => CustomText(
-                                '${StringUtils.ringAlarmTxt.tr} ${settingScreenController.formatted12HourSunsetTime.value}',
-                                color: ColorUtils.black1F,
-                                fontSize: 15.sp,
-                                fontWeight: FontWeight.w500,
-                              )),
+                                    "${StringUtils.ringAlarmTxt.tr}\t${settingScreenController.formatted12HourSunsetTime.value}",
+                                // , ${settingScreenController.scheduledFormattedDate}
+                                    color: ColorUtils.black1F,
+                                    fontSize: 15.sp,
+                                    overflow: TextOverflow.ellipsis,
+                                    maxLines: 1,
+                                    fontWeight: FontWeight.w500,
+                                  )),
 
                             SizedBox(
                               height: 20.h,
+                            ),
+
+                            SizedBox(
+                              height: 10.h,
                             ),
 
                             /// Reset Button
                             Center(
                               child: Padding(
                                 padding:
-                                EdgeInsets.symmetric(horizontal: 110.w),
+                                    EdgeInsets.symmetric(horizontal: 110.w),
                                 child: CustomBtn(
                                   height: 45.h,
                                   gradient: const LinearGradient(
@@ -508,12 +504,28 @@ class _SeetingScreenState extends State<SettingsScreen> {
 
                 /// Proceed
                 TextButton(
-                  onPressed: () {
+                  onPressed: (){
+
                     googleController.clearLocationList();
                     googleController.address.value = '';
                     PrefServices.setValue('currentAddress', '');
                     PrefServices.setValue('countryName', '');
                     PrefServices.setValue('currentLat', 0.0);
+                    PrefServices.setValue('keepScreenOn', false);
+                    PrefServices.setValue('is24Hours', false);
+                    PrefServices.setValue('isBellRinging', false);
+                    PrefServices.setValue('isCountDown', false);
+                    PrefServices.setValue('saveRemainderToggleValue', false);
+
+                    settingScreenController.on4.value = PrefServices.getBool('saveRemainderToggleValue');
+                    settingScreenController.isCountDown.value =
+                        PrefServices.getBool('isCountDown');
+                    settingScreenController.isBellRinging.value =
+                        PrefServices.getBool('isBellRinging');
+                    settingScreenController.is24Hours.value =
+                        PrefServices.getBool('is24Hours');
+                    settingScreenController.isScreenOn.value =
+                        PrefServices.getBool('keepScreenOn');
                     PrefServices.setValue('currentLong', 0.0).then((value) {
                       Fluttertoast.showToast(msg: StringUtils.resetMsg.tr);
                     });
@@ -535,9 +547,11 @@ class _SeetingScreenState extends State<SettingsScreen> {
     ));
   }
 
-  Future sunsetRemainderDialog(){
-    settingScreenController.remainderSunsetTimeController.clear();
-    return Get.dialog(
+  Future<Object> remainderDialog() async {
+    settingScreenController.remainderTimeController.clear();
+
+
+       return Get.dialog(
       barrierDismissible: false,
       AlertDialog(
         contentPadding: EdgeInsets.zero,
@@ -563,12 +577,15 @@ class _SeetingScreenState extends State<SettingsScreen> {
             CommonTextFormField(
               onChange: (value) {
                 substractSunsetTime = value;
+                PrefServices.setValue(StringUtils.saveRemainderTextfieldKey,settingScreenController.remainderTimeController.text);
+                settingScreenController.remainderTimeController.text =  PrefServices.getString(StringUtils.saveRemainderTextfieldKey);
+
+                print("Save value of field:- ${PrefServices.getString(StringUtils.saveRemainderTextfieldKey)}");
               },
               height: 25.sp,
               contentPadding: EdgeInsets.only(bottom: 11.h),
               keyBoardType: TextInputType.number,
-              textEditController:
-              settingScreenController.remainderSunsetTimeController,
+              textEditController: settingScreenController.remainderTimeController,
             ),
             SizedBox(
               height: 25.h,
@@ -579,6 +596,9 @@ class _SeetingScreenState extends State<SettingsScreen> {
                 /// CANCEL Textbutton
                 InkWell(
                   onTap: () {
+                    PrefServices.setValue('saveToggleValue', false);
+                    settingScreenController.on4.value =
+                        PrefServices.getBool('saveToggleValue');
                     Get.back();
                   },
                   child: CustomText(
@@ -595,39 +615,50 @@ class _SeetingScreenState extends State<SettingsScreen> {
 
                 /// OK Textbutton
                 InkWell(
-                  onTap: () {
-                    settingScreenController.validateSunsetInput(substractSunsetTime);
+                  onTap: () async {
 
-                    if (settingScreenController
-                        .currentAndSunsetTimeDifference() <
-                        settingScreenController
-                            .remainderAndSunsetTimeDifference()){
-                      print(
-                          "settingScreenController.currentAndSunsetTimeDifference() :- ${settingScreenController.currentAndSunsetTimeDifference()}");
-                      print(
-                          "settingScreenController.remainderAndSunsetTimeDifference() :- ${settingScreenController.remainderAndSunsetTimeDifference()}");
-
-                      PrefServices.setValue('saveToggleValue', false);
-                      settingScreenController.on4.value =
-                          PrefServices.getBool('saveToggleValue');
-                      print(
-                          "settingScreenController.on4.value :- ${settingScreenController.on4.value}");
-                      commonFlutterToastMsg(
-                          'Invalid Value!, Your current time and sunset time difference is less than ${settingScreenController.currentAndSunsetTimeDifference()} min');
+                    if (int.parse(substractSunsetTime) < 2 ||
+                        int.parse(substractSunsetTime) > 120) {
+                      settingScreenController.validateSunsetInput(substractSunsetTime);
                       Get.back();
-                    } else {
-                      PrefServices.setValue('saveToggleValue', true);
+                    }
+
+                    // else if (settingScreenController
+                    //             .currentAndSunsetTimeDifference() <
+                    //         settingScreenController
+                    //             .remainderAndSunsetTimeDifference() &&
+                    //     (!settingScreenController
+                    //         .currentAndSunsetTimeDifference()
+                    //         .isNegative)) {
+                    //   print(
+                    //       "settingScreenController.currentAndSunsetTimeDifference() :- ${settingScreenController.currentAndSunsetTimeDifference()}");
+                    //   print(
+                    //       "settingScreenController.remainderAndSunsetTimeDifference() :- ${settingScreenController.remainderAndSunsetTimeDifference()}");
+                    //
+                    //   PrefServices.setValue('saveToggleValue', false);
+                    //   settingScreenController.on4.value =
+                    //       PrefServices.getBool('saveToggleValue');
+                    //   print(
+                    //       "Set Invalid Value :- ${settingScreenController.on4.value}");
+                    //   commonFlutterToastMsg(
+                    //       'Invalid Value!, Your current time and sunset time difference is less than ${settingScreenController.currentAndSunsetTimeDifference()} min');
+                    //   Get.back();
+                    // }
+
+                    else {
+                      PrefServices.setValue('saveRemainderToggleValue', true);
+
+                      print("Get Value Remainder:- ${PrefServices.getBool('saveRemainderToggleValue')}");
+                      settingScreenController.on4.value = PrefServices.getBool('saveRemainderToggleValue');
+
+
+                      print("settingScreenController.on4.value :- ${settingScreenController.on4.value}");
 
                       print(
-                          "Get Value Remainder:- ${PrefServices.getBool('saveToggleValue')}");
-                      settingScreenController.on4.value =
-                          PrefServices.getBool('saveToggleValue');
-                      print(
-                          "settingScreenController.on4.value :- ${settingScreenController.on4.value}");
+                          "Tommorow time body :- ${DateFormat("yyyy-MM-dd").format(DateTime.now().add(const Duration(days: 1)))}");
 
-                      settingScreenController
-                          .scheduleDailySunsetNotification()
-                          .then((value) => Get.back());
+                        settingScreenController.remainderNotificationLogic();
+
                     }
                   },
                   child: CustomText(
@@ -643,145 +674,6 @@ class _SeetingScreenState extends State<SettingsScreen> {
                 ),
               ],
             ),
-            SizedBox(
-              height: 10.h,
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Future sunriseRemainderDialog(){
-
-    settingScreenController.remainderSunRiseTimeController.clear();
-
-    print("current Lat :- ${PrefServices.getDouble('currentLat')}");
-    print("current Long :- ${PrefServices.getDouble('currentLong')}");
-    print("Date :- ${DateTime.now().add(const Duration(days: 1))}");
-    print("PrefServices.getString('countryName') :- ${PrefServices.getString('countryName')}");
-
-    sunriseSunsetController.countryTimeZone(
-        PrefServices.getDouble('currentLat'),
-        PrefServices.getDouble('currentLong'),
-        DateTime.now().add(const Duration(days: 1)).toString(),
-        PrefServices.getString('countryName'));
-
-    print("sunriseSunsetController.countrySunriseTimeZone :- ${sunriseSunsetController.countrySunriseTimeZone}");
-    print("sunriseSunsetController.countrySunsetTimeZone :- ${sunriseSunsetController.countrySunsetTimeZone}");
-
-    return Get.dialog(
-      barrierDismissible: false,
-      AlertDialog(
-        contentPadding: EdgeInsets.zero,
-        shape: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(3.r),
-            borderSide: BorderSide.none),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-
-            SizedBox(
-              height: 15.h,
-            ),
-
-            Padding(
-              padding: EdgeInsets.only(left: 20.w),
-              child: CustomText(
-                StringUtils.enterTimeInMinText,
-                color: ColorUtils.black1F,
-                fontSize: 15.sp,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-
-            CommonTextFormField(
-              onChange: (value){
-                substractSunriseTime = value;
-              },
-              height: 25.sp,
-              contentPadding: EdgeInsets.only(bottom: 11.h),
-              keyBoardType: TextInputType.number,
-              textEditController: settingScreenController.remainderSunRiseTimeController,
-            ),
-
-            SizedBox(
-              height: 25.h,
-            ),
-
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-
-                /// CANCEL Textbutton
-                InkWell(
-                  onTap: () {
-                    Get.back();
-                  },
-                  child: CustomText(
-                    StringUtils.cancleCapitalTxt,
-                    color: ColorUtils.orange,
-                    fontWeight: FontWeight.w500,
-                    fontSize: 12.sp,
-                  ),
-                ),
-
-                SizedBox(
-                  width: 20.w,
-                ),
-
-                /// OK Textbutton
-                InkWell(
-                  onTap: () {
-
-                    settingScreenController.validateSunriseInput(substractSunriseTime);
-
-                    // if (settingScreenController
-                    //     .currentAndSunsetTimeDifference() <
-                    //     settingScreenController
-                    //         .remainderAndSunsetTimeDifference()){
-                    //   print(
-                    //       "settingScreenController.currentAndSunsetTimeDifference() :- ${settingScreenController.currentAndSunsetTimeDifference()}");
-                    //   print(
-                    //       "settingScreenController.remainderAndSunsetTimeDifference() :- ${settingScreenController.remainderAndSunsetTimeDifference()}");
-                    //
-                    //   PrefServices.setValue('saveSunriseToggleValue', false);
-                    //   settingScreenController.on5.value = PrefServices.getBool('saveSunriseToggleValue');
-                    //   print(
-                    //       "settingScreenController.on5.value :- ${settingScreenController.on5.value}");
-                    //   commonFlutterToastMsg(
-                    //       'Invalid Value!, Your current time and sunset time difference is less than ${settingScreenController.currentAndSunsetTimeDifference()} min');
-                    //   Get.back();
-                    // } else {
-                    //   PrefServices.setValue('saveSunriseToggleValue', true);
-
-                    print("saveSunriseToggleValue Get Value Remainder:- ${PrefServices.getBool('saveSunriseToggleValue')}");
-
-                    settingScreenController.on4.value = PrefServices.getBool('saveSunriseToggleValue');
-
-                    print("settingScreenController.on5.value :- ${settingScreenController.on5.value}");
-
-                    settingScreenController
-                        .scheduleDailySunsetNotification()
-                        .then((value) => Get.back());
-                    // }
-                  },
-                  child: CustomText(
-                    StringUtils.okTxt,
-                    color: ColorUtils.orange,
-                    fontWeight: FontWeight.w500,
-                    fontSize: 12.sp,
-                  ),
-                ),
-
-                SizedBox(
-                  width: 15.w,
-                ),
-
-              ],
-            ),
-
             SizedBox(
               height: 10.h,
             ),

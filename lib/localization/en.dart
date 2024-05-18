@@ -46,7 +46,7 @@ Map<String,String> en= {
   "ringsTxt":"Rings bell at time of Agnihotra",
   "countDownTxt":"Display Countdown",
   "countDownClockTxt":"Display countdown or clock in center",
-  "reminderTxt":"Reminders For Sunset Time",
+  "reminderTxt":"Reminders",
   "sunriseReminderTxt":"Reminders For Sunrise Time",
   "setReminderTxt":"Set Reminder for Agnihotra",
   "enterTimeInMinText":"Enter time in minutes (2-120):",

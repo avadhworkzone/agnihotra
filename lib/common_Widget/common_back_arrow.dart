@@ -5,7 +5,8 @@ import 'package:sunrise_app/utils/color_utils.dart';
 import 'package:sunrise_app/utils/image_utils.dart';
 
 class CommonBackArrow extends StatelessWidget {
-  const CommonBackArrow({super.key});
+  final void Function()? onPressed;
+  const CommonBackArrow({super.key, this.onPressed});
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +15,7 @@ class CommonBackArrow extends StatelessWidget {
       radius: 20.r,
       child: Center(
         child: IconButton(
-          onPressed: (){
+          onPressed: onPressed ?? (){
             Get.back();
           },
           icon: const Icon(

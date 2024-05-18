@@ -223,7 +223,15 @@ class StringUtils {
   static const otherTxt = "otherTxt";
   static const okTxt = "okTxt";
 
+  /// Setting Screen
+  static const pleaseEnterMinutes = "Please Enter Minutes";
+  static const minimum2minutesRequired = "Minimum 2 minutes required";
+  static const maximum120minutesAllow = "Maximum 120 minutes allow";
 
+  static const reminderSunsetKey = "reminderSunsetKey";
+  static const reminderSunriseKey = "reminderSunriseKey";
+  static const subStractMinuteKey = "subStractMinuteKey";
+  static const saveRemainderTextfieldKey = "saveRemainderTextfieldKey";
 
 
 
