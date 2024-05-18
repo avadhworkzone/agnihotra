@@ -73,8 +73,8 @@ class _HelpScreenState extends State<HelpScreen> {
                           SizedBox(
                             height: 10.h,
                           ),
-                          TextButton(
-                              onPressed: () {
+                          ListTile(
+                            onTap: () {
                                  helpScreenController.makingPhoneCall();
                               },
                             leading: const Icon(

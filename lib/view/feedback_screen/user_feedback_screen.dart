@@ -77,11 +77,13 @@ class _UserFeedBackScreenState extends State<UserFeedBackScreen> {
                           ListTile(
                             title: CustomText(
                               widget.fullName,
-                              color: ColorUtils.black,
+                              // color: ColorUtils.black,
+                              color: ColorUtils.black1F,
                             ),
                             subtitle: CustomText(
                               widget.yourMessage,
-                              color: ColorUtils.black,
+                              // color: ColorUtils.black,
+                              color: ColorUtils.black1F,
                             ),
                           ),
                           SizedBox(height: 30.h,),

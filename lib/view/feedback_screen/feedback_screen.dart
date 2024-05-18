@@ -90,7 +90,7 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                               },
                             title: StringUtils.shareFeedbackTxt,
                             bgColor: ColorUtils.borderColor,
-                            textColor: ColorUtils.black,
+                            textColor: ColorUtils.black1F,
                           ),
                           SizedBox(height: 20.h,),
                           CustomBtn(
@@ -100,15 +100,15 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                             },
                             title: StringUtils.shareBotherationTxt,
                             bgColor: ColorUtils.borderColor,
-                            textColor: ColorUtils.black,
+                            textColor: ColorUtils.black1F,
                           ),
                           SizedBox(height: 30.h,),
-                          CommonTextField(
+                          CommonTextFormField(
                             hintText: 'Full Name',
                             textEditController: helpScreenController.fullNameController,
                           ),
                           SizedBox(height: 30.h,),
-                          CommonTextField(
+                          CommonTextFormField(
                             hintText: 'Your Message',
                             textEditController: helpScreenController.yourMessageController,
                           ),

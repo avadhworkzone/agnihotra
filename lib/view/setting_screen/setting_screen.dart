@@ -256,8 +256,7 @@ class _SeetingScreenState extends State<SettingsScreen> {
                                             PrefServices.getBool(
                                                 'isBellRinging');
 
-                                        print(
-                                            "settingScreenController.isBellRinging.value :- ${settingScreenController.isBellRinging.value}");
+                                        print("settingScreenController.isBellRinging.value :- ${settingScreenController.isBellRinging.value}");
                                       },
                                     ),
                                   ),

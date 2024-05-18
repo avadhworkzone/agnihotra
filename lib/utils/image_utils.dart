@@ -52,10 +52,7 @@ class AssetUtils {
 
 
 
-  static const phoneIcon = Icons.phone;
-  static const emailIcon = Icons.email;
-  static const chatIcon = Icons.chat_bubble_outline;
-  static const feedBackIcon = Icons.feedback_outlined;
+
 
   static const googleIcon = '${iconPath}google.png';
   static const messageIcon = '${iconPath}message.png';

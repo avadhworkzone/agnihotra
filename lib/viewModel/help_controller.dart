@@ -1,7 +1,11 @@
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class HelpScreenController extends GetxController{
+
+  TextEditingController fullNameController = TextEditingController();
+  TextEditingController yourMessageController = TextEditingController();
 
   makingPhoneCall() async {
     var url = Uri.parse("tel:9913165164");
